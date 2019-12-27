@@ -20,5 +20,7 @@ ${AnsiColor.BLUE}
        \:::\____\                |::|    |                                                             \::::/    /
         \::/    /                |::|____|                                                              \::/____/
          \/____/                  ~~                                                                     ~~
+---------------
+Course scheduling system of Laboratory
 -----版本号-----
 ${spring-boot.version}

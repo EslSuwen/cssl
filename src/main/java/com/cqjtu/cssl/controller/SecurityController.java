@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 
@@ -33,19 +35,38 @@ public class SecurityController {
 
 
     @PostMapping(value="/login")
-    public String login(User user,Map<String, Object> map){
+    public String login(User user, Map<String, Object> map, HttpServletRequest request){
 
         if(userService.get(user.getUserNo())!=null){
             User user1=userService.get(user.getUserNo());
             if(user1.getUserPwd().equals(user.getUserPwd())){
                 map.put("user",user1);
+
+                //获取session并将userName存入session对象
+                HttpSession session=request.getSession();
+                session.setAttribute("USER_SESSION_KEY", user1);
+
                 return "main";
             }
         }
 
-
         return "login";
     }
+
+/*    @PostMapping(value="/login")
+    public String login(User user, Map<String, Object> map){
+
+        if(userService.get(user.getUserNo())!=null){
+            User user1=userService.get(user.getUserNo());
+            if(user1.getUserPwd().equals(user.getUserPwd())){
+                map.put("user",user1);
+
+                return "main";
+            }
+        }
+
+        return "login";
+    }*/
 
     @GetMapping("/mainController")
     public String main(){
@@ -54,8 +75,11 @@ public class SecurityController {
     }
 
     @GetMapping("/logout")
-    public String logout(){
+    public String logout(HttpServletRequest request){
 
+        //获取session并将userName存入session对象
+        HttpSession session=request.getSession();
+        session.setAttribute("USER_SESSION_KEY", null);
         return "redirect:/security/toLogin";
 
     }
