@@ -37,6 +37,8 @@ spring:
     encoding: UTF-8
     cache: false
     mode: HTML5
+#  mvc:        #配置放行静态资源
+#      static-path-pattern: /static/**
 
 mybatis:     #配置mybatis
   mapper-locations: classpath:mybatis/*Mapper.xml
