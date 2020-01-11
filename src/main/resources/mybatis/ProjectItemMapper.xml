@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqjtu.cssl.mapper.ProjectItemMapper">
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="ItemRM" type="com.cqjtu.cssl.entity.ProjectItem">
+        <id property="iId" column="iid"/>
+        <result property="proId" column="pro_id"/>
+        <result property="iName" column="iname"/>
+        <result property="iType" column="itype"/>
+        <result property="iTime" column="itime"/>
+        <result property="cType" column="ctype"/>
+        <result property="num" column="num"/>
+        <result property="intend" column="intend"/>
+    </resultMap>
+
+    <!-- 添加实验项目表信息 -->
+    <insert id="addItem" parameterType="com.cqjtu.cssl.entity.ProjectItem">
+        insert  into project_item (iid,pro_id,iname,itype,itime,ctype,num,intend) values (#{iId},#{proId},#{iName},#{iType},#{iTime},#{cType},#{num},#{intend})
+    </insert>
+
+    <!-- 通过实验项目ID查询实验项目信息 -->
+    <select id="findById" resultType="com.cqjtu.cssl.entity.ProjectItem" resultMap="ItemRM">
+        select * from  project_item where iid=#{iId}
+    </select>
+
+    <!-- 通过实验项目ID修改实验项目信息 -->
+    <update id="updateById" parameterType="com.cqjtu.cssl.entity.ProjectItem">
+        update project_item set pro_id=#{proId},iname=#{iName},itype=#{iType},itime=#{iTime},ctype=#{cType},num=#{num},intend=#{intend} where iid=#{iId}
+    </update>
+
+    <!-- 通过实验室项目卡片ID查看它所拥有的实验项目信息-->
+    <select id="findAllByProId" resultMap="ItemRM">
+        select * from project_item where pro_id=#{peoId}
+    </select>
+
+    <!--通过ID删除一项实验项目信息-->
+    <delete id="deleById" >
+        delete from project_item where iid=#{iId}
+    </delete>
+
+    <!--通过实验室卡片ID删除所有实验项目信息-->
+    <delete id="deleByProId" >
+        delete from project_item where pro_id=#{proId}
+    </delete>
+
+    <select id="find" resultType="int">
+        select  pro_id from project_item where iid=#{iId}
+    </select>
+</mapper>

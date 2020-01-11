@@ -6,14 +6,12 @@ import com.cqjtu.cssl.utils.CourseQueryHelper;
 import java.util.List;
 
 
-
 public interface CourseService {
 
     /**
      * 新增课程记录
      *
      * @param course
-     *
      */
     void addCourse(Course course);
 
@@ -22,7 +20,6 @@ public interface CourseService {
      *
      * @param courseNo
      * @return boolean
-     *
      */
     boolean removeCourseByNo(String courseNo);
 
@@ -30,7 +27,6 @@ public interface CourseService {
      * 更新一条课程记录
      *
      * @param course
-     *
      */
     void updateCourse(Course course);
 
@@ -39,7 +35,6 @@ public interface CourseService {
      *
      * @param courseNo
      * @return Course
-     *
      */
     Course loadCourseByNo(String courseNo);
 
@@ -48,7 +43,6 @@ public interface CourseService {
      *
      * @param helper
      * @return List
-     *
      */
     List<Course> loadScopedCourses(CourseQueryHelper helper);
 
@@ -57,7 +51,6 @@ public interface CourseService {
      *
      * @param courseNo
      * @return byte
-     *
      */
     byte[] getTextbookPic(String courseNo);
 
