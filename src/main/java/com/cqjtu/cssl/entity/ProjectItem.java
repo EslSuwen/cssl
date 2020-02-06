@@ -1,114 +1,133 @@
 package com.cqjtu.cssl.entity;
 
+/**
+ * 实验项目实体
+ *
+ * @author: suwen
+ * @time: 2020/2/6 3:19 下午
+ */
 public class ProjectItem {
-    //实验项目编号
-    private String iId;
-    //项目ID
-    private int proId;
-    //实验项目名称
-    private String iName;
-    //实验类型
-    private String iType;
-    //实验项目学时
-    private int iTime;
-    //必修或选修
-    private String cType;
-    //分组人数
-    private int num;
-    //实验目的
-    private String intend;
+  // 实验项目编号
+  private String iId;
+  // 项目ID
+  private int proId;
+  // 实验项目名称
+  private String iName;
+  // 实验类型
+  private String iType;
+  // 实验项目学时
+  private int iTime;
+  // 必修或选修
+  private String cType;
+  // 分组人数
+  private int num;
+  // 实验目的
+  private String intend;
 
-    public ProjectItem() {
+  public ProjectItem() {}
 
-    }
+  public ProjectItem(
+      String iId,
+      int proId,
+      String iName,
+      String iType,
+      int iTime,
+      String cType,
+      int num,
+      String intend) {
+    this.iId = iId;
+    this.proId = proId;
+    this.iName = iName;
+    this.iType = iType;
+    this.iTime = iTime;
+    this.cType = cType;
+    this.num = num;
+    this.intend = intend;
+  }
 
-    public ProjectItem(String iId, int proId, String iName, String iType, int iTime, String cType, int num, String intend) {
-        this.iId = iId;
-        this.proId = proId;
-        this.iName = iName;
-        this.iType = iType;
-        this.iTime = iTime;
-        this.cType = cType;
-        this.num = num;
-        this.intend = intend;
-    }
+  @Override
+  public String toString() {
+    return "ProjectItem{"
+        + "iId="
+        + iId
+        + ", proId="
+        + proId
+        + ", iName="
+        + iName
+        + ", iType="
+        + iType
+        + ", iTime="
+        + iTime
+        + ", cType="
+        + cType
+        + ", num="
+        + num
+        + ", intend="
+        + intend
+        + '}';
+  }
 
-    @Override
-    public String toString() {
-        return "ProjectItem{" +
-                "iId=" + iId +
-                ", proId=" + proId +
-                ", iName=" + iName +
-                ", iType=" + iType +
-                ", iTime=" + iTime +
-                ", cType=" + cType +
-                ", num=" + num +
-                ", intend=" + intend +
-                '}';
-    }
+  public String getiId() {
+    return iId;
+  }
 
+  public void setiId(String iId) {
+    this.iId = iId;
+  }
 
-    public String getiId() {
-        return iId;
-    }
+  public int getProId() {
+    return proId;
+  }
 
-    public void setiId(String iId) {
-        this.iId = iId;
-    }
+  public void setProId(int proId) {
+    this.proId = proId;
+  }
 
-    public int getProId() {
-        return proId;
-    }
+  public String getiName() {
+    return iName;
+  }
 
-    public void setProId(int proId) {
-        this.proId = proId;
-    }
+  public void setiName(String iName) {
+    this.iName = iName;
+  }
 
-    public String getiName() {
-        return iName;
-    }
+  public String getiType() {
+    return iType;
+  }
 
-    public void setiName(String iName) {
-        this.iName = iName;
-    }
+  public void setiType(String iType) {
+    this.iType = iType;
+  }
 
-    public String getiType() {
-        return iType;
-    }
+  public int getiTime() {
+    return iTime;
+  }
 
-    public void setiType(String iType) {
-        this.iType = iType;
-    }
+  public void setiTime(int iTime) {
+    this.iTime = iTime;
+  }
 
-    public int getiTime() {
-        return iTime;
-    }
+  public String getcType() {
+    return cType;
+  }
 
-    public void setiTime(int iTime) {
-        this.iTime = iTime;
-    }
+  public void setcType(String cType) {
+    this.cType = cType;
+  }
 
-    public String getcType() {
-        return cType;
-    }
+  public int getNum() {
+    return num;
+  }
 
-    public void setcType(String cType) {
-        this.cType = cType;
-    }
+  public void setNum(int num) {
+    this.num = num;
+  }
 
-    public int getNum() {
-        return num;
-    }
+  public String getIntend() {
+    return intend;
+  }
 
-    public void setNum(int num) {
-        this.num = num;
-    }
-
-    public String getIntend() {
-        return intend;
-    }
-
-    public void setIntend(String intend) {
-        this.intend = intend;
-    }
+  public void setIntend(String intend) {
+    this.intend = intend;
+  }
 }

@@ -2,14 +2,14 @@ server:                  #配置server
   tomcat:       #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
-    context-path: /cssl
+    context-path: /
   port: 8090
 
 spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver            # 数据库访问配置,主数据源，默认的
-      url: jdbc:mysql://localhost:3306/shixun?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/xiaozedb?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: Liyu8824
       initial-size: 5          # 下面为连接池的补充设置，应用到上面所有数据源中,初始化大小，最小，最大
@@ -37,8 +37,6 @@ spring:
     encoding: UTF-8
     cache: false
     mode: HTML5
-#  mvc:        #配置放行静态资源
-#      static-path-pattern: /static/**
 
 mybatis:     #配置mybatis
   mapper-locations: classpath:mybatis/*Mapper.xml

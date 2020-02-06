@@ -1,15 +1,18 @@
 package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Demo;
-import com.cqjtu.cssl.service.TestFileService;
-import com.cqjtu.cssl.utils.MessageQueryHelper;
 import com.cqjtu.cssl.service.DemodataRepository;
+import com.cqjtu.cssl.utils.MessageQueryHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-// 标明是controller的bean
+/**
+ * 数据传送测试 Demo controller
+ *
+ * @author: suwen
+ * @time: 2020/2/6 2:33 下午
+ */
 @RestController
-// 允许跨域访问。前端端口为4200。server端口为1230
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/demo")
 public class DemoController {
@@ -19,21 +22,35 @@ public class DemoController {
     @Autowired
     private DemodataRepository demodataRepository;
 
-    //增加数据
+    /**
+     * 增加数据
+     * Springboot将返回的类，以JSON字符串形式输出。这里使用Message model建立json格式数据
+     *
+     * @param demodata 请求体参数
+     * @return: com.cqjtu.cssl.utils.MessageQueryHelper
+     * @author: suwen
+     * @time: 2020/2/6 2:34 下午
+     */
     @PostMapping(value = "/newData")
-    // Springboot将返回的类，以JSON字符串形式输出。这里使用Message model建立json格式数据
     public MessageQueryHelper addNewData(@RequestBody Demo demodata) {
         System.out.println("addNewData()被调用");
         MessageQueryHelper msg = new MessageQueryHelper();
         // save后自动添加id
         demodataRepository.save(demodata);
-        msg.setMsg("The info of " + demodata.getName() + " has been added with the ID: " + demodata.getId());;
+        msg.setMsg("The info of " + demodata.getName() + " has been added with the ID: " + demodata.getId());
+        ;
         return msg;
     }
 
-    // 获取数据
+    /**
+     * 获取数据
+     * 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
+     *
+     * @return: Iterable<com.cqjtu.cssl.entity.Demo>
+     * @author: suwen
+     * @time: 2020/2/6 2:35 下午
+     */
     @GetMapping(value = "/getData")
-    // 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
     public Iterable<Demo> getDemodatas() {
 
         System.out.println("getDemodatas()被调用");
@@ -42,7 +59,13 @@ public class DemoController {
 
     }
 
-    // 删除数据
+    /**
+     * 删除数据
+     *
+     * @return: com.cqjtu.cssl.utils.MessageQueryHelper
+     * @author: suwen
+     * @time:
+     */
     @DeleteMapping(value = "/clearData")
     public MessageQueryHelper clearDemodatas() {
         System.out.println("clearDemodatas()被调用");

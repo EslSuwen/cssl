@@ -9,46 +9,45 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-
+/**
+ * 实验项目接口实现
+ *
+ * @author: suwen
+ * @time: 2020/2/6 4:04 下午
+ */
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ProjectItemServiceImpl implements ProjectItemService {
 
-    @Autowired
-    private ProjectItemMapper projectItemMapper;
+  @Autowired private ProjectItemMapper projectItemMapper;
 
-    @Override
-    public void addProjectItem(ProjectItem projectItem) {
+  @Override
+  public void addProjectItem(ProjectItem projectItem) {
 
-        projectItemMapper.addItem(projectItem);
+    projectItemMapper.addItem(projectItem);
+  }
 
-    }
+  @Override
+  public void removeProjectItem(Integer iId) {
 
-    @Override
-    public void removeProjectItem(Integer iId) {
+    projectItemMapper.deleById(iId.toString());
+  }
 
-        projectItemMapper.deleById(iId.toString());
+  @Override
+  public void updateProjectItem(ProjectItem projectItem) {
 
-    }
+    projectItemMapper.updateById(projectItem);
+  }
 
-    @Override
-    public void updateProjectItem(ProjectItem projectItem) {
+  @Override
+  public ProjectItem getProjectItemById(Integer iId) {
 
-        projectItemMapper.updateById(projectItem);
+    return projectItemMapper.findById(iId.toString());
+  }
 
-    }
+  @Override
+  public List<ProjectItem> findAllByProId(int proId) {
 
-    @Override
-    public ProjectItem getProjectItemById(Integer iId) {
-
-        return projectItemMapper.findById(iId.toString());
-
-    }
-
-    @Override
-    public List<ProjectItem> findAllByProId(int proId) {
-
-        return projectItemMapper.findAllByProId(proId);
-
-    }
+    return projectItemMapper.findAllByProId(proId);
+  }
 }

@@ -2,98 +2,47 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.UserService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Map;
-
+/**
+ * 用户 controller
+ *
+ * @author: suwen
+ * @time: 2020/2/6 3:07 下午
+ */
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+  @Autowired private UserService userService;
 
-    /**
-     * 访问用户输入界面
-     */
-    @GetMapping("/toInput")
-    public String input(Map<String, Object> map) {
+  /**
+   * 获取用户信息
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:10 下午
+   * @return: com.cqjtu.cssl.entity.User 用户
+   */
+  @GetMapping(value = "/getInfo")
+  public User getInfo() {
+    return new User();
+  }
 
-        /**
-         * 实现编号自增
-         */
-        List<User> userList = userService.loadAll();
-        User new_nser = new User(), user = userList.get(userList.size() - 1);
-        new_nser.setUserNo("" + (Integer.parseInt(user.getUserNo()) + 1));
+  /**
+   * 修改用户信息
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:10 下午
+   * @param user 用户
+   * @return: java.lang.String 状态码
+   */
+  @RequestMapping(value = "/update")
+  public String update(User user) {
 
-        map.put("user", new_nser);
-
-        return "user/input_user";
-    }
-
-    /**
-     * 创建新用户
-     */
-    @PostMapping(value = "/create")
-    public String create(User user) {
-
-        userService.addUser(user);
-
-        return "redirect:/user/list";
-
-    }
-
-    @GetMapping("/list")
-    public String list(Map<String, Object> map, @RequestParam(value = "pageNo", required = false, defaultValue = "1") String pageNoStr) {
-
-        int pageNo = 1;
-
-        //对 pageNo 的校验
-        pageNo = Integer.parseInt(pageNoStr);
-        if (pageNo < 1) {
-            pageNo = 1;
-        }
-
-        /*
-         * 第一个参数：第几页;
-         * 第二个参数：每页获取的条数.
-         */
-        PageHelper.startPage(pageNo, 20);
-        List<User> userList = userService.loadDistinct();
-//        List<User> userList = userService.loadAll();
-        PageInfo<User> page = new PageInfo<>(userList);
-
-        System.out.println(userList.size());
-
-        map.put("page", page);
-
-        return "user/list_user";
-    }
-
-    @GetMapping(value = "/remove/{userNo}")
-    public String remove(@PathVariable("userNo") Integer userNo) {
-
-        userService.removeUser(userNo);
-        return "redirect:/user/list";
-    }
-
-    @GetMapping(value = "/preUpdate/{userNo}")
-    public String preUpdate(@PathVariable("userNo") Integer userNo, Map<String, Object> map) {
-        System.out.println(userService.getUserById(userNo));
-        map.put("user", userService.getUserById(userNo));
-
-        return "user/update_user";
-    }
-
-    @RequestMapping(value = "/update")
-    public String update(User user) {
-
-        userService.updateUser(user);
-        return "redirect:/user/list";
-    }
+    userService.updateUser(user);
+    return "";
+  }
 }

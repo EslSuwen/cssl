@@ -2,14 +2,17 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Project;
 import com.cqjtu.cssl.service.ProjectService;
+import com.cqjtu.cssl.utils.MessageQueryHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
-// 标明是controller的bean
+/**
+ * 项目 controller
+ *
+ * @author: suwen
+ * @time: 2020/2/6 2:50 下午
+ */
 @RestController
-// 允许跨域访问。前端端口为4200。server端口为8090
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/project")
 public class ProjectController {
@@ -19,10 +22,13 @@ public class ProjectController {
 
     /**
      * 测试实验项目增加
+     *
+     * @param project 请求体变量 项目实体
+     * @return: int 状态码
+     * @author: suwen
+     * @time: 2020/2/6 2:51 下午
      */
-    //    @CrossOrigin
     @PostMapping(value = "/newProject")
-    // Springboot将返回的类，以JSON字符串形式输出。这里使用Message model建立json格式数据
     public int addNewProject(@RequestBody Project project) {
 
         System.out.println("addNewData()被调用");
@@ -34,10 +40,13 @@ public class ProjectController {
     }
 
     /**
-     * 测试实验项目数据
+     * 测试获取实验项目数据
+     *
+     * @return: java.lang.Iterable<com.cqjtu.cssl.entity.Project>
+     * @author: suwen
+     * @time: 2020/2/6 2:52 下午
      */
     @GetMapping(value = "/getProject")
-    // 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
     public Iterable<Project> getProjects() {
 
         System.out.println("getDemodatas()被调用");
@@ -48,16 +57,12 @@ public class ProjectController {
 
     /**
      * 测试实验项目删除
+     *
+     * @author: suwen
+     * @time: 2020/2/6 2:53 下午
      */
-    /*@DeleteMapping(value = "/clearProject")
+    @DeleteMapping(value = "/clearProject")
     public MessageQueryHelper clearDemodatas() {
-        System.out.println("clearDemodatas()被调用");
-        List<User> userList = userService.loadAll();
-        for (User user : userList) {
-            userService.removeUser(Integer.parseInt(user.getUserNo()));
-        }
-        MessageQueryHelper msg = new MessageQueryHelper();
-        msg.setMsg("The database has been cleared");
-        return msg;
-    }*/
+        return null;
+    }
 }

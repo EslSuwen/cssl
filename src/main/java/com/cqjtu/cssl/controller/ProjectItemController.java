@@ -5,9 +5,13 @@ import com.cqjtu.cssl.service.ProjectItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-// 标明是controller的bean
+/**
+ * 项目 controller
+ *
+ * @author: suwen
+ * @time: 2020/2/6 2:55 下午
+ */
 @RestController
-// 允许跨域访问。前端端口为4200。server端口为8090
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/projectItem")
 public class ProjectItemController {
@@ -17,9 +21,13 @@ public class ProjectItemController {
 
     /**
      * 测试实验项目项增加
+     *
+     * @param projectItem 请求体变量 实验项目
+     * @return: int 状态码
+     * @author: suwen
+     * @time: 2020/2/6 2:55 下午
      */
     @PostMapping(value = "/newProjectItem")
-    // Springboot将返回的类，以JSON字符串形式输出。这里使用Message model建立json格式数据
     public int addNewProjectItem(@RequestBody ProjectItem projectItem) {
 
         projectItemService.addProjectItem(projectItem);
@@ -28,10 +36,14 @@ public class ProjectItemController {
     }
 
     /**
-     * 测试实验项目项
+     * 测试获取实验项目
+     *
+     * @param proId 项目 id
+     * @return: java.lang.Iterable<com.cqjtu.cssl.entity.ProjectItem> 实验项目序列
+     * @author: suwen
+     * @time: 2020/2/6 2:55 下午
      */
     @GetMapping(value = "/getProjectItem")
-    // 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
     public Iterable<ProjectItem> getProjectItem(@RequestBody Integer proId/*, @RequestParam(value = "proId", required = false, defaultValue = "1") Integer Id*/) {
 
         return projectItemService.findAllByProId(proId);

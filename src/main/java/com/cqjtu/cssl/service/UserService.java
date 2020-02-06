@@ -4,69 +4,39 @@ import com.cqjtu.cssl.entity.User;
 
 import java.util.List;
 
-
+/**
+ * 用户服务接口
+ *
+ * @author: suwen
+ * @time: 2020/2/6 3:49 下午
+ */
 public interface UserService {
 
-    /**
-     * 获取一条用户数据
-     *
-     * @param  userNo
-     * @return User
-     *
-     */
-    User get(String userNo);
+  /**
+   * 获取一条用户记录
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:45 下午
+   * @param userId 用户编号
+   * @return User
+   */
+  User getUserById(Integer userId);
 
+  /**
+   * 更新一条用户记录
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:45 下午
+   * @param user 用户
+   */
+  void updateUser(User user);
 
-    /**
-     * 新增一条用户数据
-     *
-     * @param  user
-     * @return User
-     *
-     */
-    void addUser(User user);
-
-
-    /**
-     * 删除一条用户数据记录
-     *
-     * @param  userId
-     *
-     */
-    void removeUser(Integer userId);
-
-    /**
-     * 更新一条用户记录
-     *
-     * @param user
-     *
-     */
-    void updateUser(User user);
-
-    /**
-     * 获取一条用户记录
-     *
-     * @param userId
-     * @return User
-     *
-     */
-    User getUserById(Integer userId);
-
-    /**
-     *  获取所有用户记录
-     *
-     * @return List
-     *
-     */
-    List<User> loadAll();
-
-    /**
-     *  获取单一用户记录
-     *
-     * @return List
-     *
-     */
-    List<User> loadDistinct();
-
+  /**
+   * 获取所有用户记录
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:45 下午
+   * @return List<com.cqjtu.cssl.entity.User>
+   */
+  List<User> loadAll();
 }
-

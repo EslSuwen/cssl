@@ -16,10 +16,6 @@
 
     </resultMap>
 
-    <insert id="addUser">
-  	insert into tbl_test_file(file_name,file) values("namefdsf","fsdfsd");
-  </insert>
-
     <!-- 新增 -->
     <insert id="addFile" parameterType="com.cqjtu.cssl.entity.TestFile">
         insert into tbl_test_file(file_name,file)

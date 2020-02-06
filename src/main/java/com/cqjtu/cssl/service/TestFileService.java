@@ -2,32 +2,30 @@ package com.cqjtu.cssl.service;
 
 import com.cqjtu.cssl.entity.TestFile;
 
-import java.util.List;
-
-
+/**
+ * 文件测试服务接口
+ *
+ * @author: suwen
+ * @time: 2020/2/6 3:50 下午
+ */
 public interface TestFileService {
 
+  /**
+   * 新增一条文件数据
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:50 下午
+   * @param id
+   * @return TestFile
+   */
+  TestFile get(int id);
 
-    /**
-     * 新增一条文件数据
-     *
-     * @param  id
-     * @return TestFile
-     *
-     */
-    TestFile get(int id);
-
-
-    /**
-     * 新增一条文件数据
-     *
-     * @param  testFile
-     *
-     */
-    void addFile(TestFile testFile);
-
-    void addUser();
-
-
+  /**
+   * 新增一条文件数据
+   *
+   * @author: suwen
+   * @time: 2020/2/6 3:50 下午
+   * @param testFile
+   */
+  void addFile(TestFile testFile);
 }
-

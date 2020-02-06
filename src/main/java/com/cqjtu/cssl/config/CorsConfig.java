@@ -1,4 +1,3 @@
-
 package com.cqjtu.cssl.config;
 
 import org.springframework.context.annotation.Bean;
@@ -11,11 +10,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 
-/**
- * 对系统后台进行跨域访问进行配置
- *//*
+/*
 
- */
 
 @Configuration
 public class CorsConfig extends WebMvcConfigurerAdapter {
@@ -35,13 +31,16 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
 //    }
 
 }
+*/
 
 
 /**
- * Created by BLIT on 2019/3/7.
+ *对系统后台进行跨域访问进行配置
+ *
+ * @author: suwen
+ * @time: 2019/3/7 2:27 下午
+ *
  */
-
-/*
 @Configuration
 @EnableWebMvc
 public class CorsConfig implements WebMvcConfigurer {
@@ -58,6 +57,9 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedMethods("*")
                 //跨域允许时间
                 .maxAge(3600);
-    }*/
+    }
+}
+
+
 
 

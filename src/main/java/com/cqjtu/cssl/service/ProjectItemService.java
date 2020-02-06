@@ -4,49 +4,57 @@ import com.cqjtu.cssl.entity.ProjectItem;
 
 import java.util.List;
 
-
+/**
+ * 实验项目接口
+ *
+ * @author: suwen
+ * @time: 2020/2/6 4:03 下午
+ */
 public interface ProjectItemService {
 
-    /**
-     * 新增一条实验项目项
-     *
-     * @param  projectItem
-     *
-     */
-    void addProjectItem(ProjectItem projectItem);
+  /**
+   * 新增一条实验项目项
+   *
+   * @author: suwen
+   * @time: 2020/2/6 4:03 下午
+   * @param projectItem 实验项目
+   */
+  void addProjectItem(ProjectItem projectItem);
 
+  /**
+   * 删除一条实验项目项
+   *
+   * @author: suwen
+   * @time: 2020/2/6 4:03 下午
+   * @param iId 实验项目编号
+   */
+  void removeProjectItem(Integer iId);
 
-    /**
-     * 删除一条实验项目项
-     *
-     * @param  iId
-     *
-     */
-    void removeProjectItem(Integer iId);
+  /**
+   * 更新一条实验项目项
+   *
+   * @author: suwen
+   * @time: 2020/2/6 4:03 下午
+   * @param projectItem 实验项目
+   */
+  void updateProjectItem(ProjectItem projectItem);
 
-    /**
-     * 更新一条实验项目项
-     *
-     * @param projectItem
-     *
-     */
-    void updateProjectItem(ProjectItem projectItem);
+  /**
+   * 获取一条实验项目项
+   *
+   * @author: suwen
+   * @time: 2020/2/6 4:03 下午
+   * @param iId 实验项目编号
+   */
+  ProjectItem getProjectItemById(Integer iId);
 
-    /**
-     * 获取一条实验项目项
-     *
-     * @param iId
-     *
-     */
-    ProjectItem getProjectItemById(Integer iId);
-
-    /**
-     * 通过实验室项目卡片ID查看它所拥有的实验项目信息
-     *
-     * @param proId
-     * @return List<ProjectItem>
-     */
-    List<ProjectItem> findAllByProId(int proId);
-
+  /**
+   * 通过实验室项目卡片ID查看它所拥有的实验项目信息
+   *
+   * @author: suwen
+   * @time: 2020/2/6 4:03 下午
+   * @param proId 项目卡片编号
+   * @return List<ProjectItem>
+   */
+  List<ProjectItem> findAllByProId(int proId);
 }
-

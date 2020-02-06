@@ -1,37 +1,38 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.config.CorsConfig;
 import com.cqjtu.cssl.entity.TestFile;
-import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.TestFileService;
-import com.cqjtu.cssl.service.UserService;
-import com.cqjtu.cssl.utils.FileHelper;
-import com.cqjtu.cssl.utils.MessageQueryHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.annotation.Resource;
-import java.io.BufferedOutputStream;
-import java.io.FileOutputStream;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
-// 标明是controller的bean
+/**
+ * 文件传输测试 controller
+ *
+ * @author: suwen
+ * @time: 2020/2/6 2:42 下午
+ */
 @RestController
-// 允许跨域访问。前端端口为4200。server端口为8090
 //@CrossOrigin(origins = "http://localhost:4200")
-public class FileTestController extends CorsConfig {
-
+@RequestMapping(path = "/file")
+public class FileTestController {
 
     @Autowired
     private TestFileService testFileService;
 
-    // 获取数据
+    /**
+     * 获取文件
+     *
+     * @return:
+     * @author: suwen
+     * @time: 2020/2/6 2:44 下午
+     */
     @RequestMapping("/file")
-    // 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
     public void getFile(/*@RequestBody FileHelper[] file_from_sever*/) {
 
         System.out.println("getFile()被调用");
@@ -41,7 +42,15 @@ public class FileTestController extends CorsConfig {
 
     }
 
-    @CrossOrigin
+    /**
+     * 测试文件上传
+     *
+     * @param file
+     * @throws IOException
+     * @return: java.lang.String
+     * @author: suwen
+     * @time: 2020/2/6 2:45 下午
+     */
     @PostMapping(value = "/upload")
     public String upload(@RequestParam("file") MultipartFile file) throws IOException {
 //        System.out.println("后台文件上传函数");
@@ -56,14 +65,43 @@ public class FileTestController extends CorsConfig {
 //        outputStream.close();
 
 
-        TestFile testFile=new TestFile (file.getOriginalFilename(),file.getBytes());
+        TestFile testFile = new TestFile(file.getOriginalFilename(), file.getBytes());
 
 
         testFileService.addFile(testFile);
 
-        testFileService.addUser();
+//        testFileService.addUser();
 
         return "客户资料上传成功";
+    }
+
+
+    /**
+     * 测试图片发送
+     *
+     * @param request 服务器请求
+     * @param response 服务器响应
+     * @return: java.lang.String
+     * @author: suwen
+     * @time: 2020/2/6 2:47 下午
+     */
+    @GetMapping("/getImage")
+    public String getImage(HttpServletRequest request, HttpServletResponse response/*@RequestBody FileHelper[] file_from_sever*/) throws Exception {
+
+        System.out.println("getImage()被调用");
+
+        TestFile testFile = testFileService.get(28);
+        byte[] bytes = testFile.getFile();
+
+        //向浏览器发通知，我要发送是图片
+        response.setContentType("image/jpeg");
+        ServletOutputStream sos = response.getOutputStream();
+        sos.write(bytes);
+        sos.flush();
+        sos.close();
+
+        return null;
+
     }
 
 }
