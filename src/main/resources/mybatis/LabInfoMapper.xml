@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.LabInfoMapper">
+
+    <resultMap id="LabInfoRM" type="com.cqjtu.cssl.entity.LabInfo">
+        <id property="labId" column="lab_id"/>
+        <result property="tId" column="tid"/>
+        <result property="typeId" column="type_id"/>
+        <result property="labName" column="lab_name"/>
+        <result property="labCampus" column="lab_campus"/>
+        <result property="labCap" column="lab_cap"/>
+        <result property="labArea" column="lab_area"/>
+    </resultMap>
+    <insert id="addLab" parameterType="com.cqjtu.cssl.entity.LabInfo">
+        insert into lab_info(lab_id,tid,type_id,lab_name,lab_campus,lab_cap,lab_area) values (#{labId},#{tId},#{typeId},#{labName},#{labCampus},#{labCap},#{labArea})
+    </insert>
+    <update id="updateLabById" parameterType="com.cqjtu.cssl.entity.LabInfo">
+        update lab_info set tid=#{tId},type_id=#{typeId},lab_name=#{labName},lab_campus=#{labCampus},lab_cap=#{labCap},lab_area=#{labArea} where lab_id=#{labId}
+    </update>
+    <delete id="deleLabById">
+        delete from lab_info where lab_id=#{labId}
+    </delete>
+    <select id="findAllLab" resultMap="LabInfoRM">
+        select * from lab_info
+    </select>
+    <select id="findLabById" resultMap="LabInfoRM">
+        select * from  lab_info where lab_id like concat(concat('%', #{labId}), '%')
+    </select>
+</mapper>

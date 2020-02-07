@@ -5,7 +5,7 @@ import com.cqjtu.cssl.entity.User;
 import java.util.List;
 
 /**
- * 用户服务接口
+ * 用户信息服务接口
  *
  * @author: suwen
  * @time: 2020/2/6 3:49 下午

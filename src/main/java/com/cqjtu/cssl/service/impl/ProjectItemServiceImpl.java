@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 实验项目接口实现
+ * 实验项目信息服务接口实现
  *
  * @author: suwen
  * @time: 2020/2/6 4:04 下午

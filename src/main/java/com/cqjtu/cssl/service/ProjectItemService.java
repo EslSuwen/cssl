@@ -5,7 +5,7 @@ import com.cqjtu.cssl.entity.ProjectItem;
 import java.util.List;
 
 /**
- * 实验项目接口
+ * 实验项目信息服务接口
  *
  * @author: suwen
  * @time: 2020/2/6 4:03 下午
@@ -13,7 +13,7 @@ import java.util.List;
 public interface ProjectItemService {
 
   /**
-   * 新增一条实验项目项
+   * 新增一条实验项目
    *
    * @author: suwen
    * @time: 2020/2/6 4:03 下午
@@ -22,7 +22,7 @@ public interface ProjectItemService {
   void addProjectItem(ProjectItem projectItem);
 
   /**
-   * 删除一条实验项目项
+   * 删除一条实验项目
    *
    * @author: suwen
    * @time: 2020/2/6 4:03 下午
@@ -31,7 +31,7 @@ public interface ProjectItemService {
   void removeProjectItem(Integer iId);
 
   /**
-   * 更新一条实验项目项
+   * 更新一条实验项目
    *
    * @author: suwen
    * @time: 2020/2/6 4:03 下午
@@ -40,7 +40,7 @@ public interface ProjectItemService {
   void updateProjectItem(ProjectItem projectItem);
 
   /**
-   * 获取一条实验项目项
+   * 获取一条实验项目
    *
    * @author: suwen
    * @time: 2020/2/6 4:03 下午

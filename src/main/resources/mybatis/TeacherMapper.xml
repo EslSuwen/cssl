@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.TeacherMapper">
+
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="TeacherRM" type="com.cqjtu.cssl.entity.Teacher">
+        <id property="tID" column="tid"/>
+        <result property="tName" column="tname"/>
+        <result property="tPhone" column="tphone"/>
+        <result property="tQQ" column="tqq"/>
+        <result property="tEmail" column="temail"/>
+        <result property="tLimit" column="tlimit"/>
+        <result property="tPassword" column="tpassword"/>
+    </resultMap>
+
+    <!-- 添加教师信息 -->
+    <insert id="addTeacher" parameterType="com.cqjtu.cssl.entity.Teacher">
+  	insert into teacher(tid,tname,tphone,tqq,temail,tlimit,tpassword) values(#{tID},#{tName},#{tPhone},#{tQQ},#{tEmail},#{tLimit},#{tPassword});
+  </insert>
+
+    <!-- 通过教师ID查找教师信息 -->
+    <select id="findById" resultType="com.cqjtu.cssl.entity.Teacher">
+  		select * from  teacher where  tid=#{tid}
+  </select>
+
+    <!-- 通过教师ID修改教师信息 -->
+    <update id="updateById" parameterType="com.cqjtu.cssl.entity.Teacher">
+        update teacher set tname=#{tName},tphone=#{tPhone},tqq=#{tQQ},temail=#{tEmail},tlimit=#{tLimit},tpassword=#{tPassword} where tid=#{tID}
+    </update>
+
+    <!-- 查找所有教师信息 -->
+    <select id="findAll" resultMap="TeacherRM">
+        select  * from teacher
+    </select>
+
+    <!-- 通过ID删除教师信息 -->
+    <delete id="deleteById">
+        delete from teacher where tid=#{tid}
+    </delete>
+    <select id="findPassword" resultType="String">
+        select tpassword from teacher where tid = #{tid}
+    </select>
+    <update id="updatePassword">
+        update teacher set tpassword=#{arg1} where tid=#{arg0};
+    </update>
+</mapper>

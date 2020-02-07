@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.MajorClassMapper">
+
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="MajorClassRM" type="com.cqjtu.cssl.entity.MajorClassHelper">
+        <result property="majorName" column="major_name"/>
+        <result property="className" column="class_name"/>
+        <result property="classNum" column="class_num"/>
+    </resultMap>
+    <select id="findALL" resultMap="MajorClassRM">
+        select major_name,class_name,class_num from major m,class c where m.major_id=c.major_id
+    </select>
+</mapper>

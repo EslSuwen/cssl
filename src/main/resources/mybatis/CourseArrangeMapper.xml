@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.CourseArrangeMapper">
+
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="CourseArrangeRM" type="com.cqjtu.cssl.entity.CourseArrange">
+        <result property="labDay" column="lab_day"/>
+        <result property="labSession" column="lab_session"/>
+        <result property="courseName" column="course_name"/>
+        <result property="labID" column="lab_id"/>
+    </resultMap>
+    <select id="findALL" resultMap="CourseArrangeRM">
+        select lab_day,lab_session,c.course_name,la.lab_id from lab_arrange la,course c where
+        c.course_id = la.course_id and la.tid=#{arg0} and la.lab_week = #{arg1};
+    </select>
+
+</mapper>

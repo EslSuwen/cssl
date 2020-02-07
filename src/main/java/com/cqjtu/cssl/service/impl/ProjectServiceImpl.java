@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 项目服务接口实现
+ * 项目卡片信息服务接口实现
  *
  * @author: suwen
  * @time: 2020/2/6 3:57 下午

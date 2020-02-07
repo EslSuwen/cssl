@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.TeachClassMapper">
+
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="TeachClassRM" type="com.cqjtu.cssl.entity.TeachClass">
+        <id property="tid" column="tid"/>
+        <result property="courseID" column="course_id"/>
+        <result property="className" column="class_name"/>
+        <result property="majorID" column="major_id"/>
+    </resultMap>
+
+    <!-- 添加授课信息信息 -->
+    <insert id="addTeachClass" parameterType="com.cqjtu.cssl.entity.TeachClass">
+  	insert into teachclass(tid,course_id,class_name,major_id) values(#{tid},#{courseID},#{className},#{majorID});
+  </insert>
+
+    <!-- 查询所有的授课信息 -->
+    <select id="findAll" resultType="com.cqjtu.cssl.entity.TeachClass" resultMap="TeachClassRM">
+  		select * from  teachclass
+  </select>
+
+    <!-- 修改授课信息 -->
+    <update id="updateTeachClass" parameterType="com.cqjtu.cssl.entity.TeachClass">
+        update teachclass set tid=#{arg1.tid},course_id=#{arg1.courseID},class_name=#{arg1.className},major_id=#{arg1.majorID} where tid=#{arg0.tid} and course_id=#{arg0.courseID} and class_name=#{arg0.className} and major_id=#{arg0.majorID}
+    </update>
+
+    <!-- 通过ID删除教师信息 -->
+    <delete id="deleteTeachClass">
+        delete from teachclass where tid=#{tid} and course_id=#{courseID} and class_name = #{className} and major_id=#{majorID}
+    </delete>
+    <select id="findByTidAndCourseID" resultType="com.cqjtu.cssl.entity.TeachClass" resultMap="TeachClassRM">
+  		select * from  teachclass where tid=#{arg0} and course_id = #{arg1};
+    </select>
+</mapper>

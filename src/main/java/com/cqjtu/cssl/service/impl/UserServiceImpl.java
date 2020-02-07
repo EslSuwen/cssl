@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * 用户服务接口实现
+ * 用户信息服务接口实现
  *
  * @author: suwen
- * @time: 2020/2/6 3:48 下午
+ * @time: 2020/1/12 3:48 下午
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
    * 注解式 自定义 mappper 方法调用
    *
    * @author: suwen
-   * @time: 2020/2/6 3:45 下午
+   * @time: 2020/1/12 3:45 下午
    * @param userName
    * @return
    */

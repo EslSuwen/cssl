@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.CourseMapper">
+
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="CourseRM" type="com.cqjtu.cssl.entity.Course">
+        <id property="courseID" column="course_id"/>
+        <result property="courseName" column="course_name"/>
+    </resultMap>
+
+    <!-- 添加课程信息 -->
+    <insert id="addCourse" parameterType="com.cqjtu.cssl.entity.Course" >
+  	insert into course(course_id,course_name) values(#{courseID},#{courseName});
+  </insert>
+
+    <!-- 通过课程ID查找课程信息 -->
+    <select id="findByID" resultType="com.cqjtu.cssl.entity.Course" resultMap="CourseRM">
+  		select * from  course where  course_id=#{courseID}
+  </select>
+
+    <!-- 通过课程ID修改课程信息 -->
+    <update id="updateByID" parameterType="com.cqjtu.cssl.entity.Course">
+        update course set course_name=#{courseName} where course_id=#{courseID}
+    </update>
+
+    <!-- 查找所有专业信息 -->
+    <select id="findAll" resultMap="CourseRM">
+        select  * from course
+    </select>
+
+    <!-- 通过ID删除课程信息 -->
+    <delete id="deleteByID">
+        delete from course where course_id=#{courseID}
+    </delete>
+</mapper>

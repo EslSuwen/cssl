@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+        author : rty
+        time : 2020/1/*
+-->
+
+<mapper namespace="com.cqjtu.cssl.mapper.LabArrangeMapper">
+    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
+    <resultMap id="LabArrangeRM" type="com.cqjtu.cssl.entity.LabArrange">
+        <id property="labWeek" column="lab_week"/>
+        <id property="labDay" column="lab_day"/>
+        <id property="labSession" column="lab_session"/>
+        <id property="labId" column="lab_id"/>
+        <result property="proId" column="pro_id"/>
+        <result property="tId" column="tid"/>
+        <result property="courseId" column="course_id"/>
+        <result property="labClass" column="lab_class"/>
+        <result property="labRemark" column="lab_remark"/>
+        <result property="expProname" column="exp_Proname"/>
+    </resultMap>
+    <resultMap id="LabArrangeShowRM" type="com.cqjtu.cssl.entity.LabArrangeShow">
+        <result property="labCenName" column="lab_cen_name"/>
+        <result property="labWeek" column="lab_week"/>
+        <result property="labDay" column="lab_day"/>
+        <result property="labSession" column="lab_session"/>
+        <result property="courseName" column="course_name"/>
+        <result property="expProName" column="exp_proname"/>
+        <result property="majorName" column="exp_major"/>
+        <result property="className" column="lab_class"/>
+        <result property="tname" column="tname"/>
+        <result property="labID" column="lab_id"/>
+        <result property="labCampus" column="lab_campus"/>
+        <result property="labRemark" column="lab_remark"/>
+    </resultMap>
+    <insert id="addLabArrange" parameterType="com.cqjtu.cssl.entity.LabArrange">
+        insert into lab_arrange(lab_week,lab_day,lab_session,lab_id,pro_id,tid,course_id,lab_class,lab_remark,exp_proname) values (#{labWeek},#{labDay},#{labSession},#{labId},#{proId},#{tId},#{courseId},#{labClass},#{labRemark},#{expProname})
+    </insert>
+    <select id="findAll" resultMap="LabArrangeShowRM">
+        select lab_cen_name,lab_week,lab_day,lab_session,cname,exp_proname,exp_major,lab_class,tname,la.lab_id,lab_campus,lab_remark
+        from lab_info li, lab_arrange la,exp_project e ,teacher t where la.lab_id=li.lab_id and
+        t.tid = la.tid  and e.pro_id = la.pro_id;
+    </select>
+    <select id="findByTid" resultMap="LabArrangeShowRM">
+        select lab_cen_name,lab_week,lab_day,lab_session,cname,exp_proname,exp_major,lab_class,tname,la.lab_id,lab_campus,lab_remark
+        from lab_info li,lab_arrange la,exp_project e,teacher t where la.lab_id=li.lab_id and
+        t.tid=la.tid and e.pro_id=la.pro_id and la.tid=#{tid};
+    </select>
+    <select id="findByLabWeek" resultMap="LabArrangeShowRM">
+        select lab_cen_name,lab_week,lab_day,lab_session,cname,exp_proname,exp_major,lab_class,tname,la.lab_id,lab_campus,lab_remark
+        from lab_info li,lab_arrange la,exp_project e,teacher t where la.lab_id=li.lab_id and
+        t.tid=la.tid and e.pro_id=la.pro_id and lab_week=#{labWeek};
+    </select>
+    <select id="findByLabWeekAndDay" resultMap="LabArrangeShowRM">
+        select lab_cen_name,lab_week,lab_day,lab_session,cname,exp_proname,exp_major,lab_class,tname,la.lab_id,lab_campus,lab_remark
+        from lab_info li,lab_arrange la,exp_project e,teacher t where la.lab_id=li.lab_id and
+        t.tid=la.tid and e.pro_id=la.pro_id and lab_week=#{arg0} and lab_day = #{arg1};
+    </select>
+</mapper>
