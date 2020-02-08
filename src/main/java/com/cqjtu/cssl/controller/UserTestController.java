@@ -2,14 +2,14 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.UserService;
-import com.cqjtu.cssl.utils.MessageQueryHelper;
+import com.cqjtu.cssl.utils.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
- * 用户测试 controller
+ * 用户测试控制器
  *
  * @author: suwen
  * @time: 2020/2/6 3:12 下午
@@ -41,13 +41,13 @@ public class UserTestController {
    *
    * @author: suwen
    * @time: 2020/2/6 3:13 下午
-   * @return: com.cqjtu.cssl.utils.MessageQueryHelper
+   * @return: com.cqjtu.cssl.utils.MessageHelper
    */
   @DeleteMapping(value = "/clearUser")
-  public MessageQueryHelper clearDemodatas() {
+  public MessageHelper clearDemodatas() {
     System.out.println("clearDemodatas()被调用");
     List<User> userList = userService.loadAll();
-    MessageQueryHelper msg = new MessageQueryHelper();
+    MessageHelper msg = new MessageHelper();
     msg.setMsg("The database has been cleared");
     return msg;
   }

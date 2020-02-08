@@ -1,0 +1,133 @@
+<div class="row mt-2">
+  <div class="col px-0">
+    <div class="card">
+      <h3 class="card-header text-center font-weight-bold text-uppercase pt-3">实验项目卡片
+      </h3>
+      <div class="card-body">
+        <table mdbTable bordered="true">
+          <thead class="black white-text">
+          <tr>
+            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr mdbTableCol *ngFor="let el of elements">
+            <th scope="row">{{el.id}}</th>
+            <td>{{el.first}}</td>
+            <td>{{el.last}}</td>
+            <td>{{el.handle}}</td>
+          </tr>
+          <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId)">
+            <td>{{each.proId}}</td>
+            <td>{{each.labCenName}}</td>
+            <td>{{each.expCname}}</td>
+            <td>{{each.expMajor}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col px-0">
+    <div class="card">
+      <h3 class="card-header text-center font-weight-bold text-uppercase ">实验项目细则
+        <span class="table-add float-right mb-3 mr-2">
+          <a class="text-success" (click)="add()">
+            <mdb-icon fas icon="plus" size="lg"></mdb-icon>
+          </a>
+        </span>
+      </h3>
+      <div class="card-body">
+        <div id="table" class="table-editable">
+
+          <table class="table table-bordered table-responsive-md table-striped text-center">
+            <tr class="black white-text">
+              <th class="text-center">实验项目编号</th>
+              <th class="text-center">实验项目名称</th>
+              <th class="text-center">实验类别</th>
+              <th class="text-center">实验学时</th>
+              <th class="text-center">课程性质</th>
+              <th class="text-center">分组人数</th>
+              <th class="text-center">实验目的</th>
+              <th class="text-center">Remove</th>
+            </tr>
+            <tr>
+              <button (click)="removeItem()">减少一行</button>
+            </tr>
+            <tr *ngFor="let each of projectItems; let id = index">
+              <td>
+                <span (keyup)="changeValue(id, 'name', $event)" (blur)="updateList(id, 'name', $event)"
+                      contenteditable="true">{{each.iId}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'age', $event)"
+                      (blur)="updateList(id, 'age', $event)">{{each.iName}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'companyName', $event)"
+                      (blur)="updateList(id, 'companyName', $event)">{{each.iType}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'country', $event)"
+                      (blur)="updateList(id, 'country', $event)">{{each.iTime}}</span>
+              </td>
+              <td>
+                <span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
+                      (blur)="updateList(id, 'city', $event)">{{each.cType}}</span>
+              </td>
+              <td><span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
+                        (blur)="updateList(id, 'city', $event)">{{each.num}}</span></td>
+              <td><span contenteditable="true" (keyup)="changeValue(id, 'city', $event)"
+                        (blur)="updateList(id, 'city', $event)">{{each.intend}}</span></td>
+              <td>
+                <span class="table-remove">
+                  <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0" data-toggle="modal"
+                          data-target="#basicExample" (click)="frame.show()">移除</button>
+                </span>
+                <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
+                     aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                    <!--Content-->
+                    <div class="modal-content text-center">
+                      <!--Header-->
+                      <div class="modal-header d-flex justify-content-center">
+                        <p class="heading">确定删除吗？</p>
+                      </div>
+
+                      <!--Body-->
+                      <div class="modal-body">
+                        <mdb-icon fas icon="times" size="4x" class="animated rotateIn"></mdb-icon>
+                      </div>
+
+                      <!--Footer-->
+                      <div class="modal-footer justify-content-center">
+                        <a mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect
+                           (click)="remove(id)">确定</a>
+                        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect data-dismiss="modal"
+                           (click)="frame.hide()">返回</a>
+                      </div>
+                    </div>
+                    <!--/.Content-->
+                  </div>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col-4 mx-auto mt-4">
+    <button mdbBtn type="button" color="success" block="true" outline="true" (click)="onsubmit()" class="rounded-pill"
+            mdbWavesEffect>提交
+    </button>
+
+  </div>

@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+<h4 class="modal-title w-100 text-center" id="myModalLabel">{{ heading }}</h4>
+  </div>
+  <div class="modal-body" *ngIf="displaybody">
+    <h5>{{ content.heading }}</h5>
+    <p>{{ content.description }}</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" *ngIf="displaybody" (click)="modalRef.hide()" mdbWavesEffect>取消</button>
+    <button type="button" mdbBtn color="primary" class="relative waves-light" (click)="modalRef.hide()" mdbWavesEffect>确定</button>
+  </div>

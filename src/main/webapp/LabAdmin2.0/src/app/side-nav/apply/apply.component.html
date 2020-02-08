@@ -1,0 +1,173 @@
+<div class="row mt-2">
+  <div class="col px-0 mt-4">
+    <mdb-card cascade="true" narrower="true">
+      <!--Card image-->
+      <div
+        class="view view-cascade gradient-card-header blue-gradient narrower z-depth-2 rounded-lg  py-2 m-3 mt-n3 d-flex justify-content-between align-items-center">
+
+        <div>
+          <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button" class="px-2"
+            mdbWavesEffect>
+            <i class="far fa-grin-hearts fa-2x "></i>
+          </button>
+          <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button" class="px-2"
+            mdbWavesEffect>
+            <i class="far fa-grin-beam fa-2x"></i>
+            <!-- <i class="fab fa-angellist"></i> -->
+          </button>
+        </div>
+
+        <a href="" class="white-text mx-3">申请情况一览</a>
+
+        <div>
+          <button type="button" mdbBtn color="white" outline="true" rounded="true" size="sm" class="px-2"
+            mdbWavesEffect>
+            <i class="far fa-grin-tongue-wink fa-2x"></i>
+          </button>
+          <button type="button" mdbBtn color="white" outline="true" rounded="true" size="sm" class="px-2"
+            mdbWavesEffect>
+            <i class="far fa-kiss-wink-heart fa-2x"></i>
+          </button>
+
+        </div>
+
+      </div>
+      <!--/Card image-->
+      <table class="table table-striped table-responsive-md btn-table">
+        <thead>
+          <tr>
+            <th>实验课程编号</th>
+            <th>实验课程名称</th>
+            <th>实验课程情况</th>
+            <th>实验室</th>
+            <th>可执行操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">3</th>
+            <td>通信原理实验</td>
+            <td>
+              <button type="button" class="btn btn-outline-success disabled btn-sm m-0 waves-effect">已通过</button>
+            </td>
+            <td>the Bird</td>
+            <td>
+              <button type="button" class="btn btn-indigo btn-sm m-0 " data-toggle="modal" data-target="#basicExample"
+                (click)="frame.show()">
+                申请实验室
+                <i class="fas fa-arrow-right ml-2"></i>
+              </button>
+            </td>
+
+            <div mdbModal [config]="{ignoreBackdropClick: true}" #frame="mdbModal" class="modal fade right"
+              id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog modal-notify modal-info" role="document">
+                <!--Content-->
+                <div class="modal-content ">
+                  <!--Header-->
+                  <div class="modal-header d-flex justify-content-center text-center">
+                    <mdb-icon fas icon="bell" size="2x" class="animated rotateIn mr-1 deep-purple-text"></mdb-icon>
+                    <p class="heading">请填写申请信息！</p>
+                  </div>
+
+                  <!--Body-->
+                  <div class="modal-body">
+                    <div class="row">
+                      <!-- 校区 -->
+                      <div class="col px-0 mr-3">
+                        <angular2-multiselect [data]="regionList" [(ngModel)]="regionselectedItems"
+                          [settings]="regionSettings">
+                          <c-item>
+                            <ng-template let-item="item">
+                              <label style="min-width: 60%;">{{item.itemName}}</label>
+                            </ng-template>
+                          </c-item>
+                        </angular2-multiselect>
+                      </div>
+
+                      <!-- 星期 -->
+                      <div class="col  px-0">
+                        <angular2-multiselect [data]="dayList" [(ngModel)]="dayselectedItems" [settings]="daySettings">
+                          <c-item>
+                            <ng-template let-item="item">
+                              <label style="min-width: 60%;">{{item.itemName}}</label>
+                            </ng-template>
+                          </c-item>
+                        </angular2-multiselect>
+                      </div>
+                    </div>
+                    <div class="row my-4">
+                      <!-- 节次 -->
+                      <div class="col px-0 mr-3">
+                        <angular2-multiselect [data]="timeList" [(ngModel)]="timeselectedItems"
+                          [settings]="timeSettings">
+                          <c-item>
+                            <ng-template let-item="item">
+                              <label style="min-width: 60%;">{{item.itemName}}</label>
+                            </ng-template>
+                          </c-item>
+                        </angular2-multiselect>
+                      </div>
+                      <!-- 星期 -->
+                      <div class="col px-0">
+                        <angular2-multiselect [data]="weekList" [(ngModel)]="weekselectedItems"
+                          [settings]="weekSettings">
+                          <c-item>
+                            <ng-template let-item="item">
+                              <label style="min-width: 60%;">{{item.itemName}}</label>
+                            </ng-template>
+                          </c-item>
+                        </angular2-multiselect>
+
+                      </div>
+
+
+
+                    </div>
+                    <div class="row">
+                      <!-- 年级 -->
+                      <div class="col px-0 mr-3">
+                        <angular2-multiselect [data]="gradeList" [(ngModel)]="gradeselectedItems"
+                          [settings]="gradeSettings">
+                          <c-item class="red">
+                            <ng-template let-item="item">
+                              <label style="min-width: 60%;">{{item.itemName}}</label>
+                            </ng-template>
+                          </c-item>
+                        </angular2-multiselect>
+                      </div>
+                      <!-- 班级 -->
+                      <div class="col px-0 ">
+                        <angular2-multiselect [data]="classList" [(ngModel)]="classselectedItems"
+                          [settings]="classSettings">
+
+                        </angular2-multiselect>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col z-depth-1 my-4">
+                        <div class="md-form">
+                          <mdb-icon fas icon="pencil-alt" class="prefix "></mdb-icon>
+                          <textarea type="text" id="form8" class="md-textarea form-control hight1" mdbInput></textarea>
+                          <label for="form8">备注.....</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!--Footer-->
+                  <div class="modal-footer justify-content-center">
+                    <a type="button" mdbBtn color="primary" class="waves-light">提交</a>
+                    <a type="button" mdbBtn color="primary" outline="true" class="waves-light" data-dismiss="modal"
+                      (click)="frame.hide()">返回</a>
+                  </div>
+                </div>
+                <!--/.Content-->
+              </div>
+            </div>
+          </tr>
+        </tbody>
+      </table>
+    </mdb-card>
+  </div>
+</div>

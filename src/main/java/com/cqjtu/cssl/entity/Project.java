@@ -117,7 +117,7 @@ public class Project {
     this.labCenName = labCenName;
   }
 
-  public String getExpCame() {
+  public String getExpCname() {
     return expCname;
   }
 

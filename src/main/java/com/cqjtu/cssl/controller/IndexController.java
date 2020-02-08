@@ -4,7 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 /**
- * 根目录映射
+ * 根目录映射控制器
  *
  * @author: suwen
  * @time: 2020/2/6 2:49 下午
@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
-    @GetMapping("/")
-    public String root() {
-        return "index";
-    }
-
+  @GetMapping("/")
+  public String root() {
+    return "index";
+  }
 }

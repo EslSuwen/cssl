@@ -6,14 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 用户 controller
+ * 用户控制器
  *
  * @author: suwen
  * @time: 2020/2/6 3:07 下午
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 public class UserController {
 
