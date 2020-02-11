@@ -20,7 +20,7 @@ public interface UserService {
    * @param userId 用户编号
    * @return User
    */
-  User getUserById(Integer userId);
+  User getUserById(String userId);
 
   /**
    * 更新一条用户记录

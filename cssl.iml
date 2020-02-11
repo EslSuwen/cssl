@@ -33,6 +33,8 @@
       <excludeFolder url="file://$MODULE_DIR$/build" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/angular/dist" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/angular/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/LabAdmin2.0/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/LabAdmin2.0/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/demo-app/dist" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/webapp/demo-app/tmp" />
     </content>

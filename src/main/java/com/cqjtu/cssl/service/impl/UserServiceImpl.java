@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
   @Autowired private UserMapper userMapper;
 
   @Override
-  public User getUserById(Integer userId) {
+  public User getUserById(String userId) {
     return userMapper.selectByPrimaryKey(userId);
   }
 

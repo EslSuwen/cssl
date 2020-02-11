@@ -33,16 +33,23 @@ public class SecurityController {
    *
    * @param user 用户
    * @param request http 请求
+   * @param imageCode 图片验证码
    * @return: com.cqjtu.angularspringboot.Model.Message
    * @author: suwen
    * @time: 2020/2/3 1:26 下午
    */
-  @PostMapping("/toLogin")
-  public Message toLogin(@RequestBody User user, HttpServletRequest request) {
-    System.out.println(request.getSession().getAttribute("teachernum"));
-    System.out.println(user.getUserNo() + " : " + user.getUserPwd());
+  @PostMapping("/login/{imageCode}")
+  public Message toLogin(
+      @RequestBody User user, @PathVariable String imageCode, HttpServletRequest request) {
     Message msg = new Message();
-    msg.setMsg("The member of " + user.getUserNo() + " has been logined: " + user.getUserPwd());
+    System.out.println(request.getSession().getAttribute("imageCode"));
+    System.out.println(user.getUserNo() + " : " + user.getUserPwd());
+    if (imageCode.equals(request.getSession().getAttribute("imageCode"))) {
+      user=userService.getUserById(user.getUserNo());
+      msg.setMsg("The member of " + user.getUserNo() + " has been logined: " + user.getUserPwd());
+    } else {
+      msg.setMsg("Wrong imageCode!!!");
+    }
     return msg;
   }
 
