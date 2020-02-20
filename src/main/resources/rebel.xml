@@ -9,9 +9,9 @@
              xsi:schemaLocation="http://www.zeroturnaround.com http://update.zeroturnaround.com/jrebel/rebel-2_1.xsd">
 
     <classpath>
-        <dir name="/Users/suwen/Project Alpha/cssl/build/classes/java/main">
+        <dir name="/Users/susie/Project Alpha/cssl/build/classes/java/main">
         </dir>
-        <dir name="/Users/suwen/Project Alpha/cssl/src/main/resources">
+        <dir name="/Users/susie/Project Alpha/cssl/src/main/resources">
         </dir>
     </classpath>
 

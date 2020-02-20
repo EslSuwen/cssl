@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * 用户控制器
  *
@@ -45,5 +47,17 @@ public class UserController {
 
     userService.updateUser(user);
     return "";
+  }
+
+  /**
+   * 获取所有用户信息
+   *
+   * @author: suwen
+   * @time: 2020/2/20 下午5:19
+   * @return: java.util.List<com.cqjtu.cssl.entity.User>
+   */
+  @GetMapping(value = "/getAllInfo")
+  public List<User> getAllInfo() {
+    return userService.loadAll();
   }
 }

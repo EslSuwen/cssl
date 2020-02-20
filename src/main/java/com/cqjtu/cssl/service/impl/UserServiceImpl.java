@@ -23,17 +23,17 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User getUserById(String userId) {
-    return userMapper.selectByPrimaryKey(userId);
+    return userMapper.selectById(userId);
   }
 
   @Override
   public void updateUser(User user) {
-    userMapper.updateByPrimaryKey(user);
+    userMapper.updateById(user);
   }
 
   @Override
   public List<User> loadAll() {
-    return userMapper.selectAll();
+    return userMapper.loadAll();
   }
 
   /**

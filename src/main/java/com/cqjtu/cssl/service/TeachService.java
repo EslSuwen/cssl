@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service;
 
+import com.cqjtu.cssl.entity.Teach;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,4 +22,14 @@ public interface TeachService {
    * @return 所教课程
    */
   List<String> findCourseByTeacher(String tid);
+
+  /**
+   * 通过教职工号查询出他的所有教的课程
+   *
+   * @author: suwen
+   * @time: 2020/2/20 上午11:57
+   * @param tid 教职工
+   * @return: List<com.cqjtu.cssl.entity.Teach> 授课信息列表
+   */
+  List<Teach> getCourseInfoByTid(String tid);
 }

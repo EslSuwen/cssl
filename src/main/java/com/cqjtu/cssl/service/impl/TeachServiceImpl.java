@@ -30,4 +30,9 @@ public class TeachServiceImpl implements TeachService {
     }
     return list;
   }
+
+  @Override
+  public List<Teach> getCourseInfoByTid(String tid) {
+    return teachMapper.findByTid(tid);
+  }
 }
