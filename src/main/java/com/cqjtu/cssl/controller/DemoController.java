@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 数据传送测试 Demo 控制器
  *
- * @author: suwen
- * @time: 2020/2/6 2:33 下午
+ * @author suwen
+ * @date 2020/2/6 2:33 下午
  */
 @RestController
 @RequestMapping(path = "/demo")
@@ -43,7 +43,7 @@ public class DemoController {
    *
    * @return: Iterable<com.cqjtu.cssl.entity.Demo>
    * @author: suwen
-   * @time: 2020/2/6 2:35 下午
+   * @time 2020/2/6 2:35 下午
    */
   @GetMapping(value = "/getData")
   public Iterable<Demo> getDemodatas() {

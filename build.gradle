@@ -16,6 +16,17 @@ repositories {
 
 dependencies {
 
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    annotationProcessor 'org.projectlombok:lombok:1.18.12'
+    compileOnly 'org.projectlombok:lombok:1.18.12'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
+    testCompileOnly 'org.projectlombok:lombok:1.18.12'
+
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+
+    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator
+    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'
     compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.3.1'
 
     compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
