@@ -6,9 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
- * 
- * </p>
+ * 实验室安排上课时间实体
  *
  * @author suwen
  * @since 2020-02-21
@@ -18,17 +16,20 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class ArrangePeriod implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private Integer aid;
+  /** 实验室排课编号 */
+  private Integer aid;
 
-    private Integer labWeek;
+  /** 开课周次 */
+  private Integer labWeek;
 
-    private Integer labDay;
+  /** 开课星期 */
+  private Integer labDay;
 
-    private Integer labSession;
+  /** 开课节次 */
+  private Integer labSession;
 
-    private String expProname;
-
-
+  /** 实验项目名称 */
+  private String expProname;
 }

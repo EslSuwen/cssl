@@ -23,9 +23,9 @@ public class DemoController {
    * 增加数据 Springboot将返回的类，以JSON字符串形式输出。这里使用Message model建立json格式数据
    *
    * @param demodata 请求体参数
-   * @return: com.cqjtu.cssl.utils.MessageHelper
-   * @author: suwen
-   * @time: 2020/2/6 2:34 下午
+   * @return com.cqjtu.cssl.utils.MessageHelper
+   * @author suwen
+   * @date 2020/2/6 2:34 下午
    */
   @PostMapping(value = "/newData")
   public MessageHelper addNewData(@RequestBody Demo demodata) {
@@ -41,9 +41,9 @@ public class DemoController {
   /**
    * 获取数据 这里返回的是Iterable类型数据，为可迭代类型。可被循环访问
    *
-   * @return: Iterable<com.cqjtu.cssl.entity.Demo>
-   * @author: suwen
-   * @time 2020/2/6 2:35 下午
+   * @return Iterable<com.cqjtu.cssl.entity.Demo>
+   * @author suwen
+   * @date 2020/2/6 2:35 下午
    */
   @GetMapping(value = "/getData")
   public Iterable<Demo> getDemodatas() {
@@ -56,9 +56,9 @@ public class DemoController {
   /**
    * 删除数据
    *
-   * @return: com.cqjtu.cssl.utils.MessageHelper
-   * @author: suwen
-   * @time:
+   * @return com.cqjtu.cssl.utils.MessageHelper
+   * @author suwen
+   * @date
    */
   @DeleteMapping(value = "/clearData")
   public MessageHelper clearDemodatas() {
