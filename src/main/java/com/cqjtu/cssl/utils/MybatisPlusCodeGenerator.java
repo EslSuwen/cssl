@@ -18,8 +18,8 @@ import java.util.Scanner;
  * AutoGenerator 是 MyBatis-Plus 的代码生成器，通过 AutoGenerator 可以快速生成 Entity、Mapper、Mapper
  * XML、Service、Controller 等各个模块的代码，极大的提升了开发效率。 https://mp.baomidou.com/guide/generator.htm
  *
- * @author: suwen
- * @time: 2020/2/21 上午11:32
+ * @author suwen
+ * @date 2020/2/21 上午11:32
  */
 public class MybatisPlusCodeGenerator {
   // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中

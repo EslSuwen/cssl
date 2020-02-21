@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * 对系统后台进行跨域访问进行配置
  *
- * @author: suwen
- * @time: 2019/3/7 2:27 下午
+ * @author suwen
+ * @date 2019/3/7 2:27 下午
  */
 @Configuration
 @EnableWebMvc

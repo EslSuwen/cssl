@@ -3,8 +3,8 @@ package com.cqjtu.cssl.utils;
 /**
  * message 辅助类
  *
- * @author: suwen
- * @time: 2020/2/6 4:06 下午
+ * @author suwen
+ * @date 2020/2/6 4:06 下午
  */
 public class MessageHelper {
 

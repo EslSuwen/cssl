@@ -16,75 +16,65 @@ import java.util.Arrays;
 import java.util.Enumeration;
 
 /**
- * WebLogAspect
+ * WebLogAspect 实现Web层的日志切面
  *
  * @author xiaoze
  * @date 2018/6/3
- *
- * 实现Web层的日志切面
- *
  */
 @Aspect
 @Component
 public class WebLogAspect {
 
-    private Logger logger =  LoggerFactory.getLogger(this.getClass());
+  private Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    ThreadLocal<Long> startTime = new ThreadLocal<Long>();
+  ThreadLocal<Long> startTime = new ThreadLocal<Long>();
 
-    /**
-     * 定义一个切入点.
-     * 解释下：
-     *
-     * ~ 第一个 * 代表任意修饰符及任意返回值.
-     * ~ 第二个 * 任意包名
-     * ~ 第三个 * 代表任意方法.
+  /**
+   * 定义一个切入点. 解释下：
+   *
+   * <p>~ 第一个 * 代表任意修饰符及任意返回值. ~ 第二个 * 任意包名 ~ 第三个 * 代表任意方法.
+   *
+   * <p>~ 第四个 * 定义在web包或者子包 ~ 第五个 * 任意方法 ~ .. 匹配任意数量的参数. execution(*
+   * xiao.ze.demo.service.impl.*.*(..))
+   */
+  @Pointcut("execution(* com.cqjtu.cssl.service.impl.*.*(..))")
+  public void webLog() {}
 
-     * ~ 第四个 * 定义在web包或者子包
-     * ~ 第五个 * 任意方法
-     * ~ .. 匹配任意数量的参数.
-     * execution(* xiao.ze.demo.service.impl.*.*(..))
-     */
+  @Before("webLog()")
+  public void doBefore(JoinPoint joinPoint) {
 
-    @Pointcut("execution(* com.cqjtu.cssl.service.impl.*.*(..))")
+    startTime.set(System.currentTimeMillis());
 
-    public void webLog(){}
+    // 接收到请求，记录请求内容
+    logger.info("WebLogAspect.doBefore()");
+    ServletRequestAttributes attributes =
+        (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    HttpServletRequest request = attributes.getRequest();
 
+    // 记录下请求内容
+    logger.info("URL : " + request.getRequestURL().toString());
+    logger.info("HTTP_METHOD : " + request.getMethod());
+    logger.info("IP : " + request.getRemoteAddr());
+    logger.info(
+        "CLASS_METHOD : "
+            + joinPoint.getSignature().getDeclaringTypeName()
+            + "."
+            + joinPoint.getSignature().getName());
+    logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
 
-    @Before("webLog()")
-
-    public void doBefore(JoinPoint joinPoint){
-
-        startTime.set(System.currentTimeMillis());
-
-        // 接收到请求，记录请求内容
-        logger.info("WebLogAspect.doBefore()");
-        ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-        HttpServletRequest request = attributes.getRequest();
-
-
-        // 记录下请求内容
-        logger.info("URL : " + request.getRequestURL().toString());
-        logger.info("HTTP_METHOD : " + request.getMethod());
-        logger.info("IP : " + request.getRemoteAddr());
-        logger.info("CLASS_METHOD : " + joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName());
-        logger.info("ARGS : " + Arrays.toString(joinPoint.getArgs()));
-
-        //获取所有参数方法一：
-        Enumeration<String> enu=request.getParameterNames();
-        while(enu.hasMoreElements()){
-            String paraName=(String)enu.nextElement();
-            System.out.println(paraName+": "+request.getParameter(paraName));
-        }
+    // 获取所有参数方法一：
+    Enumeration<String> enu = request.getParameterNames();
+    while (enu.hasMoreElements()) {
+      String paraName = (String) enu.nextElement();
+      System.out.println(paraName + ": " + request.getParameter(paraName));
     }
+  }
 
-    @AfterReturning("webLog()")
-    public void  doAfterReturning(JoinPoint joinPoint){
+  @AfterReturning("webLog()")
+  public void doAfterReturning(JoinPoint joinPoint) {
 
-        // 处理完请求，返回内容
-        logger.info("WebLogAspect.doAfterReturning()");
-        logger.info("耗时（毫秒） : " + (System.currentTimeMillis() - startTime.get()));
-
-    }
-
+    // 处理完请求，返回内容
+    logger.info("WebLogAspect.doAfterReturning()");
+    logger.info("耗时（毫秒） : " + (System.currentTimeMillis() - startTime.get()));
+  }
 }

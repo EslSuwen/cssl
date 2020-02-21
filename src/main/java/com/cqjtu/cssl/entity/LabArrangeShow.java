@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 模板类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:24 上午
+ * @author Aplin
+ * @date 2020/1/13 10:24 上午
  */
 public class LabArrangeShow {
   // 实验室（中心）名称

@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 实验室安排实体类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:23 上午
+ * @author Aplin
+ * @date 2020/1/13 10:23 上午
  */
 public class LabArrange {
   // 开课周次

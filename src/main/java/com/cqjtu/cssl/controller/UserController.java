@@ -13,8 +13,8 @@ import java.util.List;
 /**
  * 用户控制器
  *
- * @author: suwen
- * @time: 2020/2/6 3:07 下午
+ * @author suwen
+ * @date 2020/2/6 3:07 下午
  */
 @RestController
 @RequestMapping("/user")
@@ -25,9 +25,9 @@ public class UserController {
   /**
    * 获取用户信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:10 下午
-   * @return: com.cqjtu.cssl.entity.User 用户
+   * @return com.cqjtu.cssl.entity.User 用户
+   * @author suwen
+   * @date 2020/2/6 3:10 下午
    */
   @GetMapping(value = "/getInfo")
   public User getInfo() {
@@ -37,10 +37,10 @@ public class UserController {
   /**
    * 修改用户信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:10 下午
    * @param user 用户
-   * @return: java.lang.String 状态码
+   * @return java.lang.String 状态码
+   * @author suwen
+   * @date 2020/2/6 3:10 下午
    */
   @RequestMapping(value = "/update")
   public String update(User user) {
@@ -52,9 +52,9 @@ public class UserController {
   /**
    * 获取所有用户信息
    *
-   * @author: suwen
-   * @time: 2020/2/20 下午5:19
-   * @return: java.util.List<com.cqjtu.cssl.entity.User>
+   * @return java.util.List<com.cqjtu.cssl.entity.User>
+   * @author suwen
+   * @date 2020/2/20 下午5:19
    */
   @GetMapping(value = "/getAllInfo")
   public List<User> getAllInfo() {

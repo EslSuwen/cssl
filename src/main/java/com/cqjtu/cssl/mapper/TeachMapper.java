@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * 授课映射接口
  *
- * @author: Aplin
- * @time: 2020/1/13 10:45 上午
+ * @author Aplin
+ * @date 2020/1/13 10:45 上午
  */
 @Mapper
 public interface TeachMapper {
   /**
    * 添加授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param teach 授课信息
    */
   void addTeach(Teach teach);
@@ -25,8 +25,8 @@ public interface TeachMapper {
   /**
    * 通过教职工号和课程号删除授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    * @param courseID 课程号
    */
@@ -35,8 +35,8 @@ public interface TeachMapper {
   /**
    * 通过教职工号和课程修改授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param teach 新的授课信息
    */
   void updateByID(Teach teach);
@@ -44,8 +44,8 @@ public interface TeachMapper {
   /**
    * 通过教职工号和课程查询授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    * @param courseID 课程号
    * @return Teach对象
@@ -55,8 +55,8 @@ public interface TeachMapper {
   /**
    * 通过教职工号查询该老师的所有授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    * @return Teach集合
    */
@@ -65,8 +65,8 @@ public interface TeachMapper {
   /**
    * 查询所有的授课信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @return Teach集合
    */
   List<Teach> findAll();
@@ -74,11 +74,11 @@ public interface TeachMapper {
   /**
    * 通过教师ID+课程名查询课程ID
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教师ID
    * @param courseName 课程名
-   * @return
+   * @return int 课程ID
    */
   int findID(String tid, String courseName);
 }

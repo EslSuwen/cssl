@@ -11,8 +11,8 @@ import java.util.List;
 /**
  * 用户测试控制器
  *
- * @author: suwen
- * @time: 2020/2/6 3:12 下午
+ * @author suwen
+ * @date 2020/2/6 3:12 下午
  */
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -24,9 +24,9 @@ public class UserTestController {
   /**
    * 测试获取用户
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:13 下午
-   * @return: java.lang.Iterable<com.cqjtu.cssl.entity.User>
+   * @return java.lang.Iterable<com.cqjtu.cssl.entity.User>
+   * @author suwen
+   * @date 2020/2/6 3:13 下午
    */
   @GetMapping(value = "/getUser")
   public Iterable<User> getUsers() {
@@ -39,9 +39,9 @@ public class UserTestController {
   /**
    * 测试删除用户
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:13 下午
-   * @return: com.cqjtu.cssl.utils.MessageHelper
+   * @return com.cqjtu.cssl.utils.MessageHelper
+   * @author suwen
+   * @date 2020/2/6 3:13 下午
    */
   @DeleteMapping(value = "/clearUser")
   public MessageHelper clearDemodatas() {

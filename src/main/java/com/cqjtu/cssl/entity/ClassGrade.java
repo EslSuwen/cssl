@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 班级实体类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:21 上午
+ * @author Aplin
+ * @date 2020/1/13 10:21 上午
  */
 public class ClassGrade {
   // 班级名称

@@ -7,7 +7,12 @@ import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
-/** 图片验证码生成库 Kaptcha 配置 @Author: suwen @Date: 2020/1/30 7:00 下午 */
+/**
+ * 图片验证码生成库 Kaptcha 配置
+ *
+ * @author suwen
+ * @date 2020/1/30 7:00 下午
+ */
 @Component
 public class KaptchaConfig {
   @Bean

@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * 实验项目 mapper
  *
- * @author: suwen
- * @time: 2020/2/6 3:30 下午
+ * @author suwen
+ * @date 2020/2/6 3:30 下午
  */
 @Mapper
 public interface ProjectItemMapper {
@@ -17,39 +17,37 @@ public interface ProjectItemMapper {
   /**
    * 添加实验项目表信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:37 下午
+   * @author suwen
+   * @date 2020/2/6 3:37 下午
    * @param projectItem 实验项目
-   * @return:
    */
   void addItem(ProjectItem projectItem);
 
   /**
    * 根据ID修改实验项目信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:38 下午
+   * @author suwen
+   * @date 2020/2/6 3:38 下午
    * @param projectItem 实验项目
-   * @return:
    */
   void updateById(ProjectItem projectItem);
 
   /**
    * 根据ID查找实验室项目信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:38 下午
+   * @author suwen
+   * @date 2020/2/6 3:38 下午
    * @param iId 实验项目编号
-   * @return: com.cqjtu.cssl.entity.ProjectItem
+   * @return com.cqjtu.cssl.entity.ProjectItem
    */
   ProjectItem findById(String iId);
 
   /**
    * 通过实验室项目卡片ID查看它所拥有的实验项目信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:39 下午
-   * @param proId
+   * @author suwen
+   * @date 2020/2/6 3:39 下午
+   * @param proId 卡片ID
    * @return List<ProjectItem>
    */
   List<ProjectItem> findAllByProId(int proId);
@@ -57,30 +55,28 @@ public interface ProjectItemMapper {
   /**
    * 根据ID删除实验室项目信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:41 下午
+   * @author suwen
+   * @date 2020/2/6 3:41 下午
    * @param iId 实验项目编号
-   * @return:
    */
   void deleById(String iId);
 
   /**
    * 通过实验室项目卡片ID删除它所拥有的实验项目信息
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:42 下午
+   * @author suwen
+   * @date 2020/2/6 3:42 下午
    * @param proId 项目编号
-   * @return:
    */
   void deleByProId(int proId);
 
   /**
    * 通过实验项目编号查询项目卡片编号
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:43 下午
+   * @author suwen
+   * @date 2020/2/6 3:43 下午
    * @param iId 实验项目编号
-   * @return:
+   * @return int 卡片编号
    */
   int find(String iId);
 }

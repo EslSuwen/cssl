@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 专业实体类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:25 上午
+ * @author Aplin
+ * @date 2020/1/13 10:25 上午
  */
 public class Major {
   // 专业ID

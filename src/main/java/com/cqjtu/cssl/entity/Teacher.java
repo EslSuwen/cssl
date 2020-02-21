@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 教师实体类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:27 上午
+ * @author Aplin
+ * @date 2020/1/13 10:27 上午
  */
 public class Teacher {
   // 教职工号

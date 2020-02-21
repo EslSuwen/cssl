@@ -7,17 +7,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
+/**
+ * Spring Boot 入口
+ *
+ * @author suwen
+ * @date 2020/2/21 下午3:29
+ */
 public class CsslApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(CsslApplication.class, args);
-    }
+  public static void main(String[] args) {
+    SpringApplication.run(CsslApplication.class, args);
+  }
 
-//    @SpringBootApplication
-    @RequestMapping(value = "/hello", produces = "text/plain;charset=UTF-8")
-    String index() {
-        return "Hello Spring Boot!";
-    }
+  //    @SpringBootApplication
+  @RequestMapping(value = "/hello", produces = "text/plain;charset=UTF-8")
+  String index() {
+    return "Hello Spring Boot!";
+  }
 }

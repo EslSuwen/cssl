@@ -5,25 +5,25 @@ import com.cqjtu.cssl.entity.Teacher;
 /**
  * 教师信息服务接口
  *
- * @author: Aplin
- * @time: 2020/1/13 11:09 上午
+ * @author Aplin
+ * @date 2020/1/13 11:09 上午
  */
 public interface TeacherService {
   /**
    * 通过教职工号查找老师个人信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 11:09 上午
+   * @author Aplin
+   * @date 2020/1/13 11:09 上午
    * @param tid 教职工号
-   * @return
+   * @return 老师信息
    */
   Teacher findByTid(String tid);
 
   /**
    * 通过教职工号修改密码
    *
-   * @author: Aplin
-   * @time: 2020/1/13 11:09 上午
+   * @author Aplin
+   * @date 2020/1/13 11:09 上午
    * @param tid 教职工号
    * @param password 新密码
    */
@@ -32,8 +32,8 @@ public interface TeacherService {
   /**
    * 通过教职工号修改个人信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 11:09 上午
+   * @author Aplin
+   * @date 2020/1/13 11:09 上午
    * @param tid 教职工号
    * @param teacher 教师信息
    */
@@ -42,8 +42,8 @@ public interface TeacherService {
   /**
    * 通过教职工号查询密码
    *
-   * @author: Aplin
-   * @time: 2020/1/13 11:09 上午
+   * @author Aplin
+   * @date 2020/1/13 11:09 上午
    * @param tid 教职工号
    * @return java.lang.String 密码
    */

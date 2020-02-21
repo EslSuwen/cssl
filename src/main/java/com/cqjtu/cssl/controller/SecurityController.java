@@ -18,8 +18,8 @@ import java.awt.image.BufferedImage;
 /**
  * 用户安全登录控制器
  *
- * @author: suwen
- * @time: 2020/2/6 2:58 下午
+ * @author suwen
+ * @date 2020/2/6 2:58 下午
  */
 @RestController
 @RequestMapping("/security")
@@ -34,9 +34,9 @@ public class SecurityController {
    * @param user 用户
    * @param request http 请求
    * @param imageCode 图片验证码
-   * @return: com.cqjtu.angularspringboot.Model.Message
-   * @author: suwen
-   * @time: 2020/2/3 1:26 下午
+   * @return com.cqjtu.angularspringboot.Model.Message
+   * @author suwen
+   * @date 2020/2/3 1:26 下午
    */
   @PostMapping("/login/{imageCode}")
   public Message toLogin(
@@ -45,7 +45,7 @@ public class SecurityController {
     System.out.println(request.getSession().getAttribute("imageCode"));
     System.out.println(user.getUserNo() + " : " + user.getUserPwd());
     if (imageCode.equals(request.getSession().getAttribute("imageCode"))) {
-      user=userService.getUserById(user.getUserNo());
+      user = userService.getUserById(user.getUserNo());
       msg.setMsg("The member of " + user.getUserNo() + " has been logined: " + user.getUserPwd());
     } else {
       msg.setMsg("Wrong imageCode!!!");
@@ -56,10 +56,10 @@ public class SecurityController {
   /**
    * 用户注销请求
    *
-   * @author: suwen
-   * @time: 2020/2/6 3:02 下午
+   * @author suwen
+   * @date 2020/2/6 3:02 下午
    * @param request http 请求
-   * @return: java.lang.String 状态码
+   * @return java.lang.String 状态码
    */
   @GetMapping("/logout")
   public String logout(HttpServletRequest request) {
@@ -73,11 +73,10 @@ public class SecurityController {
   /**
    * 生成图片验证码
    *
-   * @author: suwen
-   * @time: 2020/2/8 1:33 下午
+   * @author suwen
+   * @date 2020/2/8 1:33 下午
    * @param request http 请求
    * @param response http 响应
-   * @return:
    */
   @RequestMapping("/createImageCode")
   public void createImageCode(HttpServletRequest request, HttpServletResponse response)

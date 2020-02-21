@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 专业班级查询辅助类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:26 上午
+ * @author Aplin
+ * @date 2020/1/13 10:26 上午
  */
 public class MajorClassHelper {
   // 专业名称

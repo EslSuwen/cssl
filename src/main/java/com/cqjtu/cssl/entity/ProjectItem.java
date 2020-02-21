@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 实验项目实体
  *
- * @author: suwen
- * @time: 2020/2/6 3:19 下午
+ * @author suwen
+ * @date 2020/2/6 3:19 下午
  */
 public class ProjectItem {
   // 实验项目编号

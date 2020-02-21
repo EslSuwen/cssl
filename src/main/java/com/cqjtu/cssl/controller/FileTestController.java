@@ -14,8 +14,8 @@ import java.io.IOException;
 /**
  * 文件传输测试控制器
  *
- * @author: suwen
- * @time: 2020/2/6 2:42 下午
+ * @author suwen
+ * @date 2020/2/6 2:42 下午
  */
 @RestController
 // @CrossOrigin(origins = "http://localhost:4200")
@@ -27,9 +27,8 @@ public class FileTestController {
   /**
    * 获取文件
    *
-   * @return:
-   * @author: suwen
-   * @time: 2020/2/6 2:44 下午
+   * @author suwen
+   * @date 2020/2/6 2:44 下午
    */
   @RequestMapping("/file")
   public void getFile(/*@RequestBody FileHelper[] file_from_sever*/ ) {
@@ -43,11 +42,11 @@ public class FileTestController {
   /**
    * 测试文件上传
    *
-   * @param file
-   * @throws IOException
-   * @return: java.lang.String
-   * @author: suwen
-   * @time: 2020/2/6 2:45 下午
+   * @param file 文件
+   * @throws IOException 文件为空
+   * @return java.lang.String
+   * @author suwen
+   * @date 2020/2/6 2:45 下午
    */
   @PostMapping(value = "/upload")
   public String upload(@RequestParam("file") MultipartFile file) throws IOException {
@@ -77,9 +76,9 @@ public class FileTestController {
    *
    * @param request 服务器请求
    * @param response 服务器响应
-   * @return: java.lang.String
-   * @author: suwen
-   * @time: 2020/2/6 2:47 下午
+   * @return java.lang.String
+   * @author suwen
+   * @date 2020/2/6 2:47 下午
    */
   @GetMapping("/getImage")
   public String getImage(

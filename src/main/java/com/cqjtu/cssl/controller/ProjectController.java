@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 项目卡片控制器
  *
- * @author: suwen
- * @time: 2020/2/6 2:50 下午
+ * @author suwen
+ * @date 2020/2/6 2:50 下午
  */
 @RestController
 @RequestMapping("/project")
@@ -22,9 +22,9 @@ public class ProjectController {
    * 测试项目卡片增加
    *
    * @param project 请求体变量 项目卡片
-   * @return: int 状态码
-   * @author: suwen
-   * @time: 2020/2/6 2:51 下午
+   * @return int 状态码
+   * @author suwen
+   * @date 2020/2/6 2:51 下午
    */
   @PostMapping(value = "/newProject")
   public int addNewProject(@RequestBody Project project) {
@@ -40,9 +40,9 @@ public class ProjectController {
   /**
    * 测试获取项目卡片数据
    *
-   * @return: java.lang.Iterable<com.cqjtu.cssl.entity.Project>
-   * @author: suwen
-   * @time: 2020/2/6 2:52 下午
+   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
+   * @author suwen
+   * @date 2020/2/6 2:52 下午
    */
   @GetMapping(value = "/getProject")
   public Iterable<Project> getProjects() {
@@ -55,8 +55,8 @@ public class ProjectController {
   /**
    * 测试项目卡片删除
    *
-   * @author: suwen
-   * @time: 2020/2/6 2:53 下午
+   * @author suwen
+   * @date 2020/2/6 2:53 下午
    */
   @DeleteMapping(value = "/clearProject")
   public MessageHelper clearProject() {

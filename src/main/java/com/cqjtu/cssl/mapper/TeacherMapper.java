@@ -8,16 +8,16 @@ import java.util.List;
 /**
  * 教师映射接口
  *
- * @author: Aplin
- * @time: 2020/1/13 10:45 上午
+ * @author Aplin
+ * @date 2020/1/13 10:45 上午
  */
 @Mapper
 public interface TeacherMapper {
   /**
    * 添加教师信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param teacher 教师信息
    */
   void addTeacher(Teacher teacher);
@@ -25,18 +25,18 @@ public interface TeacherMapper {
   /**
    * 通过教职工号查询教师信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
-   * @return
+   * @return 教师信息
    */
   Teacher findById(String tid);
 
   /**
    * 通过教职工号修改教师信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param teacher 教师信息
    */
   void updateById(Teacher teacher);
@@ -44,17 +44,17 @@ public interface TeacherMapper {
   /**
    * 查询所有的教师信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
-   * @return List<com.cqjtu.cssl.entity.Teacher>
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
+   * @return List<com.cqjtu.cssl.entity.Teacher> 教师信息列表
    */
   List<Teacher> findAll();
 
   /**
    * 通过教职工号删除教师信息
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    */
   void deleteById(String tid);
@@ -62,8 +62,8 @@ public interface TeacherMapper {
   /**
    * 通过教职工号查询密码
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    * @return java.lang.String 密码
    */
@@ -72,8 +72,8 @@ public interface TeacherMapper {
   /**
    * 通过教职工号修改密码
    *
-   * @author: Aplin
-   * @time: 2020/1/13 10:45 上午
+   * @author Aplin
+   * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
    * @param password 新密码
    */

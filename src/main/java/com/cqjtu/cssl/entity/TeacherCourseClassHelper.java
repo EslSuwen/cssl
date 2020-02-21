@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 教师课程班级查询辅助类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:28 上午
+ * @author Aplin
+ * @date 2020/1/13 10:28 上午
  */
 public class TeacherCourseClassHelper {
   // 教师姓名

@@ -8,8 +8,8 @@ import javax.persistence.Table;
 /**
  * 文件保存测试实体
  *
- * @author: suwen
- * @time: 2020/2/6 3:19 下午
+ * @author suwen
+ * @date 2020/2/6 3:19 下午
  */
 @Component
 @Table(name = "tbl_test_file")

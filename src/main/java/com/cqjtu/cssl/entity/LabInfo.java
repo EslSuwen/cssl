@@ -3,8 +3,8 @@ package com.cqjtu.cssl.entity;
 /**
  * 实验室信息实体类
  *
- * @author: Aplin
- * @time: 2020/1/13 10:25 上午
+ * @author Aplin
+ * @date 2020/1/13 10:25 上午
  */
 public class LabInfo {
   // 实验室编号

@@ -7,8 +7,8 @@ import javax.persistence.*;
 /**
  * 测试 data 实体 标明是Entity，以被jpa识别为数据，映射到MySQL数据库。必须与@Id注解 结合使用
  *
- * @author: suwen
- * @time: 2020/2/6 3:15 下午
+ * @author suwen
+ * @date 2020/2/6 3:15 下午
  */
 @Entity
 @Table(name = "demodata")
