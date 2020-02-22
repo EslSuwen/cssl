@@ -12,6 +12,12 @@ public class MessageHelper {
   // 数据模型类即可
   private String msg;
 
+  public MessageHelper() {}
+
+  public MessageHelper(String msg) {
+    this.msg = msg;
+  }
+
   public void setMsg(String msg) {
     this.msg = msg;
   }

@@ -13,7 +13,6 @@ import java.util.List;
  * @author suwen
  * @date 2020/2/6 3:29 下午
  */
-@Mapper
 public interface UserMapper extends BaseMapper<User> {
 
   /**

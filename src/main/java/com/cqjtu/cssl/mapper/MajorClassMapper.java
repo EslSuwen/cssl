@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:37 上午
  */
-@Mapper
 public interface MajorClassMapper {
   /**
    * 查询所有班级的信息（含专业名）

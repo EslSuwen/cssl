@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:45 上午
  */
-@Mapper
 public interface MajorMapper {
   /**
    * 添加专业信息

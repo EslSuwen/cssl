@@ -11,7 +11,6 @@ import java.util.List;
  * @author suwen
  * @date 2020/2/6 3:30 下午
  */
-@Mapper
 public interface ProjectMapper {
 
   /**

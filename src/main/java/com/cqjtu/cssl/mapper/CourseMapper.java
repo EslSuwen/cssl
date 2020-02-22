@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:36 上午
  */
-@Mapper
 public interface CourseMapper {
   /**
    * 添加一门课程

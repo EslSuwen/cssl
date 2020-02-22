@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:34 上午
  */
-@Mapper
 public interface ClassMapper {
   /**
    * 添加一个班级信息

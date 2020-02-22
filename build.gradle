@@ -43,9 +43,9 @@ dependencies {
 
     compile('org.springframework:spring-context-support')
 
-    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
+//    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
 
-    compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10')
+//    compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10')
 
 //    compile('tk.mybatis:mapper-spring-boot-starter:2.1.5')
 

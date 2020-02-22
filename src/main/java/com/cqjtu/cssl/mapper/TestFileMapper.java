@@ -9,7 +9,6 @@ import org.apache.ibatis.annotations.Mapper;
  * @author suwen
  * @date 2020/2/6 3:20 下午
  */
-@Mapper
 public interface TestFileMapper {
 
   /**

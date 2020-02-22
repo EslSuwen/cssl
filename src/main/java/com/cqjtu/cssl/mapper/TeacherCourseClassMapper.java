@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:40 上午
  */
-@Mapper
 public interface TeacherCourseClassMapper {
   /**
    * 查询所有的授课班级的具体信息

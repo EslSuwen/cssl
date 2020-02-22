@@ -3,17 +3,12 @@ package com.cqjtu.cssl.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-
-import java.beans.Transient;
-import java.io.Serializable;
-import java.util.List;
-
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Table;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * 实验室安排实体

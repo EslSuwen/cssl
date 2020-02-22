@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:36 上午
  */
-@Mapper
 public interface CourseArrangeMapper {
   /**
    * 查询第几周某个老师的课程安排

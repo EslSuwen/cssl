@@ -11,7 +11,6 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:37 上午
  */
-@Mapper
 public interface LabInfoMapper {
   /**
    * 增加实验室信息
