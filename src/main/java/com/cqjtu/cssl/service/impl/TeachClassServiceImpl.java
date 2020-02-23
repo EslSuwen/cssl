@@ -29,7 +29,7 @@ public class TeachClassServiceImpl implements TeachClassService {
     List<TeachClass> teachClasses = teachClassMapper.findByTidAndCourseID(tid, courseID);
     List<String> list = new ArrayList<>();
     for (TeachClass t : teachClasses) {
-      list.add(majorMapper.findById(t.getMajorID()).getManjorName() + t.getClassName());
+      list.add(majorMapper.findById(t.getMajorID()).getMajorID() + t.getClassName());
     }
     return list;
   }

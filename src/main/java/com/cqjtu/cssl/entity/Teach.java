@@ -1,11 +1,15 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import lombok.Data;
+
 /**
  * 授课实体类
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 10:27 上午
  */
+@Data
 public class Teach {
   // 教职工号
   private String tid;
@@ -14,54 +18,15 @@ public class Teach {
   // 实验室申请权限
   private int applyLimit;
 
-  public Teach() {}
+  /** 课程名 */
+  @TableField(exist = false)
+  private String courseName;
 
-  public Teach(String tid, int courseID) {
-    this.tid = tid;
-    this.courseID = courseID;
-    this.applyLimit = 0;
-  }
+  /** 课程实验室申请状态 */
+  @TableField(exist = false)
+  private String status;
 
-  public Teach(String tid, int courseID, int applyLimit) {
-    this.tid = tid;
-    this.courseID = courseID;
-    this.applyLimit = applyLimit;
-  }
-
-  public String getTid() {
-    return tid;
-  }
-
-  public void setTid(String tid) {
-    this.tid = tid;
-  }
-
-  public int getCourseID() {
-    return courseID;
-  }
-
-  public void setCourseID(int courseID) {
-    this.courseID = courseID;
-  }
-
-  public int isApplyLimit() {
-    return applyLimit;
-  }
-
-  public void setApplyLimit(int applyLimit) {
-    this.applyLimit = applyLimit;
-  }
-
-  @Override
-  public String toString() {
-    return "TeachClass{"
-        + "tid='"
-        + tid
-        + '\''
-        + ", courseID="
-        + courseID
-        + ", applyLimit="
-        + applyLimit
-        + '}';
-  }
+  /** 课程实验室编号 */
+  @TableField(exist = false)
+  private String labId;
 }

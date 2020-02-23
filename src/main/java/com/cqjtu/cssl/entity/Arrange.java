@@ -23,7 +23,7 @@ public class Arrange implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  /** 实验室排课编号 */
+    /** 实验室排课编号 */
   @TableId(value = "aid", type = IdType.AUTO)
   private Integer aid;
 

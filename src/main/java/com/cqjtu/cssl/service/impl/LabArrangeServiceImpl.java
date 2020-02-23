@@ -39,7 +39,7 @@ public class LabArrangeServiceImpl implements LabArrangeService {
   @Override
   public void addLabArrange(String tid, int proId, LabArrangeShow labArrangeShow) {
     LabArrange labArrange = new LabArrange();
-    labArrange.settId(tid);
+    labArrange.setTId(tid);
     labArrange.setLabWeek(labArrangeShow.getLabWeek());
     labArrange.setLabDay(labArrangeShow.getLabDay());
     labArrange.setLabSession(labArrangeShow.getLabSession());

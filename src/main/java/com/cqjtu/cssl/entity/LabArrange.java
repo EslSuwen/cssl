@@ -1,11 +1,14 @@
 package com.cqjtu.cssl.entity;
 
+import lombok.Data;
+
 /**
  * 实验室安排实体类
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 10:23 上午
  */
+@Data
 public class LabArrange {
   // 开课周次
   int labWeek;
@@ -27,109 +30,4 @@ public class LabArrange {
   String labRemark;
   // 实验项目名称
   String expProname;
-
-  public LabArrange() {}
-
-  public LabArrange(
-      int labWeek,
-      int labDay,
-      String labSession,
-      String labId,
-      int proId,
-      String tId,
-      int courseId,
-      String labClass,
-      String labRemark,
-      String expProname) {
-    this.labWeek = labWeek;
-    this.labDay = labDay;
-    this.labSession = labSession;
-    this.labId = labId;
-    this.proId = proId;
-    this.tId = tId;
-    this.courseId = courseId;
-    this.labClass = labClass;
-    this.labRemark = labRemark;
-    this.expProname = expProname;
-  }
-
-  public String getExpProname() {
-    return expProname;
-  }
-
-  public void setExpProname(String expProname) {
-    this.expProname = expProname;
-  }
-
-  public int getLabWeek() {
-    return labWeek;
-  }
-
-  public void setLabWeek(int labWeek) {
-    this.labWeek = labWeek;
-  }
-
-  public int getLabDay() {
-    return labDay;
-  }
-
-  public void setLabDay(int labDay) {
-    this.labDay = labDay;
-  }
-
-  public String getLabSession() {
-    return labSession;
-  }
-
-  public void setLabSession(String labSession) {
-    this.labSession = labSession;
-  }
-
-  public String getLabId() {
-    return labId;
-  }
-
-  public void setLabId(String labId) {
-    this.labId = labId;
-  }
-
-  public int getProId() {
-    return proId;
-  }
-
-  public void setProId(int proId) {
-    this.proId = proId;
-  }
-
-  public String gettId() {
-    return tId;
-  }
-
-  public void settId(String tId) {
-    this.tId = tId;
-  }
-
-  public int getCourseId() {
-    return courseId;
-  }
-
-  public void setCourseId(int courseId) {
-    this.courseId = courseId;
-  }
-
-  public String getLabClass() {
-    return labClass;
-  }
-
-  public void setLabClass(String labClass) {
-    this.labClass = labClass;
-  }
-
-  public String getLabRemark() {
-    return labRemark;
-  }
-
-  public void setLabRemark(String labRemark) {
-    this.labRemark = labRemark;
-  }
 }

@@ -62,7 +62,7 @@ public class FileTestController {
     //        outputStream.flush();
     //        outputStream.close();
 
-    TestFile testFile = new TestFile(file.getOriginalFilename(), file.getBytes());
+    TestFile testFile = new TestFile(Math.round(100), file.getOriginalFilename(), file.getBytes());
 
     testFileService.addFile(testFile);
 

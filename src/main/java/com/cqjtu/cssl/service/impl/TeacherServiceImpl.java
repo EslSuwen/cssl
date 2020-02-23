@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * 教师信息服务接口实现
  *
- * @author: Aplin
+ * @author: Aplin suwen
  * @time: 2020/1/13 11:09 上午
  */
 @Service
@@ -18,6 +18,7 @@ public class TeacherServiceImpl implements TeacherService {
 
   @Override
   public Teacher findByTid(String tid) {
+
     return teacherMapper.findById(tid);
   }
 
@@ -29,8 +30,8 @@ public class TeacherServiceImpl implements TeacherService {
   @Override
   public void updateTeacher(String tid, Teacher teacher) {
     Teacher teacher1 = teacherMapper.findById(tid);
-    teacher.settPassword(teacher1.gettPassword());
-    teacher.setytLimit(teacher1.gettLimit());
+    teacher.setTPassword(teacher1.getTPassword());
+    teacher.setTLimit(teacher1.getTLimit());
     teacherMapper.updateById(teacher);
   }
 
