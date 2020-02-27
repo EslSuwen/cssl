@@ -1,14 +1,15 @@
 package com.cqjtu.cssl.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.Teacher;
 
 /**
  * 教师信息服务接口
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 11:09 上午
  */
-public interface TeacherService {
+public interface TeacherService extends IService<Teacher> {
   /**
    * 通过教职工号查找老师个人信息
    *

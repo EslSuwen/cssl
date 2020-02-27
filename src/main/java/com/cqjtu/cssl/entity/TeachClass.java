@@ -1,21 +1,36 @@
 package com.cqjtu.cssl.entity;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
+
+import java.io.Serializable;
 
 /**
- * 授课班级实体类
+ * 教师授课班级实体类
  *
- * @author Aplin suwen
- * @date 2020/1/13 10:27 上午
+ * @author suwen Aplin
+ * @since 2020-02-27
  */
+@ApiModel(description = "授教师授课班级实体")
 @Data
-public class TeachClass {
-  // 教职工号
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+public class Teachclass implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
+  @ApiModelProperty(value = "教师编号", required = true)
   private String tid;
-  // 课程号
-  private int courseID;
-  // 班级名称
+
+  @ApiModelProperty(value = "课程编号", position = 1, required = true)
+  private Integer courseId;
+
+  @ApiModelProperty(value = "班级名", position = 2, required = true)
   private String className;
-  // 专业号
-  private int majorID;
+
+  @ApiModelProperty(value = "专业编号", position = 3, required = true)
+  private Integer majorId;
 }

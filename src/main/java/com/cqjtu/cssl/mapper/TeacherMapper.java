@@ -1,17 +1,17 @@
 package com.cqjtu.cssl.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Teacher;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * 教师映射接口
+ * 教师 Mapper 接口
  *
- * @author Aplin
- * @date 2020/1/13 10:45 上午
+ * @author suwen
+ * @date 2020/2/6 3:30 下午
  */
-public interface TeacherMapper {
+public interface TeacherMapper extends BaseMapper<Teacher> {
   /**
    * 添加教师信息
    *
@@ -30,15 +30,6 @@ public interface TeacherMapper {
    * @return 教师信息
    */
   Teacher findById(String tid);
-
-  /**
-   * 通过教职工号修改教师信息
-   *
-   * @author Aplin
-   * @date 2020/1/13 10:45 上午
-   * @param teacher 教师信息
-   */
-  void updateById(Teacher teacher);
 
   /**
    * 查询所有的教师信息

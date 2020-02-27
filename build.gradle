@@ -16,22 +16,36 @@ repositories {
 
 dependencies {
 
+
+    // https://mvnrepository.com/artifact/com.github.xiaoymin/swagger-bootstrap-ui
+    compile group: 'com.github.xiaoymin', name: 'swagger-bootstrap-ui', version: '1.9.6'
+    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+
+    // https://mvnrepository.com/artifact/org.freemarker/freemarker
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
+    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator
+    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'
+    implementation 'com.auth0:java-jwt:3.10.0'
+
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
 
-    // https://mvnrepository.com/artifact/org.freemarker/freemarker
-    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
-
-    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator
-    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'
     compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.3.1'
 
     compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '2.2.2.RELEASE'
+
+//    implementation 'org.springframework.boot:spring-boot-starter-security:2.2.2.RELEASE'
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
+//    compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.2.RELEASE'
+
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.2.2.RELEASE'
 
     compile('org.springframework.boot:spring-boot-starter-web')
 

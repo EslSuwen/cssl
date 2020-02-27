@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.LabInfo;
 import com.cqjtu.cssl.mapper.LabInfoMapper;
 import com.cqjtu.cssl.service.LabInfoService;
@@ -9,14 +10,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 实验室信息服务接口实现
+ * 实验室信息服务实现类
  *
- * @author: Aplin
- * @time: 2020/1/13 11:05 上午
+ * @author Aplin suwen
+ * @since 2020-02-27
  */
 @Service
-public class LabInfoServiceImpl implements LabInfoService {
-  @Autowired private LabInfoMapper labInfoMapper;
+public class LabInfoServiceImpl extends ServiceImpl<LabInfoMapper, LabInfo>
+    implements LabInfoService {
+  private final LabInfoMapper labInfoMapper;
+
+  @Autowired
+  public LabInfoServiceImpl(LabInfoMapper labInfoMapper) {
+    this.labInfoMapper = labInfoMapper;
+  }
 
   @Override
   public void addLab(LabInfo labInfo) {

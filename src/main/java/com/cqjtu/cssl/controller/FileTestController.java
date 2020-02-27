@@ -2,6 +2,7 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.TestFile;
 import com.cqjtu.cssl.service.TestFileService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,12 +18,17 @@ import java.io.IOException;
  * @author suwen
  * @date 2020/2/6 2:42 下午
  */
+@Api(tags = "文件传输测试-控制器")
 @RestController
-// @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping(path = "/file")
 public class FileTestController {
 
-  @Autowired private TestFileService testFileService;
+  private final TestFileService testFileService;
+
+  @Autowired
+  public FileTestController(TestFileService testFileService) {
+    this.testFileService = testFileService;
+  }
 
   /**
    * 获取文件
@@ -30,7 +36,7 @@ public class FileTestController {
    * @author suwen
    * @date 2020/2/6 2:44 下午
    */
-  @RequestMapping("/file")
+  @GetMapping("/file")
   public void getFile(/*@RequestBody FileHelper[] file_from_sever*/ ) {
 
     System.out.println("getFile()被调用");
@@ -64,7 +70,7 @@ public class FileTestController {
 
     TestFile testFile = new TestFile(Math.round(100), file.getOriginalFilename(), file.getBytes());
 
-    testFileService.addFile(testFile);
+    testFileService.save(testFile);
 
     //        testFileService.addUser();
 
@@ -88,7 +94,7 @@ public class FileTestController {
 
     System.out.println("getImage()被调用");
 
-    TestFile testFile = testFileService.get(28);
+    TestFile testFile = testFileService.getById(28);
     byte[] bytes = testFile.getFile();
 
     // 向浏览器发通知，我要发送是图片

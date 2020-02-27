@@ -1,18 +1,17 @@
 package com.cqjtu.cssl.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.ProjectItem;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * 实验项目 mapper
+ * (实验卡片)实验项目 Mapper 接口
  *
- * @author suwen
+ * @author Aplin suwen
  * @date 2020/2/6 3:30 下午
  */
-public interface ProjectItemMapper {
-
+public interface ProjectItemMapper extends BaseMapper<ProjectItem> {
   /**
    * 添加实验项目表信息
    *
@@ -21,15 +20,6 @@ public interface ProjectItemMapper {
    * @param projectItem 实验项目
    */
   void addItem(ProjectItem projectItem);
-
-  /**
-   * 根据ID修改实验项目信息
-   *
-   * @author suwen
-   * @date 2020/2/6 3:38 下午
-   * @param projectItem 实验项目
-   */
-  void updateById(ProjectItem projectItem);
 
   /**
    * 根据ID查找实验室项目信息

@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.Teach;
 import org.springframework.stereotype.Service;
 
@@ -8,11 +9,10 @@ import java.util.List;
 /**
  * 教师授课信息服务接口
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 11:08 上午
  */
-@Service
-public interface TeachService {
+public interface TeachService extends IService<Teach> {
   /**
    * 通过教职工号查询出他的所有教的课程
    *

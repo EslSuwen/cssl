@@ -12,13 +12,13 @@
 
     <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
     <resultMap id="TeacherRM" type="com.cqjtu.cssl.entity.Teacher">
-        <id property="tID" column="tid"/>
-        <result property="tName" column="tname"/>
-        <result property="tPhone" column="tphone"/>
-        <result property="tQQ" column="tqq"/>
-        <result property="tEmail" column="temail"/>
-        <result property="tLimit" column="tlimit"/>
-        <result property="tPassword" column="tpassword"/>
+        <id property="tid" column="tid"/>
+        <result property="tname" column="tname"/>
+        <result property="tphone" column="tphone"/>
+        <result property="tqq" column="tqq"/>
+        <result property="temail" column="temail"/>
+        <result property="tlimit" column="tlimit"/>
+        <result property="tpassword" column="tpassword"/>
     </resultMap>
 
     <!-- 添加教师信息 -->

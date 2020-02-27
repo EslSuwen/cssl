@@ -16,7 +16,7 @@
         <result property="className" column="class_name"/>
         <result property="classNum" column="class_num"/>
     </resultMap>
-    <select id="findALL" resultMap="MajorClassRM">
+    <select id="findAll" resultMap="MajorClassRM">
         select major_name,class_name,class_num from major m,class c where m.major_id=c.major_id
     </select>
 </mapper>

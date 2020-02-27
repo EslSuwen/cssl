@@ -2,6 +2,7 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.service.TeachService;
+import io.swagger.annotations.Api;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,17 @@ import java.util.List;
  * @author suwen
  * @date 2020/2/20 上午11:47
  */
+@Api(tags = "授课信息-控制器")
 @RestController
 @RequestMapping("/teach")
 public class TeachController {
 
-  @Autowired private TeachService teachService;
+  private final TeachService teachService;
+
+  @Autowired
+  public TeachController(TeachService teachService) {
+    this.teachService = teachService;
+  }
 
   /**
    * 根据教师 id 获取授课信息

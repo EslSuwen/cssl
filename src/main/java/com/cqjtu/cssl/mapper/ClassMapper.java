@@ -1,57 +1,57 @@
 package com.cqjtu.cssl.mapper;
 
-import com.cqjtu.cssl.entity.ClassGrade;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cqjtu.cssl.entity.Class;
 
 import java.util.List;
 
 /**
- * 班级映射接口
+ * 班级 Mapper 接口
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 10:34 上午
  */
-public interface ClassMapper {
+public interface ClassMapper extends BaseMapper<Class> {
   /**
    * 添加一个班级信息
    *
    * @author Aplin
    * @date 2020/1/13 10:34 上午
-   * @param classGrade 班级对象
+   * @param aClass 班级对象
    */
-  void addClass(ClassGrade classGrade);
+  void addClass(Class aClass);
 
   /**
-   * 通过班级名和专业ID删除一个班级
+   * 通过班级名和专业Id删除一个班级
    *
    * @author Aplin
    * @date 2020/1/13 10:34 上午
    * @param className 班级名
-   * @param majorID 专业ID
+   * @param majorId 专业Id
    */
-  void deleteClass(String className, int majorID);
+  void deleteClass(String className, int majorId);
 
   /**
-   * 通过班级名和专业ID修改一个班级
-   *
-   * @author: Aplin
-   * @time: 2020/1/13 10:34 上午
-   * @param className 班级名
-   * @param majorID 专业ID
-   * @param classGrade 新班级对象
-   */
-  void updateClass(String className, int majorID, ClassGrade classGrade);
-
-  /**
-   * 通过班级名和专业ID查询一个班级
+   * 通过班级名和专业Id修改一个班级
    *
    * @author Aplin
    * @date 2020/1/13 10:34 上午
    * @param className 班级名
-   * @param majorID 专业ID
+   * @param majorId 专业Id
+   * @param aClass 新班级对象
+   */
+  void updateClass(String className, int majorId, Class aClass);
+
+  /**
+   * 通过班级名和专业Id查询一个班级
+   *
+   * @author Aplin
+   * @date 2020/1/13 10:34 上午
+   * @param className 班级名
+   * @param majorId 专业Id
    * @return ClassGrade对象
    */
-  ClassGrade findOneClass(String className, int majorID);
+  Class findOneClass(String className, int majorId);
 
   /**
    * 查询所有的班级
@@ -60,15 +60,15 @@ public interface ClassMapper {
    * @date 2020/1/13 10:34 上午
    * @return ClassGrade对象集合
    */
-  List<ClassGrade> findAllClass();
+  List<Class> findAllClass();
 
   /**
-   * 通过专业ID查询该专业下的所有班级
+   * 通过专业Id查询该专业下的所有班级
    *
    * @author Aplin
    * @date 2020/1/13 10:34 上午
-   * @param majorID 专业ID
+   * @param majorId 专业Id
    * @return ClassGrade对象集合
    */
-  List<ClassGrade> findClassByMajor(int majorID);
+  List<Class> findClassByMajor(int majorId);
 }

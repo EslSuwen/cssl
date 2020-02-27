@@ -2,20 +2,29 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.service.ProjectItemService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
- * 实验项目控制器
+ * (项目卡片)实验项目控制器
  *
  * @author suwen
  * @date 2020/2/6 2:55 下午
  */
+@Api(tags = "(项目卡片)实验项目-控制器")
 @RestController
 @RequestMapping("/projectItem")
 public class ProjectItemController {
 
-  @Autowired private ProjectItemService projectItemService;
+  private final ProjectItemService projectItemService;
+
+  @Autowired
+  public ProjectItemController(ProjectItemService projectItemService) {
+    this.projectItemService = projectItemService;
+  }
 
   /**
    * 测试实验项目项增加
@@ -28,7 +37,7 @@ public class ProjectItemController {
   @PostMapping(value = "/newProjectItem")
   public int addNewProjectItem(@RequestBody ProjectItem projectItem) {
 
-    projectItemService.addProjectItem(projectItem);
+    projectItemService.save(projectItem);
 
     return 0;
   }
@@ -42,7 +51,7 @@ public class ProjectItemController {
    * @date 2020/2/6 2:55 下午
    */
   @GetMapping(value = "/getProjectItem/{proId}")
-  public Iterable<ProjectItem> getProjectItem(@PathVariable("proId") Integer proId) {
+  public List<ProjectItem> getProjectItem(@PathVariable("proId") Integer proId) {
 
     System.out.println("proId = " + proId);
     if (proId == null) {

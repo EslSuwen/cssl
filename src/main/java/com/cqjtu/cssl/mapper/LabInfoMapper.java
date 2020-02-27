@@ -1,17 +1,17 @@
 package com.cqjtu.cssl.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.LabInfo;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * 实验室映射接口
+ * 实验室 Mapper 接口
  *
- * @author Aplin
- * @date 2020/1/13 10:37 上午
+ * @author Aplin suwen
+ * @date 2020/2/6 3:30 下午
  */
-public interface LabInfoMapper {
+public interface LabInfoMapper extends BaseMapper<LabInfo> {
   /**
    * 增加实验室信息
    *

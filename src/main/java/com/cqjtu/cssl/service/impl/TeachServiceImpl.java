@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
 import com.cqjtu.cssl.mapper.CourseMapper;
@@ -12,23 +13,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 教师授课信息服务接口实现
+ * 授课信息服务实现类
  *
- * @author: Aplin suwen
- * @time: 2020/1/13 11:08 上午
+ * @author Aplin suwen
+ * @since 2020-02-27
  */
 @Service
-public class TeachServiceImpl implements TeachService {
-  @Autowired TeachMapper teachMapper;
-  @Autowired CourseMapper courseMapper;
-  @Autowired ArrangeMapper arrangeMapper;
+public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach> implements TeachService {
+  private final TeachMapper teachMapper;
+  private final CourseMapper courseMapper;
+  private final ArrangeMapper arrangeMapper;
+
+  @Autowired
+  public TeachServiceImpl(
+      TeachMapper teachMapper, CourseMapper courseMapper, ArrangeMapper arrangeMapper) {
+    this.teachMapper = teachMapper;
+    this.courseMapper = courseMapper;
+    this.arrangeMapper = arrangeMapper;
+  }
 
   @Override
   public List<String> findCourseByTeacher(String tid) {
     List<String> list = new ArrayList<>();
     List<Teach> list1 = teachMapper.findByTid(tid);
     for (Teach t : list1) {
-      list.add(courseMapper.findByID(t.getCourseID()).getCourseName());
+      list.add(courseMapper.findById(t.getCourseId()).getCourseName());
     }
     return list;
   }
@@ -37,8 +46,8 @@ public class TeachServiceImpl implements TeachService {
   public List<Teach> getCourseInfoByTid(String tid) {
     List<Teach> teachList = teachMapper.findByTid(tid);
     for (Teach each : teachList) {
-      each.setCourseName(courseMapper.findByID(each.getCourseID()).getCourseName());
-      each.setLabId(arrangeMapper.findLabByClsNo(each.getCourseID()));
+      each.setCourseName(courseMapper.findById(each.getCourseId()).getCourseName());
+      each.setLabId(arrangeMapper.findLabByClsNo(each.getCourseId()));
       if (each.getApplyLimit() == 0) {
         each.setStatus("审核中");
       } else {

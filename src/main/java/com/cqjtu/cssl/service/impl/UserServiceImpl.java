@@ -1,48 +1,35 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.mapper.UserMapper;
 import com.cqjtu.cssl.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * 用户信息服务接口实现
  *
- * @author: suwen
- * @time: 2020/1/12 3:48 下午
+ * @author suwen
+ * @date 2020/1/12 3:48 下午
  */
 @Service
-@Transactional(rollbackFor = Exception.class)
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
-  @Autowired private UserMapper userMapper;
+  private final UserMapper userMapper;
 
-  @Override
-  public User getUserById(String userId) {
-    return userMapper.selectById(userId);
-  }
-
-  @Override
-  public void updateUser(User user) {
-    userMapper.updateById(user);
-  }
-
-  @Override
-  public List<User> loadAll() {
-    return userMapper.loadAll();
+  @Autowired
+  public UserServiceImpl(UserMapper userMapper) {
+    this.userMapper = userMapper;
   }
 
   /**
    * 注解式 自定义 mappper 方法调用
    *
-   * @author: suwen
-   * @time: 2020/1/12 3:45 下午
-   * @param userName
-   * @return
+   * @author suwen
+   * @date 2020/1/12 3:45 下午
+   * @param userName 用户名
+   * @return User 用户
    */
   public User getUserByName(String userName) {
     return userMapper.selectByUserName(userName);

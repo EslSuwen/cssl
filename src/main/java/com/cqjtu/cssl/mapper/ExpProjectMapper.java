@@ -1,17 +1,17 @@
 package com.cqjtu.cssl.mapper;
 
-import com.cqjtu.cssl.entity.Project;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cqjtu.cssl.entity.ExpProject;
 
 import java.util.List;
 
 /**
- * 项目 mapper
+ * 项目(实验卡片) Mapper 接口
  *
- * @author suwen
+ * @author Aplin suwen
  * @date 2020/2/6 3:30 下午
  */
-public interface ProjectMapper {
+public interface ExpProjectMapper extends BaseMapper<ExpProject> {
 
   /**
    * 根据ID查询实验项目卡片信息
@@ -21,7 +21,7 @@ public interface ProjectMapper {
    * @param proId 项目
    * @return com.cqjtu.cssl.entity.Project
    */
-  Project findProjectById(int proId);
+  ExpProject findProjectById(int proId);
 
   /**
    * 根据课程名称模糊查询实验项目卡片信息
@@ -31,25 +31,25 @@ public interface ProjectMapper {
    * @param expCname 课程名
    * @return java.util.List<com.cqjtu.cssl.entity.Project>
    */
-  List<Project> findProjectByName(String expCname);
+  List<ExpProject> findProjectByName(String expCname);
 
   /**
    * 添加实验项目卡片信息
    *
    * @author suwen
    * @date 2020/2/6 3:33 下午
-   * @param project 项目
+   * @param expProject 项目
    */
-  void addProject(Project project);
+  void addProject(ExpProject expProject);
 
   /**
    * 根据ID修改实验项目卡片信息
    *
    * @author suwen
    * @date 2020/2/6 3:33 下午
-   * @param project 卡片信息
+   * @param expProject 卡片信息
    */
-  void updateProjectById(Project project);
+  void updateProjectById(ExpProject expProject);
 
   /**
    * 根据ID删除实验项目卡片信息
@@ -67,5 +67,5 @@ public interface ProjectMapper {
    * @date 2020/2/6 3:35 下午
    * @return java.util.List<com.cqjtu.cssl.entity.Project>
    */
-  List<Project> findAllProject();
+  List<ExpProject> findAllProject();
 }
