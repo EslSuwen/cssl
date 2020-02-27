@@ -3,19 +3,75 @@
 
  Source Server         : mysql8
  Source Server Type    : MySQL
- Source Server Version : 80011
+ Source Server Version : 80019
  Source Host           : localhost:3306
  Source Schema         : csslDB
 
  Target Server Type    : MySQL
- Target Server Version : 80011
+ Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 20/02/2020 10:03:02
+ Date: 23/02/2020 15:01:24
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for arrange
+-- ----------------------------
+DROP TABLE IF EXISTS `arrange`;
+CREATE TABLE `arrange` (
+  `aid` int NOT NULL AUTO_INCREMENT,
+  `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `pro_id` int DEFAULT NULL,
+  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `course_id` int DEFAULT NULL,
+  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`aid`),
+  KEY `fk_relationship_12` (`lab_id`) USING BTREE,
+  KEY `fk_relationship_13` (`pro_id`) USING BTREE,
+  KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
+  KEY `tid` (`tid`),
+  KEY `aid` (`aid`),
+  CONSTRAINT `arrange_ibfk_1` FOREIGN KEY (`pro_id`) REFERENCES `exp_project` (`pro_id`),
+  CONSTRAINT `arrange_ibfk_2` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`),
+  CONSTRAINT `arrange_ibfk_3` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of arrange
+-- ----------------------------
+BEGIN;
+INSERT INTO `arrange` VALUES (1, '60202', 1, '256740953460', 17015054, '17级3、4班', '无');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for arrange_period
+-- ----------------------------
+DROP TABLE IF EXISTS `arrange_period`;
+CREATE TABLE `arrange_period` (
+  `aid` int NOT NULL,
+  `lab_week` int NOT NULL,
+  `lab_day` int NOT NULL,
+  `lab_session` int NOT NULL,
+  `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
+  CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`) ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of arrange_period
+-- ----------------------------
+BEGIN;
+INSERT INTO `arrange_period` VALUES (1, 2, 1, 1, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 2, 1, 2, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 3, 1, 1, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 4, 1, 1, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 4, 1, 3, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 6, 1, 1, '实验4');
+COMMIT;
 
 -- ----------------------------
 -- Table structure for class
@@ -23,8 +79,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class` (
   `class_name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `major_id` int(11) NOT NULL,
-  `class_num` int(11) DEFAULT NULL,
+  `major_id` int NOT NULL,
+  `class_num` int DEFAULT NULL,
   PRIMARY KEY (`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_8` (`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_8` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
@@ -46,7 +102,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `course_id` int(11) NOT NULL,
+  `course_id` int NOT NULL,
   `course_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -98,20 +154,20 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `exp_project`;
 CREATE TABLE `exp_project` (
-  `pro_id` int(11) NOT NULL,
+  `pro_id` int NOT NULL,
   `lab_cen_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '��Ϣ����ʵ����ѧ����',
   `exp_cname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `exp_eqname` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `eqnum` int(11) DEFAULT NULL,
+  `eqnum` int DEFAULT NULL,
   `exp_major` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `ssort` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `exp_time` int(11) NOT NULL,
+  `exp_time` int NOT NULL,
   `book` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `software` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `exp_tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `cname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `con_name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `con_num` int(11) DEFAULT NULL,
+  `con_num` int DEFAULT NULL,
   PRIMARY KEY (`pro_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
@@ -128,13 +184,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_arrange`;
 CREATE TABLE `lab_arrange` (
-  `lab_week` int(11) NOT NULL,
-  `lab_day` int(11) NOT NULL,
+  `lab_week` int NOT NULL,
+  `lab_day` int NOT NULL,
   `lab_session` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `pro_id` int(11) DEFAULT NULL,
+  `pro_id` int DEFAULT NULL,
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL,
+  `course_id` int DEFAULT NULL,
   `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
@@ -142,9 +198,9 @@ CREATE TABLE `lab_arrange` (
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
-  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
   CONSTRAINT `fk_relationship_13` FOREIGN KEY (`pro_id`) REFERENCES `exp_project` (`pro_id`),
-  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
+  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`),
+  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -166,10 +222,10 @@ DROP TABLE IF EXISTS `lab_info`;
 CREATE TABLE `lab_info` (
   `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `type_id` int(11) DEFAULT NULL,
+  `type_id` int DEFAULT NULL,
   `lab_name` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `lab_campus` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `lab_cap` int(11) NOT NULL,
+  `lab_cap` int NOT NULL,
   `lab_area` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`lab_id`) USING BTREE,
   KEY `fk_relationship_4` (`type_id`) USING BTREE,
@@ -209,7 +265,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_type`;
 CREATE TABLE `lab_type` (
-  `type_id` int(11) NOT NULL,
+  `type_id` int NOT NULL,
   `type_name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -227,7 +283,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `major`;
 CREATE TABLE `major` (
-  `major_id` int(11) NOT NULL,
+  `major_id` int NOT NULL,
   `major_name` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -248,12 +304,12 @@ COMMIT;
 DROP TABLE IF EXISTS `project_item`;
 CREATE TABLE `project_item` (
   `iid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `pro_id` int(11) DEFAULT NULL,
+  `pro_id` int DEFAULT NULL,
   `iname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `itype` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `itime` int(11) NOT NULL,
+  `itime` int NOT NULL,
   `ctype` char(4) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `num` int(11) NOT NULL,
+  `num` int NOT NULL,
   `intend` varchar(256) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`iid`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE,
@@ -279,8 +335,8 @@ COMMIT;
 DROP TABLE IF EXISTS `teach`;
 CREATE TABLE `teach` (
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `course_id` int(11) NOT NULL,
-  `apply_limit` tinyint(4) DEFAULT NULL,
+  `course_id` int NOT NULL,
+  `apply_limit` tinyint DEFAULT NULL,
   PRIMARY KEY (`tid`,`course_id`) USING BTREE,
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
@@ -291,11 +347,11 @@ CREATE TABLE `teach` (
 -- Records of teach
 -- ----------------------------
 BEGIN;
-INSERT INTO `teach` VALUES ('256740953460', 17015054, NULL);
-INSERT INTO `teach` VALUES ('344847034079', 14210669, NULL);
-INSERT INTO `teach` VALUES ('529144083628', 14210187, NULL);
-INSERT INTO `teach` VALUES ('768326701984', 17015184, NULL);
-INSERT INTO `teach` VALUES ('773194542654', 14211374, NULL);
+INSERT INTO `teach` VALUES ('256740953460', 17015054, 0);
+INSERT INTO `teach` VALUES ('344847034079', 14210669, 0);
+INSERT INTO `teach` VALUES ('529144083628', 14210187, 0);
+INSERT INTO `teach` VALUES ('768326701984', 17015184, 0);
+INSERT INTO `teach` VALUES ('773194542654', 14211374, 0);
 INSERT INTO `teach` VALUES ('773194542654', 17015054, 1);
 COMMIT;
 
@@ -305,9 +361,9 @@ COMMIT;
 DROP TABLE IF EXISTS `teachclass`;
 CREATE TABLE `teachclass` (
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `course_id` int(11) NOT NULL,
+  `course_id` int NOT NULL,
   `class_name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `major_id` int(11) NOT NULL,
+  `major_id` int NOT NULL,
   PRIMARY KEY (`tid`,`course_id`,`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_10` (`class_name`,`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_10` FOREIGN KEY (`class_name`, `major_id`) REFERENCES `class` (`class_name`, `major_id`),
