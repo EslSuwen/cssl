@@ -6,7 +6,7 @@ import com.cqjtu.cssl.entity.Arrange;
 import java.util.List;
 
 /**
- * 实验室安排 服务类
+ * 实验室安排服务类
  *
  * @author suwen
  * @since 2020-02-21

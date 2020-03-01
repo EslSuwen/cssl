@@ -1,17 +1,17 @@
 package com.cqjtu.cssl.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Teach;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
- * 授课映射接口
+ * 授课 Mapper 接口
  *
- * @author Aplin
- * @date 2020/1/13 10:45 上午
+ * @author Aplin suwen
+ * @date 2020/2/6 3:30 下午
  */
-public interface TeachMapper {
+public interface TeachMapper extends BaseMapper<Teach> {
   /**
    * 添加授课信息
    *
@@ -27,18 +27,9 @@ public interface TeachMapper {
    * @author Aplin
    * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
-   * @param courseID 课程号
+   * @param courseId 课程号
    */
-  void deleteByID(String tid, int courseID);
-
-  /**
-   * 通过教职工号和课程修改授课信息
-   *
-   * @author Aplin
-   * @date 2020/1/13 10:45 上午
-   * @param teach 新的授课信息
-   */
-  void updateByID(Teach teach);
+  void deleteById(String tid, int courseId);
 
   /**
    * 通过教职工号和课程查询授课信息
@@ -46,10 +37,10 @@ public interface TeachMapper {
    * @author Aplin
    * @date 2020/1/13 10:45 上午
    * @param tid 教职工号
-   * @param courseID 课程号
+   * @param courseId 课程号
    * @return Teach对象
    */
-  Teach findByID(String tid, int courseID);
+  Teach findById(String tid, int courseId);
 
   /**
    * 通过教职工号查询该老师的所有授课信息
@@ -71,13 +62,13 @@ public interface TeachMapper {
   List<Teach> findAll();
 
   /**
-   * 通过教师ID+课程名查询课程ID
+   * 通过教师Id+课程名查询课程Id
    *
    * @author Aplin
    * @date 2020/1/13 10:45 上午
-   * @param tid 教师ID
+   * @param tid 教师Id
    * @param courseName 课程名
-   * @return int 课程ID
+   * @return int 课程Id
    */
-  int findID(String tid, String courseName);
+  int findId(String tid, String courseName);
 }

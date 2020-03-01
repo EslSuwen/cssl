@@ -1,11 +1,12 @@
 package com.cqjtu.cssl.service.impl;
 
-import com.cqjtu.cssl.entity.TeachClass;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cqjtu.cssl.entity.Teachclass;
 import com.cqjtu.cssl.entity.TeacherCourseClassHelper;
 import com.cqjtu.cssl.mapper.MajorMapper;
-import com.cqjtu.cssl.mapper.TeachClassMapper;
+import com.cqjtu.cssl.mapper.TeachclassMapper;
 import com.cqjtu.cssl.mapper.TeacherCourseClassMapper;
-import com.cqjtu.cssl.service.TeachClassService;
+import com.cqjtu.cssl.service.TeachclassService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,23 +14,35 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 教师授课班级信息服务接口实现
+ * 教师授课班级信息服务实现类
  *
- * @author: Aplin
- * @time: 2020/1/13 11:08 上午
+ * @author Aplin suwen
+ * @since 2020-02-27
  */
 @Service
-public class TeachClassServiceImpl implements TeachClassService {
-  @Autowired private TeachClassMapper teachClassMapper;
-  @Autowired private MajorMapper majorMapper;
-  @Autowired private TeacherCourseClassMapper teacherCourseClassMapper;
+public class TeachclassServiceImpl extends ServiceImpl<TeachclassMapper, Teachclass>
+    implements TeachclassService {
+
+  private TeachclassMapper teachClassMapper;
+  private MajorMapper majorMapper;
+  private TeacherCourseClassMapper teacherCourseClassMapper;
+
+  @Autowired
+  public TeachclassServiceImpl(
+      TeachclassMapper teachClassMapper,
+      MajorMapper majorMapper,
+      TeacherCourseClassMapper teacherCourseClassMapper) {
+    this.teachClassMapper = teachClassMapper;
+    this.majorMapper = majorMapper;
+    this.teacherCourseClassMapper = teacherCourseClassMapper;
+  }
 
   @Override
-  public List<String> findByTidAndCourseID(String tid, int courseID) {
-    List<TeachClass> teachClasses = teachClassMapper.findByTidAndCourseID(tid, courseID);
+  public List<String> findByTidAndCourseId(String tid, int courseId) {
+    List<Teachclass> teachclasses = teachClassMapper.findByTidAndCourseId(tid, courseId);
     List<String> list = new ArrayList<>();
-    for (TeachClass t : teachClasses) {
-      list.add(majorMapper.findById(t.getMajorID()).getMajorID() + t.getClassName());
+    for (Teachclass t : teachclasses) {
+      list.add(majorMapper.findById(t.getMajorId()).getMajorId() + t.getClassName());
     }
     return list;
   }

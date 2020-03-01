@@ -4,6 +4,7 @@ import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.UserService;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
+import io.swagger.annotations.Api;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,12 +22,19 @@ import java.awt.image.BufferedImage;
  * @author suwen
  * @date 2020/2/6 2:58 下午
  */
+@Api(tags = "用户安全登录-控制器")
 @RestController
 @RequestMapping("/security")
 public class SecurityController {
 
-  @Autowired private UserService userService;
-  @Autowired private DefaultKaptcha defaultKaptcha;
+  private final UserService userService;
+  private final DefaultKaptcha defaultKaptcha;
+
+  @Autowired
+  public SecurityController(UserService userService, DefaultKaptcha defaultKaptcha) {
+    this.userService = userService;
+    this.defaultKaptcha = defaultKaptcha;
+  }
 
   /**
    * 登录验证
@@ -45,7 +53,7 @@ public class SecurityController {
     System.out.println(request.getSession().getAttribute("imageCode"));
     System.out.println(user.getUserNo() + " : " + user.getUserPwd());
     if (imageCode.equals(request.getSession().getAttribute("imageCode"))) {
-      user = userService.getUserById(user.getUserNo());
+      user = userService.getById(user.getUserNo());
       msg.setMsg("The member of " + user.getUserNo() + " has been logined: " + user.getUserPwd());
     } else {
       msg.setMsg("Wrong imageCode!!!");
@@ -78,7 +86,7 @@ public class SecurityController {
    * @param request http 请求
    * @param response http 响应
    */
-  @RequestMapping("/createImageCode")
+  @GetMapping("/createImageCode")
   public void createImageCode(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
     byte[] captchaChallengeAsJpeg = null;

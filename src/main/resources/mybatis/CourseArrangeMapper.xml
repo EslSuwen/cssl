@@ -15,7 +15,7 @@
         <result property="labDay" column="lab_day"/>
         <result property="labSession" column="lab_session"/>
         <result property="courseName" column="course_name"/>
-        <result property="labID" column="lab_id"/>
+        <result property="labId" column="lab_id"/>
     </resultMap>
     <select id="findALL" resultMap="CourseArrangeRM">
         select lab_day,lab_session,c.course_name,la.lab_id from lab_arrange la,course c where

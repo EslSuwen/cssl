@@ -11,12 +11,12 @@
 <mapper namespace="com.cqjtu.cssl.mapper.ProjectItemMapper">
     <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
     <resultMap id="ItemRM" type="com.cqjtu.cssl.entity.ProjectItem">
-        <id property="iId" column="iid"/>
+        <id property="iid" column="iid"/>
         <result property="proId" column="pro_id"/>
-        <result property="iName" column="iname"/>
-        <result property="iType" column="itype"/>
-        <result property="iTime" column="itime"/>
-        <result property="cType" column="ctype"/>
+        <result property="iname" column="iname"/>
+        <result property="itime" column="itype"/>
+        <result property="itime" column="itime"/>
+        <result property="ctype" column="ctype"/>
         <result property="num" column="num"/>
         <result property="intend" column="intend"/>
     </resultMap>
@@ -38,16 +38,16 @@
 
     <!-- 通过实验室项目卡片ID查看它所拥有的实验项目信息-->
     <select id="findAllByProId" resultMap="ItemRM">
-        select * from project_item where pro_id=#{peoId}
+        select * from project_item where pro_id=#{proId}
     </select>
 
     <!--通过ID删除一项实验项目信息-->
-    <delete id="deleById" >
+    <delete id="deleById">
         delete from project_item where iid=#{iId}
     </delete>
 
     <!--通过实验室卡片ID删除所有实验项目信息-->
-    <delete id="deleByProId" >
+    <delete id="deleByProId">
         delete from project_item where pro_id=#{proId}
     </delete>
 

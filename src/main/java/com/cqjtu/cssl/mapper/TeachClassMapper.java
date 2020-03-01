@@ -1,17 +1,18 @@
 package com.cqjtu.cssl.mapper;
 
-import com.cqjtu.cssl.entity.TeachClass;
-import org.apache.ibatis.annotations.Mapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cqjtu.cssl.entity.Teachclass;
 
 import java.util.List;
 
 /**
- * 授课班级映射接口
+ * 授课班级 Mapper 接口
  *
- * @author Aplin
- * @date 2020/1/13 10:39 上午
+ * @author suwen
+ * @date 2020/2/6 3:30 下午
  */
-public interface TeachClassMapper {
+public interface TeachclassMapper extends BaseMapper<Teachclass> {
+
   /**
    * 添加授课班级信息
    *
@@ -19,7 +20,7 @@ public interface TeachClassMapper {
    * @date 2020/1/13 10:39 上午
    * @param teachClass 授课班级对象
    */
-  void addTeachClass(TeachClass teachClass);
+  void addTeachClass(Teachclass teachClass);
 
   /**
    * 删除授课班级信息
@@ -28,17 +29,17 @@ public interface TeachClassMapper {
    * @date 2020/1/13 10:39 上午
    * @param teachClass 授课班级对象
    */
-  void deleteTeachClass(TeachClass teachClass);
+  void deleteTeachClass(Teachclass teachClass);
 
   /**
    * 修改授课班级信息
    *
    * @author Aplin
    * @date 2020/1/13 10:39 上午
-   * @param oldTeachClass 旧的授课班级对象
-   * @param newTeachClass 新的授课班级对象
+   * @param oldTeachclass 旧的授课班级对象
+   * @param newTeachclass 新的授课班级对象
    */
-  void updateTeachClass(TeachClass oldTeachClass, TeachClass newTeachClass);
+  void updateTeachClass(Teachclass oldTeachclass, Teachclass newTeachclass);
 
   /**
    * 查询所有的授课班级信息
@@ -47,7 +48,7 @@ public interface TeachClassMapper {
    * @date 2020/1/13 10:39 上午
    * @return 授课班级对象集合
    */
-  List<TeachClass> findAll();
+  List<Teachclass> findAll();
 
   /**
    * 通过教职工号和课程号查询对应的授课信息
@@ -58,5 +59,5 @@ public interface TeachClassMapper {
    * @param course 课程号
    * @return 授课班级对象集合
    */
-  List<TeachClass> findByTidAndCourseID(String tid, int course);
+  List<Teachclass> findByTidAndCourseId(String tid, int course);
 }

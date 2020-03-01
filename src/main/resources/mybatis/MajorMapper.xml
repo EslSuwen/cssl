@@ -12,23 +12,23 @@
 
     <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
     <resultMap id="MajorRM" type="com.cqjtu.cssl.entity.Major">
-        <id property="majorID" column="major_id"/>
+        <id property="majorId" column="major_id"/>
         <result property="majorName" column="major_name"/>
     </resultMap>
 
     <!-- 添加专业信息 -->
     <insert id="addMajor" parameterType="com.cqjtu.cssl.entity.Major" >
-  	insert into major(major_id,major_name) values(#{majorID},#{majorName});
+  	insert into major(major_id,major_name) values(#{majorId},#{majorName});
   </insert>
 
-    <!-- 通过专业ID查找专业信息 -->
+    <!-- 通过专业Id查找专业信息 -->
     <select id="findById" resultType="com.cqjtu.cssl.entity.Major" resultMap="MajorRM">
-  		select * from  major where  major_id=#{majorID}
+  		select * from  major where  major_id=#{majorId}
   </select>
 
-    <!-- 通过专业ID修改专业信息 -->
+    <!-- 通过专业Id修改专业信息 -->
     <update id="updateById" parameterType="com.cqjtu.cssl.entity.Major">
-        update major set major_id = #{arg1.majorID},major_name=#{arg1.majorName} where major_id=#{arg0}
+        update major set major_id = #{arg1.majorId},major_name=#{arg1.majorName} where major_id=#{arg0}
     </update>
 
     <!-- 查找所有专业信息 -->
@@ -36,8 +36,8 @@
         select  * from major
     </select>
 
-    <!-- 通过ID删除专业信息 -->
+    <!-- 通过Id删除专业信息 -->
     <delete id="deleteById">
-        delete from major where major_id=#{majorID}
+        delete from major where major_id=#{majorId}
     </delete>
 </mapper>

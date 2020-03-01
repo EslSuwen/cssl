@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.service.impl;
 
-import com.cqjtu.cssl.entity.ClassGrade;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.mapper.ClassMapper;
 import com.cqjtu.cssl.service.ClassService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,42 +10,47 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 班级服务接口实现
+ * 班级服务实现类
  *
- * @author: Aplin
- * @time: 2020/1/13 11:04 上午
+ * @author suwen Aplin
+ * @since 2020-02-27
  */
 @Service
-public class ClassServiceImpl implements ClassService {
-  @Autowired private ClassMapper classMapper;
+public class ClassServiceImpl extends ServiceImpl<ClassMapper, Class> implements ClassService {
+  private final ClassMapper classMapper;
 
-  @Override
-  public void addClass(ClassGrade classGrade) {
-    classMapper.addClass(classGrade);
+  @Autowired
+  public ClassServiceImpl(ClassMapper classMapper) {
+    this.classMapper = classMapper;
   }
 
   @Override
-  public void deleteClass(String className, int majorID) {
-    classMapper.deleteClass(className, majorID);
+  public void addClass(Class aClass) {
+    classMapper.addClass(aClass);
   }
 
   @Override
-  public void updateClass(String className, int majorID, ClassGrade classGrade) {
-    classMapper.updateClass(className, majorID, classGrade);
+  public void deleteClass(String className, int majorId) {
+    classMapper.deleteClass(className, majorId);
   }
 
   @Override
-  public ClassGrade findOneClass(String className, int majorID) {
-    return classMapper.findOneClass(className, majorID);
+  public void updateClass(String className, int majorId, Class aClass) {
+    classMapper.updateClass(className, majorId, aClass);
   }
 
   @Override
-  public List<ClassGrade> findAllClass() {
+  public Class findOneClass(String className, int majorId) {
+    return classMapper.findOneClass(className, majorId);
+  }
+
+  @Override
+  public List<Class> findAllClass() {
     return classMapper.findAllClass();
   }
 
   @Override
-  public List<ClassGrade> findClassByMajor(int majorID) {
-    return classMapper.findClassByMajor(majorID);
+  public List<Class> findClassByMajor(int majorId) {
+    return classMapper.findClassByMajor(majorId);
   }
 }

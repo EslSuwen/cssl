@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.TestFile;
-import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 文件测试 mapper
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @author suwen
  * @date 2020/2/6 3:20 下午
  */
-public interface TestFileMapper {
+public interface TestFileMapper extends BaseMapper<TestFile> {
 
   /**
    * 测试文件增加

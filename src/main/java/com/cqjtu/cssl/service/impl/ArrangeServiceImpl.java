@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
 import com.cqjtu.cssl.mapper.ArrangePeriodMapper;
+import com.cqjtu.cssl.mapper.LabArrangeMapper;
+import com.cqjtu.cssl.mapper.TeachMapper;
 import com.cqjtu.cssl.service.ArrangeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 服务实现类
+ * 实验室安排服务实现类
  *
  * @author suwen
  * @since 2020-02-21
@@ -22,7 +24,19 @@ import java.util.Map;
 public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     implements ArrangeService {
 
-  @Autowired ArrangePeriodMapper arrangePeriodMapper;
+  private final ArrangePeriodMapper arrangePeriodMapper;
+  private final LabArrangeMapper labArrangeMapper;
+  private final TeachMapper teachMapper;
+
+  @Autowired
+  public ArrangeServiceImpl(
+      ArrangePeriodMapper arrangePeriodMapper,
+      LabArrangeMapper labArrangeMapper,
+      TeachMapper teachMapper) {
+    this.arrangePeriodMapper = arrangePeriodMapper;
+    this.labArrangeMapper = labArrangeMapper;
+    this.teachMapper = teachMapper;
+  }
 
   @Override
   public List<Arrange> findByTid(String tid) {

@@ -12,7 +12,7 @@
 
     <resultMap id="LabInfoRM" type="com.cqjtu.cssl.entity.LabInfo">
         <id property="labId" column="lab_id"/>
-        <result property="tId" column="tid"/>
+        <result property="tid" column="tid"/>
         <result property="typeId" column="type_id"/>
         <result property="labName" column="lab_name"/>
         <result property="labCampus" column="lab_campus"/>

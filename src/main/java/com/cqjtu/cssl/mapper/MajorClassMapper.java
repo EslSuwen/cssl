@@ -19,5 +19,5 @@ public interface MajorClassMapper {
    * @date 2020/1/13 10:37 上午
    * @return List<com.cqjtu.cssl.entity.MajorClassHelper> 专业班级对象
    */
-  List<MajorClassHelper> findALL();
+  List<MajorClassHelper> findAll();
 }

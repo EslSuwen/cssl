@@ -1,10 +1,13 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.entity.Project;
-import com.cqjtu.cssl.service.ProjectService;
-import com.cqjtu.cssl.utils.MessageHelper;
+import com.cqjtu.cssl.entity.ExpProject;
+import com.cqjtu.cssl.entity.Message;
+import com.cqjtu.cssl.service.ExpProjectService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 项目卡片控制器
@@ -12,26 +15,32 @@ import org.springframework.web.bind.annotation.*;
  * @author suwen
  * @date 2020/2/6 2:50 下午
  */
+@Api(tags = "项目卡片-控制器")
 @RestController
 @RequestMapping("/project")
-public class ProjectController {
+public class ExpProjectController {
 
-  @Autowired private ProjectService projectService;
+  private final ExpProjectService expProjectService;
+
+  @Autowired
+  public ExpProjectController(ExpProjectService expProjectService) {
+    this.expProjectService = expProjectService;
+  }
 
   /**
    * 测试项目卡片增加
    *
-   * @param project 请求体变量 项目卡片
+   * @param expProject 请求体变量 项目卡片
    * @return int 状态码
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
   @PostMapping(value = "/newProject")
-  public int addNewProject(@RequestBody Project project) {
+  public int addNewProject(@RequestBody ExpProject expProject) {
 
     System.out.println("addNewData()被调用");
 
-    projectService.addProject(project);
+    expProjectService.addProject(expProject);
 
     // save后自动添加id
     return 0;
@@ -45,11 +54,11 @@ public class ProjectController {
    * @date 2020/2/6 2:52 下午
    */
   @GetMapping(value = "/getProject")
-  public Iterable<Project> getProjects() {
+  public List<ExpProject> getProjects() {
 
     System.out.println("getProjects()被调用");
 
-    return projectService.loadAll();
+    return expProjectService.loadAll();
   }
 
   /**
@@ -59,10 +68,10 @@ public class ProjectController {
    * @date 2020/2/6 2:53 下午
    */
   @DeleteMapping(value = "/clearProject")
-  public MessageHelper clearProject() {
+  public Message clearProject() {
     System.out.println("clearProject()被调用");
 
-    MessageHelper msg = new MessageHelper();
+    Message msg = new Message();
     msg.setMsg("clearProject()被调用");
 
     return msg;

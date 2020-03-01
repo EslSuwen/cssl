@@ -2,9 +2,10 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
+import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
-import com.cqjtu.cssl.utils.MessageHelper;
+import io.swagger.annotations.Api;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +18,20 @@ import java.util.List;
  * @author suwen
  * @since 2020-02-21
  */
+@Api(tags = "实验室安排-控制器")
 @RestController
 @RequestMapping("/arrange")
 public class ArrangeController {
 
-  @Autowired private ArrangeService arrangeService;
-  @Autowired private ArrangePeriodService arrangePeriodService;
+  private final ArrangeService arrangeService;
+  private final ArrangePeriodService arrangePeriodService;
+
+  @Autowired
+  public ArrangeController(
+      ArrangeService arrangeService, ArrangePeriodService arrangePeriodService) {
+    this.arrangeService = arrangeService;
+    this.arrangePeriodService = arrangePeriodService;
+  }
 
   /**
    * 根据教师编号查询排课
@@ -45,11 +54,11 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/2/22 下午1:24
    */
-  @RequestMapping("/add")
-  public MessageHelper addArrange(@NonNull @RequestBody Arrange arrange) {
+  @PostMapping("/add")
+  public Message addArrange(@NonNull @RequestBody Arrange arrange) {
     arrangeService.save(arrange);
     List<ArrangePeriod> arrangePeriodList = arrange.getArrangePeriod();
     arrangePeriodService.saveBatch(arrangePeriodList);
-    return new MessageHelper("增加成功");
+    return new Message("增加成功");
   }
 }

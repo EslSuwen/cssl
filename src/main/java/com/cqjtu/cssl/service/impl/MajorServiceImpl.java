@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.Major;
 import com.cqjtu.cssl.mapper.MajorMapper;
 import com.cqjtu.cssl.service.MajorService;
@@ -9,14 +10,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * 专业信息服务接口实现
+ * 服务实现类
  *
- * @author: Aplin
- * @time: 2020/1/13 11:06 上午
+ * @author Aplin suwen
+ * @since 2020-02-27
  */
 @Service
-public class MajorServiceImpl implements MajorService {
-  @Autowired private MajorMapper majorMapper;
+public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {
+  private final MajorMapper majorMapper;
+
+  @Autowired
+  public MajorServiceImpl(MajorMapper majorMapper) {
+    this.majorMapper = majorMapper;
+  }
 
   @Override
   public void addMajor(Major major) {
@@ -24,13 +30,13 @@ public class MajorServiceImpl implements MajorService {
   }
 
   @Override
-  public Major findById(int majorID) {
-    return majorMapper.findById(majorID);
+  public Major findById(int majorId) {
+    return majorMapper.findById(majorId);
   }
 
   @Override
-  public void updateById(int majorID, Major newMajor) {
-    majorMapper.updateById(majorID, newMajor);
+  public void updateById(int majorId, Major newMajor) {
+    majorMapper.updateById(majorId, newMajor);
   }
 
   @Override
@@ -39,7 +45,7 @@ public class MajorServiceImpl implements MajorService {
   }
 
   @Override
-  public void deleteById(int majorID) {
-    majorMapper.deleteById(majorID);
+  public void deleteById(int majorId) {
+    majorMapper.deleteById(majorId);
   }
 }

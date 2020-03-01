@@ -1,12 +1,13 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.io.Serializable;
 
 /**
  * 文件保存测试实体
@@ -18,10 +19,10 @@ import javax.persistence.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Component
-@Table(name = "tbl_test_file")
-public class TestFile {
+@TableName("tbl_test_file")
+public class TestFile implements Serializable {
 
-  @Id private int id;
+  @TableId private int id;
   private String fileName;
   private byte[] file;
 }

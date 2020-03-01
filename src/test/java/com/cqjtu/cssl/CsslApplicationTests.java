@@ -45,6 +45,6 @@ class CsslApplicationTests {
   @Test
   public void testLombok() {
     ProjectItem projectItem = new ProjectItem();
-    log.info(projectItem.getIId());
+    log.info(projectItem.getIid());
   }
 }

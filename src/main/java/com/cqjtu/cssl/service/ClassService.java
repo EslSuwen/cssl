@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.service;
 
-import com.cqjtu.cssl.entity.ClassGrade;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.cqjtu.cssl.entity.Class;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,19 +9,19 @@ import java.util.List;
 /**
  * 班级服务接口
  *
- * @author Aplin
+ * @author Aplin suwen
  * @date 2020/1/13 11:04 上午
  */
 @Service
-public interface ClassService {
+public interface ClassService extends IService<Class> {
   /**
    * 添加班级信息
    *
    * @author Aplin
    * @date 2020/1/13 11:04 上午
-   * @param classGrade 班级信息
+   * @param aClass 班级信息
    */
-  void addClass(ClassGrade classGrade);
+  void addClass(Class aClass);
 
   /**
    * 删除班级信息
@@ -28,9 +29,9 @@ public interface ClassService {
    * @author Aplin
    * @date 2020/1/13 11:04 上午
    * @param className 班级名称
-   * @param majorID 专业ID
+   * @param majorId 专业Id
    */
-  void deleteClass(String className, int majorID);
+  void deleteClass(String className, int majorId);
 
   /**
    * 修改班级信息
@@ -38,10 +39,10 @@ public interface ClassService {
    * @author Aplin
    * @date 2020/1/13 11:04 上午
    * @param className 班级名称
-   * @param majorID 专业ID
-   * @param classGrade 新班级对象
+   * @param majorId 专业Id
+   * @param aClass 新班级对象
    */
-  void updateClass(String className, int majorID, ClassGrade classGrade);
+  void updateClass(String className, int majorId, Class aClass);
 
   /**
    * 查询一个班级信息
@@ -49,10 +50,10 @@ public interface ClassService {
    * @author Aplin
    * @date 2020/1/13 11:04 上午
    * @param className 班级名称
-   * @param majorID 专业ID
+   * @param majorId 专业Id
    * @return com.cqjtu.cssl.entity.ClassGrade 班级信息
    */
-  ClassGrade findOneClass(String className, int majorID);
+  Class findOneClass(String className, int majorId);
 
   /**
    * 查询所有的班级信息
@@ -61,15 +62,15 @@ public interface ClassService {
    * @date 2020/1/13 11:04 上午
    * @return List<com.cqjtu.cssl.entity.ClassGrade> 班级信息列表
    */
-  List<ClassGrade> findAllClass();
+  List<Class> findAllClass();
 
   /**
    * 查询专业下的所有班级信息
    *
    * @author Aplin
    * @date 2020/1/13 11:04 上午
-   * @param majorID 专业ID
+   * @param majorId 专业Id
    * @return List<com.cqjtu.cssl.entity.ClassGrade> 班级信息列表
    */
-  List<ClassGrade> findClassByMajor(int majorID);
+  List<Class> findClassByMajor(int majorId);
 }

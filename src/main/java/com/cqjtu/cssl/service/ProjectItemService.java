@@ -1,52 +1,17 @@
 package com.cqjtu.cssl.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.ProjectItem;
 
 import java.util.List;
 
 /**
- * 实验项目信息服务接口
+ * 实验项目信息服务类
  *
- * @author suwen
- * @date 2020/2/6 4:03 下午
+ * @author Aplin suwen
+ * @since 2020-02-27
  */
-public interface ProjectItemService {
-
-  /**
-   * 新增一条实验项目
-   *
-   * @author suwen
-   * @date 2020/2/6 4:03 下午
-   * @param projectItem 实验项目
-   */
-  void addProjectItem(ProjectItem projectItem);
-
-  /**
-   * 删除一条实验项目
-   *
-   * @author suwen
-   * @date 2020/2/6 4:03 下午
-   * @param iId 实验项目编号
-   */
-  void removeProjectItem(Integer iId);
-
-  /**
-   * 更新一条实验项目
-   *
-   * @author suwen
-   * @date 2020/2/6 4:03 下午
-   * @param projectItem 实验项目
-   */
-  void updateProjectItem(ProjectItem projectItem);
-
-  /**
-   * 获取一条实验项目
-   *
-   * @author suwen
-   * @date 2020/2/6 4:03 下午
-   * @param iId 实验项目编号
-   */
-  ProjectItem getProjectItemById(Integer iId);
+public interface ProjectItemService extends IService<ProjectItem> {
 
   /**
    * 通过实验室项目卡片ID查看它所拥有的实验项目信息

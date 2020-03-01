@@ -1,10 +1,14 @@
 package com.cqjtu.cssl.controller;
 
+import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.entity.User;
 import com.cqjtu.cssl.service.UserService;
-import com.cqjtu.cssl.utils.MessageHelper;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,12 +18,17 @@ import java.util.List;
  * @author suwen
  * @date 2020/2/6 3:12 下午
  */
+@Api(tags = "用户测试-控制器")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/test_user")
 public class UserTestController {
 
-  @Autowired private UserService userService;
+  private final UserService userService;
+
+  @Autowired
+  public UserTestController(UserService userService) {
+    this.userService = userService;
+  }
 
   /**
    * 测试获取用户
@@ -29,25 +38,25 @@ public class UserTestController {
    * @date 2020/2/6 3:13 下午
    */
   @GetMapping(value = "/getUser")
-  public Iterable<User> getUsers() {
+  public List<User> getUsers() {
 
     System.out.println("getUsers()被调用");
 
-    return userService.loadAll();
+    return userService.list();
   }
 
   /**
    * 测试删除用户
    *
-   * @return com.cqjtu.cssl.utils.MessageHelper
+   * @return com.cqjtu.cssl.utils.Message
    * @author suwen
    * @date 2020/2/6 3:13 下午
    */
   @DeleteMapping(value = "/clearUser")
-  public MessageHelper clearDemodatas() {
+  public Message clearDemodatas() {
     System.out.println("clearDemodatas()被调用");
-    List<User> userList = userService.loadAll();
-    MessageHelper msg = new MessageHelper();
+    List<User> userList = userService.list();
+    Message msg = new Message();
     msg.setMsg("The database has been cleared");
     return msg;
   }
