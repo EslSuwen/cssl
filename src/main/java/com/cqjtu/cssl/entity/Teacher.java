@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 教师实体类
@@ -42,4 +44,8 @@ public class Teacher implements Serializable {
 
   @ApiModelProperty(value = "权限(是否为管理员)", position = 6, required = true)
   private Boolean tlimit;
+
+  @ApiModelProperty(value = "用户权限列表", position = 7)
+  @TableField(exist = false)
+  private List<Authority> authorities;
 }

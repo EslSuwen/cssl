@@ -6,12 +6,11 @@ server:                  #配置server
   port: 8090
 
 spring:
+  profiles:
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver            # 数据库访问配置,主数据源，默认的
-      url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
-      username: root
-      password: Liyu8824
       initial-size: 5          # 下面为连接池的补充设置，应用到上面所有数据源中,初始化大小，最小，最大
       min-idle: 5
       max-active: 20
@@ -71,3 +70,53 @@ info:
     name: Course scheduling system of Laboratory
     abbrName: cssl
     version: v0.6
+
+api:
+  base-path: /api
+
+management:
+  server:
+    port: 8090
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always
+
+security:
+  cors:
+    allowed-origins: "*"
+    allowed-methods: GET,POST,DELETE,PUT,OPTIONS
+    allowed-headers: Accept,Accept-Encoding,Accept-Language,Authorization,Connection,Content-Type,Host,Origin,Referer,User-Agent,X-Requested-With
+  jwt:
+    header: Authorization
+    secret: mySecret
+    expiration: 1200
+    issuer: suwen
+    authentication-path: /api/auth
+
+---
+#开发环境配置
+
+spring:
+  profiles: dev
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: Liyu8824
+
+
+---
+#生产环境配置
+
+spring:
+  profiles: prod
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/csslDB
+      username: root
+      password: Cssl123.
