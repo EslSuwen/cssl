@@ -2,32 +2,32 @@
 
   <table mdbTable class="col-7 mt-3" bordered="true">
     <thead class="blue lighten-2 white-text">
-      <tr>
-        <th *ngFor="let head of headElements" scope="col">{{head}} </th>
-      </tr>
+    <tr>
+      <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+    </tr>
     </thead>
     <tbody>
-      <tr mdbTableCol *ngFor="let el of elements">
-        <th class="blue lighten-2 white-text" scope="row">{{el.id}}</th>
-        <td>{{el.first}}</td>
-        <td>{{el.last}}</td>
-        <td>{{el.handle}}</td>
-        <td>{{el.handle2}}</td>
-        <td>{{el.handle3}}</td>
-      </tr>
+    <tr mdbTableCol *ngFor="let el of elements">
+      <th class="blue lighten-2 white-text" scope="row">{{el.id}}</th>
+      <td>{{el.first}}</td>
+      <td>{{el.last}}</td>
+      <td>{{el.handle}}</td>
+      <td>{{el.handle2}}</td>
+      <td>{{el.handle3}}</td>
+    </tr>
     </tbody>
   </table>
 
-<div class="col-4 mx-auto mt-3 animated fadeInRight z-depth-2">
-  <ul class="list-group mt-5">
-    <li class="list-group-item text-center font-weight-bold ">个人信息</li>
-    <li class="list-group-item">姓名:</li>
-    <li class="list-group-item">工号:</li>
-    <li class="list-group-item">邮箱:</li>
-    <li class="list-group-item">QQ:</li>
-    <li class="list-group-item">电话:</li>
-    <li class="list-group-item">......</li>
-  </ul>
-</div>
-  
+  <div class="col-4 mx-auto mt-3 animated fadeInRight z-depth-2">
+    <ul class="list-group mt-5">
+      <li class="list-group-item text-center font-weight-bold ">个人信息</li>
+      <li class="list-group-item">姓名:{{userName}}</li>
+      <li class="list-group-item">工号:</li>
+      <li class="list-group-item">邮箱:</li>
+      <li class="list-group-item">QQ:</li>
+      <li class="list-group-item">电话:</li>
+      <li class="list-group-item">......</li>
+    </ul>
+  </div>
+
 </div>
