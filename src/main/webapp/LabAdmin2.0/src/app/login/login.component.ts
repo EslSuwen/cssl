@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {environment} from "../../environments/environment";
+import {AuthenticationService} from "../service/authentication.service";
+import {MessageService} from "../service/message.service";
 
 @Component({
   selector: 'app-login',
@@ -10,40 +12,56 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   validationForm: FormGroup;
-  img: any;
+  authModel: any = {};
+  imgUrl: string = `${environment.apiUrl}/login/createImageCode`;
+
   constructor(
     public fb: FormBuilder,
-    public authService: AuthService,
     public router: Router,
+    private authenticationService: AuthenticationService,
+    private messageService: MessageService
   ) {
     this.validationForm = fb.group({
       userFormEx: [null, [Validators.required]],
       passwordFormEx: [null, Validators.required],
     });
   }
-  get userFormEx() { return this.validationForm.get('userFormEx'); }
-  get passwordFormEx() { return this.validationForm.get('passwordFormEx'); }
+
+  get userFormEx() {
+    return this.validationForm.get('userFormEx');
+  }
+
+  get passwordFormEx() {
+    return this.validationForm.get('passwordFormEx');
+  }
+
   onSubmit() {
     // this.validationForm.controls.input.markAsTouched();
   }
+
   ngOnInit() {
-    this.img = 'http://localhost:8090/login/createImageCode';
+    this.authenticationService.logout();
 
   }
+
   login() {
-
-    this.authService.login().subscribe(() => {
-      if (this.authService.isLoggedIn) {
-        // Get the redirect URL from our auth service
-        // If no redirect has been set, use the default
-        const redirect = this.authService.redirectUrl ? this.router.parseUrl(this.authService.redirectUrl) : '/sidenav/personalinfo';
-
-        // Redirect the user
-        this.router.navigateByUrl(redirect);
-      }
-    });
+    this.authenticationService.login(this.authModel.username, this.authModel.password)
+      .subscribe(result => {
+        if (result) {
+          // login successful
+          this.router.navigate(['sidenav/personalinfo']);
+        } else {
+          // login failed
+          this.log('Username or password is incorrect');
+        }
+      });
   }
+
+  private log(message: string) {
+    this.messageService.add('Login: ' + message);
+  }
+
   refresh() {
-    this.img = 'http://localhost:8090/login/createImageCode' + '?' + Math.random();
+    this.imgUrl = this.imgUrl + '?' + Math.random();
   }
 }

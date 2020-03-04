@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { AuthService } from '../auth/auth.service';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-side-nav',
@@ -10,16 +9,20 @@ import { AuthService } from '../auth/auth.service';
 export class SideNavComponent implements OnInit {
 
   toggleFlag = true;
+
   onToggle() {
     this.toggleFlag = (this.toggleFlag === true) ? false : true;
   }
-  constructor(public authService: AuthService, ) { }
+
+  constructor() {
+  }
 
   ngOnInit() {
 
   }
+
   logout() {
-    this.authService.logout();
+
   }
 }
 
