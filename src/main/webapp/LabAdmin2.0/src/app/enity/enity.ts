@@ -11,19 +11,19 @@ export class Exp {
   // 实验设备名
   expEqname: string;
   // 设备数量
-  eqNum: number;
+  eqnum: number;
   // 面向专业
   expMajor: string;
   // 学生类别
-  sSort: string;
+  ssort: string;
   // 实验总学时
   expTime: number;
   // 实验教材
   book: string;
   // 实验所用软件
-  sSorsoftWaret: string;
+  software: string;
   // 教职工号
-  tId: string;
+  expTid: string;
   // 课程名
   cName: string;
   // 消耗材料名称
@@ -36,13 +36,13 @@ export class Exp {
     this.labCenName = 'init';
     this.expCname = 'init';
     this.expEqname = 'init';
-    this.eqNum = 0;
+    this.eqnum = 0;
     this.expMajor = 'init';
-    this.sSort = 'init';
+    this.ssort = 'init';
     this.expTime = 0;
     this.book = 'init';
-    this.sSorsoftWaret = 'init';
-    this.tId = 'init';
+    this.software = 'init';
+    this.expTid = 'init';
     this.cName = 'init';
     this.conName = 'init';
     this.conNum = 0;
@@ -53,29 +53,29 @@ export class Exp {
 // http://localhost:8090/cssl/projectItem/
 export class ProjectItem {
   // 实验项目编号
-  iId: string;
+  iid: string;
   // 项目ID
   proId: string;
   // 实验项目名称
-  iName: string;
+  iname: string;
   // 实验类型
-  iType: string;
+  itype: string;
   // 实验项目学时
-  iTime: number;
+  itime: number;
   // 必修或选修
-  cType: String;
+  ctype: String;
   // 分组人数
   num: number;
   // 实验目的
   intend: string;
 
   constructor() {
-    this.iId = 'init';
+    this.iid = 'init';
     this.proId = 'init';
-    this.iName = 'init';
-    this.iType = 'init';
-    this.iTime = 0;
-    this.cType = 'init';
+    this.iname = 'init';
+    this.itype = 'init';
+    this.itime = 0;
+    this.ctype = 'init';
     this.num = 0;
     this.intend = 'init';
 
@@ -85,18 +85,18 @@ export class ProjectItem {
 // 教室个人信息类
 export class Teacher {
   // 教职工号 String tID tid
-  tID: string;
+  tid: string;
   // 教师姓名 String tName tname
-  tName: string;
+  tname: string;
   // 教师电话 String tPhone tphone
-  tPhone: string;
+  tphone: string;
   // 教师QQ String tQQ tqq
-  tQQ: string;
+  tqq: string;
   // 教师邮箱 String tEmail temail
-  tEmail: string;
+  temail: string;
   // 密码 String tPassword tpassword
-  tPassword: string;
+  tpassword: string;
   // 权限（是否为管理员） int tLimit tlimit
-  tLimit: number;
+  tlimit: number;
 }
 

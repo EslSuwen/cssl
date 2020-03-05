@@ -6,7 +6,8 @@ import {throwError} from 'rxjs/internal/observable/throwError';
 import {environment} from "../../environments/environment";
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'})
+  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  withCredentials: true
 };
 
 @Injectable({providedIn: 'root'})
@@ -16,10 +17,11 @@ export class AuthenticationService {
   constructor(private http: HttpClient) {
   }
 
-  login(name: string, pass: string): Observable<boolean> {
+  login(name: string, pass: string, img: string): Observable<boolean> {
     return this.http.post<any>(`${environment.apiUrl}/api/auth`, JSON.stringify({
       username: name,
-      password: pass
+      password: pass,
+      imgCode: img
     }), httpOptions).pipe(
       tap(response => {
         if (response && response.token) {

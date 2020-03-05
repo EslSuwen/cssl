@@ -13,7 +13,7 @@ import {MessageService} from "../service/message.service";
 export class LoginComponent implements OnInit {
   validationForm: FormGroup;
   authModel: any = {};
-  imgUrl: string = `${environment.apiUrl}/login/createImageCode`;
+  imgUrl: string = `${environment.apiUrl}/api/createImageCode`;
 
   constructor(
     public fb: FormBuilder,
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login(this.authModel.username, this.authModel.password)
+    this.authenticationService.login(this.authModel.username, this.authModel.password, this.authModel.imgCode)
       .subscribe(result => {
         if (result) {
           // login successful

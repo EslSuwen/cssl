@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalComponent} from 'src/app/modal/modal.component';
 import {MDBModalRef, MDBModalService} from 'angular-bootstrap-md';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+
+import {Exp, ProjectItem} from '../../enity/enity';
 import {ProjectService} from 'src/app/service/project.service';
-import {Exp, ProjectItem} from './enity';
 
 @Component({
   selector: 'app-card',
@@ -10,84 +12,101 @@ import {Exp, ProjectItem} from './enity';
   styleUrls: ['./card.component.scss']
 })
 export class CardComponent implements OnInit {
-  modalRef: MDBModalRef;
-  exps: Exp[];
   projectItems: ProjectItem[];
+  exps: Exp[]; // 实验卡片
+  switch2: any;
+  modalRef: MDBModalRef; // 模态
+  element: FormGroup;
+  element1: FormGroup;
+  id: number;
+  headElements = ['实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件'];
+  controlArray: Array<{
+    id: number, iName: string, iType: string, iTime: number, cType: string, num: number, intend: string,
+  }> = [];
 
-  elements: any = [
-    {id: 1, first: 'Mark', last: 'Otto', handle: '@mdo'},
-    {id: 2, first: 'Jacob', last: 'Thornton', handle: '@fat'},
-    {id: 3, first: 'Larry', last: 'the Bird', handle: '@twitter'},
-  ];
-  headElements = ['ID', 'First', 'Last', 'Handle'];
-  editField: string;
-  personList: Array<any> = [
-    {id: 1, name: 'Aurelia Vega', age: 30, companyName: 'Deepends', country: 'Spain', city: 'Madrid'},
-    {id: 2, name: 'Guerra Cortez', age: 45, companyName: 'Insectus', country: 'USA', city: 'San Francisco'},
-    {id: 3, name: 'Guadalupe House', age: 26, companyName: 'Isotronic', country: 'Germany', city: 'Frankfurt am Main'},
-    {id: 4, name: 'Aurelia Vega', age: 30, companyName: 'Deepends', country: 'Spain', city: 'Madrid'},
-    {id: 5, name: 'Elisa Gallagher', age: 31, companyName: 'Portica', country: 'United Kingdom', city: 'London'},
-  ];
-
-  awaitingPersonList: Array<any> = [
-    {id: 6, name: 'George Vega', age: 28, companyName: 'Classical', country: 'Russia', city: 'Moscow'},
-    {id: 7, name: 'Mike Low', age: 22, companyName: 'Lou', country: 'USA', city: 'Los Angeles'},
-    {id: 8, name: 'John Derp', age: 36, companyName: 'Derping', country: 'USA', city: 'Chicago'},
-    {id: 9, name: 'Anastasia John', age: 21, companyName: 'Ajo', country: 'Brazil', city: 'Rio'},
-    {id: 10, name: 'John Maklowicz', age: 36, companyName: 'Mako', country: 'Poland', city: 'Bialystok'},
-  ];
-
-  updateList(id: number, property: string, event: any) {
-    const editField = event.target.textContent;
-    this.personList[id][property] = editField;
-
-  }
-
-  loadProjectItems(proId: number) {
-    this.projectService.getProjectItems(proId)
-      .subscribe(datas => {
-        this.projectItems = datas;
-        console.log('projectItems : ' + datas.length);
-      });
-  }
+  // myList: Array<ProjectItem> = [];
 
   remove(id: any) {
-    // frame.show();
-    this.awaitingPersonList.push(this.personList[id]);
-    this.personList.splice(id, 1);
-  }
-
-  removeItem() {
-    this.projectItems.pop();
+    this.controlArray.splice(id, 1);
   }
 
   add() {
-    if (this.awaitingPersonList.length > 0) {
-      const person = this.awaitingPersonList[0];
-      this.personList.push(person);
-      this.awaitingPersonList.splice(0, 1);
-    }
+    const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].id + 1 : 0;
+    const control = {
+      id,
+      // 实验项目名
+      iName: '',
+      // 实验类型
+      iType: '',
+      // 实验项目学时
+      iTime: 0,
+      // 必修或选修
+      cType: '',
+      // 分组人数
+      num: 0,
+      // 实验目的
+      intend: '',
+    };
+    this.controlArray.push(control);
   }
 
-  changeValue(id: number, property: string, event: any) {
-    this.editField = event.target.textContent;
-  }
-
-  constructor(private modalService: MDBModalService,
-              private projectService: ProjectService,) {
+  constructor(
+    private modalService: MDBModalService,
+    private projectService: ProjectService) {
   }
 
   ngOnInit() {
+    // 初始化数据
     this.projectService.getProjects()
       .subscribe(exps => {
         this.exps = exps;
         console.log('exps : ' + exps.length);
       });
-    this.projectService.getProjectItems(1)
-      .subscribe(datas => {
-        this.projectItems = datas;
-        console.log('projectItems : ' + datas.length);
-      });
+    // 初始化实验卡片表单控制
+    this.element = new FormGroup({
+      // 实验课程名称
+      expCname: new FormControl(null, Validators.required),
+      // 设备
+      expEqname: new FormControl(null, Validators.required),
+      // 设备数量
+      eqNum: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
+      // 面向专业
+      expMajor: new FormControl(null, Validators.required),
+      // 学生类别
+      sSort: new FormControl(null, Validators.required),
+      // 实验总学时
+      expTime: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
+      // 实验教材
+      book: new FormControl(null, Validators.required),
+      // 实验所用软件
+      sSorsoftWaret: new FormControl(null, Validators.required),
+      // 教职工号
+      tId: new FormControl(null, Validators.required),
+      // 课程名
+      cName: new FormControl(null, Validators.required),
+      // 消耗材料名称
+      conName: new FormControl(null, Validators.required),
+      // 消耗材料数量
+      conNum: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
+    });
+    // 初始化细则
+    const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].id + 1 : 0;
+    const control = {
+      id,
+      // 实验项目名
+      iName: '',
+      // 实验类型
+      iType: '',
+      // 实验项目学时
+      iTime: 0,
+      // 必修或选修
+      cType: '',
+      // 分组人数
+      num: 0,
+      // 实验目的
+      intend: '',
+    };
+    this.controlArray.push(control);
   }
 
   onsubmit() {
@@ -105,6 +124,47 @@ export class CardComponent implements OnInit {
         secondarybtn: false,
       }
     });
-    // 这里是操作
+    console.log(this.controlArray);
+    // 这里是提交操作
+  }
+
+  loadProjectItems(proId: number) {
+    this.projectService.getProjectItems(proId)
+      .subscribe(datas => {
+        this.projectItems = datas;
+        console.log('projectItems : ' + datas.length);
+      });
+  }
+
+  get expCname() {
+    return this.element.get('expCname');
+  }
+
+  get expEqname() {
+    return this.element.get('expEqname');
+  }
+
+  get eqNum() {
+    return this.element.get('eqNum');
+  }
+
+  get conName() {
+    return this.element.get('conName');
+  }
+
+  get conNum() {
+    return this.element.get('conNum');
+  }
+
+  get expTime() {
+    return this.element.get('expTime');
+  }
+
+  get book() {
+    return this.element.get('book');
+  }
+
+  get sSorsoftWaret() {
+    return this.element.get('sSorsoftWaret');
   }
 }

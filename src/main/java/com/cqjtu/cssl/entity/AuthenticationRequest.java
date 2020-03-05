@@ -1,4 +1,4 @@
-package com.cqjtu.angularspringboot.Model;
+package com.cqjtu.cssl.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -18,4 +18,7 @@ public class AuthenticationRequest {
 
   @ApiModelProperty(position = 1, value = "用户密码", required = true)
   private String password;
+
+  @ApiModelProperty(position = 2, value = "用户密码", required = true)
+  private String imgCode;
 }

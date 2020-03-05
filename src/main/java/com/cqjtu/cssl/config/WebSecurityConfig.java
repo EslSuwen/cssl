@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
@@ -53,7 +54,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     "/api-docs",
     "/swagger-resources/**",
     "/webjars/**",
-    "/csrf/**"
+    "/csrf/**",
+    "/api/createImageCode"
   };
 
   private final JwtAuthenticationEntryPoint unauthorizedHandler;
@@ -66,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public WebSecurityConfig(
       JwtAuthenticationEntryPoint unauthorizedHandler,
       SecurityProperties securityProperties,
-      UserDetailsService userDetailsService) {
+      @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService) {
     this.unauthorizedHandler = unauthorizedHandler;
     this.securityProperties = securityProperties;
     this.userDetailsService = userDetailsService;
@@ -139,6 +141,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     configuration.setAllowedOrigins(cors.getAllowedOrigins());
     configuration.setAllowedMethods(cors.getAllowedMethods());
     configuration.setAllowedHeaders(cors.getAllowedHeaders());
+    configuration.setAllowCredentials(true);
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;

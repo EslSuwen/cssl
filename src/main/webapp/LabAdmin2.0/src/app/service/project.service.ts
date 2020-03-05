@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Exp, ProjectItem} from '../side-nav/card/enity';
+import {Exp, ProjectItem} from '../enity/enity';
 import {environment} from "../../environments/environment";
 import {log} from "util";
 import {MessageService} from "./message.service";

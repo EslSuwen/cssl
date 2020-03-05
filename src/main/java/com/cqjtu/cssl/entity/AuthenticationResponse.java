@@ -1,4 +1,4 @@
-package com.cqjtu.angularspringboot.Model;
+package com.cqjtu.cssl.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -19,6 +19,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationResponse {
-  @ApiModelProperty(value = "验证[验证失败为空]", required = true)
+  @ApiModelProperty(value = "验证[验证失败为空]")
   private String token;
+
+  @ApiModelProperty(position = 1, value = "错误消息")
+  Message message;
 }
