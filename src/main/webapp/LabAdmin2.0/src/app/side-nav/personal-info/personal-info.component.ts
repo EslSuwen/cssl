@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-personal-info',
@@ -7,7 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalInfoComponent implements OnInit {
   elements: any = [
-    {id: '第一大节', first: 'Ma11111111111rk', last: 'Ot1111111to', handle: '111111@mdo', handle2: '111111@mdo', handle3: '111111@mdo'},
+    {
+      id: '第一大节',
+      first: 'Ma11111111111rk',
+      last: 'Ot1111111to',
+      handle: '111111@mdo',
+      handle2: '111111@mdo',
+      handle3: '111111@mdo'
+    },
     {id: '第二大节', first: 'Jacob', last: 'Thornton', handle: '@fat'},
     {id: '第三大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
     {id: '第四大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
@@ -15,12 +23,15 @@ export class PersonalInfoComponent implements OnInit {
     {id: '晚上第二大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
 
   ];
+  userName: string;
 
-  headElements = ['节数/星期', '星期一', '星期二', '星期三', '星期四', '星期五', ];
+  headElements = ['节数/星期', '星期一', '星期二', '星期三', '星期四', '星期五',];
 
-  constructor() { }
+  constructor(private authenticationService: AuthenticationService) {
+  }
 
   ngOnInit() {
+    this.userName = this.authenticationService.getUsername();
   }
 
 }
