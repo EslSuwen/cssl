@@ -23,6 +23,7 @@ export class CardComponent implements OnInit {
   controlArray: Array<{
     id: number, iName: string, iType: string, iTime: number, cType: string, num: number, intend: string,
   }> = [];
+  classname:string;
 
   // myList: Array<ProjectItem> = [];
 
@@ -132,10 +133,13 @@ export class CardComponent implements OnInit {
     this.projectService.getProjectItems(proId)
       .subscribe(datas => {
         this.projectItems = datas;
-        console.log('projectItems : ' + datas.length);
+        // console.log('projectItems : ' + datas.length);
       });
   }
-
+ get_classname(classname:string){ //通过click事件获取实验名称
+   this.classname=classname;
+  //  console.log(this.classname);
+ }
   get expCname() {
     return this.element.get('expCname');
   }

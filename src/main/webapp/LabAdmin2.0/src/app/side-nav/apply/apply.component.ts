@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Teach} from './apply'
 import {ApplyService} from "../../service/apply.service";
-
+import {Exp} from '../../enity/enity';
+import {ProjectService} from 'src/app/service/project.service';
 @Component({
   selector: 'app-apply',
   templateUrl: './apply.component.html',
   styleUrls: ['./apply.component.scss']
 })
 export class ApplyComponent implements OnInit {
+  exps: Exp[]; // 实验卡片
   // 周次
   weekList = [];
   weekselectedItems = [];
@@ -36,7 +38,7 @@ export class ApplyComponent implements OnInit {
 
   teacheList: Array<Teach>;
 
-  constructor(private applyService: ApplyService,) {
+  constructor(private applyService: ApplyService,private projectService: ProjectService) {
     this.teacheList = new Array<Teach>();
     this.applyService.getArranges().subscribe(teachList => {
       this.teacheList = teachList;
@@ -45,6 +47,11 @@ export class ApplyComponent implements OnInit {
 
 
   ngOnInit() {
+    this.projectService.getProjects()
+    .subscribe(exps => {
+      this.exps = exps;
+      console.log('exps : ' + exps.length);
+    });
 
     this.weekList = [
       {id: '1', itemName: '第一周'},

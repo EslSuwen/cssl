@@ -57,9 +57,32 @@
                             <a mdbWavesEffect routerLink="/sidenav/personalinfo"
                                 routerLinkActive="active"><span>个人信息</span></a>
                             <a mdbWavesEffect routerLink="/sidenav/updatepassword"
-                            routerLinkActive="active"><span>修改密码</span></a>
+                                routerLinkActive="active"><span>修改密码</span></a>
                             <a mdbWavesEffect href='http://www.cqjtu.edu.cn/'><span>学校官网</span></a>
                             <a mdbWavesEffect href="" (click)="logout()"><span>退出登录</span></a>
+                        </div>
+                        <div class="my-auto">
+
+                            <div class="btn-group mx-4" mdbDropdown>
+                                <mdb-badge color="blue" mdbDropdownToggle classInside="dropdown-toggle"
+                                    class="waves-effect" mdbWavesEffect>
+                                    账号{{userName}}已登录
+                                </mdb-badge>
+                                <div class="dropdown-menu dropdown-primary animated fadeIn">
+                                    <a class="dropdown-item" routerLink="/sidenav/personalinfo"
+                                        routerLinkActive="active">个人信息</a>
+                                    <a class="dropdown-item" routerLink="/sidenav/message"
+                                    routerLinkActive="active">通知公告
+                                        <mdb-badge pill="true" primary="true">14</mdb-badge>
+                                    </a>
+                                    <a class="dropdown-item" routerLink="/sidenav/updatepassword"
+                                        routerLinkActive="active">修改密码</a>
+                                    <div class="divider dropdown-divider"></div>
+                                    <a class="dropdown-item" href="" (click)="logout()">退出登录</a>
+
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <router-outlet></router-outlet>

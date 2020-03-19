@@ -30,6 +30,7 @@ import {MessagesComponent} from './messages/messages.component';
 import {HasRoleDirective} from './auth/has-role.directive';
 import {CanActivateAuthGuard} from "./auth/can-activate.authguard";
 import {AuthenticationInterceptor} from "./auth/authentication-interceptor";
+import { MessageComponent } from './side-nav/message/message.component';
 
 
 const appRoutes: Routes = [
@@ -46,6 +47,7 @@ const appRoutes: Routes = [
       {path: 'apply', component: ApplyComponent,},
       {path: 'applyexproom', component: ApplyExpRoomComponent,},
       {path: 'updatepassword', component: UpdatePasswordComponent,},
+      {path: 'message', component: MessageComponent,},
     ],
 
   },
@@ -74,6 +76,7 @@ const appRoutes: Routes = [
     MessagesComponent,
     MessagesComponent,
     HasRoleDirective,
+    MessageComponent,
   ],
   imports: [
     BrowserModule,
