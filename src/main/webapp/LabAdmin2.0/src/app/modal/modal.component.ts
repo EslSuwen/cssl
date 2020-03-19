@@ -7,7 +7,15 @@ import { MDBModalRef } from 'angular-bootstrap-md';
   styleUrls: ['./modal.component.scss']
 })
 export class ModalComponent implements OnInit {
-  constructor(public modalRef: MDBModalRef) { }
+  show() {
+    throw new Error("Method not implemented.");
+  }
+  hide() {
+    throw new Error("Method not implemented.");
+  }
+  constructor(public modalRef: MDBModalRef) { 
+    
+  }
 
   ngOnInit() {
   }

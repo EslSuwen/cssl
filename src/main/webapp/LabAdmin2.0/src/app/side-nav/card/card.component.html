@@ -1,8 +1,8 @@
-<div class="row">
+<div class="row ">
 
   <div class="col-1 mt-2">
-    <input type="checkbox" [(ngModel)]="switch2" id="flag2">
-    <label class="slider-v2 blue lighten-4" for="flag2"></label>
+    <input type="checkbox" [(ngModel)]="switch2" id="flag1">
+    <label class="slider-v3 blue lighten-4" for="flag1"></label>
   </div>
   <div class="col mt-4 ">
     <label class="disabled font-weight-bold" *ngIf="switch2">请在下面添加实验课程：</label>
@@ -10,7 +10,7 @@
 
   </div>
 </div>
-<div class="row mt-2">
+<div class="row mt-2 animated fadeInDown" *ngIf="switch2">
   <div class="col px-0">
     <div class="card">
       <h3 class="card-header text-center font-weight-bold">实验项目卡片
@@ -18,233 +18,302 @@
       <div class="card-body">
         <table mdbTable bordered="true" small="true" class="text-center">
           <thead class="black white-text">
-          <tr>
-            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
-          </tr>
+            <tr>
+              <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+            </tr>
           </thead>
-          <tbody *ngIf="switch2">
-          <tr mdbTableCol [formGroup]="element">
-            <td>
-              <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="expCname">
-                <mdb-error *ngIf="expCname.invalid && (expCname.dirty || expCname.touched)">请填写内容</mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
-              </div>
-            </td>
-            <td>
-              <div class="row mx-1 my-0">
-                <div class="md-form col p-0 my-0 mr-2">
-                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="expEqname"
-                         placeholder="设备">
-                  <mdb-error *ngIf="expEqname.invalid && (expEqname.dirty || expEqname.touched)" class="mt-0">请填写内容
+          <tbody>
+            <tr mdbTableCol [formGroup]="element">
+              <td>
+                <div class="md-form my-0">
+                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="expCname">
+                  <mdb-error *ngIf="expCname.invalid && (expCname.dirty || expCname.touched)">请填写内容</mdb-error>
+                  <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                </div>
+              </td>
+              <td>
+                <div class="row mx-1 my-0">
+                  <div class="md-form col p-0 my-0 mr-2">
+                    <input mdbInput mdbValidate type="text" class="form-control" formControlName="expEqname"
+                      placeholder="设备">
+                    <mdb-error *ngIf="expEqname.invalid && (expEqname.dirty || expEqname.touched)" class="mt-0">请填写内容
+                    </mdb-error>
+                    <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                  </div>
+                  <div class="md-form m-0 col p-0">
+                    <input mdbInput mdbValidate type="number" class="form-control" formControlName="eqNum" min=1 max=100
+                      placeholder="数量">
+                    <mdb-error *ngIf="eqNum.invalid && (eqNum.dirty || eqNum.touched)">不能为空,且于1到100</mdb-error>
+                  </div>
+                </div>
+
+              </td>
+              <td>
+                <div class="row mx-1 my-0">
+                  <div class="md-form col p-0 my-0 mr-2">
+                    <input mdbInput mdbValidate type="text" class="form-control" formControlName="conName"
+                      placeholder="材料">
+                    <mdb-error *ngIf="conName.invalid && (conName.dirty || conName.touched)" class="mt-0">请填写内容
+                    </mdb-error>
+                    <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                  </div>
+                  <div class="md-form m-0 col p-0">
+                    <input mdbInput mdbValidate type="number" class="form-control" formControlName="conNum" min=1
+                      max=100 placeholder="数量">
+                    <mdb-error *ngIf="conNum.invalid && (conNum.dirty || conNum.touched)">不能为空,且于1到100</mdb-error>
+                  </div>
+                </div>
+
+              </td>
+              <td>
+                <div class="md-form m-0 col p-0">
+                  <input mdbInput mdbValidate type="number" class="form-control" formControlName="expTime" min=1
+                    max=100>
+                  <mdb-error *ngIf="expTime.invalid && (expTime.dirty || expTime.touched)">不能为空,且于1到100</mdb-error>
+                </div>
+              </td>
+              <td>
+                <div class="md-form my-0">
+                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="book">
+                  <mdb-error *ngIf="book.invalid && (book.dirty || book.touched)">请填写内容</mdb-error>
+                  <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                </div>
+              </td>
+              <td>
+                <div class="md-form my-0">
+                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="sSorsoftWaret">
+                  <mdb-error *ngIf="sSorsoftWaret.invalid && (sSorsoftWaret.dirty || sSorsoftWaret.touched)">请填写内容
                   </mdb-error>
                   <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
                 </div>
-                <div class="md-form m-0 col p-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" formControlName="eqNum" min=1 max=100
-                         placeholder="数量">
-                  <mdb-error *ngIf="eqNum.invalid && (eqNum.dirty || eqNum.touched)">不能为空,且于1到100</mdb-error>
-                </div>
-              </div>
-
-            </td>
-            <td>
-              <div class="row mx-1 my-0">
-                <div class="md-form col p-0 my-0 mr-2">
-                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="conName"
-                         placeholder="材料">
-                  <mdb-error *ngIf="conName.invalid && (conName.dirty || conName.touched)" class="mt-0">请填写内容
-                  </mdb-error>
-                  <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
-                </div>
-                <div class="md-form m-0 col p-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" formControlName="conNum" min=1
-                         max=100 placeholder="数量">
-                  <mdb-error *ngIf="conNum.invalid && (conNum.dirty || conNum.touched)">不能为空,且于1到100</mdb-error>
-                </div>
-              </div>
-
-            </td>
-            <td>
-              <div class="md-form m-0 col p-0">
-                <input mdbInput mdbValidate type="number" class="form-control" formControlName="expTime" min=1
-                       max=100>
-                <mdb-error *ngIf="expTime.invalid && (expTime.dirty || expTime.touched)">不能为空,且于1到100</mdb-error>
-              </div>
-            </td>
-            <td>
-              <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="book">
-                <mdb-error *ngIf="book.invalid && (book.dirty || book.touched)">请填写内容</mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
-              </div>
-            </td>
-            <td>
-              <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="sSorsoftWaret">
-                <mdb-error *ngIf="sSorsoftWaret.invalid && (sSorsoftWaret.dirty || sSorsoftWaret.touched)">请填写内容
-                </mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
           </tbody>
-          <tbody *ngIf="!switch2">
-          <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId)">
-            <td>{{each.expCname}}</td>
-            <td>{{each.eqnum}}</td>
-            <td>{{each.conNum}}</td>
-            <td>{{each.expTime}}</td>
-            <td>{{each.book}}</td>
-            <td>{{each.software}}</td>
-          </tr>
-          </tbody>
+          <!-- <tbody *ngIf="!switch2">
+            <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId)">
+              <td>{{each.expCname}}</td>
+              <td>{{each.eqnum}}</td>
+              <td>{{each.conNum}}</td>
+              <td>{{each.expTime}}</td>
+              <td>{{each.book}}</td>
+              <td>{{each.software}}</td>
+            </tr>
+          </tbody> -->
         </table>
       </div>
     </div>
   </div>
 
 </div>
-<div class="row">
-  <div class="col px-0">
-    <div class="card">
-      <h3 class="card-header text-center font-weight-bold">实验项目细则
-        <span class="table-add float-right mb-3 mr-2" *ngIf="switch2">
-          <a class="text-success" (click)="add()">
-            <mdb-icon fas icon="plus" size="lg"></mdb-icon>
-          </a>
-        </span>
-      </h3>
-      <div class="card-body">
-        <div id="table" class="table-editable">
+<div class="list" *ngIf="switch2">
+  <div class="row animated fadeInDown">
+    <div class="col px-0">
+      <div class="card">
+        <h3 class="card-header text-center font-weight-bold">实验项目细则
+          <span class="table-add float-right mb-3 mr-2">
+            <a class="text-success" (click)="add()">
+              <mdb-icon fas icon="plus" size="lg"></mdb-icon>
+            </a>
+          </span>
+        </h3>
+        <div class="card-body">
+          <div id="table" class="table-editable">
 
-          <table mdbTable class="table table-bordered table-responsive-md table-striped text-center " small="true"
-                 bordered="true">
-            <thead>
-            <tr class="black white-text">
-              <th class="text-center">实验项目编号</th>
-              <th class="text-center">实验项目名称</th>
-              <th class="text-center">实验类别</th>
-              <th class="text-center">实验学时</th>
-              <th class="text-center">课程性质</th>
-              <th class="text-center">分组人数</th>
-              <th class="text-center">实验目的</th>
-              <th class="text-center">可执行操作</th>
-            </tr>
-            </thead>
-            <tbody *ngIf="switch2">
-            <tr *ngFor="let control of controlArray;let id = index">
-              <td>
-                <span>{{id + 1}}</span>
-              </td>
-              <td>
-                <div class="md-form my-0 py-0">
-                  <input mdbInput mdbValidate type="text" class="form-control" name="iName{{control.id}}"
-                         [(ngModel)]="control.iName" required #iName="ngModel">
-                  <mdb-error *ngIf="iName.invalid && (iName.dirty || iName.touched)">请填写内容</mdb-error>
-                </div>
-              </td>
-              <td>
-                <div class="md-form my-0 py-0">
-                  <select class="browser-default custom-select" name="iType{{control.id}}" [(ngModel)]="control.iType"
-                          required #iType="ngModel">
-                    <option value="验证">验证</option>
-                    <option value="综合">综合</option>
-                  </select>
-                  <mdb-error *ngIf="iType.invalid && (iType.dirty || iType.touched)">请填写内容</mdb-error>
-                </div>
-              </td>
-              <td>
-                <div class="md-form my-0 py-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" name="iTime{{control.id}}"
-                         [(ngModel)]="control.num" required min=0 max=100 #num="ngModel">
-                  <mdb-error *ngIf="num.invalid && (num.dirty || num.touched)">不能为空,且于0到100</mdb-error>
-                </div>
+            <table mdbTable class="table table-bordered table-responsive-md table-striped text-center " small="true"
+              bordered="true">
+              <thead>
+                <tr class="black white-text">
+                  <th class="text-center">实验项目编号</th>
+                  <th class="text-center">实验项目名称</th>
+                  <th class="text-center">实验类别</th>
+                  <th class="text-center">实验学时</th>
+                  <th class="text-center">课程性质</th>
+                  <th class="text-center">分组人数</th>
+                  <th class="text-center">实验目的</th>
+                  <th class="text-center">可执行操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let control of controlArray;let id = index">
+                  <td>
+                    <span>{{id + 1}}</span>
+                  </td>
+                  <td>
+                    <div class="md-form my-0 py-0">
+                      <input mdbInput mdbValidate type="text" class="form-control" name="iName{{control.id}}"
+                        [(ngModel)]="control.iName" required #iName="ngModel">
+                      <mdb-error *ngIf="iName.invalid && (iName.dirty || iName.touched)">请填写内容</mdb-error>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="md-form my-0 py-0">
+                      <select class="browser-default custom-select" name="iType{{control.id}}"
+                        [(ngModel)]="control.iType" required #iType="ngModel">
+                        <option value="验证">验证</option>
+                        <option value="综合">综合</option>
+                      </select>
+                      <mdb-error *ngIf="iType.invalid && (iType.dirty || iType.touched)">请填写内容</mdb-error>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="md-form my-0 py-0">
+                      <input mdbInput mdbValidate type="number" class="form-control" name="iTime{{control.id}}"
+                        [(ngModel)]="control.num" required min=0 max=100 #num="ngModel">
+                      <mdb-error *ngIf="num.invalid && (num.dirty || num.touched)">不能为空,且于0到100</mdb-error>
+                    </div>
 
-              </td>
-              <td>
-                <div class="md-form my-0 py-0">
-                  <select class="browser-default custom-select" name="cType{{control.id}}" [(ngModel)]="control.cType"
-                          required #cType="ngModel">
-                    <option value="必修">必修</option>
-                    <option value="选修">选修</option>
-                  </select>
-                  <mdb-error *ngIf="cType.invalid && (cType.dirty || cType.touched)">请填写内容</mdb-error>
-                </div>
+                  </td>
+                  <td>
+                    <div class="md-form my-0 py-0">
+                      <select class="browser-default custom-select" name="cType{{control.id}}"
+                        [(ngModel)]="control.cType" required #cType="ngModel">
+                        <option value="必修">必修</option>
+                        <option value="选修">选修</option>
+                      </select>
+                      <mdb-error *ngIf="cType.invalid && (cType.dirty || cType.touched)">请填写内容</mdb-error>
+                    </div>
 
-              </td>
-              <td>
-                <div class="md-form my-0 py-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" name="iTime{{control.id}}"
-                         [(ngModel)]="control.iTime" required min=0 max=100 #iTime="ngModel">
-                  <mdb-error *ngIf="iTime.invalid && (iTime.dirty || iTime.touched)">不能为空,且于1到100</mdb-error>
-                </div>
+                  </td>
+                  <td>
+                    <div class="md-form my-0 py-0">
+                      <input mdbInput mdbValidate type="number" class="form-control" name="iTime{{control.id}}"
+                        [(ngModel)]="control.iTime" required min=0 max=100 #iTime="ngModel">
+                      <mdb-error *ngIf="iTime.invalid && (iTime.dirty || iTime.touched)">不能为空,且于1到100</mdb-error>
+                    </div>
 
-              </td>
-              <td>
-                <div class="md-form px-3  my-0 py-0">
-                    <textarea type="text" class="md-textarea form-control p-2" mdbInput rows="1" cols="10"
-                              name="iTime{{control.id}}" [(ngModel)]="control.intend"></textarea>
+                  </td>
+                  <td>
+                    <div class="md-form px-3  my-0 py-0">
+                      <textarea type="text" class="md-textarea form-control p-2" mdbInput rows="1" cols="10"
+                        name="iTime{{control.id}}" [(ngModel)]="control.intend"></textarea>
 
-                </div>
-              </td>
-              <td>
-                  <span class="table-remove">
-                    <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0"
-                            data-toggle="modal" data-target="#basicExample" (click)="frame.show()">移除</button>
-                  </span>
-                <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
-                     aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-                    <!--Content-->
-                    <div class="modal-content text-center">
-                      <!--Header-->
-                      <div class="modal-header d-flex justify-content-center">
-                        <p class="heading">确定删除吗？</p>
-                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="table-remove">
+                      <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0"
+                        data-toggle="modal" data-target="#basicExample" (click)="frame.show()">移除</button>
+                    </span>
+                    <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1"
+                      role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+                        <!--Content-->
+                        <div class="modal-content text-center">
+                          <!--Header-->
+                          <div class="modal-header d-flex justify-content-center">
+                            <p class="heading">确定删除吗？</p>
+                          </div>
 
-                      <!--Body-->
-                      <div class="modal-body">
-                        <mdb-icon fas icon="times" size="4x" class="animated rotateIn"></mdb-icon>
-                      </div>
+                          <!--Body-->
+                          <div class="modal-body">
+                            <mdb-icon fas icon="times" size="4x" class="animated rotateIn"></mdb-icon>
+                          </div>
 
-                      <!--Footer-->
-                      <div class="modal-footer justify-content-center">
-                        <a mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect
-                           (click)="remove(id)">确定</a>
-                        <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect
-                           data-dismiss="modal" (click)="frame.hide()">返回</a>
+                          <!--Footer-->
+                          <div class="modal-footer justify-content-center">
+                            <a mdbBtn color="danger" outline="true" class="waves-effect" mdbWavesEffect
+                              (click)="remove(id)">确定</a>
+                            <a type="button" mdbBtn color="danger" class="waves-effect" mdbWavesEffect
+                              data-dismiss="modal" (click)="frame.hide()">返回</a>
+                          </div>
+                        </div>
+                        <!--/.Content-->
                       </div>
                     </div>
-                    <!--/.Content-->
-                  </div>
-                </div>
-              </td>
+                  </td>
 
-            </tr>
-            </tbody>
-            <tbody *ngIf="!switch2">
-            <tr *ngFor="let each of projectItems; let id = index">
-              <td>{{each.iid}}</td>
-              <td>{{each.iname}}</td>
-              <td>{{each.itype}}</td>
-              <td>{{each.itime}}</td>
-              <td>{{each.ctype}}</td>
-              <td>>{{each.num}}</td>
-              <td>{{each.intend}}</td>
-              <td></td>
-            </tbody>
-          </table>
+                </tr>
+              </tbody>
+              <!-- <tbody *ngIf="!switch2">
+                <tr *ngFor="let each of projectItems; let id = index">
+                  <td>{{each.iid}}</td>
+                  <td>{{each.iname}}</td>
+                  <td>{{each.itype}}</td>
+                  <td>{{each.itime}}</td>
+                  <td>{{each.ctype}}</td>
+                  <td>>{{each.num}}</td>
+                  <td>{{each.intend}}</td>
+                  <td></td>
+              </tbody> -->
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
+  </div>
+  <div class="row">
+    <div class="col-4 mx-auto mt-4">
+      <button mdbBtn type="button" color="success" block="true" outline="true" (click)="onsubmit()" class="rounded-pill"
+        mdbWavesEffect>提交
+      </button>
+
+    </div>
+  </div>
 </div>
-<div class="row">
-  <div class="col-4 mx-auto mt-4">
-    <button mdbBtn type="button" color="success" block="true" outline="true" (click)="onsubmit()" class="rounded-pill"
-            mdbWavesEffect>提交
-    </button>
-
+<div class="row mt-2 animated animated fadeIn" *ngIf="!switch2">
+  <div class="col px-0">
+    <div class="card">
+      <h3 class="card-header text-center font-weight-bold">实验项目卡片
+      </h3>
+      <div class="card-body">
+        <table mdbTable bordered="true" small="true" class="text-center">
+          <thead class="black white-text">
+            <tr>
+              <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+            </tr>
+          </thead>
+          <tbody *ngIf="!switch2">
+            <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId);get_classname(each.expCname)">
+              <td>{{each.expCname}}</td>
+              <td>{{each.eqnum}}</td>
+              <td>{{each.conNum}}</td>
+              <td>{{each.expTime}}</td>
+              <td>{{each.book}}</td>
+              <td>{{each.software}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+</div>
+<div class="list" *ngIf="!switch2">
+  <div class="row animated fadeIn">
+    <div class="col px-0">
+      <div class="card">
+        <h3 class="card-header text-center font-weight-bold">{{classname}}实验项目细则</h3>
+        <div class="card-body">
+          <div id="table" class="table-editable">
+
+            <table mdbTable class="table table-bordered table-responsive-md table-striped text-center " small="true"
+              bordered="true">
+              <thead>
+                <tr class="black white-text">
+                  <th class="text-center">实验项目编号</th>
+                  <th class="text-center">实验项目名称</th>
+                  <th class="text-center">实验类别</th>
+                  <th class="text-center">实验学时</th>
+                  <th class="text-center">课程性质</th>
+                  <th class="text-center">分组人数</th>
+                  <th class="text-center">实验目的</th>
+                  <th class="text-center">可执行操作</th>
+                </tr>
+              </thead>
+              <tbody *ngIf="!switch2">
+                <tr *ngFor="let each of projectItems; let id = index">
+                  <td>{{each.iid}}</td>
+                  <td>{{each.iname}}</td>
+                  <td>{{each.itype}}</td>
+                  <td>{{each.itime}}</td>
+                  <td>{{each.ctype}}</td>
+                  <td>>{{each.num}}</td>
+                  <td>{{each.intend}}</td>
+                  <td></td>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

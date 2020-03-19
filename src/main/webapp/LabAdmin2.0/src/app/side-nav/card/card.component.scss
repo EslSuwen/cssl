@@ -11,9 +11,41 @@
   }
 }
 
-#flag2 {
+
+#flag1 {
   position: absolute;
   display: none;
+}
+.slider-v3 {
+  position: relative;
+  display: block;
+  width: 7em;
+  height: 3em;
+  cursor: pointer;
+  border-radius: 1.5em;
+  transition: 350ms;
+  background: #ddd;
+}
+
+.slider-v3::after {
+  position: absolute;
+  content: '';
+  width: 2em;
+  height: 2em;
+  top: 0.5em;
+  left: 0.5em;
+  border-radius: 1.5em;
+  transition: width 200ms ease-out, height 300ms 50ms ease-in, top 300ms 50ms ease-in, left 250ms 50ms ease-in, background 300ms ease-in, box-shadow 300ms ease-in;
+  background: #f2f2f2;
+  box-shadow: 0 0 0 1.5em #f2f2f2 inset;
+}
+#flag1:checked + .slider-v3::after {
+  width: 4em;
+  height: 3em;
+  top: 0;
+  left: 3em;
+  background: #4c6;
+  box-shadow: 0 0 0 0 #f2f2f2 inset;
 }
 .slider-v2 {
   position: relative;
@@ -53,10 +85,15 @@
   box-shadow: 0 0.08em 0.15em -0.1em rgba(0, 0, 0, 0.5) inset, 0 0.05em 0.08em -0.01em rgba(255, 255, 255, 0.7), 0 0 0 0 rgba(68, 204, 102, 0.7) inset;
 }
 
-#flag2:checked + .slider-v2::before {
+#flag1:checked + .slider-v2::before {
   box-shadow: 0 0.08em 0.15em -0.1em rgba(0, 0, 0, 0.5) inset, 0 0.05em 0.08em -0.01em rgba(255, 255, 255, 0.7), 3em 0 0 0 rgba(68, 204, 102, 0.7) inset;
 }
 
-#flag2:checked + .slider-v2::after {
+#flag1:checked + .slider-v2::after {
   left: 3em;
 }
+//文本框的高度
+.list{
+  margin-top: 100px;
+}
+

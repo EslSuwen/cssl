@@ -68,7 +68,21 @@ img {
   border-left:0.5em solid #9B8651;
   border-bottom:0.5em solid #fff;
 }
-
+.my-auto{
+  margin-top: auto !important;
+  margin-bottom: auto !important;
+  margin-right: 80px;
+  
+}
+.my-auto .btn-group mx-4.waves-effect:hover .dropdown-menu {
+  display: block;
+}
+.show>:hover.dropdown-menu {
+    display: block;
+}
+.badge {
+  font-size: 15px;
+}
 
 
 
