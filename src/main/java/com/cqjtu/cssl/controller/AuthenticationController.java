@@ -3,6 +3,7 @@ package com.cqjtu.cssl.controller;
 import com.cqjtu.cssl.entity.AuthenticationRequest;
 import com.cqjtu.cssl.entity.AuthenticationResponse;
 import com.cqjtu.cssl.entity.Message;
+import com.cqjtu.cssl.service.TeacherService;
 import com.cqjtu.cssl.utils.JwtTokenUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
@@ -45,17 +46,19 @@ public class AuthenticationController {
   private final UserDetailsService userDetailsService;
   private final AuthenticationManager authenticationManager;
   private final DefaultKaptcha defaultKaptcha;
+  private final TeacherService teacherService;
 
   @Autowired
   public AuthenticationController(
       AuthenticationManager authenticationManager,
       JwtTokenUtil jwtTokenUtil,
       @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
-      DefaultKaptcha defaultKaptcha) {
+      DefaultKaptcha defaultKaptcha,TeacherService teacherService) {
     this.authenticationManager = authenticationManager;
     this.jwtTokenUtil = jwtTokenUtil;
     this.userDetailsService = userDetailsService;
     this.defaultKaptcha = defaultKaptcha;
+    this.teacherService=teacherService;
   }
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
@@ -66,18 +69,18 @@ public class AuthenticationController {
     log.info(request.getSession().getAttribute("imageCode"));
 
     if (!authRequest.getImgCode().equals(request.getSession().getAttribute("imageCode"))) {
-      return new AuthenticationResponse("", new Message("Wrong imageCode!!!"));
+      return new AuthenticationResponse("", null, new Message("Wrong imageCode!!!"));
     }
 
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
-                authRequest.getUsername(), authRequest.getPassword()));
+                authRequest.getUserNo(), authRequest.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
+    UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
     String token = jwtTokenUtil.generate(userDetails);
-    return new AuthenticationResponse(token, new Message("successful"));
+    return new AuthenticationResponse(token,teacherService.findByTid(authRequest.getUserNo()), new Message("successful"));
   }
 
   /**

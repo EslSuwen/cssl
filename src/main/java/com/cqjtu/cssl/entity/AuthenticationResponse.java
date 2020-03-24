@@ -19,9 +19,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthenticationResponse {
-  @ApiModelProperty(value = "验证[验证失败为空]")
+
+  @ApiModelProperty(value = "验证token[验证失败为空]")
   private String token;
 
-  @ApiModelProperty(position = 1, value = "错误消息")
+  @ApiModelProperty(position = 1, value = "登录用户信息")
+  Teacher teacher;
+
+  @ApiModelProperty(position = 2, value = "错误消息")
   Message message;
 }

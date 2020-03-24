@@ -13,12 +13,12 @@ import lombok.Data;
 @Data
 @ApiModel(description = "验证请求接收实体")
 public class AuthenticationRequest {
-  @ApiModelProperty(position = 0, value = "用户名[用户账号]", required = true)
-  private String username;
+  @ApiModelProperty(position = 0, value = "用户账号", required = true)
+  private String userNo;
 
   @ApiModelProperty(position = 1, value = "用户密码", required = true)
   private String password;
 
-  @ApiModelProperty(position = 2, value = "用户密码", required = true)
+  @ApiModelProperty(position = 2, value = "登录验证码", required = true)
   private String imgCode;
 }

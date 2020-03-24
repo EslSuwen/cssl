@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {TeacherService} from "../../service/teacher.service";
+import {TeacherMsg} from "../../enity/teacher";
+import {AuthenticationService} from "../../service/authentication.service";
 
 @Component({
   selector: 'app-message',
@@ -7,9 +10,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MessageComponent implements OnInit {
 
-  constructor() { }
+  teacherMsgs: TeacherMsg[];
+
+  constructor(private authenticationService: AuthenticationService, private teacherService: TeacherService) {
+  }
 
   ngOnInit() {
+    this.teacherService.getMsgInfo(this.authenticationService.getUserNo()).subscribe(data => {
+      this.teacherMsgs = data;
+    });
+  }
+
+  isreaded(id: number) {
+    this.teacherMsgs[id].mstatus = 1;
+    this.teacherService.readMsg(this.teacherMsgs[id].mid).subscribe();
+  }
+
+  deleteMsg(id: number) {
+    this.teacherService.deleteMsg(this.teacherMsgs[id].mid).subscribe();
+    this.teacherMsgs.splice(id, 1);
   }
 
 }

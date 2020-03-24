@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
+import {Teacher} from "../../enity/teacher";
+import {TeacherService} from "../../service/teacher.service";
 
 @Component({
   selector: 'app-personal-info',
@@ -25,13 +27,17 @@ export class PersonalInfoComponent implements OnInit {
   ];
   userName: string;
 
+  teacher: Teacher;
+
   headElements = ['节数/星期', '星期一', '星期二', '星期三', '星期四', '星期五',];
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private authenticationService: AuthenticationService, private teacherService: TeacherService) {
   }
 
   ngOnInit() {
-    this.userName = this.authenticationService.getUsername();
+    this.teacher = this.authenticationService.getCurrentUserInfo();
+    this.userName = this.teacher.tname;
+
   }
 
 }

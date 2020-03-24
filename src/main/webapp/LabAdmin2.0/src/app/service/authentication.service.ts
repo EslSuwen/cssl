@@ -4,6 +4,7 @@ import {Observable, of} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {throwError} from 'rxjs/internal/observable/throwError';
 import {environment} from "../../environments/environment";
+import {Teacher} from "../enity/teacher";
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'}),
@@ -13,13 +14,14 @@ const httpOptions = {
 @Injectable({providedIn: 'root'})
 export class AuthenticationService {
   private tokenParsed: any;
+  private teacher: Teacher;
 
   constructor(private http: HttpClient) {
   }
 
-  login(name: string, pass: string, img: string): Observable<boolean> {
+  login(no: string, pass: string, img: string): Observable<boolean> {
     return this.http.post<any>(`${environment.apiUrl}/api/auth`, JSON.stringify({
-      username: name,
+      userNo: no,
       password: pass,
       imgCode: img
     }), httpOptions).pipe(
@@ -27,8 +29,11 @@ export class AuthenticationService {
         if (response && response.token) {
           // login successful, store username and jwt token in local storage to keep user logged in between page refreshes
           let tokenParsed = this.decodeToken(response.token);
+          let teacher: Teacher = response.teacher;
+          console.log(response.teacher);
+          localStorage.setItem('currentUserInfo', JSON.stringify(teacher));
           localStorage.setItem('currentUser', JSON.stringify({
-            username: name,
+            userNo: no,
             token: response.token,
             expire: JSON.parse(tokenParsed).exp,
             tokenParsed: tokenParsed
@@ -49,8 +54,12 @@ export class AuthenticationService {
     const userStr = localStorage.getItem('currentUser');
     const nowTime = new Date().getTime().toString().substr(0, 10);
     const user = JSON.parse(userStr);
-
     return userStr && user.expire > nowTime ? user : this.logout();
+  }
+
+  getCurrentUserInfo(): any {
+    const userInfoStr = localStorage.getItem('currentUserInfo');
+    return this.isLoggedIn() ? JSON.parse(userInfoStr) : '';
   }
 
   getToken(): string {
@@ -58,13 +67,19 @@ export class AuthenticationService {
     return currentUser ? currentUser.token : '';
   }
 
-  getUsername(): string {
+  getUserNo(): string {
     const currentUser = this.getCurrentUser();
-    return currentUser ? currentUser.username : '';
+    return currentUser ? currentUser.userNo : '';
+  }
+
+  getUserName(): string {
+    const currentUser = this.getCurrentUserInfo();
+    return currentUser ? currentUser.tname : '';
   }
 
   logout(): void {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('currentUserInfo');
   }
 
   isLoggedIn(): boolean {
