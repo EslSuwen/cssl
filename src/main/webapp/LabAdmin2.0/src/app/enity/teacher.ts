@@ -16,10 +16,39 @@ export class Teacher {
   tlimit: number;
 }
 
+
+export class Teach {
+  // 教职工号
+  tid: string;
+  // 课程号
+  courseId: number;
+  // 实验室申请权限
+  applyLimit: number;
+
+  /** 课程名 */
+  courseName: string;
+
+  /** 课程实验室申请状态 */
+  status: string;
+
+  /** 课程实验室编号 */
+  labId: string;
+
+  constructor() {
+    this.tid = 'init';
+    this.courseId = 0;
+    this.applyLimit = 0;
+    this.courseName = 'init';
+    this.status = 'init';
+    this.labId = 'init';
+  }
+}
+
+
 /**
  * 用户消息实体
  */
-export class TeacherMsg{
+export class TeacherMsg {
 
   mid: number;
 

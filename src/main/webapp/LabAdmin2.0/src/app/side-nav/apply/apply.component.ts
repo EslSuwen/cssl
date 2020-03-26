@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {Teach} from './apply'
 import {ApplyService} from "../../service/apply.service";
-import {Exp} from '../../enity/enity';
+import {Exp} from '../../enity/project';
 import {ProjectService} from 'src/app/service/project.service';
+import {Teach} from "../../enity/teacher";
 @Component({
   selector: 'app-apply',
   templateUrl: './apply.component.html',

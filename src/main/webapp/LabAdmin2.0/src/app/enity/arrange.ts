@@ -32,12 +32,12 @@ export class Arrange {
 
   constructor() {
     this.aid = 0;
-    this.labId = 'init';
+    this.labId = '';
     this.proId = 0;
-    this.tid = 'init';
+    this.tid = '';
     this.courseId = 0;
-    this.labClass = 'init';
-    this.labRemark = 'init';
+    this.labClass = '';
+    this.labRemark = '';
     this.arrangePeriod = new Array<ArrangePeriod>();
   }
 }
@@ -70,33 +70,6 @@ export class ArrangePeriod {
     this.labWeek = 0;
     this.labDay = 0;
     this.labSession = 0;
-    this.expProname = 'init';
-  }
-}
-
-export class Teach {
-  // 教职工号
-  tid: string;
-  // 课程号
-  courseID: number;
-  // 实验室申请权限
-  applyLimit: number;
-
-  /** 课程名 */
-  courseName: string;
-
-  /** 课程实验室申请状态 */
-  status: string;
-
-  /** 课程实验室编号 */
-  labId: string;
-
-  constructor() {
-    this.tid = 'init';
-    this.courseID = 0;
-    this.applyLimit = 0;
-    this.courseName = 'init';
-    this.status = 'init';
-    this.labId = 'init';
+    this.expProname = '';
   }
 }

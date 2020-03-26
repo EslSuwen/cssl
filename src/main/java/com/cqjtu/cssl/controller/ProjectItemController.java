@@ -3,10 +3,12 @@ package com.cqjtu.cssl.controller;
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.service.ProjectItemService;
 import io.swagger.annotations.Api;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * (项目卡片)实验项目控制器
@@ -29,15 +31,15 @@ public class ProjectItemController {
   /**
    * 测试实验项目项增加
    *
-   * @param projectItem 请求体变量 实验项目
+   * @param projectItems 请求体变量 实验项目
    * @return int 状态码
    * @author suwen
    * @date 2020/2/6 2:55 下午
    */
-  @PostMapping(value = "/newProjectItem")
-  public int addNewProjectItem(@RequestBody ProjectItem projectItem) {
+  @PostMapping(value = "/addProjectItems")
+  public int addNewProjectItem(@RequestBody List<ProjectItem> projectItems) {
 
-    projectItemService.save(projectItem);
+    projectItemService.saveBatch(projectItems);
 
     return 0;
   }
@@ -51,12 +53,8 @@ public class ProjectItemController {
    * @date 2020/2/6 2:55 下午
    */
   @GetMapping(value = "/getProjectItem/{proId}")
-  public List<ProjectItem> getProjectItem(@PathVariable("proId") Integer proId) {
+  public List<ProjectItem> getProjectItem(@NonNull @PathVariable("proId") Integer proId) {
 
-    System.out.println("proId = " + proId);
-    if (proId == null) {
-      proId = 1;
-    }
-    return projectItemService.findAllByProId(proId);
+    return projectItemService.listByProId(proId);
   }
 }

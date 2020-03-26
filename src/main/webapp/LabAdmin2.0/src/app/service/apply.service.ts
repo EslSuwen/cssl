@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {Teach} from '../side-nav/apply/apply'
 import {environment} from "../../environments/environment";
 import {log} from "util";
 import {MessageService} from "./message.service";
+import {Teach} from "../enity/teacher";
 
 @Injectable({
   providedIn: 'root'

@@ -46,9 +46,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   /** 放行白名单 */
   private static String[] WHITE_LIST = {
-    "/",
-    "/demo/**",
+    "/**",
     "/**/*.css,",
+    "/**/*.jpg,",
+    "/**/*.png,",
+    "/**/*.ico,",
     "/**/*.js",
     "/**/*.html",
     "/api-docs",

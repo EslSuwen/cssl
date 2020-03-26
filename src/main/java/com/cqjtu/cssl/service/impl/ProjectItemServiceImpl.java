@@ -20,19 +20,13 @@ import java.util.Map;
 @Service
 public class ProjectItemServiceImpl extends ServiceImpl<ProjectItemMapper, ProjectItem>
     implements ProjectItemService {
-  private final ProjectItemMapper projectItemMapper;
-
-  @Autowired
-  public ProjectItemServiceImpl(ProjectItemMapper projectItemMapper) {
-    this.projectItemMapper = projectItemMapper;
-  }
 
   @Override
-  public List<ProjectItem> findAllByProId(int proId) {
+  public List<ProjectItem> listByProId(int proId) {
 
     Map<String, Object> map = new HashMap<>();
     map.put("pro_Id", proId);
 
-    return projectItemMapper.selectByMap(map);
+    return listByMap(map);
   }
 }

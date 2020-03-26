@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
-import {Teacher, TeacherMsg} from "../enity/teacher";
+import {Teach, Teacher, TeacherMsg} from "../enity/teacher";
 import {catchError, tap} from "rxjs/operators";
 
 @Injectable({
@@ -15,6 +15,8 @@ export class TeacherService {
 
   private teacher_api = `${environment.apiUrl}/teacher`;
 
+  private teach_api = `${environment.apiUrl}/teach`;
+
 
   getTeacherInfo(tid: string): Observable<Teacher> {
     const url = `${this.teacher_api}/getTeacherInfo/${tid}`;
@@ -22,6 +24,11 @@ export class TeacherService {
       tap(() => this.log(`fetched teacher id=${tid}`)),
       catchError(this.handleError<Teacher>(`getTeacherInfo id=${tid}`))
     );
+  }
+
+  getTeaches(tid:string): Observable<Teach[]> {
+    const url=`${this.teach_api}/getTeachInfo/${tid}`;
+    return this.http.get<Teach[]>(url);
   }
 
   getMsgInfo(tid: string): Observable<TeacherMsg[]> {

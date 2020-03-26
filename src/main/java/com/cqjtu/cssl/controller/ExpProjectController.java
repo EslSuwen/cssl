@@ -28,22 +28,25 @@ public class ExpProjectController {
   }
 
   /**
-   * 测试项目卡片增加
+   * 项目卡片增加
    *
    * @param expProject 请求体变量 项目卡片
    * @return int 状态码
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
-  @PostMapping(value = "/newProject")
+  @PostMapping(value = "/addProject")
   public int addNewProject(@RequestBody ExpProject expProject) {
 
-    System.out.println("addNewData()被调用");
+    if (expProjectService.isCardExist(expProject.getExpTid(), expProject.getCourseId())) {
+      return -1;
+    }
+    expProject.setLabCenName("信息技术实践教学中心");
+    expProjectService.save(expProject);
 
-    expProjectService.addProject(expProject);
-
-    // save后自动添加id
-    return 0;
+    return expProjectService
+        .getExpByTidCid(expProject.getExpTid(), expProject.getCourseId())
+        .getProId();
   }
 
   /**
@@ -56,9 +59,7 @@ public class ExpProjectController {
   @GetMapping(value = "/getProject")
   public List<ExpProject> getProjects() {
 
-    System.out.println("getProjects()被调用");
-
-    return expProjectService.loadAll();
+    return expProjectService.list();
   }
 
   /**

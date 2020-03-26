@@ -21,5 +21,5 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @param proId 项目卡片编号
    * @return List<ProjectItem>
    */
-  List<ProjectItem> findAllByProId(int proId);
+  List<ProjectItem> listByProId(int proId);
 }
