@@ -1,6 +1,4 @@
-/* 请求服务地址：
-http://localhost:8090/cssl/project/
- class Project 项目 */
+//class Project 项目
 export class Exp {
   // 项目ID
   proId: number;
@@ -25,7 +23,9 @@ export class Exp {
   // 教职工号
   expTid: string;
   // 课程名
-  cName: string;
+  cname: string;
+  // 课程编号
+  courseId: string;
   // 消耗材料名称
   conName: string;
   // 消耗材料数量
@@ -33,29 +33,31 @@ export class Exp {
 
   constructor() {
     this.proId = 0;
-    this.labCenName = 'init';
-    this.expCname = 'init';
-    this.expEqname = 'init';
+    this.labCenName = '';
+    this.expCname = '';
+    this.expEqname = '';
     this.eqnum = 0;
-    this.expMajor = 'init';
-    this.ssort = 'init';
+    this.expMajor = '';
+    this.ssort = '';
     this.expTime = 0;
-    this.book = 'init';
-    this.software = 'init';
-    this.expTid = 'init';
-    this.cName = 'init';
-    this.conName = 'init';
+    this.book = '';
+    this.software = '';
+    this.expTid = '';
+    this.cname = '';
+    this.conName = '';
     this.conNum = 0;
   }
 }
 
 // class ProjectItem 实验项目
-// http://localhost:8090/cssl/projectItem/
 export class ProjectItem {
+
+  // 编号
+  ino: number;
   // 实验项目编号
   iid: string;
   // 项目ID
-  proId: string;
+  proId: number;
   // 实验项目名称
   iname: string;
   // 实验类型
@@ -70,14 +72,15 @@ export class ProjectItem {
   intend: string;
 
   constructor() {
-    this.iid = 'init';
-    this.proId = 'init';
-    this.iname = 'init';
-    this.itype = 'init';
+    this.ino = 0;
+    this.iid = '';
+    this.proId = 0;
+    this.iname = '';
+    this.itype = '';
     this.itime = 0;
-    this.ctype = 'init';
+    this.ctype = '';
     this.num = 0;
-    this.intend = 'init';
+    this.intend = '';
 
   }
 }

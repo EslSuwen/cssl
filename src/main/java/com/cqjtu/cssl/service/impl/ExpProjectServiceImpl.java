@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
@@ -7,7 +8,9 @@ import com.cqjtu.cssl.service.ExpProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 项目卡片信息服务实现类
@@ -19,35 +22,15 @@ import java.util.List;
 public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProject>
     implements ExpProjectService {
 
-  private final ExpProjectMapper expProjectMapper;
+  @Override
+  public boolean isCardExist(String tid, String cid) {
 
-  @Autowired
-  public ExpProjectServiceImpl(ExpProjectMapper expProjectMapper) {
-    this.expProjectMapper = expProjectMapper;
+    return !list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid)).isEmpty();
   }
 
   @Override
-  public void addProject(ExpProject expProject) {
-    expProjectMapper.addProject(expProject);
-  }
+  public ExpProject getExpByTidCid(String tid, String cid) {
 
-  @Override
-  public List<ExpProject> loadAll() {
-    return expProjectMapper.findAllProject();
-  }
-
-  @Override
-  public void removeProject(Integer proId) {
-    expProjectMapper.deleProjectById(proId);
-  }
-
-  @Override
-  public void updateProject(ExpProject expProject) {
-    expProjectMapper.updateProjectById(expProject);
-  }
-
-  @Override
-  public ExpProject getProjectById(Integer proId) {
-    return expProjectMapper.findProjectById(proId);
+    return getOne(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid));
   }
 }
