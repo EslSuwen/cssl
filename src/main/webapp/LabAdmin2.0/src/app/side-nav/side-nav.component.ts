@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from "../service/authentication.service";
 
 @Component({
   selector: 'app-side-nav',
@@ -9,15 +10,18 @@ import {Component, OnInit} from '@angular/core';
 export class SideNavComponent implements OnInit {
 
   toggleFlag = true;
+  userName = '';
 
   onToggle() {
     this.toggleFlag = (this.toggleFlag === true) ? false : true;
   }
 
-  constructor() {
+  constructor(private authenticationService: AuthenticationService) {
   }
 
   ngOnInit() {
+
+    this.userName = this.authenticationService.getUserName();
 
   }
 

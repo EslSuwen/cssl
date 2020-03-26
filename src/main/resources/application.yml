@@ -94,7 +94,7 @@ security:
   jwt:
     header: Authorization
     secret: mySecret
-    expiration: 1200
+    expiration: 12000
     issuer: suwen
     authentication-path: /api/auth
 

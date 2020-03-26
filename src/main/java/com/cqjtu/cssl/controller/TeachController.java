@@ -1,7 +1,9 @@
 package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Teach;
+import com.cqjtu.cssl.entity.TeacherMsg;
 import com.cqjtu.cssl.service.TeachService;
+import com.cqjtu.cssl.service.TeacherMsgService;
 import io.swagger.annotations.Api;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,15 +32,18 @@ public class TeachController {
     this.teachService = teachService;
   }
 
+
   /**
    * 根据教师 id 获取授课信息
    *
    * @author suwen
-   * @date 2020/2/6 3:10 下午
+   * @date 2020/3/23 3:10 下午
    * @return 授课信息列表
    */
   @GetMapping(value = "/getTeachInfo/{tid}")
   public List<Teach> getTeachInfo(@NonNull @PathVariable String tid) {
     return teachService.getCourseInfoByTid(tid);
   }
+
+
 }
