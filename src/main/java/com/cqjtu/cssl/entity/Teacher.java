@@ -1,6 +1,8 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,6 +27,7 @@ public class Teacher implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "教职工号", required = true)
+  @TableId()
   private String tid;
 
   @ApiModelProperty(value = "教师姓名", position = 1, required = true)

@@ -11,13 +11,4 @@ import java.util.List;
  * @author Aplin
  * @date 2020/1/13 10:37 上午
  */
-public interface MajorClassMapper {
-  /**
-   * 查询所有班级的信息（含专业名）
-   *
-   * @author Aplin
-   * @date 2020/1/13 10:37 上午
-   * @return List<com.cqjtu.cssl.entity.MajorClassHelper> 专业班级对象
-   */
-  List<MajorClassHelper> findAll();
-}
+public interface MajorClassMapper {}

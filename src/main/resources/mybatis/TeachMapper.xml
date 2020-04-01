@@ -10,42 +10,4 @@
 
 <mapper namespace="com.cqjtu.cssl.mapper.TeachMapper">
 
-    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
-    <resultMap id="TeachRM" type="com.cqjtu.cssl.entity.Teach">
-        <id property="tid" column="tid"/>
-        <result property="courseId" column="course_id"/>
-        <result property="applyLimit" column="apply_limit"/>
-    </resultMap>
-
-    <!-- 添加授课信息 -->
-    <insert id="addTeach" parameterType="com.cqjtu.cssl.entity.Teach">
-  	insert into teach(tid,course_id,apply_limit) values(#{tid},#{courseId},#{applyLimit});
-  </insert>
-
-    <!-- 通过教师Id和课程号查找授课信息 -->
-    <select id="findById" resultMap="TeachRM">
-  		select * from  teach where  tid=#{arg0} and course_id = #{arg1}
-  </select>
-
-    <!-- 通过教师Id和课程号修改授课信息 -->
-    <update id="updateById" parameterType="com.cqjtu.cssl.entity.Teach">
-        update teach set apply_limit = #{applyLimit} where tid=#{tid} and course_id = #{courseId}
-    </update>
-
-    <!-- 查找所有授课信息 -->
-    <select id="findAll" resultMap="TeachRM">
-        select  * from teach
-    </select>
-
-    <!-- 通过教师Id和课程号删除授课信息 -->
-    <delete id="deleteById">
-        delete from teach where tid=#{arg0} and course_id = #{arg1}
-    </delete>
-    <!-- 查找所有授课信息 -->
-    <select id="findByTid" resultMap="TeachRM">
-        select  * from teach where tid = #{tid}
-    </select>
-    <select id="findId" resultType="int">
-        select t.course_id from teach t,course c where t.course_id=c.course_id and  t.tid=#{arg0} and c.course_name=#{arg1};
-    </select>
 </mapper>
