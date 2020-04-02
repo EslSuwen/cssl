@@ -15,11 +15,11 @@ export class Arrange {
   /** 项目ID */
   proId: number;
 
-  /** 教职工号 */
-  tid: string;
+  /** 实验室校区 */
+  campus: string;
 
-  /** 课程号 */
-  courseId: number;
+  /** 申请状态 */
+  status: number;
 
   /** 班级 */
   labClass: string;
@@ -34,8 +34,8 @@ export class Arrange {
     this.aid = 0;
     this.labId = '';
     this.proId = 0;
-    this.tid = '';
-    this.courseId = 0;
+    this.campus = '';
+    this.status = 0;
     this.labClass = '';
     this.labRemark = '';
     this.arrangePeriod = new Array<ArrangePeriod>();

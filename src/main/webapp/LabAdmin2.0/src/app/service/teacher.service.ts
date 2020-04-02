@@ -26,8 +26,8 @@ export class TeacherService {
     );
   }
 
-  getTeaches(tid:string): Observable<Teach[]> {
-    const url=`${this.teach_api}/getTeachInfo/${tid}`;
+  getTeaches(tid: string): Observable<Teach[]> {
+    const url = `${this.teach_api}/getTeachInfo/${tid}`;
     return this.http.get<Teach[]>(url);
   }
 
@@ -48,6 +48,16 @@ export class TeacherService {
   deleteMsg(mid: number) {
     const url = `${this.teacher_api}/deleteMsg/${mid}`;
     return this.http.get(url);
+  }
+
+  updatePassword(tid: string, oldPw: string, newPw: string): Observable<number> {
+    const url = this.teacher_api + '/updatePassword'
+    return this.http.get<number>(url, {
+        params: {
+          "tid": tid, "oldPw": oldPw, "newPw": newPw
+        }
+      }
+    )
   }
 
 

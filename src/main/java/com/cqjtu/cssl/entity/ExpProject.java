@@ -22,7 +22,7 @@ public class ExpProject implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "专业ID", required = true)
+  @ApiModelProperty(value = "项目ID", required = true)
   private Integer proId;
 
   @ApiModelProperty(value = "实验室（中心）名称", position = 1, required = true)
