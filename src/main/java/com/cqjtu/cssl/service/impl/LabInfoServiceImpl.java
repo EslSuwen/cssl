@@ -17,36 +17,4 @@ import java.util.List;
  */
 @Service
 public class LabInfoServiceImpl extends ServiceImpl<LabInfoMapper, LabInfo>
-    implements LabInfoService {
-  private final LabInfoMapper labInfoMapper;
-
-  @Autowired
-  public LabInfoServiceImpl(LabInfoMapper labInfoMapper) {
-    this.labInfoMapper = labInfoMapper;
-  }
-
-  @Override
-  public void addLab(LabInfo labInfo) {
-    labInfoMapper.addLab(labInfo);
-  }
-
-  @Override
-  public void updateLabById(LabInfo labInfo) {
-    labInfoMapper.updateLabById(labInfo);
-  }
-
-  @Override
-  public void deleLabById(String labId) {
-    labInfoMapper.deleLabById(labId);
-  }
-
-  @Override
-  public List<LabInfo> findAllLab() {
-    return labInfoMapper.findAllLab();
-  }
-
-  @Override
-  public List<LabInfo> findLabById(String labId) {
-    return labInfoMapper.findLabById(labId);
-  }
-}
+    implements LabInfoService {}

@@ -10,34 +10,4 @@
 
 <mapper namespace="com.cqjtu.cssl.mapper.CourseMapper">
 
-    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
-    <resultMap id="CourseRM" type="com.cqjtu.cssl.entity.Course">
-        <id property="courseId" column="course_id"/>
-        <result property="courseName" column="course_name"/>
-    </resultMap>
-
-    <!-- 添加课程信息 -->
-    <insert id="addCourse" parameterType="com.cqjtu.cssl.entity.Course" >
-  	insert into course(course_id,course_name) values(#{courseId},#{courseName});
-  </insert>
-
-    <!-- 通过课程Id查找课程信息 -->
-    <select id="findById" resultType="com.cqjtu.cssl.entity.Course" resultMap="CourseRM">
-  		select * from  course where  course_id=#{courseId}
-  </select>
-
-    <!-- 通过课程Id修改课程信息 -->
-    <update id="updateById" parameterType="com.cqjtu.cssl.entity.Course">
-        update course set course_name=#{courseName} where course_id=#{courseId}
-    </update>
-
-    <!-- 查找所有专业信息 -->
-    <select id="findAll" resultMap="CourseRM">
-        select  * from course
-    </select>
-
-    <!-- 通过Id删除课程信息 -->
-    <delete id="deleteById">
-        delete from course where course_id=#{courseId}
-    </delete>
 </mapper>

@@ -10,39 +10,4 @@
 
 <mapper namespace="com.cqjtu.cssl.mapper.ClassMapper">
 
-    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
-    <resultMap id="ClassRM" type="com.cqjtu.cssl.entity.Class">
-        <id property="className" column="class_name"/>
-        <result property="majorId" column="major_id"/>
-        <result property="classNum" column="class_Num"/>
-    </resultMap>
-
-    <!-- 添加班级信息 -->
-    <insert id="addClass" parameterType="com.cqjtu.cssl.entity.Class">
-  	insert into class(class_name,major_id,class_num) values(#{className},#{majorID},#{classNum});
-  </insert>
-
-    <!-- 通过班级和专业查找班级信息 -->
-    <select id="findOneClass" resultType="com.cqjtu.cssl.entity.Class" resultMap="ClassRM">
-  		select * from  class where  class_name=#{arg0} and major_id=#{arg1}
-  </select>
-
-    <!-- 通过班级名称和专业修改班级信息 -->
-    <update id="updateClass" parameterType="com.cqjtu.cssl.entity.Class">
-        update class set class_num = #{classNum} where major_id=#{majorID} and class_name=#{className}
-    </update>
-
-    <!-- 查找所有班级信息 -->
-    <select id="findAllClass" resultMap="ClassRM">
-        select  * from class
-    </select>
-
-    <!-- 通过班级名和专业删除班级信息 -->
-    <delete id="deleteClass">
-        delete from class where class_name=#{arg0} and major_id=#{arg1}
-    </delete>
-    <!-- 查找某专业下的所有班级信息 -->
-    <select id="findClassByMajor" resultMap="ClassRM">
-        select  * from class where major_id = #{majorID}
-    </select>
 </mapper>

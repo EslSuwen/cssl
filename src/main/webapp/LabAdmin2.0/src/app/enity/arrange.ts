@@ -1,9 +1,10 @@
-/**
+/*
  * 实验室安排实体
  *
  * @author suwen
  * @since 2020-02-23
  */
+
 export class Arrange {
 
   /** 实验室排课编号 */
@@ -15,14 +16,17 @@ export class Arrange {
   /** 项目ID */
   proId: number;
 
-  /** 教职工号 */
-  tid: string;
+  /** 实验室校区 */
+  campus: string;
 
-  /** 课程号 */
-  courseId: number;
+  /** 申请状态 */
+  status: number;
 
   /** 班级 */
   labClass: string;
+
+  /** 实验项目名称 */
+  expProname: string;
 
   /** 备注 */
   labRemark: string;
@@ -34,9 +38,10 @@ export class Arrange {
     this.aid = 0;
     this.labId = '';
     this.proId = 0;
-    this.tid = '';
-    this.courseId = 0;
+    this.campus = '';
+    this.status = 0;
     this.labClass = '';
+    this.expProname = '';
     this.labRemark = '';
     this.arrangePeriod = new Array<ArrangePeriod>();
   }
@@ -62,14 +67,10 @@ export class ArrangePeriod {
   /** 开课节次 */
   labSession: number;
 
-  /** 实验项目名称 */
-  expProname: string;
-
   constructor() {
     this.aid = 0;
     this.labWeek = 0;
     this.labDay = 0;
     this.labSession = 0;
-    this.expProname = '';
   }
 }

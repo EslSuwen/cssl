@@ -16,36 +16,4 @@ import java.util.List;
  * @since 2020-02-27
  */
 @Service
-public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {
-  private final MajorMapper majorMapper;
-
-  @Autowired
-  public MajorServiceImpl(MajorMapper majorMapper) {
-    this.majorMapper = majorMapper;
-  }
-
-  @Override
-  public void addMajor(Major major) {
-    majorMapper.addMajor(major);
-  }
-
-  @Override
-  public Major findById(int majorId) {
-    return majorMapper.findById(majorId);
-  }
-
-  @Override
-  public void updateById(int majorId, Major newMajor) {
-    majorMapper.updateById(majorId, newMajor);
-  }
-
-  @Override
-  public List<Major> findAll() {
-    return majorMapper.findAll();
-  }
-
-  @Override
-  public void deleteById(int majorId) {
-    majorMapper.deleteById(majorId);
-  }
-}
+public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService { }

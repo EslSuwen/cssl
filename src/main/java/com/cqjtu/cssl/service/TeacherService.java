@@ -10,43 +10,16 @@ import com.cqjtu.cssl.entity.Teacher;
  * @date 2020/1/13 11:09 上午
  */
 public interface TeacherService extends IService<Teacher> {
-  /**
-   * 通过教职工号查找老师个人信息
-   *
-   * @author Aplin
-   * @date 2020/1/13 11:09 上午
-   * @param tid 教职工号
-   * @return 老师信息
-   */
-  Teacher findByTid(String tid);
 
   /**
    * 通过教职工号修改密码
    *
-   * @author Aplin
-   * @date 2020/1/13 11:09 上午
+   * @author Aplin suwen
+   * @date 2020/4/1 20:14 下午
    * @param tid 教职工号
-   * @param password 新密码
+   * @param oldPw 旧密码
+   * @param newPw 新密码
    */
-  void updatePassword(String tid, String password);
+  int updatePassword(String tid, String oldPw, String newPw);
 
-  /**
-   * 通过教职工号修改个人信息
-   *
-   * @author Aplin
-   * @date 2020/1/13 11:09 上午
-   * @param tid 教职工号
-   * @param teacher 教师信息
-   */
-  void updateTeacher(String tid, Teacher teacher);
-
-  /**
-   * 通过教职工号查询密码
-   *
-   * @author Aplin
-   * @date 2020/1/13 11:09 上午
-   * @param tid 教职工号
-   * @return java.lang.String 密码
-   */
-  String findPassword(String tid);
 }

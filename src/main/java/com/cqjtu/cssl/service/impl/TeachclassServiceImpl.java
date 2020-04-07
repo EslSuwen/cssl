@@ -21,34 +21,4 @@ import java.util.List;
  */
 @Service
 public class TeachclassServiceImpl extends ServiceImpl<TeachclassMapper, Teachclass>
-    implements TeachclassService {
-
-  private TeachclassMapper teachClassMapper;
-  private MajorMapper majorMapper;
-  private TeacherCourseClassMapper teacherCourseClassMapper;
-
-  @Autowired
-  public TeachclassServiceImpl(
-      TeachclassMapper teachClassMapper,
-      MajorMapper majorMapper,
-      TeacherCourseClassMapper teacherCourseClassMapper) {
-    this.teachClassMapper = teachClassMapper;
-    this.majorMapper = majorMapper;
-    this.teacherCourseClassMapper = teacherCourseClassMapper;
-  }
-
-  @Override
-  public List<String> findByTidAndCourseId(String tid, int courseId) {
-    List<Teachclass> teachclasses = teachClassMapper.findByTidAndCourseId(tid, courseId);
-    List<String> list = new ArrayList<>();
-    for (Teachclass t : teachclasses) {
-      list.add(majorMapper.findById(t.getMajorId()).getMajorId() + t.getClassName());
-    }
-    return list;
-  }
-
-  @Override
-  public List<TeacherCourseClassHelper> findAll() {
-    return teacherCourseClassMapper.findALL();
-  }
-}
+    implements TeachclassService {}

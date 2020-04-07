@@ -5,8 +5,8 @@ import {FormControl, FormGroup, Validators, FormBuilder, FormArray} from '@angul
 
 import {ProjectService} from '../../service/project.service';
 import {Exp, ProjectItem} from '../../enity/project';
-import {AuthenticationService} from "../../service/authentication.service";
-import {TeacherService} from "../../service/teacher.service";
+import {AuthenticationService} from '../../service/authentication.service';
+import {TeacherService} from '../../service/teacher.service';
 
 @Component({
   selector: 'app-card',
@@ -61,10 +61,9 @@ export class CardComponent implements OnInit {
       // searchPlaceholderText 搜索的默认文字
     };
     // 初始化数据
-    this.projectService.getProjects()
+    this.projectService.getProjects(this.authenticationService.getUserNo())
       .subscribe(exps => {
         this.exps = exps;
-        console.log('exps : ' + exps.length);
       });
     this.teacherService.getTeaches(this.authenticationService.getUserNo())
       .subscribe(data => {
