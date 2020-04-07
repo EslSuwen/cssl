@@ -1,17 +1,17 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Observable, of} from 'rxjs';
-import {catchError, tap} from 'rxjs/operators';
-import {throwError} from 'rxjs/internal/observable/throwError';
-import {environment} from "../../environments/environment";
-import {Teacher} from "../enity/teacher";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
+import { throwError } from 'rxjs/internal/observable/throwError';
+import { environment } from '../../environments/environment';
+import { Teacher } from '../enity/teacher';
 
 const httpOptions = {
-  headers: new HttpHeaders({'Content-Type': 'application/json'}),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   withCredentials: true
 };
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthenticationService {
   private tokenParsed: any;
   private teacher: Teacher;
@@ -28,14 +28,15 @@ export class AuthenticationService {
       tap(response => {
         if (response && response.token) {
           // login successful, store username and jwt token in local storage to keep user logged in between page refreshes
-          let tokenParsed = this.decodeToken(response.token);
-          let teacher: Teacher = response.teacher;
+          const tokenParsed = this.decodeToken(response.token);
+          const teacher: Teacher = response.teacher;
           console.log(response.teacher);
           localStorage.setItem('currentUserInfo', JSON.stringify(teacher));
           localStorage.setItem('currentUser', JSON.stringify({
             userNo: no,
             token: response.token,
             expire: JSON.parse(tokenParsed).exp,
+            // tslint:disable-next-line: object-literal-shorthand
             tokenParsed: tokenParsed
           }));
           return of(true);

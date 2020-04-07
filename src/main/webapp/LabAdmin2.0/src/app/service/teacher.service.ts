@@ -31,6 +31,11 @@ export class TeacherService {
     return this.http.get<Teach[]>(url);
   }
 
+  getTeacheCls(tid: string): Observable<Teach[]> {
+    const url = `${this.teach_api}/getTeachInfo/${tid}`;
+    return this.http.get<Teach[]>(url);
+  }
+
   getMsgInfo(tid: string): Observable<TeacherMsg[]> {
     const url = `${this.teacher_api}/getMsgInfo/${tid}`;
     return this.http.get<TeacherMsg[]>(url).pipe(

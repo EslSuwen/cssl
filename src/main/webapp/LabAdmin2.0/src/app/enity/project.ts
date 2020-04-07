@@ -1,4 +1,4 @@
-//class Project 项目
+// class Project 项目
 export class Exp {
   // 项目ID
   proId: number;
@@ -30,6 +30,8 @@ export class Exp {
   conName: string;
   // 消耗材料数量
   conNum: number;
+  // 申请实验室状态
+  labStatus: number;
 
   constructor() {
     this.proId = 0;
@@ -46,6 +48,7 @@ export class Exp {
     this.cname = '';
     this.conName = '';
     this.conNum = 0;
+    this.labStatus=0;
   }
 }
 
@@ -65,7 +68,7 @@ export class ProjectItem {
   // 实验项目学时
   itime: number;
   // 必修或选修
-  ctype: String;
+  ctype: string;
   // 分组人数
   num: number;
   // 实验目的

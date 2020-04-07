@@ -51,12 +51,16 @@ public class Arrange implements Serializable {
   @ApiModelProperty(value = "班级", position = 5, required = true)
   private String labClass;
 
+  /** 实验项目名称 */
+  @ApiModelProperty(value = "实验项目名称", position = 6)
+  private String expProname;
+
   /** 备注 */
-  @ApiModelProperty(value = "备注", position = 6, required = true)
+  @ApiModelProperty(value = "备注", position = 7, required = true)
   private String labRemark;
 
   /** 排课时间 */
-  @ApiModelProperty(value = "排课时间", position = 7, required = true)
+  @ApiModelProperty(value = "排课时间", position = 8, required = true)
   @TableField(exist = false)
   private List<ArrangePeriod> arrangePeriod;
 }

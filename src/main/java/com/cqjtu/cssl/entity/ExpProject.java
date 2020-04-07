@@ -1,5 +1,7 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -23,6 +25,7 @@ public class ExpProject implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "项目ID", required = true)
+  @TableId(value = "pro_id", type = IdType.AUTO)
   private Integer proId;
 
   @ApiModelProperty(value = "实验室（中心）名称", position = 1, required = true)
@@ -66,4 +69,7 @@ public class ExpProject implements Serializable {
 
   @ApiModelProperty(value = "消耗材料数量", position = 14)
   private Integer conNum;
+
+  @ApiModelProperty(value = "申请实验室状态", position = 15)
+  private Integer labStatus;
 }

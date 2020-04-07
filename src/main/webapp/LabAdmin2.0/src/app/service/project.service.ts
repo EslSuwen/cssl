@@ -5,6 +5,7 @@ import {Exp, ProjectItem} from '../enity/project';
 import {environment} from "../../environments/environment";
 import {log} from "util";
 import {MessageService} from "./message.service";
+import {Arrange} from "../enity/arrange";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,9 @@ export class ProjectService {
     return this.http.post<any>(this.item_api + '/addProjectItems', projectItems);
   }
 
-  getProjects(): Observable<Exp[]> {
-    return this.http.get<Exp[]>(this.api + '/getProject');
+  getProjects(tid: string): Observable<Exp[]> {
+    const url = `${this.api}/getProject/${tid}`
+    return this.http.get<Exp[]>(url);
   }
 
   clearDatabase(): Observable<any> {
@@ -41,7 +43,7 @@ export class ProjectService {
   }
 
   getProjectItems(proId: number): Observable<ProjectItem[]> {
-    const url=`${this.item_api}/getProjectItem/${proId}`;
+    const url = `${this.item_api}/getProjectItem/${proId}`;
     return this.http.get<ProjectItem[]>(url);
 
   }
