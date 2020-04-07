@@ -31,14 +31,11 @@ public class ArrangePeriod implements Serializable {
   private Integer labWeek;
 
   /** 开课星期 */
-  @ApiModelProperty(value = "开课星期", position = 1, required = true)
+  @ApiModelProperty(value = "开课星期", position = 2, required = true)
   private Integer labDay;
 
   /** 开课节次 */
-  @ApiModelProperty(value = "开课节次", position = 1, required = true)
+  @ApiModelProperty(value = "开课节次", position = 3, required = true)
   private Integer labSession;
 
-  /** 实验项目名称 */
-  @ApiModelProperty(value = "实验项目名称", position = 1)
-  private String expProname;
 }

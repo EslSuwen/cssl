@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
@@ -35,18 +36,18 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach> implements
   @Override
   public List<String> findCourseByTeacher(String tid) {
     List<String> list = new ArrayList<>();
-    List<Teach> list1 = teachMapper.findByTid(tid);
+    List<Teach> list1 = teachMapper.selectList(new QueryWrapper<Teach>().eq("tid",tid));
     for (Teach t : list1) {
-      list.add(courseMapper.findById(t.getCourseId()).getCourseName());
+      list.add(courseMapper.selectById(t.getCourseId()).getCourseName());
     }
     return list;
   }
 
   @Override
   public List<Teach> getCourseInfoByTid(String tid) {
-    List<Teach> teachList = teachMapper.findByTid(tid);
+    List<Teach> teachList = teachMapper.selectList(new QueryWrapper<Teach>().eq("tid",tid));
     for (Teach each : teachList) {
-      each.setCourseName(courseMapper.findById(each.getCourseId()).getCourseName());
+      each.setCourseName(courseMapper.selectById(each.getCourseId()).getCourseName());
       each.setLabId(arrangeMapper.findLabByClsNo(each.getCourseId()));
       if (each.getApplyLimit() == 0) {
         each.setStatus("审核中");

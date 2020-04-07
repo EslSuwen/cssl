@@ -10,15 +10,4 @@ import java.util.List;
  * @author Aplin suwen
  * @date 2020/1/13 11:04 上午
  */
-public interface CourseArrangeService {
-  /**
-   * 查询第几周某个老师的课程安排
-   *
-   * @author Aplin
-   * @date 2020/1/13 11:04 上午
-   * @param tid 教职工号
-   * @param labWeek 周次
-   * @return List<com.cqjtu.cssl.entity.CourseArrange>
-   */
-  List<CourseArrange> findAll(String tid, int labWeek);
-}
+public interface CourseArrangeService {}

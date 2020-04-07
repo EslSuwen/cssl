@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.service.ExpProjectService;
@@ -50,16 +51,16 @@ public class ExpProjectController {
   }
 
   /**
-   * 测试获取项目卡片数据
+   * 获取项目卡片数据
    *
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/2/6 2:52 下午
    */
-  @GetMapping(value = "/getProject")
-  public List<ExpProject> getProjects() {
+  @GetMapping(value = "/getProject/{tid}")
+  public List<ExpProject> getProjects(@PathVariable String tid) {
 
-    return expProjectService.list();
+    return expProjectService.list(new QueryWrapper<ExpProject>().eq("exp_tid",tid));
   }
 
   /**

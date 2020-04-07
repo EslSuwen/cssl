@@ -15,17 +15,4 @@ import java.util.List;
  * @date 2020/1/13 11:04 上午
  */
 @Service
-public class CourseArrangeServiceImpl implements CourseArrangeService {
-
-  private final CourseArrangeMapper courseArrangeMapper;
-
-  @Autowired
-  public CourseArrangeServiceImpl(CourseArrangeMapper courseArrangeMapper) {
-    this.courseArrangeMapper = courseArrangeMapper;
-  }
-
-  @Override
-  public List<CourseArrange> findAll(String tid, int labWeek) {
-    return courseArrangeMapper.findALL(tid, labWeek);
-  }
-}
+public class CourseArrangeServiceImpl implements CourseArrangeService {}

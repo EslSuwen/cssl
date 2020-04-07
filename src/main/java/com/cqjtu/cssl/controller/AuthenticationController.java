@@ -80,7 +80,7 @@ public class AuthenticationController {
 
     UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
     String token = jwtTokenUtil.generate(userDetails);
-    return new AuthenticationResponse(token,teacherService.findByTid(authRequest.getUserNo()), new Message("successful"));
+    return new AuthenticationResponse(token,teacherService.getById(authRequest.getUserNo()), new Message("successful"));
   }
 
   /**

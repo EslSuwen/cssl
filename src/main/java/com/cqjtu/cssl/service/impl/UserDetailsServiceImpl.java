@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String userNo) {
-    Teacher teacher = teacherMapper.findById(userNo);
+    Teacher teacher = teacherMapper.selectById(userNo);
     List<Authority> authorities = new ArrayList<>();
     if (teacher.getTlimit()) {
       authorities.add(new Authority(1L, AuthorityName.ROLE_ADMIN));

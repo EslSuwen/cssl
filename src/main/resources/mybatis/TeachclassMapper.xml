@@ -10,34 +10,4 @@
 
 <mapper namespace="com.cqjtu.cssl.mapper.TeachclassMapper">
 
-    <!-- 中间，对象的属性和结果集的字段之间的对应关系 -->
-    <resultMap id="TeachClassRM" type="com.cqjtu.cssl.entity.Teachclass">
-        <id property="tid" column="tid"/>
-        <result property="courseId" column="course_id"/>
-        <result property="className" column="class_name"/>
-        <result property="majorId" column="major_id"/>
-    </resultMap>
-
-    <!-- 添加授课信息信息 -->
-    <insert id="addTeachClass" parameterType="com.cqjtu.cssl.entity.Teachclass">
-  	insert into teachclass(tid,course_id,class_name,major_id) values(#{tid},#{courseId},#{className},#{majorId});
-  </insert>
-
-    <!-- 查询所有的授课信息 -->
-    <select id="findAll" resultType="com.cqjtu.cssl.entity.Teachclass" resultMap="TeachClassRM">
-  		select * from  teachclass
-  </select>
-
-    <!-- 修改授课信息 -->
-    <update id="updateTeachClass" parameterType="com.cqjtu.cssl.entity.Teachclass">
-        update teachclass set tid=#{arg1.tid},course_id=#{arg1.courseId},class_name=#{arg1.className},major_id=#{arg1.majorId} where tid=#{arg0.tid} and course_id=#{arg0.courseId} and class_name=#{arg0.className} and major_id=#{arg0.majorId}
-    </update>
-
-    <!-- 通过Id删除教师信息 -->
-    <delete id="deleteTeachClass">
-        delete from teachclass where tid=#{tid} and course_id=#{courseId} and class_name = #{className} and major_id=#{majorId}
-    </delete>
-    <select id="findByTidAndCourseId" resultType="com.cqjtu.cssl.entity.Teachclass" resultMap="TeachClassRM">
-  		select * from  teachclass where tid=#{arg0} and course_id = #{arg1};
-    </select>
 </mapper>

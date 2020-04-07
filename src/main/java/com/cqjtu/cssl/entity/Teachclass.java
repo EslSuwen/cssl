@@ -14,7 +14,7 @@ import java.io.Serializable;
  * @author suwen Aplin
  * @since 2020-02-27
  */
-@ApiModel(description = "授教师授课班级实体")
+@ApiModel(description = "教师授课班级实体")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
