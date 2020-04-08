@@ -154,7 +154,7 @@ COMMIT;
 DROP TABLE IF EXISTS `exp_project`;
 CREATE TABLE `exp_project` (
   `pro_id` int(11) NOT NULL AUTO_INCREMENT,
-  `lab_cen_name` varchar(64) NOT NULL DEFAULT '��Ϣ����ʵ����ѧ����',
+  `lab_cen_name` varchar(64) NOT NULL DEFAULT '信息技术实践教学中心',
   `exp_cname` varchar(32) NOT NULL,
   `exp_eqname` varchar(16) DEFAULT NULL,
   `eqnum` int(11) DEFAULT NULL,

@@ -70,7 +70,7 @@ export class CardComponent implements OnInit {
       // searchPlaceholderText 搜索的默认文字
     };
     // 初始化数据
-    this.projectService.getProjects()
+    this.projectService.getProjects(this.authenticationService.getUserNo())
       .subscribe(exps => {
         this.exps = exps;
         console.log('exps : ' + exps.length);
