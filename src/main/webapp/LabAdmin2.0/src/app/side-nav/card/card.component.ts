@@ -1,19 +1,25 @@
-import {Component, OnInit} from '@angular/core';
-import {ModalComponent} from 'src/app/modal/modal.component';
-import {MDBModalRef, MDBModalService} from 'angular-bootstrap-md';
-import {FormControl, FormGroup, Validators, FormBuilder, FormArray} from '@angular/forms';
-
-import {ProjectService} from '../../service/project.service';
-import {Exp, ProjectItem} from '../../enity/project';
-import {AuthenticationService} from '../../service/authentication.service';
-import {TeacherService} from '../../service/teacher.service';
-
+import { Component, OnInit } from '@angular/core';
+import { ModalComponent } from 'src/app/modal/modal.component';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { ProjectService } from '../../service/project.service';
+import { Exp, ProjectItem } from '../../enity/project';
+import { AuthenticationService } from "../../service/authentication.service";
+import { TeacherService } from "../../service/teacher.service";
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrls: ['./card.component.scss']
+  styleUrls: ['./card.component.scss'],
 })
 export class CardComponent implements OnInit {
+  confirmModal: NzModalRef; // For testing by now
+  //设置模态框的参数
+  isVisible = false;
+  isConfirmLoading = false;
+  value1 = 1; //增加表格的行数
   courseList = [];
   selectedItems1 = [];
   Settings1 = {};
@@ -27,7 +33,7 @@ export class CardComponent implements OnInit {
   id: number;
   headElements = ['课程名', '实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件'];
   controlArray: Array<ProjectItem> = [];
-
+  title: string;
   // myList: Array<ProjectItem> = [];
 
   remove(id: any) {
@@ -44,6 +50,9 @@ export class CardComponent implements OnInit {
     private projectService: ProjectService,
     private authenticationService: AuthenticationService,
     private teacherService: TeacherService,
+    private modal: NzModalService,
+    private message: NzMessageService,
+    public router: Router
   ) {
   }
 
@@ -64,11 +73,12 @@ export class CardComponent implements OnInit {
     this.projectService.getProjects(this.authenticationService.getUserNo())
       .subscribe(exps => {
         this.exps = exps;
+        console.log('exps : ' + exps.length);
       });
     this.teacherService.getTeaches(this.authenticationService.getUserNo())
       .subscribe(data => {
         for (let each of data)
-          this.courseList.push({id: each.courseId, itemName: each.courseName});
+          this.courseList.push({ id: each.courseId, itemName: each.courseName });
       });
     // 初始化实验卡片表单控制
     this.element = new FormGroup({
@@ -104,20 +114,7 @@ export class CardComponent implements OnInit {
   }
 
   onsubmit() {
-    this.modalRef = this.modalService.show(ModalComponent, {
-      backdrop: false, // 背景蒙版
-      focus: true,
-      ignoreBackdropClick: false,
-      class: 'modal-top-right',
-      containerClass: 'right',
-      animated: true,
-      data: {
-        heading: '提交成功！！',
-        content: {heading: '', description: ''},
-        displaybody: false,
-        secondarybtn: false,
-      }
-    });
+    this.seccess_Message('success');
     this.saveNewExp();
     console.log(this.controlArray);
     console.log(this.newExp);
@@ -186,5 +183,45 @@ export class CardComponent implements OnInit {
 
   get software() {
     return this.element.get('software');
+  }
+  getexpname(title1: string)  //获取实验项目名称
+  {
+    this.title = title1;
+  }
+  confirm(): void {
+    this.remove(this.id);
+  }
+  showModal(): void {
+    this.isVisible = true;
+  }
+  handleOk(): void {
+    this.isConfirmLoading = true;
+    this.additem(this.value1);
+    setTimeout(() => {
+      this.isVisible = false;
+      this.isConfirmLoading = false;
+    }, 500);
+  }
+  handleCancel(): void {
+    this.isVisible = false;
+  }
+  additem(time: number) {
+    for (var i = 0; i < time; i++) {
+      this.add();
+    }
+  }
+  showConfirm(): void {  //确认提交的模态框
+    this.confirmModal = this.modal.confirm({
+      nzTitle: '确认提交吗',
+      nzContent: '确认后，窗口将在几秒后关闭，期间可以取消',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(Math.random() < 0.0 ? resolve : reject, 3000);
+        }).catch(() => this.onsubmit())
+    });
+  }
+  seccess_Message(type: string): void { //提交成功后的显示
+    this.message.create(type, `提交成功!!!,等待管理员审核`);
+    this.router.navigate(['sidenav/personalinfo']);
   }
 }

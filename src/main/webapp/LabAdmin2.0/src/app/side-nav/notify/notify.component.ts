@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DateTimeAdapter } from 'ng-pick-datetime';
-import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
-import { ModalComponent } from 'src/app/modal/modal.component';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-notify',
   templateUrl: './notify.component.html',
@@ -9,7 +10,7 @@ import { ModalComponent } from 'src/app/modal/modal.component';
 })
 
 export class NotifyComponent implements OnInit {
-  modalRef: MDBModalRef;
+  confirmModal: NzModalRef;
   // 专业
   majorList = [];
   majorselectedItems = [];
@@ -29,7 +30,9 @@ export class NotifyComponent implements OnInit {
 
   constructor(
     dateTimeAdapter: DateTimeAdapter<any>,
-    private modalService: MDBModalService
+    private modal: NzModalService,
+    private message: NzMessageService,
+    private router:Router
   ) {
     dateTimeAdapter.setLocale('zh-cn'); // change locale to Japanese
   }
@@ -112,20 +115,21 @@ export class NotifyComponent implements OnInit {
     console.log(items);
   }
   onsubmit() {
-    this.modalRef = this.modalService.show(ModalComponent, {
-      backdrop: true, // 背景蒙版
-      focus: true,
-      ignoreBackdropClick: false,
-      class: 'modal-top-right',
-      containerClass: 'right',
-      animated: true,
-      data: {
-        heading: '提交成功！！',
-        content: { heading: '', description: '' },
-        displaybody: false,
-        secondarybtn: false,
-      }
+    this.showConfirm();
+  }
+  
+  showConfirm(): void {
+    this.confirmModal = this.modal.confirm({
+      nzTitle: '确认提交吗',
+      nzContent: '3秒内可以取消',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(Math.random() < 0.0 ? resolve : reject, 3000);
+        }).catch(() => this.createMessage('success'))
     });
-    // 这里是操作
+  }
+  createMessage(type: string): void {
+    this.message.create(type, `提交成功，等待管理员审核`);
+    this.router.navigate(['sidenav/personalinfo']);
   }
 }

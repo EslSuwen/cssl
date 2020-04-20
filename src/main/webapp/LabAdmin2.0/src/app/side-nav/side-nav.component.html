@@ -63,26 +63,26 @@
                         </div>
                         <div class="my-auto">
 
-                            <div class="btn-group mx-4" mdbDropdown>
+                            <a nz-dropdown [nzDropdownMenu]="menu">
                                 <mdb-badge color="blue" mdbDropdownToggle classInside="dropdown-toggle"
                                     class="waves-effect" mdbWavesEffect>
                                     账号 {{userName}} 已登录
+                                    <nz-badge nzStatus="error"></nz-badge>
                                 </mdb-badge>
-                                <div class="dropdown-menu dropdown-primary animated fadeIn">
-                                    <a class="dropdown-item" routerLink="/sidenav/personalinfo"
-                                        routerLinkActive="active">个人信息</a>
-                                    <a class="dropdown-item" routerLink="/sidenav/message"
-                                    routerLinkActive="active">通知公告
-                                        <mdb-badge pill="true" primary="true">14</mdb-badge>
-                                    </a>
-                                    <a class="dropdown-item" routerLink="/sidenav/updatepassword"
-                                        routerLinkActive="active">修改密码</a>
-                                    <div class="divider dropdown-divider"></div>
-                                    <a class="dropdown-item" href="" (click)="logout()">退出登录</a>
+                                <i nz-icon nzType="down"></i>
+                            </a>
+                            <nz-dropdown-menu #menu="nzDropdownMenu">
+                                <a class="dropdown-item" routerLink="/sidenav/personalinfo"
+                                    routerLinkActive="active">个人信息</a>
+                                <a class="dropdown-item" routerLink="/sidenav/message" routerLinkActive="active">通知公告
+                                    <nz-badge [nzCount]="5"></nz-badge>
+                                </a>
+                                <a class="dropdown-item" routerLink="/sidenav/updatepassword"
+                                    routerLinkActive="active">修改密码</a>
+                                <div class="divider dropdown-divider"></div>
+                                <a class="dropdown-item" href="" (click)="logout()">退出登录</a>
 
-                                </div>
-                            </div>
-
+                            </nz-dropdown-menu>
                         </div>
                     </div>
                     <router-outlet></router-outlet>

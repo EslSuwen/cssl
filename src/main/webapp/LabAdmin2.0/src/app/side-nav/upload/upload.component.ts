@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from 'src/app/modal/modal.component';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
-
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-upload',
   templateUrl: './upload.component.html',
@@ -9,25 +10,28 @@ import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 })
 export class UploadComponent implements OnInit {
   modalRef: MDBModalRef;
+  confirmModal: NzModalRef;
+  // 专业
+  majorList = [];
+  majorselectedItems = [];
+  majorSettings = {};
 
-// 专业
-majorList = [];
-majorselectedItems = [];
-majorSettings = {};
+  majorselectedItems1 = [];
+  // 班级
+  classList = [];
+  classselectedItems = [];
+  classSettings = {};
+  // 年级
+  gradeList = [];
+  gradeselectedItems = [];
+  gradeSettings = {};
+  switch1: any;
+  // 文件上传的控件
+  fileInputName = ['考勤名单', '实验任务书', '实验成绩', '评分标准表'];
+  constructor(private modal: NzModalService,
+    private message: NzMessageService,
+    private router: Router) { }
 
-majorselectedItems1 = [];
-// 班级
-classList = [];
-classselectedItems = [];
-classSettings = {};
-// 年级
-gradeList = [];
-gradeselectedItems = [];
-gradeSettings = {};
-switch1: any;
-// 文件上传的控件
-fileInputName = ['考勤名单', '实验任务书', '实验成绩', '评分标准表'];
-    constructor(private modalService: MDBModalService) { }
   ngOnInit() {
     this.majorList = [
       { id: 1, itemName: '计算机科学与技术' },
@@ -106,20 +110,21 @@ fileInputName = ['考勤名单', '实验任务书', '实验成绩', '评分标�
     console.log(items);
   }
   onsubmit() {
-    this.modalRef = this.modalService.show(ModalComponent, {
-      backdrop: false, // 背景蒙版
-      focus: true,
-      ignoreBackdropClick: false,
-      class: 'modal-top-right',
-      containerClass: 'right',
-      animated: true,
-      data: {
-        heading: '提交成功！！',
-        content: { heading: '', description: '' },
-        displaybody: false,
-        secondarybtn: false,
-      }
+    this.showConfirm();
+  }
+  
+  showConfirm(): void {
+    this.confirmModal = this.modal.confirm({
+      nzTitle: '确认提交吗',
+      nzContent: '3秒内可以取消',
+      nzOnOk: () =>
+        new Promise((resolve, reject) => {
+          setTimeout(Math.random() < 0.0 ? resolve : reject, 3000);
+        }).catch(() => this.createMessage('success'))
     });
-    // 这里是操作
+  }
+  createMessage(type: string): void {
+    this.message.create(type, `提交成功，等待管理员审核`);
+    this.router.navigate(['sidenav/personalinfo']);
   }
 }
