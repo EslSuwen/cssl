@@ -1,7 +1,10 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cqjtu.cssl.entity.Curriculum;
 import com.cqjtu.cssl.entity.Teacher;
+
+import java.util.List;
 
 /**
  * 教师信息服务接口
@@ -19,7 +22,18 @@ public interface TeacherService extends IService<Teacher> {
    * @param tid 教职工号
    * @param oldPw 旧密码
    * @param newPw 新密码
+   * @return 状态码
    */
   int updatePassword(String tid, String oldPw, String newPw);
 
+  /**
+   * 查询某周的课程安排
+   *
+   * @param tid 教职工号
+   * @param week 周次
+   * @return 课程安排
+   * @author suwen
+   * @date 2020/4/20 上午10:46
+   */
+  List<Curriculum> getCurriculum(String tid, String week);
 }

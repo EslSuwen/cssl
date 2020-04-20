@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : mysql8
+ Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 80018
+ Source Server Version : 80019
  Source Host           : localhost:3306
  Source Schema         : csslDB
 
  Target Server Type    : MySQL
- Target Server Version : 80018
+ Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 26/03/2020 20:23:33
+ Date: 20/04/2020 16:35:07
 */
 
 SET NAMES utf8mb4;
@@ -22,28 +22,32 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `arrange`;
 CREATE TABLE `arrange` (
-  `aid` int(11) NOT NULL AUTO_INCREMENT,
-  `lab_id` varchar(16) NOT NULL,
-  `pro_id` int(11) DEFAULT NULL,
-  `tid` char(12) DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL,
-  `lab_class` varchar(128) NOT NULL,
-  `lab_remark` varchar(8) NOT NULL,
+  `aid` int NOT NULL AUTO_INCREMENT COMMENT '时间安排编号',
+  `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室编号',
+  `pro_id` int DEFAULT NULL COMMENT '项目编号',
+  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '教师编号',
+  `course_id` int DEFAULT NULL COMMENT '课程编号',
+  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室类型',
+  `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '实验室备注',
+  `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '实验名称',
+  `campus` char(8) DEFAULT NULL COMMENT '校区',
+  `status` tinyint DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   KEY `tid` (`tid`),
-  KEY `aid` (`aid`),
-  CONSTRAINT `arrange_ibfk_2` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`),
-  CONSTRAINT `arrange_ibfk_3` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+  KEY `aid` (`aid`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
 
 -- ----------------------------
 -- Records of arrange
 -- ----------------------------
 BEGIN;
-INSERT INTO `arrange` VALUES (1, '60202', 1, '256740953460', 17015054, '17级3、4班', '无');
+INSERT INTO `arrange` VALUES (1, 'B01406', 1, '256740953460', 17015054, '17级3、4班', '无', '实验', '双福校区', 0);
+INSERT INTO `arrange` VALUES (3, '60201', 3, '123', 14211829, '计算机1班-计算机2班', '', 'python语言', '南岸校区', 0);
+INSERT INTO `arrange` VALUES (4, 'B01406', 13, '123', 14210187, '计算机3班-计算机4班', '', '上机', '双福校区', 0);
+INSERT INTO `arrange` VALUES (5, '60201', 18, '123', 14210669, '曙光班', '', '汇编上机', '南岸校区', 0);
 COMMIT;
 
 -- ----------------------------
@@ -51,11 +55,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `arrange_period`;
 CREATE TABLE `arrange_period` (
-  `aid` int(11) NOT NULL,
-  `lab_week` int(11) NOT NULL,
-  `lab_day` int(11) NOT NULL,
-  `lab_session` int(11) NOT NULL,
-  `exp_proname` varchar(32) NOT NULL,
+  `aid` int NOT NULL,
+  `lab_week` int NOT NULL,
+  `lab_day` int NOT NULL,
+  `lab_session` int NOT NULL,
   PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
   CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -64,12 +67,92 @@ CREATE TABLE `arrange_period` (
 -- Records of arrange_period
 -- ----------------------------
 BEGIN;
-INSERT INTO `arrange_period` VALUES (1, 2, 1, 1, '实验4');
-INSERT INTO `arrange_period` VALUES (1, 2, 1, 2, '实验4');
-INSERT INTO `arrange_period` VALUES (1, 3, 1, 1, '实验4');
-INSERT INTO `arrange_period` VALUES (1, 4, 1, 1, '实验4');
-INSERT INTO `arrange_period` VALUES (1, 4, 1, 3, '实验4');
-INSERT INTO `arrange_period` VALUES (1, 6, 1, 1, '实验4');
+INSERT INTO `arrange_period` VALUES (1, 2, 1, 1);
+INSERT INTO `arrange_period` VALUES (1, 2, 1, 2);
+INSERT INTO `arrange_period` VALUES (1, 3, 1, 1);
+INSERT INTO `arrange_period` VALUES (1, 4, 1, 1);
+INSERT INTO `arrange_period` VALUES (1, 4, 1, 3);
+INSERT INTO `arrange_period` VALUES (1, 6, 1, 1);
+INSERT INTO `arrange_period` VALUES (3, 1, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 2, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 3, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 4, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 5, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 6, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 7, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 8, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 9, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 10, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 11, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 12, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 13, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 14, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 15, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 16, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 17, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 18, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 19, 3, 3);
+INSERT INTO `arrange_period` VALUES (3, 20, 3, 3);
+INSERT INTO `arrange_period` VALUES (4, 1, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 1, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 2, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 2, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 3, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 3, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 4, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 4, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 5, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 5, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 6, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 6, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 7, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 7, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 8, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 8, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 9, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 9, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 10, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 10, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 11, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 11, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 12, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 12, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 13, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 13, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 14, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 14, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 15, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 15, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 16, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 16, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 17, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 17, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 18, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 18, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 19, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 19, 5, 3);
+INSERT INTO `arrange_period` VALUES (4, 20, 1, 3);
+INSERT INTO `arrange_period` VALUES (4, 20, 5, 3);
+INSERT INTO `arrange_period` VALUES (5, 1, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 2, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 3, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 4, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 5, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 6, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 7, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 8, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 9, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 10, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 11, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 12, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 13, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 14, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 15, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 16, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 17, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 18, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 19, 4, 1);
+INSERT INTO `arrange_period` VALUES (5, 20, 4, 1);
 COMMIT;
 
 -- ----------------------------
@@ -78,8 +161,8 @@ COMMIT;
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class` (
   `class_name` varchar(16) NOT NULL,
-  `major_id` int(11) NOT NULL,
-  `class_num` int(11) DEFAULT NULL,
+  `major_id` int NOT NULL,
+  `class_num` int DEFAULT NULL,
   PRIMARY KEY (`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_8` (`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_8` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
@@ -101,7 +184,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `course_id` int(11) NOT NULL,
+  `course_id` int NOT NULL,
   `course_name` varchar(32) NOT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -153,34 +236,35 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `exp_project`;
 CREATE TABLE `exp_project` (
-  `pro_id` int(11) NOT NULL AUTO_INCREMENT,
-  `lab_cen_name` varchar(64) NOT NULL DEFAULT '��Ϣ����ʵ����ѧ����',
+  `pro_id` int NOT NULL AUTO_INCREMENT,
+  `lab_cen_name` varchar(64) NOT NULL DEFAULT '信息技术实践教学中心',
   `exp_cname` varchar(32) NOT NULL,
   `exp_eqname` varchar(16) DEFAULT NULL,
-  `eqnum` int(11) DEFAULT NULL,
+  `eqnum` int DEFAULT NULL,
   `exp_major` varchar(32) NOT NULL,
   `ssort` varchar(16) NOT NULL,
-  `exp_time` int(11) NOT NULL,
+  `exp_time` int NOT NULL,
   `book` varchar(128) DEFAULT NULL,
   `software` varchar(32) DEFAULT NULL,
   `exp_tid` char(12) NOT NULL,
+  `lab_status` tinyint DEFAULT NULL,
   `cname` varchar(32) NOT NULL,
   `con_name` varchar(16) DEFAULT NULL,
-  `con_num` int(11) NOT NULL,
-  `course_id` int(11) NOT NULL,
+  `con_num` int NOT NULL,
+  `course_id` int NOT NULL,
   PRIMARY KEY (`pro_id`) USING BTREE,
   KEY `cid` (`course_id`),
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of exp_project
 -- ----------------------------
 BEGIN;
-INSERT INTO `exp_project` VALUES (1, '信息技术实践教学中心', 'java程序设计EB', '计算机', 40, '计算机科学与技术', '本科生', 32, '《Java语言程序设计》，辛运帏，饶一梅，人民邮电出版社，2009  ', 'eclipse，SQL Server, jdk', '256740953460', 'java程序设计', '无', 2, 18210177);
-INSERT INTO `exp_project` VALUES (3, '信息技术实践教学中心', 'python语言', '计算机', 40, '计算机科学与技术', '本科生', 45, '《数据预处理》', 'python', '123', 'python', '无', 2, 14211829);
-INSERT INTO `exp_project` VALUES (13, '信息技术实践教学中心', '上机', '设备', 1, '', '', 40, '教材', '软件', '123', '操作系统原理A', '材料', 1, 14210187);
-INSERT INTO `exp_project` VALUES (18, '信息技术实践教学中心', '汇编上机', '计算机', 50, '', '', 0, '教材', '软件', '123', '汇编与计算机组成原理', '材料', 10, 14210669);
+INSERT INTO `exp_project` VALUES (1, '信息技术实践教学中心', 'java程序设计EB', '计算机', 40, '计算机科学与技术', '本科生', 32, '《Java语言程序设计》，辛运帏，饶一梅，人民邮电出版社，2009  ', 'eclipse，SQL Server, jdk', '256740953460', 0, 'java程序设计', '无', 2, 18210177);
+INSERT INTO `exp_project` VALUES (3, '信息技术实践教学中心', 'python语言', '计算机', 40, '计算机科学与技术', '本科生', 45, '《数据预处理》', 'python', '123', 2, 'python', '无', 2, 14211829);
+INSERT INTO `exp_project` VALUES (13, '信息技术实践教学中心', '上机', '设备', 1, '', '', 40, '教材', '软件', '123', 2, '操作系统原理A', '材料', 1, 14210187);
+INSERT INTO `exp_project` VALUES (18, '信息技术实践教学中心', '汇编上机', '计算机', 50, '', '', 0, '教材', '软件', '123', 2, '汇编与计算机组成原理', '材料', 10, 14210669);
 COMMIT;
 
 -- ----------------------------
@@ -188,13 +272,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_arrange_backup`;
 CREATE TABLE `lab_arrange_backup` (
-  `lab_week` int(11) NOT NULL,
-  `lab_day` int(11) NOT NULL,
+  `lab_week` int NOT NULL,
+  `lab_day` int NOT NULL,
   `lab_session` varchar(16) NOT NULL,
   `lab_id` varchar(16) NOT NULL,
-  `pro_id` int(11) DEFAULT NULL,
+  `pro_id` int DEFAULT NULL,
   `tid` char(12) DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL,
+  `course_id` int DEFAULT NULL,
   `lab_class` varchar(128) NOT NULL,
   `lab_remark` varchar(8) NOT NULL,
   `exp_proname` varchar(32) NOT NULL,
@@ -202,8 +286,8 @@ CREATE TABLE `lab_arrange_backup` (
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
-  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
-  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
+  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`),
+  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -225,10 +309,10 @@ DROP TABLE IF EXISTS `lab_info`;
 CREATE TABLE `lab_info` (
   `lab_id` varchar(16) NOT NULL,
   `tid` char(12) DEFAULT NULL,
-  `type_id` int(11) DEFAULT NULL,
+  `type_id` int DEFAULT NULL,
   `lab_name` varchar(64) NOT NULL,
   `lab_campus` char(4) NOT NULL,
-  `lab_cap` int(11) NOT NULL,
+  `lab_cap` int NOT NULL,
   `lab_area` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`lab_id`) USING BTREE,
   KEY `fk_relationship_4` (`type_id`) USING BTREE,
@@ -268,7 +352,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_type`;
 CREATE TABLE `lab_type` (
-  `type_id` int(11) NOT NULL,
+  `type_id` int NOT NULL,
   `type_name` varchar(16) NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -286,7 +370,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `major`;
 CREATE TABLE `major` (
-  `major_id` int(11) NOT NULL,
+  `major_id` int NOT NULL,
   `major_name` varchar(32) NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -306,18 +390,18 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `project_item`;
 CREATE TABLE `project_item` (
-  `ino` int(11) NOT NULL AUTO_INCREMENT,
+  `ino` int NOT NULL AUTO_INCREMENT,
   `iid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `pro_id` int(11) NOT NULL,
+  `pro_id` int NOT NULL,
   `iname` varchar(32) NOT NULL,
   `itype` varchar(8) NOT NULL,
-  `itime` int(11) NOT NULL,
+  `itime` int NOT NULL,
   `ctype` char(4) NOT NULL,
-  `num` int(11) NOT NULL,
+  `num` int NOT NULL,
   `intend` varchar(256) NOT NULL,
   PRIMARY KEY (`ino`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of project_item
@@ -343,8 +427,8 @@ COMMIT;
 DROP TABLE IF EXISTS `teach`;
 CREATE TABLE `teach` (
   `tid` char(12) NOT NULL,
-  `course_id` int(11) NOT NULL,
-  `apply_limit` tinyint(4) DEFAULT NULL,
+  `course_id` int NOT NULL,
+  `apply_limit` tinyint DEFAULT NULL,
   PRIMARY KEY (`tid`,`course_id`) USING BTREE,
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
@@ -374,9 +458,9 @@ COMMIT;
 DROP TABLE IF EXISTS `teachclass`;
 CREATE TABLE `teachclass` (
   `tid` char(12) NOT NULL,
-  `course_id` int(11) NOT NULL,
+  `course_id` int NOT NULL,
   `class_name` varchar(16) NOT NULL,
-  `major_id` int(11) NOT NULL,
+  `major_id` int NOT NULL,
   PRIMARY KEY (`tid`,`course_id`,`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_10` (`class_name`,`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_10` FOREIGN KEY (`class_name`, `major_id`) REFERENCES `class` (`class_name`, `major_id`),
@@ -427,13 +511,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher_msg`;
 CREATE TABLE `teacher_msg` (
-  `mid` int(11) NOT NULL AUTO_INCREMENT,
+  `mid` int NOT NULL AUTO_INCREMENT,
   `tid` char(12) NOT NULL,
   `mtitle` varchar(36) NOT NULL,
-  `mresult` tinyint(4) NOT NULL,
+  `mresult` tinyint NOT NULL,
   `mtext` varchar(255) NOT NULL,
   `mdate` datetime NOT NULL,
-  `mstatus` tinyint(4) NOT NULL,
+  `mstatus` tinyint NOT NULL,
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -449,8 +533,39 @@ INSERT INTO `teacher_msg` VALUES (25, '123', '实验室安排通知', 1, '管理
 INSERT INTO `teacher_msg` VALUES (26, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
 INSERT INTO `teacher_msg` VALUES (27, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
 INSERT INTO `teacher_msg` VALUES (28, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
-INSERT INTO `teacher_msg` VALUES (29, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
+INSERT INTO `teacher_msg` VALUES (29, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
 INSERT INTO `teacher_msg` VALUES (30, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for teacher_msg_copy1
+-- ----------------------------
+DROP TABLE IF EXISTS `teacher_msg_copy1`;
+CREATE TABLE `teacher_msg_copy1` (
+  `mid` int NOT NULL AUTO_INCREMENT,
+  `tid` char(12) NOT NULL,
+  `mtitle` varchar(36) NOT NULL,
+  `mresult` tinyint NOT NULL,
+  `mtext` varchar(255) NOT NULL,
+  `mdate` datetime NOT NULL,
+  `mstatus` tinyint NOT NULL,
+  PRIMARY KEY (`mid`),
+  KEY `tid` (`tid`),
+  CONSTRAINT `teacher_msg_copy1_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- ----------------------------
+-- Records of teacher_msg_copy1
+-- ----------------------------
+BEGIN;
+INSERT INTO `teacher_msg_copy1` VALUES (23, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
+INSERT INTO `teacher_msg_copy1` VALUES (24, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
+INSERT INTO `teacher_msg_copy1` VALUES (25, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
+INSERT INTO `teacher_msg_copy1` VALUES (26, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
+INSERT INTO `teacher_msg_copy1` VALUES (27, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
+INSERT INTO `teacher_msg_copy1` VALUES (28, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
+INSERT INTO `teacher_msg_copy1` VALUES (29, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
+INSERT INTO `teacher_msg_copy1` VALUES (30, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

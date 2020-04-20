@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from "../../service/authentication.service";
 import {Teacher} from "../../enity/teacher";
 import {TeacherService} from "../../service/teacher.service";
+import {Curriculum} from "../../enity/arrange";
 
 @Component({
   selector: 'app-personal-info',
@@ -31,13 +32,22 @@ export class PersonalInfoComponent implements OnInit {
 
   headElements = ['节数/星期', '星期一', '星期二', '星期三', '星期四', '星期五',];
 
+  curriculumList: Curriculum[];
+
   constructor(private authenticationService: AuthenticationService, private teacherService: TeacherService) {
   }
 
   ngOnInit() {
     this.teacher = this.authenticationService.getCurrentUserInfo();
     this.userName = this.teacher.tname;
+    this.getCurriculum(this.authenticationService.getUserNo(), '2');
+  }
 
+  getCurriculum(tid: string, week: string) {
+    this.teacherService.getCurriculum(tid, week).subscribe(data => {
+      console.log(data);
+      this.curriculumList = data;
+    })
   }
 
 }
