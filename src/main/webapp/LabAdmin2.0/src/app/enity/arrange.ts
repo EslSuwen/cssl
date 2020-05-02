@@ -98,13 +98,19 @@ export class Curriculum {
   /** 班级 */
   labClass: string;
 
+  /** 实验室 */
+  labId: string;
+
+  /** 校区 */
+  campus: string;
   /** 排课时间 */
-  arrangePeriod: Array<ArrangePeriod>;
+  arrangePeriod: ArrangePeriod;
+
 
   constructor() {
     this.cname = '';
     this.labClass = '';
-    this.arrangePeriod = new Array<ArrangePeriod>();
+    this.arrangePeriod = new ArrangePeriod();
   }
 
 }

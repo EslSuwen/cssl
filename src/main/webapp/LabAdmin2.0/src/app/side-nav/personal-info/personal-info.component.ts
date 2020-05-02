@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthenticationService} from "../../service/authentication.service";
-import {Teacher} from "../../enity/teacher";
-import {TeacherService} from "../../service/teacher.service";
-import {Curriculum} from "../../enity/arrange";
+import {AuthenticationService} from '../../service/authentication.service';
+import {Teacher} from '../../enity/teacher';
+import {TeacherService} from '../../service/teacher.service';
+import {Curriculum, ArrangePeriod} from '../../enity/arrange';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-personal-info',
@@ -10,34 +11,20 @@ import {Curriculum} from "../../enity/arrange";
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent implements OnInit {
-  elements: any = [
-    {
-      id: '第一大节',
-      first: 'Ma11111111111rk',
-      last: 'Ot1111111to',
-      handle: '111111@mdo',
-      handle2: '111111@mdo',
-      handle3: '111111@mdo'
-    },
-    {id: '第二大节', first: 'Jacob', last: 'Thornton', handle: '@fat'},
-    {id: '第三大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
-    {id: '第四大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
-    {id: '晚上第一大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
-    {id: '晚上第二大节', first: 'Larry', last: 'the Bird', handle: '@twitter'},
 
-  ];
   userName: string;
 
   teacher: Teacher;
 
-  headElements = ['节数/星期', '星期一', '星期二', '星期三', '星期四', '星期五',];
-
   curriculumList: Curriculum[];
+  arrangePeriod: ArrangePeriod;
+  selectedWeek: string;
 
   constructor(private authenticationService: AuthenticationService, private teacherService: TeacherService) {
   }
 
   ngOnInit() {
+    this.initCurriculum();
     this.teacher = this.authenticationService.getCurrentUserInfo();
     this.userName = this.teacher.tname;
     this.getCurriculum(this.authenticationService.getUserNo(), '2');
@@ -47,7 +34,28 @@ export class PersonalInfoComponent implements OnInit {
     this.teacherService.getCurriculum(tid, week).subscribe(data => {
       console.log(data);
       this.curriculumList = data;
-    })
+      for (const key of Object.keys(this.curriculumList)) {
+        this.arrangePeriod = this.curriculumList[key].arrangePeriod;
+        const i = this.arrangePeriod.labDay;
+        const j = this.arrangePeriod.labSession;
+        $('#table_' + i + '_' + j).html(this.curriculumList[key].cname +
+          '<br>' + this.curriculumList[key].labClass + '<br>' + this.curriculumList[key].labId +
+          '<br>' + this.curriculumList[key].campus); // 填充课表
+      }
+    });
   }
 
+  searchWeek(week: string) {
+    this.initCurriculum();
+    this.getCurriculum(this.authenticationService.getUserNo(), week);
+  }
+
+  // 课表清空初始化
+  initCurriculum() {
+    for (let i = 1; i < 6; i++) {
+      for (let j = 1; j < 6; j++) {
+        $('#table_' + j + '_' + i).html(' '); // 初始化课表
+      }
+    }
+  }
 }
