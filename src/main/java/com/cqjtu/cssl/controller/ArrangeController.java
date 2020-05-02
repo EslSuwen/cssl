@@ -64,6 +64,8 @@ public class ArrangeController {
    */
   @PostMapping("/addArrange")
   public int addArrange(@NonNull @RequestBody Arrange arrange) {
+    int proId = arrange.getProId();
+    arrange.setCourseId(expProjectService.getById(proId).getCourseId());
     arrangeService.save(arrange);
     ExpProject exp = expProjectService.getById(arrange.getProId());
     exp.setLabStatus(2);

@@ -16,79 +16,13 @@
 
 # (项目卡片)实验项目-控制器
 
-## getProjectItem
-
-
-**接口描述**:
-
-
-**接口地址**:`/projectItem/getProjectItem/{proId}`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|proId| proId  | path | true |integer  |    |
-
-**响应示例**:
-
-```json
-[
-	{
-		"iid": "",
-		"proId": 0,
-		"iname": "",
-		"itype": "",
-		"itime": 0,
-		"ctype": "",
-		"num": 0,
-		"intend": ""
-	}
-]
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|iid| 实验项目编号  |string  |    |
-|proId| 项目(实验卡片)ID  |integer(int32)  | integer(int32)   |
-|iname| 实验项目名称  |string  |    |
-|itype| 实验类型  |string  |    |
-|itime| 实验项目学时  |integer(int32)  | integer(int32)   |
-|ctype| 必修或选修  |string  |    |
-|num| 分组人数  |integer(int32)  | integer(int32)   |
-|intend| 实验目的  |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |ProjectItem|
 ## addNewProjectItem
 
 
 **接口描述**:
 
 
-**接口地址**:`/projectItem/newProjectItem`
+**接口地址**:`/projectItem/addProjectItems`
 
 
 **请求方式**：`POST`
@@ -102,16 +36,19 @@
 
 **请求示例**：
 ```json
-{
-	"iid": "",
-	"proId": 0,
-	"iname": "",
-	"itype": "",
-	"itime": 0,
-	"ctype": "",
-	"num": 0,
-	"intend": ""
-}
+[
+	{
+		"ino": "",
+		"iid": "",
+		"proId": 0,
+		"iname": "",
+		"itype": "",
+		"itime": 0,
+		"ctype": "",
+		"num": 0,
+		"intend": ""
+	}
+]
 ```
 
 
@@ -119,7 +56,7 @@
 
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
-|projectItem| (实验卡片)实验项目实体  | body | true |ProjectItem  | ProjectItem   |
+|projectItems| (实验卡片)实验项目实体  | body | true |array  | ProjectItem   |
 
 **schema属性说明**
 
@@ -129,6 +66,7 @@
 
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
+|ino| 实验项目id  | body | false |string  |    |
 |iid| 实验项目编号  | body | true |string  |    |
 |proId| 项目(实验卡片)ID  | body | true |integer(int32)  |    |
 |iname| 实验项目名称  | body | true |string  |    |
@@ -159,22 +97,82 @@
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
 | 200 | OK  ||
-# 实验室安排-控制器
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-    
->>>>>>> dev
+## getProjectItem
 
-=======
->>>>>>> dev
+
+**接口描述**:
+
+
+**接口地址**:`/projectItem/getProjectItem/{proId}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|proId| proId  | path | true |integer  |    |
+
+**响应示例**:
+
+```json
+[
+	{
+		"ino": "",
+		"iid": "",
+		"proId": 0,
+		"iname": "",
+		"itype": "",
+		"itime": 0,
+		"ctype": "",
+		"num": 0,
+		"intend": ""
+	}
+]
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|ino| 实验项目id  |string  |    |
+|iid| 实验项目编号  |string  |    |
+|proId| 项目(实验卡片)ID  |integer(int32)  | integer(int32)   |
+|iname| 实验项目名称  |string  |    |
+|itype| 实验类型  |string  |    |
+|itime| 实验项目学时  |integer(int32)  | integer(int32)   |
+|ctype| 必修或选修  |string  |    |
+|num| 分组人数  |integer(int32)  | integer(int32)   |
+|intend| 实验目的  |string  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ProjectItem|
+# 实验室安排-控制器
 ## addArrange
 
 
 **接口描述**:
 
 
-**接口地址**:`/arrange/add`
+**接口地址**:`/arrange/addArrange`
 
 
 **请求方式**：`POST`
@@ -192,17 +190,19 @@
 	"aid": 0,
 	"labId": "",
 	"proId": 0,
-	"tid": "",
-	"courseId": 0,
+	"campus": "",
+	"status": 0,
 	"labClass": "",
+	"courseId": "",
+	"tid": "",
+	"expProname": "",
 	"labRemark": "",
 	"arrangePeriod": [
 		{
 			"aid": 0,
-			"expProname": "",
+			"labWeek": 0,
 			"labDay": 0,
-			"labSession": 0,
-			"labWeek": 0
+			"labSession": 0
 		}
 	]
 }
@@ -226,9 +226,12 @@
 |aid| 实验室排课编号  | body | false |integer(int32)  |    |
 |labId| 实验室编号  | body | true |string  |    |
 |proId| 项目ID  | body | true |integer(int32)  |    |
-|tid| 教职工号  | body | true |string  |    |
-|courseId| 课程号  | body | true |integer(int32)  |    |
+|campus| 实验室校区  | body | true |string  |    |
+|status| 申请状态  | body | true |integer(int32)  |    |
 |labClass| 班级  | body | true |string  |    |
+|courseId| 课程编号  | body | true |string  |    |
+|tid| 教职工号  | body | true |string  |    |
+|expProname| 实验项目名称  | body | false |string  |    |
 |labRemark| 备注  | body | true |string  |    |
 |arrangePeriod| 排课时间  | body | true |array  | ArrangePeriod   |
 
@@ -237,25 +240,20 @@
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
 |aid| 实验室排课编号  | body | true |integer(int32)  |    |
-|expProname| 实验项目名称  | body | false |string  |    |
+|labWeek| 开课周次  | body | true |integer(int32)  |    |
 |labDay| 开课星期  | body | true |integer(int32)  |    |
 |labSession| 开课节次  | body | true |integer(int32)  |    |
-|labWeek| 开课周次  | body | true |integer(int32)  |    |
 
 **响应示例**:
 
 ```json
-{
-	"msg": ""
-}
+
 ```
 
 **响应参数**:
 
 
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|msg| 消息  |string  |    |
+暂无
 
 
 
@@ -266,8 +264,21 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Message|
+| 200 | OK  ||
+<<<<<<< HEAD
+# 实验室安排-控制器
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    
+>>>>>>> dev
+
+=======
+>>>>>>> dev
+## addArrange
+=======
 ## getArrange
+>>>>>>> dev
 
 
 **接口描述**:
@@ -300,17 +311,19 @@
 		"aid": 0,
 		"labId": "",
 		"proId": 0,
-		"tid": "",
-		"courseId": 0,
+		"campus": "",
+		"status": 0,
 		"labClass": "",
+		"courseId": "",
+		"tid": "",
+		"expProname": "",
 		"labRemark": "",
 		"arrangePeriod": [
 			{
 				"aid": 0,
-				"expProname": "",
+				"labWeek": 0,
 				"labDay": 0,
-				"labSession": 0,
-				"labWeek": 0
+				"labSession": 0
 			}
 		]
 	}
@@ -325,9 +338,12 @@
 |aid| 实验室排课编号  |integer(int32)  | integer(int32)   |
 |labId| 实验室编号  |string  |    |
 |proId| 项目ID  |integer(int32)  | integer(int32)   |
-|tid| 教职工号  |string  |    |
-|courseId| 课程号  |integer(int32)  | integer(int32)   |
+|campus| 实验室校区  |string  |    |
+|status| 申请状态  |integer(int32)  | integer(int32)   |
 |labClass| 班级  |string  |    |
+|courseId| 课程编号  |string  |    |
+|tid| 教职工号  |string  |    |
+|expProname| 实验项目名称  |string  |    |
 |labRemark| 备注  |string  |    |
 |arrangePeriod| 排课时间  |array  | ArrangePeriod   |
 
@@ -343,10 +359,9 @@
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | ------------------|--------|----------- |
 |aid | 实验室排课编号   |integer(int32)  |    |
-|expProname | 实验项目名称   |string  |    |
+|labWeek | 开课周次   |integer(int32)  |    |
 |labDay | 开课星期   |integer(int32)  |    |
 |labSession | 开课节次   |integer(int32)  |    |
-|labWeek | 开课周次   |integer(int32)  |    |
 
 **响应状态**:
 
@@ -418,6 +433,364 @@
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
 | 200 | OK  |Teach|
+# 教师信息-控制器
+
+## deleteMsg
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/deleteMsg/{mid}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|mid| mid  | path | true |string  |    |
+
+**响应示例**:
+
+```json
+
+```
+
+**响应参数**:
+
+
+暂无
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  ||
+## getCurriculum
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/getCurriculum`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+暂无
+
+
+
+**响应示例**:
+
+```json
+[
+	{
+		"cname": "",
+		"labClass": "",
+		"labId": "",
+		"campus": "",
+		"arrangePeriod": {
+			"aid": 0,
+			"labWeek": 0,
+			"labDay": 0,
+			"labSession": 0
+		}
+	}
+]
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|cname| 课程名  |string  |    |
+|labClass| 班级  |string  |    |
+|labId| 实验室编号  |string  |    |
+|campus| 实验室校区  |string  |    |
+|arrangePeriod| 时间安排  |ArrangePeriod  | ArrangePeriod   |
+
+
+
+**schema属性说明**
+
+
+
+
+**ArrangePeriod**
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | ------------------|--------|----------- |
+|aid | 实验室排课编号   |integer(int32)  |    |
+|labWeek | 开课周次   |integer(int32)  |    |
+|labDay | 开课星期   |integer(int32)  |    |
+|labSession | 开课节次   |integer(int32)  |    |
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |Curriculum|
+## getMsgInfo
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/getMsgInfo/{tid}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|tid| tid  | path | true |string  |    |
+
+**响应示例**:
+
+```json
+[
+	{
+		"mid": 0,
+		"tid": "",
+		"mtitle": "",
+		"mresult": 0,
+		"mdate": "",
+		"mtext": "",
+		"mstatus": 0
+	}
+]
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|mid| 消息编号  |integer(int32)  | integer(int32)   |
+|tid| 教师编号  |string  |    |
+|mtitle| 通知标题  |string  |    |
+|mresult| 通知结果  |integer(int32)  | integer(int32)   |
+|mdate| 消息创建时间  |string  |    |
+|mtext| 消息内容  |string  |    |
+|mstatus| 消息状态  |integer(int32)  | integer(int32)   |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |TeacherMsg|
+## getTeacherInfo
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/getTeacherInfo/{tid}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|tid| tid  | path | true |string  |    |
+
+**响应示例**:
+
+```json
+{
+	"tid": "",
+	"tname": "",
+	"tphone": "",
+	"tqq": "",
+	"temail": "",
+	"tpassword": "",
+	"tlimit": true,
+	"authorities": [
+		{
+			"id": 0,
+			"name": ""
+		}
+	]
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|tid| 教职工号  |string  |    |
+|tname| 教师姓名  |string  |    |
+|tphone| 教师电话  |string  |    |
+|tqq| 教师QQ  |string  |    |
+|temail| 教师邮箱  |string  |    |
+|tpassword| 密码  |string  |    |
+|tlimit| 权限(是否为管理员)  |boolean  |    |
+|authorities| 用户权限列表  |array  | Authority   |
+
+
+
+**schema属性说明**
+
+
+
+
+**Authority**
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | ------------------|--------|----------- |
+|id | 编号   |integer(int64)  |    |
+|name | 权限,可用值:ROLE_USER,ROLE_ADMIN   |string  |    |
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |Teacher|
+## readMsg
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/readMsg/{mid}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|mid| mid  | path | true |string  |    |
+
+**响应示例**:
+
+```json
+
+```
+
+**响应参数**:
+
+
+暂无
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  ||
+## updatePassword
+
+
+**接口描述**:
+
+
+**接口地址**:`/teacher/updatePassword`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+暂无
+
+
+
+**响应示例**:
+
+```json
+
+```
+
+**响应参数**:
+
+
+暂无
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  ||
 # 文件传输测试-控制器
 
 ## getFile
@@ -1957,7 +2330,7 @@
 **请求示例**：
 ```json
 {
-	"username": "",
+	"userNo": "",
 	"password": "",
 	"imgCode": ""
 }
@@ -1978,15 +2351,30 @@
 
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
-|username| 用户名[用户账号]  | body | true |string  |    |
+|userNo| 用户账号  | body | true |string  |    |
 |password| 用户密码  | body | true |string  |    |
-|imgCode| 用户密码  | body | true |string  |    |
+|imgCode| 登录验证码  | body | true |string  |    |
 
 **响应示例**:
 
 ```json
 {
 	"token": "",
+	"teacher": {
+		"tid": "",
+		"tname": "",
+		"tphone": "",
+		"tqq": "",
+		"temail": "",
+		"tpassword": "",
+		"tlimit": true,
+		"authorities": [
+			{
+				"id": 0,
+				"name": ""
+			}
+		]
+	},
 	"message": {
 		"msg": ""
 	}
@@ -1998,7 +2386,8 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|token| 验证[验证失败为空]  |string  |    |
+|token| 验证token[验证失败为空]  |string  |    |
+|teacher| 登录用户信息  |Teacher  | Teacher   |
 |message| 错误消息  |Message  | Message   |
 
 
@@ -2007,6 +2396,26 @@
 
 
 
+
+**Teacher**
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | ------------------|--------|----------- |
+|tid | 教职工号   |string  |    |
+|tname | 教师姓名   |string  |    |
+|tphone | 教师电话   |string  |    |
+|tqq | 教师QQ   |string  |    |
+|temail | 教师邮箱   |string  |    |
+|tpassword | 密码   |string  |    |
+|tlimit | 权限(是否为管理员)   |boolean  |    |
+|authorities | 用户权限列表   |array  | Authority   |
+
+**Authority**
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | ------------------|--------|----------- |
+|id | 编号   |integer(int64)  |    |
+|name | 权限,可用值:ROLE_USER,ROLE_ADMIN   |string  |    |
 
 **Message**
 
@@ -2069,6 +2478,99 @@
 >>>>>>> dev
 # 项目卡片-控制器
 
+## addNewProject
+
+
+**接口描述**:
+
+
+**接口地址**:`/project/addProject`
+
+
+**请求方式**：`POST`
+
+
+**consumes**:`["application/json"]`
+
+
+**produces**:`["*/*"]`
+
+
+**请求示例**：
+```json
+{
+	"proId": 0,
+	"labCenName": "",
+	"expCname": "",
+	"expEqname": "",
+	"eqnum": 0,
+	"expMajor": "",
+	"ssort": "",
+	"expTime": 0,
+	"book": "",
+	"software": "",
+	"expTid": "",
+	"cname": "",
+	"courseId": "",
+	"conName": "",
+	"conNum": 0,
+	"labStatus": 0
+}
+```
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|expProject| 项目实体  | body | true |ExpProject  | ExpProject   |
+
+**schema属性说明**
+
+
+
+**ExpProject**
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|proId| 项目ID  | body | true |integer(int32)  |    |
+|labCenName| 实验室（中心）名称  | body | true |string  |    |
+|expCname| 实验课程名  | body | true |string  |    |
+|expEqname| 实验设备名  | body | true |string  |    |
+|eqnum| 设备数量  | body | true |integer(int32)  |    |
+|expMajor| 面向专业  | body | true |string  |    |
+|ssort| 学生类别  | body | true |string  |    |
+|expTime| 实验总学时  | body | true |integer(int32)  |    |
+|book| 实验教材  | body | true |string  |    |
+|software| 实验所用软件  | body | true |string  |    |
+|expTid| 教职工号  | body | true |string  |    |
+|cname| 课程名  | body | true |string  |    |
+|courseId| 课程编号  | body | true |string  |    |
+|conName| 消耗材料名称  | body | false |string  |    |
+|conNum| 消耗材料数量  | body | false |integer(int32)  |    |
+|labStatus| 申请实验室状态  | body | false |integer(int32)  |    |
+
+**响应示例**:
+
+```json
+
+```
+
+**响应参数**:
+
+
+暂无
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  ||
 ## clearProject
 
 
@@ -2124,7 +2626,7 @@
 **接口描述**:
 
 
-**接口地址**:`/project/getProject`
+**接口地址**:`/project/getProject/{tid}`
 
 
 **请求方式**：`GET`
@@ -2138,9 +2640,10 @@
 
 
 **请求参数**：
-暂无
 
-
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|tid| tid  | path | true |string  |    |
 
 **响应示例**:
 
@@ -2159,8 +2662,10 @@
 		"software": "",
 		"expTid": "",
 		"cname": "",
+		"courseId": "",
 		"conName": "",
-		"conNum": 0
+		"conNum": 0,
+		"labStatus": 0
 	}
 ]
 ```
@@ -2170,7 +2675,7 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|proId| 专业ID  |integer(int32)  | integer(int32)   |
+|proId| 项目ID  |integer(int32)  | integer(int32)   |
 |labCenName| 实验室（中心）名称  |string  |    |
 |expCname| 实验课程名  |string  |    |
 |expEqname| 实验设备名  |string  |    |
@@ -2182,8 +2687,10 @@
 |software| 实验所用软件  |string  |    |
 |expTid| 教职工号  |string  |    |
 |cname| 课程名  |string  |    |
+|courseId| 课程编号  |string  |    |
 |conName| 消耗材料名称  |string  |    |
 |conNum| 消耗材料数量  |integer(int32)  | integer(int32)   |
+|labStatus| 申请实验室状态  |integer(int32)  | integer(int32)   |
 
 
 
@@ -2195,92 +2702,3 @@
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
 | 200 | OK  |ExpProject|
-## addNewProject
-
-
-**接口描述**:
-
-
-**接口地址**:`/project/newProject`
-
-
-**请求方式**：`POST`
-
-
-**consumes**:`["application/json"]`
-
-
-**produces**:`["*/*"]`
-
-
-**请求示例**：
-```json
-{
-	"proId": 0,
-	"labCenName": "",
-	"expCname": "",
-	"expEqname": "",
-	"eqnum": 0,
-	"expMajor": "",
-	"ssort": "",
-	"expTime": 0,
-	"book": "",
-	"software": "",
-	"expTid": "",
-	"cname": "",
-	"conName": "",
-	"conNum": 0
-}
-```
-
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|expProject| 项目实体  | body | true |ExpProject  | ExpProject   |
-
-**schema属性说明**
-
-
-
-**ExpProject**
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|proId| 专业ID  | body | true |integer(int32)  |    |
-|labCenName| 实验室（中心）名称  | body | true |string  |    |
-|expCname| 实验课程名  | body | true |string  |    |
-|expEqname| 实验设备名  | body | true |string  |    |
-|eqnum| 设备数量  | body | true |integer(int32)  |    |
-|expMajor| 面向专业  | body | true |string  |    |
-|ssort| 学生类别  | body | true |string  |    |
-|expTime| 实验总学时  | body | true |integer(int32)  |    |
-|book| 实验教材  | body | true |string  |    |
-|software| 实验所用软件  | body | true |string  |    |
-|expTid| 教职工号  | body | true |string  |    |
-|cname| 课程名  | body | true |string  |    |
-|conName| 消耗材料名称  | body | false |string  |    |
-|conNum| 消耗材料数量  | body | false |integer(int32)  |    |
-
-**响应示例**:
-
-```json
-
-```
-
-**响应参数**:
-
-
-暂无
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||

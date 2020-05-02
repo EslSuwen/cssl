@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.controller;
 
+import com.cqjtu.cssl.entity.Curriculum;
 import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.entity.TeacherMsg;
@@ -103,5 +104,13 @@ public class TeacherController {
 
     return teacherService.updatePassword(
         request.getParameter("tid"), request.getParameter("oldPw"), request.getParameter("newPw"));
+  }
+
+  @GetMapping("/getCurriculum")
+  public List<Curriculum> getCurriculum(HttpServletRequest request) {
+    String tid = request.getParameter("tid");
+    String week = request.getParameter("week");
+
+    return teacherService.getCurriculum(tid, week);
   }
 }

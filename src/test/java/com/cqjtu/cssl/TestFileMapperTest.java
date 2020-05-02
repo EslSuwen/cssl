@@ -1,3 +1,4 @@
+/*
 package com.cqjtu.cssl;
 
 import com.cqjtu.cssl.entity.TestFile;
@@ -19,6 +20,7 @@ public class TestFileMapperTest {
     @Autowired
     private TestFileService testFileService;
 
+*/
 /*    @Test
     public void addFile() throws IOException {
         String resource = "mybatis-config.xml";
@@ -44,7 +46,8 @@ public class TestFileMapperTest {
         System.out.println(user);
         session.commit();
         session.close();
-    }*/
+    }*//*
+
 
     @Test
     public void findOneGenderUser() throws IOException {
@@ -58,3 +61,4 @@ public class TestFileMapperTest {
     }
 
 }
+*/
