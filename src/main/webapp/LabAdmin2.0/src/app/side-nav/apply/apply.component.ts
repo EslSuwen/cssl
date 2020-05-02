@@ -212,6 +212,8 @@ export class ApplyComponent implements OnInit {
       this.applysumbmit.proId = this.exps[i].proId;
       // 校区
       this.applysumbmit.campus = this.regionselectedItems[0].itemName;
+      // 教师编号
+      this.applysumbmit.tid=this.authenticationService.getUserNo();
       // 备注
       this.applysumbmit.labRemark = this.beizhu.value;
       // 实验项目名称

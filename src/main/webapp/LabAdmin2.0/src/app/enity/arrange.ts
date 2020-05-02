@@ -25,6 +25,12 @@ export class Arrange {
   /** 班级 */
   labClass: string;
 
+  /** 课程编号 */
+  courseId: string;
+
+  /** 教职工号 */
+  tid: string;
+
   /** 实验项目名称 */
   expProname: string;
 
@@ -41,6 +47,8 @@ export class Arrange {
     this.campus = '';
     this.status = 0;
     this.labClass = '';
+    this.tid = '';
+    this.courseId = '';
     this.expProname = '';
     this.labRemark = '';
     this.arrangePeriod = new Array<ArrangePeriod>();
@@ -73,4 +81,36 @@ export class ArrangePeriod {
     this.labDay = 0;
     this.labSession = 0;
   }
+}
+
+/**
+ * 课程表信息实体
+ *
+ * @author suwen
+ * @since 2020-04-20
+ */
+
+export class Curriculum {
+
+  /** 课程名 */
+  cname: string;
+
+  /** 班级 */
+  labClass: string;
+
+  /** 实验室 */
+  labId: string;
+
+  /** 校区 */
+  campus: string;
+  /** 排课时间 */
+  arrangePeriod: ArrangePeriod;
+
+
+  constructor() {
+    this.cname = '';
+    this.labClass = '';
+    this.arrangePeriod = new ArrangePeriod();
+  }
+
 }

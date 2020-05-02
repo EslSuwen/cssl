@@ -4,6 +4,7 @@ import {environment} from "../../environments/environment";
 import {Observable, of} from "rxjs";
 import {Teach, Teacher, TeacherMsg} from "../enity/teacher";
 import {catchError, tap} from "rxjs/operators";
+import {Curriculum} from "../enity/arrange";
 
 @Injectable({
   providedIn: 'root'
@@ -56,13 +57,21 @@ export class TeacherService {
   }
 
   updatePassword(tid: string, oldPw: string, newPw: string): Observable<number> {
-    const url = this.teacher_api + '/updatePassword'
+    const url = this.teacher_api + '/updatePassword';
     return this.http.get<number>(url, {
-        params: {
-          "tid": tid, "oldPw": oldPw, "newPw": newPw
-        }
+      params: {
+        "tid": tid, "oldPw": oldPw, "newPw": newPw
       }
-    )
+    })
+  }
+
+  getCurriculum(tid: string, week: string): Observable<Curriculum[]> {
+    const url = this.teacher_api + '/getCurriculum';
+    return this.http.get<Curriculum[]>(url, {
+      params: {
+        "tid": tid, "week": week
+      }
+    })
   }
 
 
