@@ -58,6 +58,14 @@ export class ApplyComponent implements OnInit {
         this.exps = exps;
       });
 
+    this.projectService.getAuditProjects().subscribe(data => {
+      console.log(data);
+    })
+
+    this.projectService.auditProject('20', '2').subscribe(data => {
+      console.log(data);
+    })
+
     this.weekList = [
       {id: 1, itemName: '第一周'},
       {id: 2, itemName: '第二周'},
@@ -213,7 +221,7 @@ export class ApplyComponent implements OnInit {
       // 校区
       this.applysumbmit.campus = this.regionselectedItems[0].itemName;
       // 教师编号
-      this.applysumbmit.tid=this.authenticationService.getUserNo();
+      this.applysumbmit.tid = this.authenticationService.getUserNo();
       // 备注
       this.applysumbmit.labRemark = this.beizhu.value;
       // 实验项目名称

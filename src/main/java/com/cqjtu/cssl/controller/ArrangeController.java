@@ -80,4 +80,18 @@ public class ArrangeController {
     arrangePeriodService.saveBatch(arrange.getArrangePeriod());
     return 1;
   }
+
+  /**
+   * 管理员审核实验室时间安排
+   *
+   * @param aid 安排编号
+   * @param status 状态编号
+   * @return 操作状态
+   * @author suwen
+   * @date 2020/5/11 上午9:49
+   */
+  public boolean auditArrange(@RequestParam Integer aid, @RequestParam Integer status) {
+
+    return arrangeService.auditArrange(aid, status);
+  }
 }

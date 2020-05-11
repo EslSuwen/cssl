@@ -21,7 +21,7 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @param tid 老师编号
    * @param cid 课程号
    */
-  boolean isCardExist(String tid,String cid );
+  boolean isCardExist(String tid, String cid);
 
   /**
    * 根据老师编号和课程号查找对应卡片
@@ -31,6 +31,16 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @param tid 老师编号
    * @param cid 课程号
    */
-  ExpProject getExpByTidCid(String tid,String cid );
+  ExpProject getExpByTidCid(String tid, String cid);
 
+  /**
+   * 审核项目卡片
+   *
+   * @param proId 卡片id
+   * @param status 审核状态
+   * @return 状态
+   * @author suwen
+   * @date 2020/5/10 上午11:42
+   */
+  boolean auditProject(String proId, Integer status);
 }

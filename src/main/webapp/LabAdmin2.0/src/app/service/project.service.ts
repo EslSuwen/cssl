@@ -48,6 +48,21 @@ export class ProjectService {
 
   }
 
+  getAuditProjects(): Observable<Exp[]> {
+    const url = `${this.api}/getAuditProject`
+    return this.http.get<Exp[]>(url);
+  }
+
+  auditProject(proId: string, status: string): Observable<boolean> {
+    const url = `${this.api}/auditProject`
+    return this.http.get<boolean>(url, {
+      params: {
+        "proId": proId,
+        "status": status
+      }
+    });
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (errorResponse: any): Observable<T> => {
       console.error(errorResponse.error); // log to console instead

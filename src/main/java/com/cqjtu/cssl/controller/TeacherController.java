@@ -1,7 +1,6 @@
 package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.entity.Curriculum;
-import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.entity.TeacherMsg;
 import com.cqjtu.cssl.service.TeacherMsgService;
@@ -10,14 +9,9 @@ import io.swagger.annotations.Api;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 教师信息前端控制器
@@ -91,25 +85,31 @@ public class TeacherController {
   /**
    * 用户修改密码
    *
-   * @param request http 请求
+   * @param tid 教师编号
+   * @param oldPw 当然密码
+   * @param newPw 新密码
    * @return int 状态码
    * @author suwen
    * @date 2020/4/1 下午7:56
    */
   @GetMapping("/updatePassword")
-  public int updatePassword(HttpServletRequest request) {
-    String tid = request.getParameter("tid");
-    String oldPw = request.getParameter("oldPw");
-    String newPw = request.getParameter("newPw");
+  public int updatePassword(
+      @RequestParam String tid, @RequestParam String oldPw, @RequestParam String newPw) {
 
-    return teacherService.updatePassword(
-        request.getParameter("tid"), request.getParameter("oldPw"), request.getParameter("newPw"));
+    return teacherService.updatePassword(tid, oldPw, newPw);
   }
 
+  /**
+   * 获取教师某周课表
+   *
+   * @param tid 教师编号
+   * @param week 周次
+   * @return java.util.List<com.cqjtu.cssl.entity.Curriculum>
+   * @author suwen
+   * @date 2020/5/11 上午9:35
+   */
   @GetMapping("/getCurriculum")
-  public List<Curriculum> getCurriculum(HttpServletRequest request) {
-    String tid = request.getParameter("tid");
-    String week = request.getParameter("week");
+  public List<Curriculum> getCurriculum(@RequestParam String tid, @RequestParam String week) {
 
     return teacherService.getCurriculum(tid, week);
   }

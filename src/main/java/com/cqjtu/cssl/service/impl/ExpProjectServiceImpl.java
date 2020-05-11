@@ -1,6 +1,8 @@
 package com.cqjtu.cssl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.UpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
@@ -32,5 +34,13 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   public ExpProject getExpByTidCid(String tid, String cid) {
 
     return getOne(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid));
+  }
+
+  @Override
+  public boolean auditProject(String proId, Integer status) {
+
+    ExpProject expProject=new ExpProject();
+    expProject.setLabStatus(status);
+    return update(expProject,new UpdateWrapper<ExpProject>().eq("pro_Id",proId));
   }
 }

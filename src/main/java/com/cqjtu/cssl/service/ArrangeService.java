@@ -22,4 +22,15 @@ public interface ArrangeService extends IService<Arrange> {
    * @date 2020/2/22 11:05 上午
    */
   List<Arrange> findByTid(String tid);
+
+  /**
+   * 管理员审核实验室时间安排
+   *
+   * @param aid 安排编号
+   * @param status 状态编号
+   * @return 操作状态
+   * @author suwen
+   * @date 2020/5/11 上午9:49
+   */
+  boolean auditArrange(Integer aid,Integer status);
 }

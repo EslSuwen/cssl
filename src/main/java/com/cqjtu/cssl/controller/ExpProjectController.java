@@ -5,6 +5,7 @@ import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.service.ExpProjectService;
 import io.swagger.annotations.Api;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,6 +20,7 @@ import java.util.List;
 @Api(tags = "项目卡片-控制器")
 @RestController
 @RequestMapping("/project")
+@Log4j2
 public class ExpProjectController {
 
   private final ExpProjectService expProjectService;
@@ -60,7 +62,33 @@ public class ExpProjectController {
   @GetMapping(value = "/getProject/{tid}")
   public List<ExpProject> getProjects(@PathVariable String tid) {
 
-    return expProjectService.list(new QueryWrapper<ExpProject>().eq("exp_tid",tid));
+    return expProjectService.list(new QueryWrapper<ExpProject>().eq("exp_tid", tid));
+  }
+
+  /**
+   * 获取待审核项目卡片数据
+   *
+   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
+   * @author suwen
+   * @date 2020/5/10 11:14 上午
+   */
+  @GetMapping(value = "/getAuditProject")
+  public List<ExpProject> getAuditProjects() {
+
+    return expProjectService.list(new QueryWrapper<ExpProject>().eq("lab_status", 0));
+  }
+
+  /**
+   * 审核项目卡片
+   *
+   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
+   * @author suwen
+   * @date 2020/5/10 11:24 上午
+   */
+  @GetMapping(value = "/auditProject")
+  public boolean auditProject(@RequestParam String proId, @RequestParam Integer status) {
+
+    return expProjectService.auditProject(proId, status);
   }
 
   /**

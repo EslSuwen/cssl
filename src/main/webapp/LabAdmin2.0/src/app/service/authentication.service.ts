@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
-import { throwError } from 'rxjs/internal/observable/throwError';
-import { environment } from '../../environments/environment';
-import { Teacher } from '../enity/teacher';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable, of} from 'rxjs';
+import {catchError, tap} from 'rxjs/operators';
+import {throwError} from 'rxjs/internal/observable/throwError';
+import {environment} from '../../environments/environment';
+import {Teacher} from '../enity/teacher';
 
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({'Content-Type': 'application/json'}),
   withCredentials: true
 };
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class AuthenticationService {
   private tokenParsed: any;
   private teacher: Teacher;
