@@ -4,15 +4,18 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.ExpProject;
+import com.cqjtu.cssl.entity.TeachingPlan;
 import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
 import com.cqjtu.cssl.service.ExpProjectService;
+import com.cqjtu.cssl.utils.ExcelUtil;
 import io.swagger.annotations.Api;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -93,5 +96,28 @@ public class ArrangeController {
   public boolean auditArrange(@RequestParam Integer aid, @RequestParam Integer status) {
 
     return arrangeService.auditArrange(aid, status);
+  }
+
+  /**
+   * 获取教学计划表
+   *
+   * @return java.util.List<教学计划表>
+   * @author suwen
+   * @date 2020/5/13 下午3:41
+   */
+  @GetMapping("getTeachingPlan")
+  public List<TeachingPlan> getTeachingPlanList() {
+    return arrangeService.getTeachingPlanList();
+  }
+
+  /**
+   * 获取教学计划表 excel
+   *
+   * @author suwen
+   * @date 2020/5/13 下午5:51
+   */
+  @GetMapping("getTeachingPlanExcel")
+  public void getTeachingPlanExcel(HttpServletResponse httpResponse) {
+    ExcelUtil.exportExcel(httpResponse, null);
   }
 }

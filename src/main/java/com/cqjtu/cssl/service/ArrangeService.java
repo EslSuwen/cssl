@@ -2,6 +2,7 @@ package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.Arrange;
+import com.cqjtu.cssl.entity.TeachingPlan;
 
 import java.util.List;
 
@@ -33,4 +34,13 @@ public interface ArrangeService extends IService<Arrange> {
    * @date 2020/5/11 上午9:49
    */
   boolean auditArrange(Integer aid,Integer status);
+
+  /**
+   * 获取教学计划表
+   *
+   * @return java.util.List<教学计划表>
+   * @author suwen
+   * @date 2020/5/13 下午3:44
+   */
+  List<TeachingPlan> getTeachingPlanList();
 }
