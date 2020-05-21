@@ -85,6 +85,19 @@ public class ArrangeController {
   }
 
   /**
+   * 获取已申请的实验室安排信息
+   *
+   * @return 实验室时间安排列表
+   * @author suwen
+   * @date 2020/5/15 下午7:27
+   */
+  @GetMapping("auditArrange")
+  public List<Arrange> getAuditArrange() {
+
+    return arrangeService.list(new QueryWrapper<Arrange>().eq("status", 2));
+  }
+
+  /**
    * 管理员审核实验室时间安排
    *
    * @param aid 安排编号
@@ -93,6 +106,7 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/11 上午9:49
    */
+  @GetMapping("getAuditArrange")
   public boolean auditArrange(@RequestParam Integer aid, @RequestParam Integer status) {
 
     return arrangeService.auditArrange(aid, status);
