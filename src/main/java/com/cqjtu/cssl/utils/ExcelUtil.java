@@ -7,7 +7,10 @@ import org.apache.poi.hssf.usermodel.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
-import java.util.Collections;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,7 +22,7 @@ import java.util.List;
 public class ExcelUtil {
 
   /** 方法名：exportExcel 功能：导出Excel 描述： 创建人：typ 创建时间：2018/10/19 16:00 修改人： 修改描述： 修改时间： */
-  public static void exportExcel(HttpServletResponse response, TeachingPlan data) {
+  public static void exportExcel(HttpServletResponse response, List<TeachingPlan> data) {
     log.info("导出解析开始，fileName:{}", data);
     try {
       // 实例化HSSFWorkbook
@@ -27,11 +30,38 @@ public class ExcelUtil {
       // 创建一个Excel表单，参数为sheet的名字
       HSSFSheet sheet = workbook.createSheet("sheet");
       // 设置表头
-      setTitle(workbook, sheet, new String[] {"1", "2", "3"});
+      setTitle(
+          workbook,
+          sheet,
+          new String[] {
+            "序号", "实验室", "专业", "班级", "实验课程名", "课程编号", "学时", "起止周", "所属学院", "校区", "任课教师", "课程类型",
+            "备注"
+          });
       // 设置单元格并赋值
-      setData(sheet, Collections.singletonList(new String[] {"1", "2", "3"}));
+      List<String[]> planData = new ArrayList<>();
+      for (int i = 0; i < data.size(); i++) {
+        planData.add(
+            new String[] {
+              String.valueOf(i + 1),
+              data.get(i).getLabName(),
+              data.get(i).getExpMajor(),
+              data.get(i).getLabClass(),
+              data.get(i).getExpCname(),
+              data.get(i).getCourseId(),
+              data.get(i).getExpTime().toString(),
+              data.get(i).getCoursePeriod(),
+              data.get(i).getCourseCollege(),
+              data.get(i).getCampus(),
+              data.get(i).getTname(),
+              data.get(i).getCourseType(),
+              data.get(i).getLabRemark()
+            });
+      }
+
+      setData(sheet, planData);
       // 设置浏览器下载
-      setBrowser(response, workbook, "2020-05-25.xls");
+      setBrowser(
+          response, workbook, "教学计划表" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
       log.info("导出解析成功!");
     } catch (Exception e) {
       log.info("导出解析失败!");
@@ -93,7 +123,9 @@ public class ExcelUtil {
       // 设置response的Header
       response.setCharacterEncoding("utf-8");
       response.setContentType("multipart/form-data");
-      response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+      response.setHeader(
+          "Content-disposition",
+          "attachment; filename=" + new String((fileName + ".xls").getBytes(), StandardCharsets.ISO_8859_1));
       OutputStream os = new BufferedOutputStream(response.getOutputStream());
 
       // 将excel写入到输出流中

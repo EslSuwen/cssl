@@ -3,15 +3,15 @@
 
  Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 80019
+ Source Server Version : 80018
  Source Host           : localhost:3306
  Source Schema         : csslDB
 
  Target Server Type    : MySQL
- Target Server Version : 80019
+ Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 20/04/2020 16:35:07
+ Date: 21/05/2020 16:29:12
 */
 
 SET NAMES utf8mb4;
@@ -22,16 +22,16 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `arrange`;
 CREATE TABLE `arrange` (
-  `aid` int NOT NULL AUTO_INCREMENT COMMENT '时间安排编号',
+  `aid` int(11) NOT NULL AUTO_INCREMENT COMMENT '时间安排编号',
   `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室编号',
-  `pro_id` int DEFAULT NULL COMMENT '项目编号',
+  `pro_id` int(11) DEFAULT NULL COMMENT '项目编号',
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '教师编号',
-  `course_id` int DEFAULT NULL COMMENT '课程编号',
+  `course_id` int(11) DEFAULT NULL COMMENT '课程编号',
   `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室类型',
   `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '实验室备注',
   `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '实验名称',
   `campus` char(8) DEFAULT NULL COMMENT '校区',
-  `status` tinyint DEFAULT NULL,
+  `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`aid`),
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
@@ -45,8 +45,8 @@ CREATE TABLE `arrange` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `arrange` VALUES (1, 'B01406', 1, '256740953460', 17015054, '17级3、4班', '无', '实验', '双福校区', 0);
-INSERT INTO `arrange` VALUES (3, '60201', 3, '123', 14211829, '计算机1班-计算机2班', '', 'python语言', '南岸校区', 0);
-INSERT INTO `arrange` VALUES (4, 'B01406', 13, '123', 14210187, '计算机3班-计算机4班', '', '上机', '双福校区', 0);
+INSERT INTO `arrange` VALUES (3, '60201', 3, '123', 14211829, '计算机1班-计算机2班', '', 'python语言', '南岸校区', 1);
+INSERT INTO `arrange` VALUES (4, 'B01406', 13, '123', 14210187, '计算机3班-计算机4班', '', '上机', '双福校区', 2);
 INSERT INTO `arrange` VALUES (5, '60201', 18, '123', 14210669, '曙光班', '', '汇编上机', '南岸校区', 0);
 COMMIT;
 
@@ -55,10 +55,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `arrange_period`;
 CREATE TABLE `arrange_period` (
-  `aid` int NOT NULL,
-  `lab_week` int NOT NULL,
-  `lab_day` int NOT NULL,
-  `lab_session` int NOT NULL,
+  `aid` int(11) NOT NULL,
+  `lab_week` int(11) NOT NULL,
+  `lab_day` int(11) NOT NULL,
+  `lab_session` int(11) NOT NULL,
   PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
   CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -161,8 +161,8 @@ COMMIT;
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class` (
   `class_name` varchar(16) NOT NULL,
-  `major_id` int NOT NULL,
-  `class_num` int DEFAULT NULL,
+  `major_id` int(11) NOT NULL,
+  `class_num` int(11) DEFAULT NULL,
   PRIMARY KEY (`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_8` (`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_8` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
@@ -184,8 +184,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `course`;
 CREATE TABLE `course` (
-  `course_id` int NOT NULL,
+  `course_id` int(11) NOT NULL,
   `course_name` varchar(32) NOT NULL,
+  `course_college` varchar(32) NOT NULL,
+  `course_type` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
@@ -193,42 +195,42 @@ CREATE TABLE `course` (
 -- Records of course
 -- ----------------------------
 BEGIN;
-INSERT INTO `course` VALUES (14210118, 'RFID原理与应用');
-INSERT INTO `course` VALUES (14210187, '操作系统原理A');
-INSERT INTO `course` VALUES (14210240, '传感器原理及应用');
-INSERT INTO `course` VALUES (14210669, '汇编与计算机组成原理');
-INSERT INTO `course` VALUES (14210749, '计算机网络原理');
-INSERT INTO `course` VALUES (14211006, '嵌入式系统基础B');
-INSERT INTO `course` VALUES (14211165, '数字信号处理B');
-INSERT INTO `course` VALUES (14211209, '通信原理A');
-INSERT INTO `course` VALUES (14211245, '网络软件与设计');
-INSERT INTO `course` VALUES (14211346, '信息论与编码B');
-INSERT INTO `course` VALUES (14211374, '移动互联APP');
-INSERT INTO `course` VALUES (14211829, '程序设计方法学');
-INSERT INTO `course` VALUES (14212048, '电子技术课外实践');
-INSERT INTO `course` VALUES (14212067, '多媒体技术');
-INSERT INTO `course` VALUES (14212213, '工程实训（通信工程）');
-INSERT INTO `course` VALUES (14212214, '工程实训（物联网工程）');
-INSERT INTO `course` VALUES (14212831, '嵌入式系统基础A');
-INSERT INTO `course` VALUES (14212966, '数据库原理');
-INSERT INTO `course` VALUES (14213065, '通信技术实践');
-INSERT INTO `course` VALUES (14213068, '通信网规划与设计');
-INSERT INTO `course` VALUES (14213072, '通信原理B');
-INSERT INTO `course` VALUES (17015054, '高级语言程序设计');
-INSERT INTO `course` VALUES (17015062, '轨道信号系统与设备基础');
-INSERT INTO `course` VALUES (17015184, '大数据概论');
-INSERT INTO `course` VALUES (17015187, '数据导入与预处理技术');
-INSERT INTO `course` VALUES (18210145, '高级语言程序设计A');
-INSERT INTO `course` VALUES (18210161, '计算思维综合实践I');
-INSERT INTO `course` VALUES (18210177, '高级语言程序设计B');
-INSERT INTO `course` VALUES (19210322, '数据结构A');
-INSERT INTO `course` VALUES (19210916, '信号与系统');
-INSERT INTO `course` VALUES (19211634, '大数据开发语言');
-INSERT INTO `course` VALUES (19211825, '计算思维综合实践I');
-INSERT INTO `course` VALUES (19212095, '数字电路');
-INSERT INTO `course` VALUES (19212099, '数据库技术');
-INSERT INTO `course` VALUES (19212413, 'Java编程能力强化提升');
-INSERT INTO `course` VALUES (19212769, '基于FPGA的SOC设计');
+INSERT INTO `course` VALUES (14210118, 'RFID原理与应用', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14210187, '操作系统原理A', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14210240, '传感器原理及应用', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14210669, '汇编与计算机组成原理', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14210749, '计算机网络原理', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211006, '嵌入式系统基础B', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211165, '数字信号处理B', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211209, '通信原理A', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211245, '网络软件与设计', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211346, '信息论与编码B', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211374, '移动互联APP', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14211829, '程序设计方法学', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212048, '电子技术课外实践', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212067, '多媒体技术', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212213, '工程实训（通信工程）', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212214, '工程实训（物联网工程）', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212831, '嵌入式系统基础A', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14212966, '数据库原理', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14213065, '通信技术实践', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14213068, '通信网规划与设计', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (14213072, '通信原理B', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (17015054, '高级语言程序设计', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (17015062, '轨道信号系统与设备基础', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (17015184, '大数据概论', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (17015187, '数据导入与预处理技术', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (18210145, '高级语言程序设计A', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (18210161, '计算思维综合实践I', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (18210177, '高级语言程序设计B', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19210322, '数据结构A', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19210916, '信号与系统', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19211634, '大数据开发语言', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19211825, '计算思维综合实践I', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19212095, '数字电路', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19212099, '数据库技术', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19212413, 'Java编程能力强化提升', '信息科学与工程', '必修');
+INSERT INTO `course` VALUES (19212769, '基于FPGA的SOC设计', '信息科学与工程', '必修');
 COMMIT;
 
 -- ----------------------------
@@ -236,22 +238,22 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `exp_project`;
 CREATE TABLE `exp_project` (
-  `pro_id` int NOT NULL AUTO_INCREMENT,
+  `pro_id` int(11) NOT NULL AUTO_INCREMENT,
   `lab_cen_name` varchar(64) NOT NULL DEFAULT '信息技术实践教学中心',
   `exp_cname` varchar(32) NOT NULL,
   `exp_eqname` varchar(16) DEFAULT NULL,
-  `eqnum` int DEFAULT NULL,
+  `eqnum` int(11) DEFAULT NULL,
   `exp_major` varchar(32) NOT NULL,
   `ssort` varchar(16) NOT NULL,
-  `exp_time` int NOT NULL,
+  `exp_time` int(11) NOT NULL,
   `book` varchar(128) DEFAULT NULL,
   `software` varchar(32) DEFAULT NULL,
   `exp_tid` char(12) NOT NULL,
-  `lab_status` tinyint DEFAULT NULL,
+  `lab_status` tinyint(4) DEFAULT NULL,
   `cname` varchar(32) NOT NULL,
   `con_name` varchar(16) DEFAULT NULL,
-  `con_num` int NOT NULL,
-  `course_id` int NOT NULL,
+  `con_num` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
   PRIMARY KEY (`pro_id`) USING BTREE,
   KEY `cid` (`course_id`),
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
@@ -272,13 +274,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_arrange_backup`;
 CREATE TABLE `lab_arrange_backup` (
-  `lab_week` int NOT NULL,
-  `lab_day` int NOT NULL,
+  `lab_week` int(11) NOT NULL,
+  `lab_day` int(11) NOT NULL,
   `lab_session` varchar(16) NOT NULL,
   `lab_id` varchar(16) NOT NULL,
-  `pro_id` int DEFAULT NULL,
+  `pro_id` int(11) DEFAULT NULL,
   `tid` char(12) DEFAULT NULL,
-  `course_id` int DEFAULT NULL,
+  `course_id` int(11) DEFAULT NULL,
   `lab_class` varchar(128) NOT NULL,
   `lab_remark` varchar(8) NOT NULL,
   `exp_proname` varchar(32) NOT NULL,
@@ -286,8 +288,8 @@ CREATE TABLE `lab_arrange_backup` (
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
-  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`),
-  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`)
+  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
+  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -309,10 +311,10 @@ DROP TABLE IF EXISTS `lab_info`;
 CREATE TABLE `lab_info` (
   `lab_id` varchar(16) NOT NULL,
   `tid` char(12) DEFAULT NULL,
-  `type_id` int DEFAULT NULL,
+  `type_id` int(11) DEFAULT NULL,
   `lab_name` varchar(64) NOT NULL,
   `lab_campus` char(4) NOT NULL,
-  `lab_cap` int NOT NULL,
+  `lab_cap` int(11) NOT NULL,
   `lab_area` decimal(5,2) DEFAULT NULL,
   PRIMARY KEY (`lab_id`) USING BTREE,
   KEY `fk_relationship_4` (`type_id`) USING BTREE,
@@ -352,7 +354,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `lab_type`;
 CREATE TABLE `lab_type` (
-  `type_id` int NOT NULL,
+  `type_id` int(11) NOT NULL,
   `type_name` varchar(16) NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -370,7 +372,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `major`;
 CREATE TABLE `major` (
-  `major_id` int NOT NULL,
+  `major_id` int(11) NOT NULL,
   `major_name` varchar(32) NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
@@ -390,14 +392,14 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `project_item`;
 CREATE TABLE `project_item` (
-  `ino` int NOT NULL AUTO_INCREMENT,
+  `ino` int(11) NOT NULL AUTO_INCREMENT,
   `iid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `pro_id` int NOT NULL,
+  `pro_id` int(11) NOT NULL,
   `iname` varchar(32) NOT NULL,
   `itype` varchar(8) NOT NULL,
-  `itime` int NOT NULL,
+  `itime` int(11) NOT NULL,
   `ctype` char(4) NOT NULL,
-  `num` int NOT NULL,
+  `num` int(11) NOT NULL,
   `intend` varchar(256) NOT NULL,
   PRIMARY KEY (`ino`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE
@@ -427,8 +429,8 @@ COMMIT;
 DROP TABLE IF EXISTS `teach`;
 CREATE TABLE `teach` (
   `tid` char(12) NOT NULL,
-  `course_id` int NOT NULL,
-  `apply_limit` tinyint DEFAULT NULL,
+  `course_id` int(11) NOT NULL,
+  `apply_limit` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`tid`,`course_id`) USING BTREE,
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
@@ -458,9 +460,9 @@ COMMIT;
 DROP TABLE IF EXISTS `teachclass`;
 CREATE TABLE `teachclass` (
   `tid` char(12) NOT NULL,
-  `course_id` int NOT NULL,
+  `course_id` int(11) NOT NULL,
   `class_name` varchar(16) NOT NULL,
-  `major_id` int NOT NULL,
+  `major_id` int(11) NOT NULL,
   PRIMARY KEY (`tid`,`course_id`,`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_10` (`class_name`,`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_10` FOREIGN KEY (`class_name`, `major_id`) REFERENCES `class` (`class_name`, `major_id`),
@@ -511,13 +513,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher_msg`;
 CREATE TABLE `teacher_msg` (
-  `mid` int NOT NULL AUTO_INCREMENT,
+  `mid` int(11) NOT NULL AUTO_INCREMENT,
   `tid` char(12) NOT NULL,
   `mtitle` varchar(36) NOT NULL,
-  `mresult` tinyint NOT NULL,
+  `mresult` tinyint(4) NOT NULL,
   `mtext` varchar(255) NOT NULL,
   `mdate` datetime NOT NULL,
-  `mstatus` tinyint NOT NULL,
+  `mstatus` tinyint(4) NOT NULL,
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -542,13 +544,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `teacher_msg_copy1`;
 CREATE TABLE `teacher_msg_copy1` (
-  `mid` int NOT NULL AUTO_INCREMENT,
+  `mid` int(11) NOT NULL AUTO_INCREMENT,
   `tid` char(12) NOT NULL,
   `mtitle` varchar(36) NOT NULL,
-  `mresult` tinyint NOT NULL,
+  `mresult` tinyint(4) NOT NULL,
   `mtext` varchar(255) NOT NULL,
   `mdate` datetime NOT NULL,
-  `mstatus` tinyint NOT NULL,
+  `mstatus` tinyint(4) NOT NULL,
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `teacher_msg_copy1_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE

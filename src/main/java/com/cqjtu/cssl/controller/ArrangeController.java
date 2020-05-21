@@ -132,6 +132,6 @@ public class ArrangeController {
    */
   @GetMapping("getTeachingPlanExcel")
   public void getTeachingPlanExcel(HttpServletResponse httpResponse) {
-    ExcelUtil.exportExcel(httpResponse, null);
+    ExcelUtil.exportExcel(httpResponse, arrangeService.getTeachingPlanList());
   }
 }
