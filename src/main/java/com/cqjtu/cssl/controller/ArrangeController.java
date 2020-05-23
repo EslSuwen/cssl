@@ -16,7 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 实验室安排前端控制器
@@ -94,7 +96,19 @@ public class ArrangeController {
   @GetMapping("auditArrange")
   public List<Arrange> getAuditArrange() {
 
-    return arrangeService.list(new QueryWrapper<Arrange>().eq("status", 2));
+    ArrangePeriod arrangePeriod = new ArrangePeriod();
+    arrangePeriod.setAid(123);
+    List<ArrangePeriod> arrangePeriodList = new ArrayList<ArrangePeriod>();
+    arrangePeriodList.add(arrangePeriod);
+    return arrangeService.list(new QueryWrapper<Arrange>().eq("status", 2)).stream()
+        .map(
+            each -> {
+              each.setArrangePeriod(
+                  arrangePeriodService.list(
+                      new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
+              return each;
+            })
+        .collect(Collectors.toList());
   }
 
   /**
