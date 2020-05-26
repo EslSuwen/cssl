@@ -63,7 +63,7 @@
                       <input type="text" id="form3" class="form-control text-white authImageCode"
                              [(ngModel)]="authModel.imgCode"
                              mdbValidate formControlName="codeFormEx" minLength="4" maxLength="4" mdbInput>
-                      <label for="form4">
+                      <label for="form3">
                         <mdb-icon fas icon="code" class="active mr-1"></mdb-icon>
                         验证码
                       </label>
@@ -74,7 +74,7 @@
                     <label><a (click)="refresh()"> <img [src]="imgUrl" width="100" height="50"/></a></label>
                     <div class="text-center">
                       <button mdbBtn type="submit" gradient="blue" mdbWavesEffect
-                              class="rounded-pill" 
+                              class="rounded-pill"
                               (click)="login()">登录
                       </button>
                     </div>
@@ -99,8 +99,9 @@
   </section>
 </header>
 <!--Main Navigation-->
-<div mdbModal #demoBasic="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
+<div mdbModal #demoBasic="mdbModal" class="modal fade" id="frameModalTop" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog modal-notify modal-danger" role="document">
     <!--Content-->
     <div class="modal-content text-center">
@@ -110,7 +111,8 @@
       </div>
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a type="button" mdbBtn color="danger" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal" (click)="demoBasic.hide()">确定</a>
+        <a type="button" mdbBtn color="danger" outline="true" class="waves-light" mdbWavesEffect data-dismiss="modal"
+           (click)="demoBasic.hide()">确定</a>
       </div>
       <strong>若一直登录不进去请刷新页面或者联系管理员</strong>
     </div>
@@ -118,7 +120,7 @@
   </div>
 </div>
 <div mdbModal #demoBasi1="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
-  aria-labelledby="myModalLabel" aria-hidden="true">
+     aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
     <!--Content-->
     <div class="modal-content">
@@ -134,7 +136,8 @@
         <h5 class="mt-1 mb-2 text-center">教师账号：{{username}}</h5>
 
         <div class="text-center mt-4">
-          <button mdbBtn color="cyan" rounded="true" class="mt-1 waves-light" mdbWavesEffect (click)="demoBasi1.hide();successlogin();">确认进入管理空间
+          <button mdbBtn color="cyan" rounded="true" class="mt-1 waves-light" mdbWavesEffect
+                  (click)="demoBasi1.hide();successlogin();">确认进入管理空间
             <mdb-icon fas icon="sign-in-alt" class="ml-1"></mdb-icon>
           </button>
         </div>

@@ -17,6 +17,7 @@ chrome-profiler-events*.json
 speed-measure-plugin*.json
 
 # IDEs and editors
+*.iml
 *.idea
 **/.gradle
 *.project
@@ -54,3 +55,5 @@ testem.log
 *.gitignore
 
 !/.gitignore
+
+log

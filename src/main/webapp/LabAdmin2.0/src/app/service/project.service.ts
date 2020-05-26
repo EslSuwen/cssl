@@ -5,7 +5,6 @@ import {Exp, ProjectItem} from '../enity/project';
 import {environment} from "../../environments/environment";
 import {log} from "util";
 import {MessageService} from "./message.service";
-import {Arrange} from "../enity/arrange";
 
 @Injectable({
   providedIn: 'root'
@@ -63,7 +62,4 @@ export class ProjectService {
     }
   }
 
-  private log(message: string) {
-    this.messageService.add(`DemoService: ${message}`);
-  }
 }
