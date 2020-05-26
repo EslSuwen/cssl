@@ -62,7 +62,4 @@ export class ProjectService {
     }
   }
 
-  private log(message: string) {
-    this.messageService.add(`DemoService: ${message}`);
-  }
 }

@@ -17,10 +17,8 @@ export class ApplyService {
   ) {
   }
 
-  // tslint:disable-next-line: variable-name
   private arrange_api = `${environment.apiUrl}/arrange`;
 
-  // tslint:disable-next-line: variable-name
   private teach_api = `${environment.apiUrl}/teach`;
 
   // 观察者模式方法。用post方法发送Demo类型数据，并等待返回的信息
@@ -57,7 +55,4 @@ export class ApplyService {
     };
   }
 
-  private log(message: string) {
-    this.messageService.add(`DemoService: ${message}`);
-  }
 }

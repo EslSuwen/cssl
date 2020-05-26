@@ -6,6 +6,7 @@ import {Teach} from '../../enity/teacher';
 import {Arrange, ArrangePeriod} from '../../enity/arrange';
 import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
+import { AuditService } from 'src/app/service/audit.service';
 
 @Component({
   selector: 'app-apply',
@@ -46,7 +47,10 @@ export class ApplyComponent implements OnInit {
   teacheList: Array<Teach>;
   beizhu: FormControl;
 
-  constructor(private applyService: ApplyService, private projectService: ProjectService, private authenticationService: AuthenticationService,) {
+  constructor(private applyService: ApplyService,
+     private projectService: ProjectService,
+      private authenticationService: AuthenticationService,
+      private auditService:AuditService) {
   }
 
 
@@ -58,11 +62,11 @@ export class ApplyComponent implements OnInit {
         this.exps = exps;
       });
 
-    this.projectService.getAuditProjects().subscribe(data => {
+    this.auditService.getAuditProjects().subscribe(data => {
       console.log(data);
     })
 
-    this.projectService.auditProject('20', '2').subscribe(data => {
+    this.auditService.auditProject('20', '2').subscribe(data => {
       console.log(data);
     })
 
