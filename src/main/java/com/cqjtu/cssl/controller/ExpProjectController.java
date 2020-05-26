@@ -75,7 +75,7 @@ public class ExpProjectController {
   @GetMapping(value = "/getAuditProject")
   public List<ExpProject> getAuditProjects() {
 
-    return expProjectService.list(new QueryWrapper<ExpProject>().eq("lab_status", 0));
+    return expProjectService.list(new QueryWrapper<ExpProject>().eq("lab_status", 2));
   }
 
   /**

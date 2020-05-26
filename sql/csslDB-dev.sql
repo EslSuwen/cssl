@@ -23,13 +23,13 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `arrange`;
 CREATE TABLE `arrange` (
   `aid` int(11) NOT NULL AUTO_INCREMENT COMMENT '时间安排编号',
-  `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室编号',
+  `lab_id` varchar(16) CHARACTER SET utf8mb4  NOT NULL COMMENT '实验室编号',
   `pro_id` int(11) DEFAULT NULL COMMENT '项目编号',
-  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '教师编号',
+  `tid` char(12) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '教师编号',
   `course_id` int(11) DEFAULT NULL COMMENT '课程编号',
-  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室类型',
-  `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '实验室备注',
-  `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '实验名称',
+  `lab_class` varchar(128) CHARACTER SET utf8mb4  NOT NULL COMMENT '实验室类型',
+  `lab_remark` varchar(8) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '实验室备注',
+  `exp_proname` varchar(32) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '实验名称',
   `campus` char(8) DEFAULT NULL COMMENT '校区',
   `status` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`aid`),
@@ -38,7 +38,7 @@ CREATE TABLE `arrange` (
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   KEY `tid` (`tid`),
   KEY `aid` (`aid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
 
 -- ----------------------------
 -- Records of arrange
@@ -61,7 +61,7 @@ CREATE TABLE `arrange_period` (
   `lab_session` int(11) NOT NULL,
   PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
   CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of arrange_period
@@ -166,7 +166,7 @@ CREATE TABLE `class` (
   PRIMARY KEY (`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_8` (`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_8` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of class
@@ -189,7 +189,7 @@ CREATE TABLE `course` (
   `course_college` varchar(32) NOT NULL,
   `course_type` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of course
@@ -257,7 +257,7 @@ CREATE TABLE `exp_project` (
   PRIMARY KEY (`pro_id`) USING BTREE,
   KEY `cid` (`course_id`),
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of exp_project
@@ -290,7 +290,7 @@ CREATE TABLE `lab_arrange_backup` (
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
   CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_arrange_backup
@@ -321,7 +321,7 @@ CREATE TABLE `lab_info` (
   KEY `fk_lab_mange` (`tid`) USING BTREE,
   CONSTRAINT `fk_lab_mange` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_4` FOREIGN KEY (`type_id`) REFERENCES `lab_type` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_info
@@ -357,7 +357,7 @@ CREATE TABLE `lab_type` (
   `type_id` int(11) NOT NULL,
   `type_name` varchar(16) NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_type
@@ -375,7 +375,7 @@ CREATE TABLE `major` (
   `major_id` int(11) NOT NULL,
   `major_name` varchar(32) NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of major
@@ -393,7 +393,7 @@ COMMIT;
 DROP TABLE IF EXISTS `project_item`;
 CREATE TABLE `project_item` (
   `ino` int(11) NOT NULL AUTO_INCREMENT,
-  `iid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `iid` varchar(32) CHARACTER SET utf8mb4  NOT NULL,
   `pro_id` int(11) NOT NULL,
   `iname` varchar(32) NOT NULL,
   `itype` varchar(8) NOT NULL,
@@ -403,7 +403,7 @@ CREATE TABLE `project_item` (
   `intend` varchar(256) NOT NULL,
   PRIMARY KEY (`ino`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of project_item
@@ -435,7 +435,7 @@ CREATE TABLE `teach` (
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_7` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teach
@@ -467,7 +467,7 @@ CREATE TABLE `teachclass` (
   KEY `fk_relationship_10` (`class_name`,`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_10` FOREIGN KEY (`class_name`, `major_id`) REFERENCES `class` (`class_name`, `major_id`),
   CONSTRAINT `fk_relationship_11` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teachclass
@@ -494,7 +494,7 @@ CREATE TABLE `teacher` (
   `tpassword` varchar(16) NOT NULL,
   `tlimit` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher
@@ -523,7 +523,7 @@ CREATE TABLE `teacher_msg` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
 
 -- ----------------------------
 -- Records of teacher_msg
@@ -554,7 +554,7 @@ CREATE TABLE `teacher_msg_copy1` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `teacher_msg_copy1_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
 
 -- ----------------------------
 -- Records of teacher_msg_copy1

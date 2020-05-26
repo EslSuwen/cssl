@@ -30,6 +30,7 @@ export class AuditService {
     return this.http.get<Exp[]>(url);
   }
 
+  
   /**
    * @description 审核卡片
    *
@@ -39,11 +40,11 @@ export class AuditService {
    * @author suwen
    * @date 2020/5/23 下午7:19
    */
-  auditProject(proId: string, status: string): Observable<boolean> {
+  auditProject(proId: number, status: string): Observable<boolean> {
     const url = `${this.PROJECT_API}/auditProject`
     return this.http.get<boolean>(url, {
       params: {
-        "proId": proId,
+        "proId": ''+proId,
         "status": status
       }
     });
@@ -56,7 +57,7 @@ export class AuditService {
    * @date 2020/5/23 下午7:17
    */
   getAuditArrange(): Observable<Arrange[]> {
-    const url = `${this.ARRANGE_API}/getAuditProject`
+    const url = `${this.ARRANGE_API}/auditArrange`
     return this.http.get<Arrange[]>(url);
   }
 

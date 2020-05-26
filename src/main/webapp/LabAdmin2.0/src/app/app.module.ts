@@ -33,6 +33,8 @@ import { MessageComponent } from './side-nav/message/message.component';
 import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';
+import { ApplyManageComponent } from './side-nav/apply-manage/apply-manage.component';
+import { Code404Component } from './code404/code404.component';
 
 registerLocaleData(zh);
 
@@ -52,6 +54,8 @@ const appRoutes: Routes = [
       {path: 'applyexproom', component: ApplyExpRoomComponent,},
       {path: 'updatepassword', component: UpdatePasswordComponent,},
       {path: 'message', component: MessageComponent,},
+      {path:"apply_manage",component:ApplyManageComponent},
+      {path:"**",component:Code404Component},
     ],
 
   },
@@ -59,8 +63,9 @@ const appRoutes: Routes = [
     path: '', // 默认路由
     redirectTo: '/login',
     pathMatch: 'full'
-  }];
-
+  },
+  {path:"**",component:Code404Component},];
+  
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,6 +84,8 @@ const appRoutes: Routes = [
     ModalComponent,
     HasRoleDirective,
     MessageComponent,
+    ApplyManageComponent,
+    Code404Component,
   ],
   imports: [
     BrowserModule,
