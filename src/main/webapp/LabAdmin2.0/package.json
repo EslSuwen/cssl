@@ -33,6 +33,7 @@
     "ng-zorro-antd": "^8.5.2",
     "ng2-file-input": "^1.1.0",
     "rxjs": "~6.4.0",
+    "rxjs-compat": "^6.5.5",
     "timetables": "^1.1.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"
