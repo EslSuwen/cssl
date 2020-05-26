@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.cqjtu.cssl.constant.AuthorityName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

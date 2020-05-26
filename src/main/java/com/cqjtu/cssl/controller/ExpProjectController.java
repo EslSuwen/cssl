@@ -1,15 +1,18 @@
 package com.cqjtu.cssl.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cqjtu.cssl.constant.Audit;
+import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ExpProject;
-import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.service.ExpProjectService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
+import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * 项目卡片控制器
@@ -39,30 +42,39 @@ public class ExpProjectController {
    * @date 2020/2/6 2:51 下午
    */
   @PostMapping(value = "/addProject")
-  public int addNewProject(@RequestBody ExpProject expProject) {
+  public ResponseEntity<ResultDto> addNewProject(@NonNull @RequestBody ExpProject expProject)
+      throws Exception {
 
-    if (expProjectService.isCardExist(expProject.getExpTid(), expProject.getCourseId())) {
-      return -1;
-    }
-    expProject.setLabCenName("信息技术实践教学中心");
-    expProjectService.save(expProject);
-
-    return expProjectService
-        .getExpByTidCid(expProject.getExpTid(), expProject.getCourseId())
-        .getProId();
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(expProjectService.addProject(expProject))
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message("增加卡片成功")
+            .data(
+                expProjectService.getExpByTidCid(expProject.getExpTid(), expProject.getCourseId()))
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
    * 获取项目卡片数据
    *
+   * @param tid 教师编号
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/2/6 2:52 下午
    */
   @GetMapping(value = "/getProject/{tid}")
-  public List<ExpProject> getProjects(@PathVariable String tid) {
+  public ResponseEntity<ResultDto> getProjects(@NonNull @PathVariable String tid) {
 
-    return expProjectService.list(new QueryWrapper<ExpProject>().eq("exp_tid", tid));
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取项目卡片数据成功")
+            .data(expProjectService.getExpByTid(tid))
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -73,37 +85,59 @@ public class ExpProjectController {
    * @date 2020/5/10 11:14 上午
    */
   @GetMapping(value = "/getAuditProject")
-  public List<ExpProject> getAuditProjects() {
+  public ResponseEntity<ResultDto> getAuditProjects() {
 
-    return expProjectService.list(new QueryWrapper<ExpProject>().eq("lab_status", 2));
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("获取项目卡片待审核数据成功")
+            .data(expProjectService.getAuditProjects())
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
    * 审核项目卡片
    *
+   * @param proId 项目卡片编号
+   * @param status 审核状态
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/5/10 11:24 上午
    */
-  @GetMapping(value = "/auditProject")
-  public boolean auditProject(@RequestParam String proId, @RequestParam Integer status) {
+  @PutMapping(value = "/auditProject")
+  public ResponseEntity<ResultDto> auditProject(
+      @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId,
+      @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
 
-    return expProjectService.auditProject(proId, status);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("审核项目卡片成功")
+            .data(expProjectService.auditProject(proId, status))
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
-   * 测试项目卡片删除
+   * 项目卡片删除
    *
    * @author suwen
    * @date 2020/2/6 2:53 下午
    */
-  @DeleteMapping(value = "/clearProject")
-  public Message clearProject() {
-    System.out.println("clearProject()被调用");
+  @DeleteMapping(value = "/deleteProject")
+  public ResponseEntity<ResultDto> deleteProject(
+      @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId) {
 
-    Message msg = new Message();
-    msg.setMsg("clearProject()被调用");
-
-    return msg;
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .message("删除项目卡片成功")
+            .data(expProjectService.removeById(proId))
+            .build(),
+        HttpStatus.OK);
   }
 }

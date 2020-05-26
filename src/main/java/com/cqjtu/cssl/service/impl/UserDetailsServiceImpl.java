@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.cqjtu.cssl.constant.AuthorityName;
 import com.cqjtu.cssl.entity.Authority;
-import com.cqjtu.cssl.entity.AuthorityName;
 import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.mapper.TeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String userNo) {
     Teacher teacher = teacherMapper.selectById(userNo);
     List<Authority> authorities = new ArrayList<>();
-    if (teacher.getTlimit()) {
+    if (teacher.getAuthority() == AuthorityName.ROLE_ADMIN) {
       authorities.add(new Authority(1L, AuthorityName.ROLE_ADMIN));
     } else {
       authorities.add(new Authority(1L, AuthorityName.ROLE_USER));

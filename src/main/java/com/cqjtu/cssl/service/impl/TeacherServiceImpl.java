@@ -8,6 +8,7 @@ import com.cqjtu.cssl.entity.Curriculum;
 import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.mapper.*;
 import com.cqjtu.cssl.service.TeacherService;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,13 +43,11 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
   }
 
   @Override
-  public int updatePassword(String tid, String oldPw, String newOld) {
+  public boolean updatePassword(String tid, String oldPw, String newOld) {
+    @NonNull
     Teacher teacher = getOne(new QueryWrapper<Teacher>().eq("tid", tid).eq("tpassword", oldPw));
-    if (teacher != null) {
-      teacher.setTpassword(newOld);
-      return updateById(teacher) ? 1 : 0;
-    }
-    return -1;
+    teacher.setTpassword(newOld);
+    return updateById(teacher);
   }
 
   @Override

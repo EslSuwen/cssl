@@ -1,7 +1,9 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.cqjtu.cssl.constant.Audit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -71,5 +73,5 @@ public class ExpProject implements Serializable {
   private Integer conNum;
 
   @ApiModelProperty(value = "申请实验室状态", position = 15)
-  private Integer labStatus;
+  private Audit status;
 }

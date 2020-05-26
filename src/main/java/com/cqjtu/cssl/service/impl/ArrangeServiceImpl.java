@@ -3,18 +3,19 @@ package com.cqjtu.cssl.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.TeachingPlan;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
-import com.cqjtu.cssl.mapper.ArrangePeriodMapper;
-import com.cqjtu.cssl.mapper.LabArrangeMapper;
-import com.cqjtu.cssl.mapper.TeachMapper;
+import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
+import com.cqjtu.cssl.service.ExpProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 实验室安排服务实现类
@@ -26,21 +27,18 @@ import java.util.List;
 public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     implements ArrangeService {
 
+  private final ArrangePeriodService arrangePeriodService;
+  private final ExpProjectService expProjectService;
   private final ArrangeMapper arrangeMapper;
-  private final ArrangePeriodMapper arrangePeriodMapper;
-  private final LabArrangeMapper labArrangeMapper;
-  private final TeachMapper teachMapper;
 
   @Autowired
   public ArrangeServiceImpl(
-      ArrangeMapper arrangeMapper,
-      ArrangePeriodMapper arrangePeriodMapper,
-      LabArrangeMapper labArrangeMapper,
-      TeachMapper teachMapper) {
+      ArrangePeriodService arrangePeriodService,
+      ExpProjectService expProjectService,
+      ArrangeMapper arrangeMapper) {
+    this.arrangePeriodService = arrangePeriodService;
+    this.expProjectService = expProjectService;
     this.arrangeMapper = arrangeMapper;
-    this.arrangePeriodMapper = arrangePeriodMapper;
-    this.labArrangeMapper = labArrangeMapper;
-    this.teachMapper = teachMapper;
   }
 
   @Override
@@ -48,14 +46,13 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     List<Arrange> arrangeList = list(new QueryWrapper<Arrange>().eq("tid", tid));
     for (Arrange each : arrangeList) {
       each.setArrangePeriod(
-          arrangePeriodMapper.selectList(
-              new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
+          arrangePeriodService.list(new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
     }
     return arrangeList;
   }
 
   @Override
-  public boolean auditArrange(Integer aid, Integer status) {
+  public boolean auditArrange(Integer aid, Audit status) {
     Arrange arrange = new Arrange();
     arrange.setStatus(status);
     return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
@@ -68,5 +65,38 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
       each.setCoursePeriod(arrangeMapper.getCoursePeriodByCid(each.getCourseId()));
     }
     return teachingPlanList;
+  }
+
+  @Override
+  public List<Arrange> getAuditArrange() {
+
+    return list(new QueryWrapper<Arrange>().eq("status", Audit.AUDITING)).stream()
+        .map(
+            each -> {
+              each.setArrangePeriod(
+                  arrangePeriodService.list(
+                      new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
+              return each;
+            })
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  public boolean addArrange(Arrange arrange) {
+
+    arrange.setStatus(Audit.AUDITING);
+    arrange.setCourseId(expProjectService.getById(arrange.getProId()).getCourseId());
+    save(arrange);
+
+    int aid = getOne(new QueryWrapper<Arrange>().eq("pro_id", arrange.getProId())).getAid();
+
+    return arrangePeriodService.saveBatch(
+        arrange.getArrangePeriod().stream()
+            .map(
+                each -> {
+                  each.setAid(aid);
+                  return each;
+                })
+            .collect(Collectors.toList()));
   }
 }
