@@ -29,4 +29,10 @@ public class Course implements Serializable {
 
   @ApiModelProperty(value = "课程名字", position = 1, required = true)
   private String courseName;
+
+  @ApiModelProperty(value = "课程类型", position = 2, required = true)
+  private String courseType;
+
+  @ApiModelProperty(value = "开课学院", position = 3, required = true)
+  private String courseCollege;
 }

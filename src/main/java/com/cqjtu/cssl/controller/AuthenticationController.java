@@ -53,12 +53,13 @@ public class AuthenticationController {
       AuthenticationManager authenticationManager,
       JwtTokenUtil jwtTokenUtil,
       @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
-      DefaultKaptcha defaultKaptcha,TeacherService teacherService) {
+      DefaultKaptcha defaultKaptcha,
+      TeacherService teacherService) {
     this.authenticationManager = authenticationManager;
     this.jwtTokenUtil = jwtTokenUtil;
     this.userDetailsService = userDetailsService;
     this.defaultKaptcha = defaultKaptcha;
-    this.teacherService=teacherService;
+    this.teacherService = teacherService;
   }
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
@@ -80,7 +81,8 @@ public class AuthenticationController {
 
     UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
     String token = jwtTokenUtil.generate(userDetails);
-    return new AuthenticationResponse(token,teacherService.getById(authRequest.getUserNo()), new Message("successful"));
+    return new AuthenticationResponse(
+        token, teacherService.getById(authRequest.getUserNo()), new Message("successful"));
   }
 
   /**
@@ -95,7 +97,7 @@ public class AuthenticationController {
   @GetMapping("/createImageCode")
   public void createImageCode(HttpServletRequest request, HttpServletResponse response)
       throws Exception {
-    byte[] captchaChallengeAsJpeg = null;
+    byte[] captchaChallengeAsJpeg;
     ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
     try {
       // 生产验证码字符串并保存到session中
@@ -106,6 +108,7 @@ public class AuthenticationController {
       BufferedImage challenge = defaultKaptcha.createImage(createText);
       ImageIO.write(challenge, "jpg", jpegOutputStream);
       System.out.println("createImageCode:{}" + request.getSession().getAttribute("imageCode"));
+      log.info("createImageCode:" + createText);
     } catch (IllegalArgumentException e) {
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
       return;

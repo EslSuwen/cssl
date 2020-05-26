@@ -2,7 +2,10 @@ package com.cqjtu.cssl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cqjtu.cssl.entity.*;
+import com.cqjtu.cssl.entity.Arrange;
+import com.cqjtu.cssl.entity.ArrangePeriod;
+import com.cqjtu.cssl.entity.Curriculum;
+import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.mapper.*;
 import com.cqjtu.cssl.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +55,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
   public List<Curriculum> getCurriculum(String tid, String week) {
 
     List<Arrange> arrangeList =
-        arrangeMapper.selectList(new QueryWrapper<Arrange>().eq("tid", tid));
+        arrangeMapper.selectList(new QueryWrapper<Arrange>().eq("tid", tid).eq("status", 1));
 
     for (Arrange each : arrangeList) {
       each.setArrangePeriod(
@@ -64,10 +67,10 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
     for (Arrange each : arrangeList) {
       String labClass = each.getLabClass();
       String cname = courseMapper.selectById(each.getCourseId()).getCourseName();
-      String labId =each.getLabId();
-      String campus=each.getCampus();
+      String labId = each.getLabId();
+      String campus = each.getCampus();
       for (ArrangePeriod eachPeriod : each.getArrangePeriod()) {
-        Curriculum curriculum =new Curriculum();
+        Curriculum curriculum = new Curriculum();
         curriculum.setArrangePeriod(eachPeriod);
         curriculum.setCname(cname);
         curriculum.setLabClass(labClass);

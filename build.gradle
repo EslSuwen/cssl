@@ -16,6 +16,12 @@ repositories {
 
 dependencies {
 
+    // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
+    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
+    // https://mvnrepository.com/artifact/org.apache.poi/poi
+    compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
 
     // https://mvnrepository.com/artifact/com.github.xiaoymin/swagger-bootstrap-ui
     compile group: 'com.github.xiaoymin', name: 'swagger-bootstrap-ui', version: '1.9.6'
@@ -67,7 +73,7 @@ dependencies {
 
     compile('org.apache.commons:commons-lang3:3.8.1')
 
-    compile('mysql:mysql-connector-java:8.0.15')
+    compile('mysql:mysql-connector-java')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }

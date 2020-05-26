@@ -4,16 +4,21 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.ExpProject;
+import com.cqjtu.cssl.entity.TeachingPlan;
 import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
 import com.cqjtu.cssl.service.ExpProjectService;
+import com.cqjtu.cssl.utils.ExcelUtil;
 import io.swagger.annotations.Api;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 实验室安排前端控制器
@@ -79,5 +84,68 @@ public class ArrangeController {
     }
     arrangePeriodService.saveBatch(arrange.getArrangePeriod());
     return 1;
+  }
+
+  /**
+   * 获取已申请的实验室安排信息
+   *
+   * @return 实验室时间安排列表
+   * @author suwen
+   * @date 2020/5/15 下午7:27
+   */
+  @GetMapping("auditArrange")
+  public List<Arrange> getAuditArrange() {
+
+    ArrangePeriod arrangePeriod = new ArrangePeriod();
+    arrangePeriod.setAid(123);
+    List<ArrangePeriod> arrangePeriodList = new ArrayList<ArrangePeriod>();
+    arrangePeriodList.add(arrangePeriod);
+    return arrangeService.list(new QueryWrapper<Arrange>().eq("status", 2)).stream()
+        .map(
+            each -> {
+              each.setArrangePeriod(
+                  arrangePeriodService.list(
+                      new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
+              return each;
+            })
+        .collect(Collectors.toList());
+  }
+
+  /**
+   * 管理员审核实验室时间安排
+   *
+   * @param aid 安排编号
+   * @param status 状态编号
+   * @return 操作状态
+   * @author suwen
+   * @date 2020/5/11 上午9:49
+   */
+  @GetMapping("getAuditArrange")
+  public boolean auditArrange(@RequestParam Integer aid, @RequestParam Integer status) {
+
+    return arrangeService.auditArrange(aid, status);
+  }
+
+  /**
+   * 获取教学计划表
+   *
+   * @return java.util.List<教学计划表>
+   * @author suwen
+   * @date 2020/5/13 下午3:41
+   */
+  @GetMapping("getTeachingPlan")
+  public List<TeachingPlan> getTeachingPlanList() {
+    return arrangeService.getTeachingPlanList();
+  }
+
+  /**
+   * 获取教学计划表 excel
+   *
+   * @author suwen
+   * @date 2020/5/13 下午5:51
+   */
+  @GetMapping("getTeachingPlanExcel")
+  public void getTeachingPlanExcel(HttpServletResponse httpResponse) {
+    ExcelUtil.exportExcel(httpResponse, arrangeService.getTeachingPlanList());
   }
 }
