@@ -6,7 +6,7 @@ import {environment} from '../../environments/environment';
 import {NzMessageService} from 'ng-zorro-antd';
 import {HandleError} from './handle-error';
 import {catchError, tap} from 'rxjs/operators';
-import {MESSAGETEXTS} from '../const/MessageConsts';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
@@ -29,18 +29,16 @@ export class ProjectService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午10:49
    */
-  addProject(project: Exp): Observable<boolean> {
-    return this.http.post<any>(this.PROJECT_API + '/addProject', project).pipe(
+  addProject(project: Exp): Observable<result> {
+    return this.http.post<result>(this.PROJECT_API + '/addProject', project).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return true;
+          this.success(response.message);
         } else {
           this.error('增加项目卡片失败');
-          return false;
         }
       }),
-      catchError(this.handleError<boolean>('增加项目卡片', false))
+      catchError(this.handleError<result>('增加项目卡片'))
     );
   }
 
@@ -52,18 +50,16 @@ export class ProjectService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午10:51
    */
-  addProjectItems(projectItems: ProjectItem[]): Observable<any> {
-    return this.http.post<any>(this.ITEM_API + '/addProjectItems', projectItems).pipe(
+  addProjectItems(projectItems: ProjectItem[]): Observable<result> {
+    return this.http.post<result>(this.ITEM_API + '/addProjectItems', projectItems).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return true;
+          this.success(response.message);
         } else {
           this.error('增加实验卡片项目项失败');
-          return false;
         }
       }),
-      catchError(this.handleError<boolean>('增加实验卡片项目项', false))
+      catchError(this.handleError<result>('增加实验卡片项目项'))
     );
   }
 
@@ -75,19 +71,17 @@ export class ProjectService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午10:53
    */
-  getProjects(tid: string): Observable<Exp[]> {
+  getProjects(tid: string): Observable<result> {
     const url = `${this.PROJECT_API}/getProject/${tid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return response.data;
+          this.success(response.message);
         } else {
           this.error(`根据教师编号获取项目卡片失败，教师编号：${tid}`);
-          return [];
         }
       }),
-      catchError(this.handleError<Exp[]>(`根据教师编号获取项目卡片失败,教师编号${tid}`, []))
+      catchError(this.handleError<result>(`根据教师编号获取项目卡片失败,教师编号${tid}`))
     );
   }
 
@@ -99,19 +93,17 @@ export class ProjectService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午10:55
    */
-  getProjectItems(proId: number): Observable<ProjectItem[]> {
+  getProjectItems(proId: number): Observable<result> {
     const url = `${this.ITEM_API}/getProjectItem/${proId}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return response.data;
+          this.success(response.message);
         } else {
           this.error(`根据教师编号获取项目卡片项，项目卡片编号：${proId}`);
-          return [];
         }
       }),
-      catchError(this.handleError<ProjectItem[]>(`根据教师编号获取项目卡片项，项目卡片编号：${proId}`, []))
+      catchError(this.handleError<result>(`根据教师编号获取项目卡片项，项目卡片编号：${proId}`))
     );
   }
 

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { AuthenticationService } from "../service/authentication.service";
-import { TeacherService } from "../service/teacher.service";
+import { AuthenticationService } from "../../service/authentication.service";
+import { TeacherService } from "../../service/teacher.service";
 import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { ModalComponent } from '../modal/modal.component';
+import { ModalComponent } from '../../modal/modal.component';
 import { Router } from '@angular/router';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 @Component({
@@ -75,7 +75,7 @@ export class UpdatePasswordComponent implements OnInit {
   click1() {
     this.isclick = true;
   }
-  successchange() {  //输入正确，确认进入
+  successUpdate() {  //输入正确，确认进入
     this.router.navigate(['login']);
   }
 }

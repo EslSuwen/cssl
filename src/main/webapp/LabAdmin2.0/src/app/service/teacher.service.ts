@@ -2,13 +2,10 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
-import {Teach, Teacher, TeacherMsg} from '../enity/teacher';
 import {catchError, tap} from 'rxjs/operators';
-import {Curriculum} from '../enity/arrange';
 import {HandleError} from './handle-error';
 import {NzMessageService} from 'ng-zorro-antd';
-import {MESSAGETEXTS} from '../const/MessageConsts';
-import { result } from '../enity/result';
+import {result} from '../enity/result';
 
 @Injectable({
   providedIn: 'root'
@@ -31,18 +28,18 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:02
    */
-  getTeacherInfo(tid: string): Observable<Teacher> {
+  getTeacherInfo(tid: string): Observable<result> {
     const url = `${this.TEACHER_API}/getTeacherInfo/${tid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            this.success(response.message);
           } else {
             this.error('根据教师编号获得教师信息失败');
           }
         }
       ),
-      catchError(this.handleError<Teacher>(`根据教师编号获得教师信息，教师编号为：${tid}`, null))
+      catchError(this.handleError<result>(`根据教师编号获得教师信息，教师编号为：${tid}`))
     );
   }
 
@@ -54,20 +51,18 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:04
    */
-  getTeaches(tid: string): Observable<Teach[]> {
+  getTeaches(tid: string): Observable<result> {
     const url = `${this.TEACH_API}/getTeachInfo/${tid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
-            return response.data;
+            this.success(response.message);
           } else {
             this.error('根据教师编号获得教师信息失败');
-            return [];
           }
         }
       ),
-      catchError(this.handleError<Teach[]>(`根据教师编号获得教师信息，教师编号为：${tid}`, []))
+      catchError(this.handleError<result>(`根据教师编号获得教师信息，教师编号为：${tid}`))
     );
   }
 
@@ -79,20 +74,18 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:08
    */
-  getMsgInfo(tid: string): Observable<TeacherMsg[]> {
+  getMsgInfo(tid: string): Observable<result> {
     const url = `${this.TEACHER_API}/getMsgInfo/${tid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
-            return response.data;
+            this.success(response.message);
           } else {
             this.error('根据教师编号获得教师信息失败');
-            return [];
           }
         }
       ),
-      catchError(this.handleError<TeacherMsg[]>(`getMsgInfo id=${tid}`))
+      catchError(this.handleError<result>(`getMsgInfo id=${tid}`))
     );
   }
 
@@ -104,20 +97,18 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:12
    */
-  readMsg(mid: number): Observable<boolean> {
+  readMsg(mid: number): Observable<result> {
     const url = `${this.TEACHER_API}/readMsg/${mid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
-            return true;
+            this.success(response.message);
           } else {
             this.error('根据消息编号已读消息失败');
-            return false;
           }
         }
       ),
-      catchError(this.handleError<boolean>(`根据消息编号已读消息失败, mid=${mid}`, false))
+      catchError(this.handleError<result>(`根据消息编号已读消息失败, mid=${mid}`))
     );
   }
 
@@ -129,20 +120,18 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:15
    */
-  deleteMsg(mid: number): Observable<boolean> {
+  deleteMsg(mid: number): Observable<result> {
     const url = `${this.TEACHER_API}/deleteMsg/${mid}`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
-            return true;
+            this.success(response.message);
           } else {
             this.error('根据消息编号删除消息失败');
-            return false;
           }
         }
       ),
-      catchError(this.handleError<boolean>(`根据消息编号删除消息, mid=${mid}`, false))
+      catchError(this.handleError<result>(`根据消息编号删除消息, mid=${mid}`))
     );
   }
 
@@ -156,24 +145,22 @@ export class TeacherService extends HandleError {
    * @author suwen
    * @date 2020/5/27 下午2:16
    */
-  updatePassword(tid: string, oldPw: string, newPw: string): Observable<boolean> {
+  updatePassword(tid: string, oldPw: string, newPw: string): Observable<result> {
     const url = this.TEACHER_API + '/updatePassword';
-    return this.http.get<any>(url, {
+    return this.http.get<result>(url, {
       params: {
         tid, oldPw, newPw
       }
     }).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
-            return true;
+            this.success(response.message);
           } else {
             this.error('用户更新密码消息失败');
-            return false;
           }
         }
       ),
-      catchError(this.handleError<boolean>(`用户更新密码, tid=${tid}`, false))
+      catchError(this.handleError<result>(`用户更新密码, tid=${tid}`))
     );
   }
 

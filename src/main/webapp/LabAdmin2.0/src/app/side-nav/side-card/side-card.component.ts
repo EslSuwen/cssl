@@ -6,14 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-card.component.scss']
 })
 export class SideCardComponent implements OnInit {
-  isclick:boolean;
+  isClick:boolean;
   constructor() { }
 
   ngOnInit() {
-    this.isclick=false;
+    this.isClick=false;
   }
   is_click(){
-    this.isclick=!this.isclick;
+    this.isClick=!this.isClick;
   }
 
 }

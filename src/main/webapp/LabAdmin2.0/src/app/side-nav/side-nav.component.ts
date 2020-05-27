@@ -8,7 +8,7 @@ import { MessageComponent } from './message/message.component';
 })
 
 export class SideNavComponent implements OnInit {
-  @ViewChild('MessageComponent', {static: true})  
+  @ViewChild('MessageComponent', {static: true})
   public messageComponent: MessageComponent;
   toggleFlag = true;
   userName = '';

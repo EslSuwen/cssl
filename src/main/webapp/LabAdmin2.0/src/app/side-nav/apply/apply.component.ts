@@ -6,7 +6,7 @@ import {Teach} from '../../enity/teacher';
 import {Arrange, ArrangePeriod} from '../../enity/arrange';
 import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
-import { AuditService } from 'src/app/service/audit.service';
+import {AuditService} from 'src/app/service/audit.service';
 
 @Component({
   selector: 'app-apply',
@@ -48,9 +48,9 @@ export class ApplyComponent implements OnInit {
   beizhu: FormControl;
 
   constructor(private applyService: ApplyService,
-     private projectService: ProjectService,
-      private authenticationService: AuthenticationService,
-      private auditService:AuditService) {
+              private projectService: ProjectService,
+              private authenticationService: AuthenticationService,
+              private auditService: AuditService) {
   }
 
 
@@ -58,8 +58,9 @@ export class ApplyComponent implements OnInit {
     this.beizhu = new FormControl();
 
     this.projectService.getProjects(this.authenticationService.getUserNo())
-      .subscribe(exps => {
-        this.exps = exps;
+      .subscribe(result => {
+        if (result.success)
+          this.exps = result.data;
       });
 
     this.auditService.getAuditProjects().subscribe(data => {
@@ -256,8 +257,9 @@ export class ApplyComponent implements OnInit {
 
       alert('己完成申请！');
       this.projectService.getProjects(this.authenticationService.getUserNo())
-        .subscribe(exps => {
-          this.exps = exps;
+        .subscribe(result => {
+          if (result.success)
+            this.exps = result.data;
         });
 
     } else {

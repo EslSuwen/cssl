@@ -6,7 +6,6 @@ import {TeachPlan} from '../enity/teachPlan';
 import {HandleError} from './handle-error';
 import {NzMessageService} from 'ng-zorro-antd';
 import {catchError, tap} from 'rxjs/operators';
-import {MESSAGETEXTS} from '../const/MessageConsts';
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +30,9 @@ export class TeachPlanService extends HandleError {
     return this.http.get<any>(url).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return response.data;
+          this.success(response.message);
         } else {
           this.error('获取教学计划表失败');
-          return [];
         }
       }),
       catchError(this.handleError<TeachPlan[]>('获取教学计划表失败', []))

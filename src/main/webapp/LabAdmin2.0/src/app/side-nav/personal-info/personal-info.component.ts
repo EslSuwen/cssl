@@ -30,7 +30,7 @@ export class PersonalInfoComponent implements OnInit {
     this.userName = this.teacher.tname;
     this.getCurriculum(this.authenticationService.getUserNo(), '2');
     console.log(this.authenticationService.getAuthorities(this.authenticationService.getCurrentUser().tokenParsed));
-    console.log('isadmin:' + this.authenticationService.hasRole('ADMIN'));
+    console.log('isAdmin:' + this.authenticationService.hasRole('ADMIN'));
   }
 
   getCurriculum(tid: string, week: string) {

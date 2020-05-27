@@ -1,13 +1,11 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Exp} from '../enity/project';
-import {Arrange} from '../enity/arrange';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {HandleError} from './handle-error';
 import {NzMessageService} from 'ng-zorro-antd';
 import {catchError, tap} from 'rxjs/operators';
-import {MESSAGETEXTS} from '../const/MessageConsts';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
@@ -30,19 +28,17 @@ export class AuditService extends HandleError {
    * @author suwen
    * @date 2020/5/23 下午7:17
    */
-  getAuditProjects(): Observable<Exp[]> {
+  getAuditProjects(): Observable<result> {
     const url = `${this.PROJECT_API}/getAuditProject`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return response.data;
+          this.success(response.message);
         } else {
           this.error('获取待审核卡片数据失败');
-          return [];
         }
       }),
-      catchError(this.handleError<Exp[]>('获取待审核卡片数据', []))
+      catchError(this.handleError<result>('获取待审核卡片数据'))
     );
   }
 
@@ -56,23 +52,21 @@ export class AuditService extends HandleError {
    * @author suwen
    * @date 2020/5/23 下午7:19
    */
-  auditProject(proId: number, status: string): Observable<boolean> {
+  auditProject(proId: number, status: string): Observable<result> {
     const url = `${this.PROJECT_API}/auditProject`;
-    return this.http.put<any>(url, {
+    return this.http.put<result>(url, {
       params: {
         proId: proId.toString(), status
       }
     }).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return true;
+          this.success(response.message);
         } else {
-          this.error('审核卡片数据失败');
-          return false;
+          this.error(`审核卡片数据失败,proid: ${proId}, status: ${status}`);
         }
       }),
-      catchError(this.handleError<boolean>('审核卡片', false))
+      catchError(this.handleError<result>(`审核卡片数据失败,proid: ${proId}, status: ${status}`))
     );
   }
 
@@ -83,19 +77,17 @@ export class AuditService extends HandleError {
    * @author suwen
    * @date 2020/5/23 下午7:17
    */
-  getAuditArrange(): Observable<Arrange[]> {
+  getAuditArrange(): Observable<result> {
     const url = `${this.ARRANGE_API}/auditArrange`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return response.data;
+          this.success(response.message);
         } else {
           this.error('获取待审核实验室时间安排数据失败');
-          return [];
         }
       }),
-      catchError(this.handleError<Arrange[]>('获取待审核实验室时间安排数据', []))
+      catchError(this.handleError<result>('获取待审核实验室时间安排数据'))
     );
   }
 
@@ -108,21 +100,19 @@ export class AuditService extends HandleError {
    * @author suwen
    * @date 2020/5/23 下午7:19
    */
-  auditArrange(aid: string, status: string): Observable<boolean> {
+  auditArrange(aid: string, status: string): Observable<result> {
     const url = `${this.ARRANGE_API}/auditProject`;
-    return this.http.get<any>(url, {
+    return this.http.get<result>(url, {
       params: {aid, status}
     }).pipe(
       tap(response => {
         if (response.success) {
-          this.success(MESSAGETEXTS.FETCH_SUCCESS);
-          return true;
+          this.success(response.message);
         } else {
-          this.error('审核实验室时间安排失败，' + 'aid=' + aid);
-          return false;
+          this.error(`审核实验室时间安排失败，aid=: ${aid}`);
         }
       }),
-      catchError(this.handleError<boolean>('审核实验室时间安排', false))
+      catchError(this.handleError<result>(`审核实验室时间安排失败，aid=: ${aid}`))
     );
   }
 

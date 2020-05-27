@@ -21,25 +21,30 @@ import {UploadComponent} from './side-nav/upload/upload.component';
 import {CardComponent} from './side-nav/card/card.component';
 import {TeachTableComponent} from './side-nav/teach-table/teach-table.component';
 import {ApplyComponent} from './side-nav/apply/apply.component';
-import {FooterComponent} from './footer/footer.component';
+import {FooterComponent} from './side-nav/footer/footer.component';
 import {SideCardComponent} from './side-nav/side-card/side-card.component';
 import {ApplyExpRoomComponent} from './apply-exp-room/apply-exp-room.component';
-import {UpdatePasswordComponent} from './update-password/update-password.component';
+import {UpdatePasswordComponent} from './side-nav/update-password/update-password.component';
 import {ModalComponent} from './modal/modal.component';
 import {HasRoleDirective} from './auth/has-role.directive';
 import {CanActivateAuthGuard} from "./auth/can-activate.authguard";
 import {AuthenticationInterceptor} from "./auth/authentication-interceptor";
-import { MessageComponent } from './side-nav/message/message.component';
-import { NgZorroAntdModule, NZ_I18N, zh_CN } from 'ng-zorro-antd';
-import { registerLocaleData } from '@angular/common';
+import {MessageComponent} from './side-nav/message/message.component';
+import {NgZorroAntdModule, NZ_I18N, zh_CN} from 'ng-zorro-antd';
+import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
-import { ApplyManageComponent } from './side-nav/apply-manage/apply-manage.component';
-import { Code404Component } from './code404/code404.component';
+import {ApplyManageComponent} from './side-nav/apply-manage/apply-manage.component';
+import {Code404Component} from './code404/code404.component';
 
 registerLocaleData(zh);
 
 
 const appRoutes: Routes = [
+  {
+    path: '', // 默认路由
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
   {path: 'login', component: LoginComponent},
   {
     path: 'sidenav', component: SideNavComponent,
@@ -54,18 +59,12 @@ const appRoutes: Routes = [
       {path: 'applyexproom', component: ApplyExpRoomComponent,},
       {path: 'updatepassword', component: UpdatePasswordComponent,},
       {path: 'message', component: MessageComponent,},
-      {path:"apply_manage",component:ApplyManageComponent},
-      {path:"**",component:Code404Component},
+      {path: "apply_manage", component: ApplyManageComponent},
+      {path: "**", component: Code404Component},
     ],
+  },
+  {path: "**", component: Code404Component},];
 
-  },
-  {
-    path: '', // 默认路由
-    redirectTo: '/login',
-    pathMatch: 'full'
-  },
-  {path:"**",component:Code404Component},];
-  
 @NgModule({
   declarations: [
     AppComponent,
@@ -115,7 +114,10 @@ const appRoutes: Routes = [
     NgZorroAntdModule,
   ],
   entryComponents: [ModalComponent],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}, { provide: NZ_I18N, useValue: zh_CN }],
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthenticationInterceptor, multi: true}, {
+    provide: NZ_I18N,
+    useValue: zh_CN
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

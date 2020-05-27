@@ -5,9 +5,9 @@ import {environment} from '../../environments/environment';
 import {Teach} from '../enity/teacher';
 import {Arrange} from '../enity/arrange';
 import {NzMessageService} from 'ng-zorro-antd';
-import {MESSAGETEXTS} from '../const/MessageConsts';
 import {catchError, tap} from 'rxjs/operators';
 import {HandleError} from './handle-error';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
@@ -34,18 +34,18 @@ export class ApplyService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午9:53
    */
-  addArrange(arrange: Arrange): Observable<boolean> {
+  addArrange(arrange: Arrange): Observable<result> {
     const url = `${this.ARRANGE_API}/addArrange`;
-    return this.http.post<any>(url, arrange).pipe(
+    return this.http.post<result>(url, arrange).pipe(
       tap(response => {
           if (response.success) {
-            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            this.success(response.message);
           } else {
             this.error('新增实验时间安排失败');
           }
         }
       ),
-      catchError(this.handleError<boolean>('新增实验时间安排', false))
+      catchError(this.handleError<result>('新增实验时间安排'))
     );
   }
 
