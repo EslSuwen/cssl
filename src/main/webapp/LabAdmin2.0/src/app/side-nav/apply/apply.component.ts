@@ -66,10 +66,6 @@ export class ApplyComponent implements OnInit {
       console.log(data);
     })
 
-    this.auditService.auditProject('20', '2').subscribe(data => {
-      console.log(data);
-    })
-
     this.weekList = [
       {id: 1, itemName: '第一周'},
       {id: 2, itemName: '第二周'},

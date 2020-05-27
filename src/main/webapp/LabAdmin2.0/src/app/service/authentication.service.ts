@@ -26,15 +26,15 @@ export class AuthenticationService {
       imgCode: img
     }), httpOptions).pipe(
       tap(response => {
-        if (response && response.token) {
+        if (response.success) {
           // login successful, store username and jwt token in local storage to keep user logged in between page refreshes
-          const tokenParsed = this.decodeToken(response.token);
-          const teacher: Teacher = response.teacher;
-          console.log(response.teacher);
+          const tokenParsed = this.decodeToken(response.data.token);
+          const teacher: Teacher = response.data.teacher;
+          console.log(teacher);
           localStorage.setItem('currentUserInfo', JSON.stringify(teacher));
           localStorage.setItem('currentUser', JSON.stringify({
             userNo: no,
-            token: response.token,
+            token: response.data.token,
             expire: JSON.parse(tokenParsed).exp,
             // tslint:disable-next-line: object-literal-shorthand
             tokenParsed: tokenParsed

@@ -67,7 +67,8 @@ public class AuthenticationController {
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
   @PostMapping("/auth")
   public ResponseEntity<ResultDto> login(
-      @NonNull @ApiParam(value = "请求登录模型") @RequestBody AuthenticationRequest authRequest,
+      @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
+          AuthenticationRequest authRequest,
       HttpServletRequest request) {
 
     log.info(authRequest);

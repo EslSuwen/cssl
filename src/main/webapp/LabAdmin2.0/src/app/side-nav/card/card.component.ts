@@ -118,12 +118,12 @@ export class CardComponent implements OnInit {
     this.saveNewExp();
     console.log(this.controlArray);
     console.log(this.newExp);
-    this.projectService.addProject(this.newExp).subscribe(proId => {
-      if (proId == -1) {
+    this.projectService.addProject(this.newExp).subscribe(result => {
+      if (!result) {
         return;
       }
       for (let each of this.controlArray) {
-        each.proId = proId;
+        each.proId = 1;
       }
       this.exps.push(this.newExp);
       this.projectService.addProjectItems(this.controlArray).subscribe();

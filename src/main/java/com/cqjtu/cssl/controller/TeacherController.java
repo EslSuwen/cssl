@@ -83,11 +83,18 @@ public class TeacherController {
    * @author suwen
    * @date 2020/3/24 12:28 下午
    */
-  @GetMapping(value = "/readMsg/{mid}")
-  public void readMsg(@NonNull @PathVariable String mid) {
-    TeacherMsg teacherMsg = teacherMsgService.getById(mid);
+  @PutMapping(value = "/readMsg/{mid}")
+  public ResponseEntity<ResultDto> readMsg(@NonNull @PathVariable String mid) {
+
+    @NonNull TeacherMsg teacherMsg = teacherMsgService.getById(mid);
     teacherMsg.setMstatus(1);
-    teacherMsgService.updateById(teacherMsg);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(teacherMsgService.updateById(teacherMsg))
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("用户消息已读成功")
+            .build(),
+        HttpStatus.OK);
   }
 
   /**

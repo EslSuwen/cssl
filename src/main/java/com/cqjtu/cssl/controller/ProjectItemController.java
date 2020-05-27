@@ -63,12 +63,13 @@ public class ProjectItemController {
   @GetMapping(value = "/getProjectItem/{proId}")
   public ResponseEntity<ResultDto> getProjectItem(@NonNull @PathVariable("proId") Integer proId) {
 
+    @NonNull List<ProjectItem> projectItemList = projectItemService.listByProId(proId);
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20005.getCode())
             .message("实验项目项获取成功")
-            .data(projectItemService.listByProId(proId))
+            .data(projectItemList)
             .build(),
         HttpStatus.OK);
   }

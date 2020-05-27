@@ -12,7 +12,7 @@ import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 })
 export class UpdatePasswordComponent implements OnInit {
-  
+
   @ViewChild('demoBasic1', { static: true }) modal1: ModalComponent; //修改成功模态
   @ViewChild('demoBasic2', { static: true }) modal2: ModalComponent; //修改失败的模态
   oldPw = '';
@@ -51,36 +51,16 @@ export class UpdatePasswordComponent implements OnInit {
         alert("两次输入的密码不相同");
       }
       else {
-        this.teacherService.updatePassword(this.authenticationService.getUserNo(), this.oldPw, this.newPw).subscribe(code => {
-          switch (code) {
-            case 1:  //修改成功
-              {
-                this.case1 = 1;
-                this.showAndHideModal_success();
-                this.createBasicNotification();
-              }
-              break;
-            case -1:
-              {
-                this.case1 = -1;
-                //原密码输入错误
-                this.showAndHideModa_fail();
-
-                break;
-              }
-            case 0:
-              {
-                this.case1 = 0; // 修改失败
-                console.log('修改失败！');
-                this.showAndHideModa_fail();
-                break;
-              }
-            default:
-              {
-                this.case1 = 2;
-                //意料之外的错误
-                this.showAndHideModa_fail();
-              }
+        this.teacherService.updatePassword(this.authenticationService.getUserNo(), this.oldPw, this.newPw).subscribe(result => {
+          if (result) { //修改成功
+            this.case1 = 1;
+            this.showAndHideModal_success();
+            this.createBasicNotification();
+          }
+          else {
+            this.case1 = -1;
+            //原密码输入错误
+            this.showAndHideModa_fail();
           }
         });
       }

@@ -4,6 +4,7 @@ import {Teacher} from '../../enity/teacher';
 import {TeacherService} from '../../service/teacher.service';
 import {Curriculum, ArrangePeriod} from '../../enity/arrange';
 import * as $ from 'jquery';
+import { result } from 'src/app/enity/result';
 
 @Component({
   selector: 'app-personal-info',
@@ -33,9 +34,9 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   getCurriculum(tid: string, week: string) {
-    this.teacherService.getCurriculum(tid, week).subscribe(data => {
-      console.log(data);
-      this.curriculumList = data;
+    this.teacherService.getCurriculum(tid, week).subscribe(result => {
+      console.log(result);
+      this.curriculumList = result.data;
       for (const key of Object.keys(this.curriculumList)) {
         this.arrangePeriod = this.curriculumList[key].arrangePeriod;
         const i = this.arrangePeriod.labDay;

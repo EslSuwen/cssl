@@ -1,88 +1,209 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {Observable, of} from "rxjs";
-import {Teach, Teacher, TeacherMsg} from "../enity/teacher";
-import {catchError, tap} from "rxjs/operators";
-import {Curriculum} from "../enity/arrange";
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {Observable} from 'rxjs';
+import {Teach, Teacher, TeacherMsg} from '../enity/teacher';
+import {catchError, tap} from 'rxjs/operators';
+import {Curriculum} from '../enity/arrange';
+import {HandleError} from './handle-error';
+import {NzMessageService} from 'ng-zorro-antd';
+import {MESSAGETEXTS} from '../const/MessageConsts';
+import { result } from '../enity/result';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TeacherService {
+export class TeacherService extends HandleError {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, message: NzMessageService) {
+    super(message);
   }
 
-  private teacher_api = `${environment.apiUrl}/teacher`;
+  private TEACHER_API = `${environment.apiUrl}/teacher`;
+  private TEACH_API = `${environment.apiUrl}/teach`;
 
-  private teach_api = `${environment.apiUrl}/teach`;
 
-
+  /**
+   * @description 根据教师编号获得教师信息
+   *
+   * @param tid 教师编号
+   * @return 教师信息
+   * @author suwen
+   * @date 2020/5/27 下午2:02
+   */
   getTeacherInfo(tid: string): Observable<Teacher> {
-    const url = `${this.teacher_api}/getTeacherInfo/${tid}`;
-    return this.http.get<Teacher>(url).pipe(
-      catchError(this.handleError<Teacher>(`getTeacherInfo id=${tid}`))
+    const url = `${this.TEACHER_API}/getTeacherInfo/${tid}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+          } else {
+            this.error('根据教师编号获得教师信息失败');
+          }
+        }
+      ),
+      catchError(this.handleError<Teacher>(`根据教师编号获得教师信息，教师编号为：${tid}`, null))
     );
   }
 
+  /**
+   * @description 根据教师编号获得教师授课信息
+   *
+   * @param tid 教师编号
+   * @return 教师授课信息
+   * @author suwen
+   * @date 2020/5/27 下午2:04
+   */
   getTeaches(tid: string): Observable<Teach[]> {
-    const url = `${this.teach_api}/getTeachInfo/${tid}`;
-    return this.http.get<Teach[]>(url);
+    const url = `${this.TEACH_API}/getTeachInfo/${tid}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            return response.data;
+          } else {
+            this.error('根据教师编号获得教师信息失败');
+            return [];
+          }
+        }
+      ),
+      catchError(this.handleError<Teach[]>(`根据教师编号获得教师信息，教师编号为：${tid}`, []))
+    );
   }
 
-  getTeacheCls(tid: string): Observable<Teach[]> {
-    const url = `${this.teach_api}/getTeachInfo/${tid}`;
-    return this.http.get<Teach[]>(url);
-  }
-
+  /**
+   * @description 根据教师编号获得消息
+   *
+   * @param tid 教师编号
+   * @return 消息
+   * @author suwen
+   * @date 2020/5/27 下午2:08
+   */
   getMsgInfo(tid: string): Observable<TeacherMsg[]> {
-    const url = `${this.teacher_api}/getMsgInfo/${tid}`;
-    return this.http.get<TeacherMsg[]>(url).pipe(
+    const url = `${this.TEACHER_API}/getMsgInfo/${tid}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            return response.data;
+          } else {
+            this.error('根据教师编号获得教师信息失败');
+            return [];
+          }
+        }
+      ),
       catchError(this.handleError<TeacherMsg[]>(`getMsgInfo id=${tid}`))
     );
   }
 
-  readMsg(mid: number) {
-    const url = `${this.teacher_api}/readMsg/${mid}`;
-    return this.http.get(url);
+  /**
+   * @description 根据消息编号已读消息
+   *
+   * @param mid 消息编号
+   * @return 执行结果（true: 成功；false: 失败）
+   * @author suwen
+   * @date 2020/5/27 下午2:12
+   */
+  readMsg(mid: number): Observable<boolean> {
+    const url = `${this.TEACHER_API}/readMsg/${mid}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            return true;
+          } else {
+            this.error('根据消息编号已读消息失败');
+            return false;
+          }
+        }
+      ),
+      catchError(this.handleError<boolean>(`根据消息编号已读消息失败, mid=${mid}`, false))
+    );
   }
 
-
-  deleteMsg(mid: number) {
-    const url = `${this.teacher_api}/deleteMsg/${mid}`;
-    return this.http.get(url);
+  /**
+   * @description 根据消息编号删除消息
+   *
+   * @param mid 消息编号
+   * @return 执行结果（true: 成功；false: 失败）
+   * @author suwen
+   * @date 2020/5/27 下午2:15
+   */
+  deleteMsg(mid: number): Observable<boolean> {
+    const url = `${this.TEACHER_API}/deleteMsg/${mid}`;
+    return this.http.get<any>(url).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            return true;
+          } else {
+            this.error('根据消息编号删除消息失败');
+            return false;
+          }
+        }
+      ),
+      catchError(this.handleError<boolean>(`根据消息编号删除消息, mid=${mid}`, false))
+    );
   }
 
-  updatePassword(tid: string, oldPw: string, newPw: string): Observable<number> {
-    const url = this.teacher_api + '/updatePassword';
-    return this.http.get<number>(url, {
+  /**
+   * @description 用户更新密码
+   *
+   * @param tid 教师密码
+   * @param oldPw 当前密码
+   * @param newPw 新密码
+   * @return 执行结果（true: 成功；false: 失败）
+   * @author suwen
+   * @date 2020/5/27 下午2:16
+   */
+  updatePassword(tid: string, oldPw: string, newPw: string): Observable<boolean> {
+    const url = this.TEACHER_API + '/updatePassword';
+    return this.http.get<any>(url, {
       params: {
-        "tid": tid, "oldPw": oldPw, "newPw": newPw
+        tid, oldPw, newPw
       }
-    })
+    }).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(MESSAGETEXTS.FETCH_SUCCESS);
+            return true;
+          } else {
+            this.error('用户更新密码消息失败');
+            return false;
+          }
+        }
+      ),
+      catchError(this.handleError<boolean>(`用户更新密码, tid=${tid}`, false))
+    );
   }
 
-  getCurriculum(tid: string, week: string): Observable<Curriculum[]> {
-    const url = this.teacher_api + '/getCurriculum';
-    return this.http.get<Curriculum[]>(url, {
+  /**
+   * @description 获取教师某周的排课信息
+   *
+   * @param tid 教师编号
+   * @param week 周次
+   * @return 排课信息
+   * @author suwen
+   * @date 2020/5/27 下午2:18
+   */
+  getCurriculum(tid: string, week: string): Observable<result> {
+    const url = this.TEACHER_API + '/getCurriculum';
+    return this.http.get<any>(url, {
       params: {
-        "tid": tid, "week": week
+        tid, week
       }
-    })
+    }).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(response.message);
+          } else {
+            this.error('获取教师某周的排课信息失败');
+          }
+        }
+      ),
+      catchError(this.handleError<result>(`获取教师某周的排课信息, tid= ${tid},week= ${week}`))
+    );
   }
 
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (errorResponse: any): Observable<T> => {
-      console.error(errorResponse.error); // log to console instead
-
-      if (result) {
-        return of(result as T);
-      }
-
-      return of();
-    }
-  }
 
 }
