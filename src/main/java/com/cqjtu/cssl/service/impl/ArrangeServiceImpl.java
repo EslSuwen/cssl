@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
+import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.entity.TeachingPlan;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
 import com.cqjtu.cssl.service.ArrangePeriodService;
@@ -89,6 +90,12 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     save(arrange);
 
     int aid = getOne(new QueryWrapper<Arrange>().eq("pro_id", arrange.getProId())).getAid();
+
+    // 更新项目卡片中实验室申请状态
+    ExpProject expProject = new ExpProject();
+    expProject.setLabStatus(Audit.AUDITING);
+    expProjectService.update(
+        expProject, new UpdateWrapper<ExpProject>().eq("pro_id", arrange.getProId()));
 
     return arrangePeriodService.saveBatch(
         arrange.getArrangePeriod().stream()

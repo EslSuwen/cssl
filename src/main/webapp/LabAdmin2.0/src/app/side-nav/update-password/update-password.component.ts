@@ -19,7 +19,7 @@ export class UpdatePasswordComponent implements OnInit {
   newPw: '';
   case1 = 2;
   newPw1: string;
-  isclick: boolean;//判断却认更改的两次密码是否相同
+  isClick: boolean;//判断却认更改的两次密码是否相同
   element: FormGroup;//表单验证
   createBasicNotification(): void {
     this.notification.blank(
@@ -46,7 +46,7 @@ export class UpdatePasswordComponent implements OnInit {
 
   updatePassword() {
     this.click1();
-    if (this.isclick) {
+    if (this.isClick) {
       if (this.newPw != this.newPw1) {
         alert("两次输入的密码不相同");
       }
@@ -73,7 +73,7 @@ export class UpdatePasswordComponent implements OnInit {
     this.modal2.show();
   }
   click1() {
-    this.isclick = true;
+    this.isClick = true;
   }
   successUpdate() {  //输入正确，确认进入
     this.router.navigate(['login']);

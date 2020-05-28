@@ -119,7 +119,7 @@ export class CardComponent implements OnInit {
   }
 
   onsubmit() {
-    this.seccess_Message('success');
+    // this.success_Message('success');
     this.saveNewExp();
     console.log(this.controlArray);
     console.log(this.newExp);
@@ -127,8 +127,9 @@ export class CardComponent implements OnInit {
       if (!result) {
         return;
       }
+      console.log(result.data);
       for (let each of this.controlArray) {
-        each.proId = 1;
+        each.proId = result.data;
       }
       this.exps.push(this.newExp);
       this.projectService.addProjectItems(this.controlArray).subscribe();
@@ -158,6 +159,9 @@ export class CardComponent implements OnInit {
     this.newExp.conNum = this.conNum.value;
     this.newExp.book = this.book.value;
     this.newExp.software = this.software.value;
+    this.newExp.expTime = this.expTime.value;
+    this.newExp.status = 'AUDITING';
+    this.newExp.labStatus = 'UNCHECK';
   }
 
   get expCname() {
@@ -192,7 +196,7 @@ export class CardComponent implements OnInit {
     return this.element.get('software');
   }
 
-  getexpname(title1: string)  //获取实验项目名称
+  getExpName(title1: string)  //获取实验项目名称
   {
     this.title = title1;
   }
@@ -207,7 +211,7 @@ export class CardComponent implements OnInit {
 
   handleOk(): void {
     this.isConfirmLoading = true;
-    this.additem(this.value1);
+    this.addItem(this.value1);
     setTimeout(() => {
       this.isVisible = false;
       this.isConfirmLoading = false;
@@ -218,8 +222,8 @@ export class CardComponent implements OnInit {
     this.isVisible = false;
   }
 
-  additem(time: number) {
-    for (var i = 0; i < time; i++) {
+  addItem(time: number) {
+    for (let i = 0; i < time; i++) {
       this.add();
     }
   }
@@ -235,8 +239,8 @@ export class CardComponent implements OnInit {
     });
   }
 
-  seccess_Message(type: string): void { //提交成功后的显示
+  success_Message(type: string): void { //提交成功后的显示
     this.message.create(type, `提交成功!!!,等待管理员审核`);
-    this.router.navigate(['sidenav/personalinfo']);
+    // this.router.navigate(['sidenav/personalinfo']);
   }
 }

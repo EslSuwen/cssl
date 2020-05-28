@@ -54,7 +54,7 @@ export class AuditService extends HandleError {
    */
   auditProject(proId: number, status: string): Observable<result> {
     const url = `${this.PROJECT_API}/auditProject`;
-    return this.http.put<result>(url, {
+    return this.http.put<result>(url, {}, {
       params: {
         proId: proId.toString(), status
       }
@@ -63,10 +63,10 @@ export class AuditService extends HandleError {
         if (response.success) {
           this.success(response.message);
         } else {
-          this.error(`审核卡片数据失败,proid: ${proId}, status: ${status}`);
+          this.error(`审核卡片数据失败,proId: ${proId}, status: ${status}`);
         }
       }),
-      catchError(this.handleError<result>(`审核卡片数据失败,proid: ${proId}, status: ${status}`))
+      catchError(this.handleError<result>(`审核卡片数据失败,proId: ${proId}, status: ${status}`))
     );
   }
 
@@ -78,7 +78,7 @@ export class AuditService extends HandleError {
    * @date 2020/5/23 下午7:17
    */
   getAuditArrange(): Observable<result> {
-    const url = `${this.ARRANGE_API}/auditArrange`;
+    const url = `${this.ARRANGE_API}/getAuditArrange`;
     return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
@@ -102,7 +102,7 @@ export class AuditService extends HandleError {
    */
   auditArrange(aid: string, status: string): Observable<result> {
     const url = `${this.ARRANGE_API}/auditProject`;
-    return this.http.get<result>(url, {
+    return this.http.put<result>(url, {}, {
       params: {aid, status}
     }).pipe(
       tap(response => {

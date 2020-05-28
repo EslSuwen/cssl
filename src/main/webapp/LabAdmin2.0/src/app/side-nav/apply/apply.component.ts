@@ -59,13 +59,13 @@ export class ApplyComponent implements OnInit {
 
     this.projectService.getProjects(this.authenticationService.getUserNo())
       .subscribe(result => {
-        if (result.success)
+        if (result.success) {
+
+          console.log(result.data);
           this.exps = result.data;
+        }
       });
 
-    this.auditService.getAuditProjects().subscribe(data => {
-      console.log(data);
-    })
 
     this.weekList = [
       {id: 1, itemName: '第一周'},

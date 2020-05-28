@@ -45,7 +45,7 @@ export class ApplyManageComponent implements OnInit {
     });
   }
 
-  agree(proId: number, status: string) {
+  auditPass(proId: number, status: string) {
 
     this.auditService.auditProject(proId, status).subscribe(result => {
       if (result.success) {

@@ -51,7 +51,9 @@ public class ExpProjectController {
             .code(ReturnCode.RETURN_CODE_20005.getCode())
             .message("增加卡片成功")
             .data(
-                expProjectService.getExpByTidCid(expProject.getExpTid(), expProject.getCourseId()))
+                expProjectService
+                    .getExpByTidCid(expProject.getExpTid(), expProject.getCourseId())
+                    .getProId())
             .build(),
         HttpStatus.OK);
   }

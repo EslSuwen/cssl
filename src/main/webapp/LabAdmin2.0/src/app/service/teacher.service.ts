@@ -147,7 +147,7 @@ export class TeacherService extends HandleError {
    */
   updatePassword(tid: string, oldPw: string, newPw: string): Observable<result> {
     const url = this.TEACHER_API + '/updatePassword';
-    return this.http.get<result>(url, {
+    return this.http.put<result>(url, {}, {
       params: {
         tid, oldPw, newPw
       }

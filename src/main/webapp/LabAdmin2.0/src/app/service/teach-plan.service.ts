@@ -2,10 +2,10 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {TeachPlan} from '../enity/teachPlan';
 import {HandleError} from './handle-error';
 import {NzMessageService} from 'ng-zorro-antd';
 import {catchError, tap} from 'rxjs/operators';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
@@ -25,9 +25,9 @@ export class TeachPlanService extends HandleError {
    * @author suwen
    * @date 2020/5/27 上午11:01
    */
-  getTeachingPlan(): Observable<TeachPlan[]> {
+  getTeachingPlan(): Observable<result> {
     const url = `${this.ARRANGE_API}/getTeachingPlan`;
-    return this.http.get<any>(url).pipe(
+    return this.http.get<result>(url).pipe(
       tap(response => {
         if (response.success) {
           this.success(response.message);
@@ -35,7 +35,7 @@ export class TeachPlanService extends HandleError {
           this.error('获取教学计划表失败');
         }
       }),
-      catchError(this.handleError<TeachPlan[]>('获取教学计划表失败', []))
+      catchError(this.handleError<result>('获取教学计划表失败'))
     );
   }
 }

@@ -9,6 +9,9 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
  * @date 2020/5/26 下午4:20
  */
 public enum Audit {
+
+  /** 未申请 */
+  UNCHECK(-1),
   /** 审核中 */
   AUDITING(2),
   /** 审核通过 */

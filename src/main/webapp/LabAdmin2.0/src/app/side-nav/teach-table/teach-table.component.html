@@ -6,44 +6,42 @@
       <div class="card-body">
         <table mdbTable bordered="true">
           <thead class="black white-text">
-            <tr>
-              <th>序号</th>
-              <th>实验室名称</th>
-              <th>专业</th>
-              <th>年级</th>
-              <th>班数</th>
-              <th>课程代码</th>
-              <th>课程名称</th>
-              <th>学时</th>
-              <th>起止周</th>
-              <th>开课学院</th>
-              <th>校区</th>
-              <th>实验课任课老师</th>
-              <th>课程类别</th>
-              <th>备注</th>
-            </tr>
+          <tr>
+            <th>序号</th>
+            <th>实验室名称</th>
+            <th>专业</th>
+            <th>班级</th>
+            <th>实验课程名称</th>
+            <th>课程代码</th>
+            <th>学时</th>
+            <th>起止周</th>
+            <th>开课学院</th>
+            <th>校区</th>
+            <th>实验课任课老师</th>
+            <th>课程类别</th>
+            <th>备注</th>
+          </tr>
           </thead>
           <tbody>
-            <tr mdbTableCol *ngFor="let el of elements">
-              <th scope="row">{{el.id}}</th>
-              <td>{{el.expName}}</td>
-              <td>{{el.major}}</td>
-              <td>{{el.grade}}</td>
-              <td>{{el.class}}</td>
-              <td>{{el.courseCode}}</td>
-              <td>{{el.courseName}}</td>
-              <td>{{el.time}}</td>
-              <td>{{el.beginToEnd}}</td>
-              <td>{{el.college}}</td>
-              <td>{{el.region}}</td>
-              <td>{{el.teacher}}</td>
-              <td>{{el.courseType}}</td>
-              <td>{{el.remark}}</td>
-            </tr>
+          <tr mdbTableCol *ngFor="let each of teachPlans;let no=index">
+            <th scope="row">{{no + 1}}</th>
+            <td>{{each.labName}}</td>
+            <td>{{each.expMajor}}</td>
+            <td>{{each.labClass}}</td>
+            <td>{{each.expCname}}</td>
+            <td>{{each.courseId}}</td>
+            <td>{{each.expTime}}</td>
+            <td>{{each.coursePeriod}}</td>
+            <td>{{each.courseCollege}}</td>
+            <td>{{each.campus}}</td>
+            <td>{{each.tname}}</td>
+            <td>{{each.courseType}}</td>
+            <td>{{each.labRemark}}</td>
+          </tr>
           </tbody>
         </table>
-
-
+        <button mdbBtn type="submit" gradient="blue" mdbWavesEffect (click)="download()">下载教学计划表
+        </button>
       </div>
     </div>
   </div>
