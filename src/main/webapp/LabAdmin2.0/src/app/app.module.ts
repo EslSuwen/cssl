@@ -35,6 +35,7 @@ import {registerLocaleData} from '@angular/common';
 import zh from '@angular/common/locales/zh';
 import {ApplyManageComponent} from './side-nav/apply-manage/apply-manage.component';
 import {Code404Component} from './code404/code404.component';
+import {AuditLabComponent} from './side-nav/audit-lab/audit-lab.component';
 
 registerLocaleData(zh);
 
@@ -60,6 +61,7 @@ const appRoutes: Routes = [
       {path: 'updatepassword', component: UpdatePasswordComponent,},
       {path: 'message', component: MessageComponent,},
       {path: "apply_manage", component: ApplyManageComponent},
+      {path: "audit-lab", component: AuditLabComponent},
       {path: "**", component: Code404Component},
     ],
   },
@@ -85,6 +87,7 @@ const appRoutes: Routes = [
     MessageComponent,
     ApplyManageComponent,
     Code404Component,
+    AuditLabComponent,
   ],
   imports: [
     BrowserModule,

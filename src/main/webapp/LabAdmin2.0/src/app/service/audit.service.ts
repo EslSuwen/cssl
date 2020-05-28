@@ -101,7 +101,7 @@ export class AuditService extends HandleError {
    * @date 2020/5/23 下午7:19
    */
   auditArrange(aid: string, status: string): Observable<result> {
-    const url = `${this.ARRANGE_API}/auditProject`;
+    const url = `${this.ARRANGE_API}/auditArrange`;
     return this.http.put<result>(url, {}, {
       params: {aid, status}
     }).pipe(

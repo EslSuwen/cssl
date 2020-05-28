@@ -108,7 +108,7 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/11 上午9:49
    */
-  @GetMapping("auditArrange")
+  @PutMapping("auditArrange")
   public ResponseEntity<ResultDto> auditArrange(
       @NonNull @ApiParam(value = "安排编号", required = true) @RequestParam Integer aid,
       @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {

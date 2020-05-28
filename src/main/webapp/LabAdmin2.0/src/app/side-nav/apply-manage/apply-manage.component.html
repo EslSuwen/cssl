@@ -8,11 +8,13 @@
         <table mdbTable bordered="true" small="true" class="text-center">
           <thead class="green white-text">
           <tr>
+            <th>序号</th>
             <th *ngFor="let head of headElements" scope="col">{{head}} </th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let each of exps">
+          <tr *ngFor="let each of exps;let no=index">
+            <td>{{no + 1}}</td>
             <td>{{each.labCenName}}</td>
             <td>{{each.expCname}}</td>
             <td>{{each.expEqname + each.eqnum}}</td>

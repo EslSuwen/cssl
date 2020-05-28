@@ -84,6 +84,26 @@ export class ArrangePeriod {
 }
 
 /**
+ * 时间审核实体
+ *
+ * @author suwen
+ * @date 2020/5/28 下午9:17
+ */
+export class ArrangeAudit {
+  aid: number;
+  labId: string;
+  labName: string;
+  campus: string;
+  labClass: string;
+  courseName: string;
+  tname: string;
+  expProname: string;
+  labRemark: string;
+  arrangePeriod: ArrangePeriod;
+  period: string;
+}
+
+/**
  * 课程表信息实体
  *
  * @author suwen

@@ -44,6 +44,11 @@
           <mdb-icon fas icon="clock" class="mr-1  red-text" size="lg"></mdb-icon>
           申请管理(管理员特权)
         </a>
+        <a *appHasRole="'ADMIN'" mdbWavesEffect class="nav-link my-2 text-center" routerLink="/sidenav/audit-lab"
+           routerLinkActive="active">
+          <mdb-icon fas icon="clock" class="mr-1  red-text" size="lg"></mdb-icon>
+          排课时间申请管理(管理员特权)
+        </a>
       </nav>
       <app-side-card></app-side-card>
     </div>

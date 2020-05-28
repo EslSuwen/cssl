@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -24,6 +25,7 @@ public class LabInfo implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "实验室编号", required = true)
+  @TableId
   private String labId;
 
   @ApiModelProperty(value = "实验室负责人ID", position = 1, required = true)
