@@ -71,8 +71,34 @@
                       </angular2-multiselect>
                     </div>
 
-                    <!-- 星期 -->
+                    <!-- 实验室类型 -->
                     <div class="col  px-0">
+                      <angular2-multiselect [data]="labTypeList" [(ngModel)]="labTypeSelectedItems"
+                                            [settings]="labTypeSettings">
+                        <c-item>
+                          <ng-template let-item="item">
+                            <label style="min-width: 60%;">{{item.itemName}}</label>
+                          </ng-template>
+                        </c-item>
+                      </angular2-multiselect>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <!-- 实验室名 -->
+                    <div class="col px-0 mr-3 mt-3">
+                      <angular2-multiselect [data]=" labNameList" [(ngModel)]="labNameSelectedItems"
+                                            [settings]="labNameSettings">
+                        <c-item>
+                          <ng-template let-item="item">
+                            <label style="min-width: 60%;">{{item.itemName}}</label>
+                          </ng-template>
+                        </c-item>
+                      </angular2-multiselect>
+                    </div>
+
+                    <!-- 星期 -->
+                    <div class="col px-0 mt-3">
                       <angular2-multiselect [data]="dayList" [(ngModel)]="dayselectedItems" [settings]="daySettings">
                         <c-item>
                           <ng-template let-item="item">
@@ -82,6 +108,7 @@
                       </angular2-multiselect>
                     </div>
                   </div>
+
                   <div class="row my-4">
                     <!-- 节次 -->
                     <div class="col px-0 mr-3">
@@ -109,6 +136,7 @@
 
 
                   </div>
+
                   <div class="row">
                     <!-- 年级 -->
                     <div class="col px-0 mr-3">

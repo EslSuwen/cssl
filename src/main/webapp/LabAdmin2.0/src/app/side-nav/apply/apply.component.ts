@@ -7,6 +7,7 @@ import {Arrange, ArrangePeriod} from '../../enity/arrange';
 import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuditService} from 'src/app/service/audit.service';
+import {LabService} from "../../service/lab.service";
 
 @Component({
   selector: 'app-apply',
@@ -44,13 +45,24 @@ export class ApplyComponent implements OnInit {
   gradeselectedItems = [];
   gradeSettings = {};
 
+  // 实验室类型
+  labTypeList = [];
+  labTypeSelectedItems = [];
+  labTypeSettings = {};
+
+  // 实验室名
+  labNameList = [];
+  labNameSelectedItems = [];
+  labNameSettings = {};
+
   teacheList: Array<Teach>;
   beizhu: FormControl;
 
   constructor(private applyService: ApplyService,
               private projectService: ProjectService,
               private authenticationService: AuthenticationService,
-              private auditService: AuditService) {
+              private auditService: AuditService,
+              private labService: LabService) {
   }
 
 
@@ -60,12 +72,31 @@ export class ApplyComponent implements OnInit {
     this.projectService.getProjects(this.authenticationService.getUserNo())
       .subscribe(result => {
         if (result.success) {
-
           console.log(result.data);
           this.exps = result.data;
         }
       });
 
+    this.labService.getLab("60102").subscribe(
+      result => {
+        if (result.success) {
+          console.log(result.data);
+        }
+      });
+
+    this.labService.getLabByType("123").subscribe(
+      result => {
+        if (result.success) {
+          console.log(result.data);
+        }
+      });
+
+    this.labService.getLabByTypeCampus("123", "南岸").subscribe(
+      result => {
+        if (result.success) {
+          console.log(result.data);
+        }
+      });
 
     this.weekList = [
       {id: 1, itemName: '第一周'},
@@ -209,6 +240,38 @@ export class ApplyComponent implements OnInit {
       // limitSelection: 5,
       // searchPlaceholderText 搜索的默认文字
     };
+
+    this.labTypeList = [
+      {id: '123', itemName: '电子实验室'},
+      {id: '456', itemName: '计算机实验室'},
+    ];
+    this.labTypeSettings = {
+      singleSelection: true, // 是否单选
+      text: '选择实验室类型',
+      enableSearchFilter: true, // 查找过滤器
+    }
+
+    this.labNameList = [
+      {id: '60101', itemName: '软件开放实验室'},
+      {id: '60102', itemName: '嵌入式系统实验室'},
+      {id: '60103', itemName: '硬件开放实验室'},
+      {id: '60104', itemName: '通信技术实验室'},
+      {id: '60105', itemName: '网络技术实验室'},
+      {id: '60201', itemName: '轨道交通实验室'},
+      {id: '60202', itemName: '计算机联锁实验室'},
+    ];
+    this.labNameSettings = {
+      singleSelection: true, // 是否单选
+      text: '选择实验室',
+      enableSearchFilter: true, // 查找过滤器
+    }
+  }
+
+  onCampusSelected() {
+
+  }
+
+  onLabTypeSelected() {
 
   }
 
