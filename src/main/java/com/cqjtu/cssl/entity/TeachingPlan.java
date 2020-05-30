@@ -30,7 +30,7 @@ public class TeachingPlan implements Serializable {
   private String expCname;
 
   @ApiModelProperty(value = "课程编号", position = 12, required = true)
-  private String courseId;
+  private Integer courseId;
 
   @ApiModelProperty(value = "实验总学时", position = 7, required = true)
   private Integer expTime;

@@ -3,12 +3,8 @@ package com.cqjtu.cssl.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.dto.ArrangeAudit;
-import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.TeachingPlan;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -57,7 +53,7 @@ public interface ArrangeService extends IService<Arrange> {
    * @author suwen
    * @date 2020/5/26 下午8:40
    */
- List<ArrangeAudit> getAuditArrange();
+  List<ArrangeAudit> getAuditArrange();
 
   /**
    * 增加排课信息

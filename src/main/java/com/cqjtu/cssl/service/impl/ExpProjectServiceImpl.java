@@ -22,13 +22,13 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
     implements ExpProjectService {
 
   @Override
-  public boolean isCardExist(String tid, String cid) {
+  public boolean isCardExist(String tid, Integer cid) {
 
     return !list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid)).isEmpty();
   }
 
   @Override
-  public ExpProject getExpByTidCid(String tid, String cid) {
+  public ExpProject getExpByTidCid(String tid, Integer cid) {
 
     return getOne(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid));
   }

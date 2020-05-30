@@ -1,11 +1,9 @@
 package com.cqjtu.cssl.service;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ExpProject;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,7 +23,7 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @param tid 老师编号
    * @param cid 课程号
    */
-  boolean isCardExist(String tid, String cid);
+  boolean isCardExist(String tid, Integer cid);
 
   /**
    * 根据老师编号和课程号查找对应卡片
@@ -35,7 +33,7 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @param tid 老师编号
    * @param cid 课程号
    */
-  ExpProject getExpByTidCid(String tid, String cid);
+  ExpProject getExpByTidCid(String tid, Integer cid);
 
   /**
    * 根据老师编号和课程号查找对应卡片

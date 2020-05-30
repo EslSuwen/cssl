@@ -47,7 +47,7 @@ public class ExcelUtil {
               data.get(i).getExpMajor(),
               data.get(i).getLabClass(),
               data.get(i).getExpCname(),
-              data.get(i).getCourseId(),
+              data.get(i).getCourseId().toString(),
               data.get(i).getExpTime().toString(),
               data.get(i).getCoursePeriod(),
               data.get(i).getCourseCollege(),

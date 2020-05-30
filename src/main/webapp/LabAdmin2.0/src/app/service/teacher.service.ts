@@ -52,8 +52,8 @@ export class TeacherService extends HandleError {
    * @date 2020/5/27 下午2:04
    */
   getTeaches(tid: string): Observable<result> {
-    const url = `${this.TEACH_API}/getTeachInfo/${tid}`;
-    return this.http.get<result>(url).pipe(
+    const url = `${this.TEACH_API}/getTeachInfo`;
+    return this.http.get<result>(url, {params: {tid}}).pipe(
       tap(response => {
           if (response.success) {
             this.success(response.message);

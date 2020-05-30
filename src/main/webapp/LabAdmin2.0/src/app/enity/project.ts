@@ -25,7 +25,7 @@ export class Exp {
   // 课程名
   cname: string;
   // 课程编号
-  courseId: string;
+  courseId: number;
   // 消耗材料名称
   conName: string;
   // 消耗材料数量
