@@ -9,11 +9,182 @@
 
 **联系人**:Suwen
 
-**Version**:v0.6
+**Version**:v1.0-Alpha
 
 **接口路径**：/api-docs
 
 
+# 实验室信息-控制器
+
+## getLabById
+
+
+**接口描述**:
+
+
+**接口地址**:`/lab/getLab`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|labId| 实验室编号  | query | true |integer  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getLabByTypeId
+
+
+**接口描述**:
+
+
+**接口地址**:`/lab/getLabByTypeId`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|typeId| 实验室类型编号  | query | true |integer  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getLabByTypeIdCampus
+
+
+**接口描述**:
+
+
+**接口地址**:`/lab/getLabByTypeIdCampus`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|campus| 校区  | query | true |string  |    |
+|typeId| 实验室类型编号  | query | true |integer  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
 # 实验室安排-控制器
 ## addArrange
 
@@ -76,7 +247,7 @@
 |labId| 实验室编号  | body | true |string  |    |
 |proId| 项目ID  | body | true |integer(int32)  |    |
 |campus| 实验室校区  | body | true |string  |    |
-|status| 申请状态,可用值:AUDITING,PASS,FAIL  | body | true |string  |    |
+|status| 申请状态,可用值:UNCHECK,AUDITING,PASS,FAIL  | body | true |string  |    |
 |labClass| 班级  | body | true |string  |    |
 |courseId| 课程编号  | body | true |string  |    |
 |tid| 教职工号  | body | true |string  |    |
@@ -133,10 +304,10 @@
 **接口地址**:`/arrange/auditArrange`
 
 
-**请求方式**：`GET`
+**请求方式**：`PUT`
 
 
-**consumes**:``
+**consumes**:`["application/json"]`
 
 
 **produces**:`["*/*"]`
@@ -148,7 +319,7 @@
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
 |aid| 安排编号  | query | true |integer  |    |
-|status| 审核状态,可用值:AUDITING,PASS,FAIL  | query | true |string  |    |
+|status| 审核状态,可用值:UNCHECK,AUDITING,PASS,FAIL  | query | true |string  |    |
 
 **响应示例**:
 
@@ -1236,7 +1407,8 @@
 	"courseId": "",
 	"conName": "",
 	"conNum": 0,
-	"status": ""
+	"status": "",
+	"labStatus": ""
 }
 ```
 
@@ -1270,7 +1442,8 @@
 |courseId| 课程编号  | body | true |string  |    |
 |conName| 消耗材料名称  | body | false |string  |    |
 |conNum| 消耗材料数量  | body | false |integer(int32)  |    |
-|status| 申请实验室状态,可用值:AUDITING,PASS,FAIL  | body | false |string  |    |
+|status| 申请状态,可用值:UNCHECK,AUDITING,PASS,FAIL  | body | false |string  |    |
+|labStatus| 申请实验室状态,可用值:UNCHECK,AUDITING,PASS,FAIL  | body | false |string  |    |
 
 **响应示例**:
 
@@ -1327,7 +1500,7 @@
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
 |proId| 项目卡片编号  | query | true |string  |    |
-|status| 审核状态,可用值:AUDITING,PASS,FAIL  | query | true |string  |    |
+|status| 审核状态,可用值:UNCHECK,AUDITING,PASS,FAIL  | query | true |string  |    |
 
 **响应示例**:
 
