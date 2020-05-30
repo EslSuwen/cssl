@@ -1,19 +1,21 @@
 import {Injectable} from '@angular/core';
-import {Observable} from "rxjs";
-import {Exp} from "../enity/project";
-import {Arrange} from "../enity/arrange";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
+import {Observable} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {HandleError} from './handle-error';
+import {NzMessageService} from 'ng-zorro-antd';
+import {catchError, tap} from 'rxjs/operators';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuditService {
+export class AuditService extends HandleError {
 
 
   constructor(
-    private http: HttpClient
-  ) {
+    private http: HttpClient, message: NzMessageService) {
+    super(message);
   }
 
   private PROJECT_API = `${environment.apiUrl}/project`;
@@ -22,15 +24,25 @@ export class AuditService {
   /**
    * @description 获取待审核卡片数据
    *
+   * @return 卡片数据
    * @author suwen
    * @date 2020/5/23 下午7:17
    */
-  getAuditProjects(): Observable<Exp[]> {
-    const url = `${this.PROJECT_API}/getAuditProject`
-    return this.http.get<Exp[]>(url);
+  getAuditProjects(): Observable<result> {
+    const url = `${this.PROJECT_API}/getAuditProject`;
+    return this.http.get<result>(url).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error('获取待审核卡片数据失败');
+        }
+      }),
+      catchError(this.handleError<result>('获取待审核卡片数据'))
+    );
   }
 
-  
+
   /**
    * @description 审核卡片
    *
@@ -40,25 +52,43 @@ export class AuditService {
    * @author suwen
    * @date 2020/5/23 下午7:19
    */
-  auditProject(proId: number, status: string): Observable<boolean> {
-    const url = `${this.PROJECT_API}/auditProject`
-    return this.http.get<boolean>(url, {
+  auditProject(proId: number, status: string): Observable<result> {
+    const url = `${this.PROJECT_API}/auditProject`;
+    return this.http.put<result>(url, {}, {
       params: {
-        "proId": ''+proId,
-        "status": status
+        proId: proId.toString(), status
       }
-    });
+    }).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error(`审核卡片数据失败,proId: ${proId}, status: ${status}`);
+        }
+      }),
+      catchError(this.handleError<result>(`审核卡片数据失败,proId: ${proId}, status: ${status}`))
+    );
   }
 
   /**
    * @description 获取待审核实验室时间安排数据
    *
+   * @return 实验室时间安排数据
    * @author suwen
    * @date 2020/5/23 下午7:17
    */
-  getAuditArrange(): Observable<Arrange[]> {
-    const url = `${this.ARRANGE_API}/auditArrange`
-    return this.http.get<Arrange[]>(url);
+  getAuditArrange(): Observable<result> {
+    const url = `${this.ARRANGE_API}/getAuditArrange`;
+    return this.http.get<result>(url).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error('获取待审核实验室时间安排数据失败');
+        }
+      }),
+      catchError(this.handleError<result>('获取待审核实验室时间安排数据'))
+    );
   }
 
   /**
@@ -70,13 +100,20 @@ export class AuditService {
    * @author suwen
    * @date 2020/5/23 下午7:19
    */
-  auditArrange(aid: string, status: string): Observable<boolean> {
-    const url = `${this.ARRANGE_API}/auditProject`
-    return this.http.get<boolean>(url, {
-      params: {
-        "aid": aid,
-        "status": status
-      }
-    });
+  auditArrange(aid: string, status: string): Observable<result> {
+    const url = `${this.ARRANGE_API}/auditArrange`;
+    return this.http.put<result>(url, {}, {
+      params: {aid, status}
+    }).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error(`审核实验室时间安排失败，aid=: ${aid}`);
+        }
+      }),
+      catchError(this.handleError<result>(`审核实验室时间安排失败，aid=: ${aid}`))
+    );
   }
+
 }

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.cqjtu'
-version = '0.0.1-SNAPSHOT'
+version = 'v1.0-Alpha'
 sourceCompatibility = '1.8'
 
 repositories {
@@ -16,26 +16,18 @@ repositories {
 
 dependencies {
 
-    // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
-    // https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml
     compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
-    // https://mvnrepository.com/artifact/org.apache.poi/poi
     compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
 
-    // https://mvnrepository.com/artifact/com.github.xiaoymin/swagger-bootstrap-ui
     compile group: 'com.github.xiaoymin', name: 'swagger-bootstrap-ui', version: '1.9.6'
-    // https://mvnrepository.com/artifact/io.springfox/springfox-swagger2
     compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 
 
-    // https://mvnrepository.com/artifact/org.freemarker/freemarker
     compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
-    // https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-generator
     compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'
     implementation 'com.auth0:java-jwt:3.10.0'
 
-    // https://mvnrepository.com/artifact/org.projectlombok/lombok
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
@@ -47,10 +39,8 @@ dependencies {
 
 
     implementation 'org.springframework.boot:spring-boot-starter-security:2.2.2.RELEASE'
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '2.2.2.RELEASE'
 
-    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor', version: '2.2.2.RELEASE'
 
     compile('org.springframework.boot:spring-boot-starter-web')
@@ -62,12 +52,6 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter-aop')
 
     compile('org.springframework:spring-context-support')
-
-//    compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-
-//    compile('com.github.pagehelper:pagehelper-spring-boot-starter:1.2.10')
-
-//    compile('tk.mybatis:mapper-spring-boot-starter:2.1.5')
 
     compile('com.alibaba:druid-spring-boot-starter:1.1.14')
 

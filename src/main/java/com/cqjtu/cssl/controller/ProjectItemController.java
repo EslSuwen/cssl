@@ -1,14 +1,17 @@
 package com.cqjtu.cssl.controller;
 
+import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.service.ProjectItemService;
 import io.swagger.annotations.Api;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * (项目卡片)实验项目控制器
@@ -16,7 +19,7 @@ import java.util.Map;
  * @author suwen
  * @date 2020/2/6 2:55 下午
  */
-@Api(tags = "(项目卡片)实验项目-控制器")
+@Api(tags = "实验项目-控制器")
 @RestController
 @RequestMapping("/projectItem")
 public class ProjectItemController {
@@ -29,7 +32,7 @@ public class ProjectItemController {
   }
 
   /**
-   * 测试实验项目项增加
+   * 实验项目项增加
    *
    * @param projectItems 请求体变量 实验项目
    * @return int 状态码
@@ -37,15 +40,20 @@ public class ProjectItemController {
    * @date 2020/2/6 2:55 下午
    */
   @PostMapping(value = "/addProjectItems")
-  public int addNewProjectItem(@RequestBody List<ProjectItem> projectItems) {
+  public ResponseEntity<ResultDto> addNewProjectItem(
+      @NonNull @RequestBody List<ProjectItem> projectItems) {
 
-    projectItemService.saveBatch(projectItems);
-
-    return 0;
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(projectItemService.saveBatch(projectItems))
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message("实验项目项增加成功")
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
-   * 测试获取实验项目
+   * 获取实验项目
    *
    * @param proId 项目 id
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.ProjectItem> 实验项目序列
@@ -53,8 +61,16 @@ public class ProjectItemController {
    * @date 2020/2/6 2:55 下午
    */
   @GetMapping(value = "/getProjectItem/{proId}")
-  public List<ProjectItem> getProjectItem(@NonNull @PathVariable("proId") Integer proId) {
+  public ResponseEntity<ResultDto> getProjectItem(@NonNull @PathVariable("proId") Integer proId) {
 
-    return projectItemService.listByProId(proId);
+    @NonNull List<ProjectItem> projectItemList = projectItemService.listByProId(proId);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message("实验项目项获取成功")
+            .data(projectItemList)
+            .build(),
+        HttpStatus.OK);
   }
 }

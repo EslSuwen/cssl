@@ -1,9 +1,8 @@
 package com.cqjtu.cssl.service.impl;
 
 import com.cqjtu.cssl.entity.Authority;
-import com.cqjtu.cssl.entity.AuthorityName;
 import com.cqjtu.cssl.entity.Teacher;
-import com.cqjtu.cssl.mapper.TeacherMapper;
+import com.cqjtu.cssl.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,22 +23,18 @@ import static com.cqjtu.cssl.utils.AuthorityUtil.createGrantedAuthorities;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  private final TeacherMapper teacherMapper;
+  private final TeacherService teacherService;
 
   @Autowired
-  public UserDetailsServiceImpl(TeacherMapper teacherMapper) {
-    this.teacherMapper = teacherMapper;
+  public UserDetailsServiceImpl(TeacherService teacherService) {
+    this.teacherService = teacherService;
   }
 
   @Override
   public UserDetails loadUserByUsername(String userNo) {
-    Teacher teacher = teacherMapper.selectById(userNo);
+    Teacher teacher = teacherService.getById(userNo);
     List<Authority> authorities = new ArrayList<>();
-    if (teacher.getTlimit()) {
-      authorities.add(new Authority(1L, AuthorityName.ROLE_ADMIN));
-    } else {
-      authorities.add(new Authority(1L, AuthorityName.ROLE_USER));
-    }
+    authorities.add(new Authority(1L, teacher.getAuthority()));
     teacher.setAuthorities(authorities);
     return create(teacher);
   }

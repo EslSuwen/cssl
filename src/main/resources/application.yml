@@ -69,7 +69,7 @@ info:
   app:
     name: Course scheduling system of Laboratory
     abbrName: cssl
-    version: v0.6
+    version: v1.0-Alpha
 
 api:
   base-path: /api

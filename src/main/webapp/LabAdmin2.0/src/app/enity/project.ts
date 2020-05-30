@@ -30,8 +30,10 @@ export class Exp {
   conName: string;
   // 消耗材料数量
   conNum: number;
+  // 申请状态
+  status: string;
   // 申请实验室状态
-  labStatus: number;
+  labStatus: string;
 
   constructor() {
     this.proId = 0;
@@ -48,7 +50,8 @@ export class Exp {
     this.cname = '';
     this.conName = '';
     this.conNum = 0;
-    this.labStatus=0;
+    this.status = '';
+    this.labStatus = '';
   }
 }
 

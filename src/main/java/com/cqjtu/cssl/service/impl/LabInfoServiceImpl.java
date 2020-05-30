@@ -1,10 +1,10 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.LabInfo;
 import com.cqjtu.cssl.mapper.LabInfoMapper;
 import com.cqjtu.cssl.service.LabInfoService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,4 +17,18 @@ import java.util.List;
  */
 @Service
 public class LabInfoServiceImpl extends ServiceImpl<LabInfoMapper, LabInfo>
-    implements LabInfoService {}
+        implements LabInfoService {
+
+    @Override
+    public List<LabInfo> getLabByTypeId(Integer typeId) {
+
+        return list(new QueryWrapper<LabInfo>().eq("type_id", typeId));
+    }
+
+    @Override
+    public List<LabInfo> getLabByTypeIdCampus(Integer typeId, String campus) {
+
+        return list(new QueryWrapper<LabInfo>().eq("type_id", typeId).eq("lab_campus", campus));
+    }
+}
+
