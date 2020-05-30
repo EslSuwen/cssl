@@ -3,6 +3,7 @@ package com.cqjtu.cssl.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.cqjtu.cssl.constant.Audit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -45,7 +46,7 @@ public class Arrange implements Serializable {
 
   /** 申请状态 */
   @ApiModelProperty(value = "申请状态", position = 4, required = true)
-  private Integer status;
+  private Audit status;
 
   /** 班级 */
   @ApiModelProperty(value = "班级", position = 5, required = true)

@@ -24,7 +24,7 @@ public interface TeacherService extends IService<Teacher> {
    * @param newPw 新密码
    * @return 状态码
    */
-  int updatePassword(String tid, String oldPw, String newPw);
+  boolean updatePassword(String tid, String oldPw, String newPw);
 
   /**
    * 查询某周的课程安排

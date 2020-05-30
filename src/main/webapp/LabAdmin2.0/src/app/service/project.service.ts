@@ -1,65 +1,110 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {Exp, ProjectItem} from '../enity/project';
-import {environment} from "../../environments/environment";
-import {log} from "util";
-import {MessageService} from "./message.service";
+import {environment} from '../../environments/environment';
+import {NzMessageService} from 'ng-zorro-antd';
+import {HandleError} from './handle-error';
+import {catchError, tap} from 'rxjs/operators';
+import {result} from "../enity/result";
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectService {
+export class ProjectService extends HandleError {
 
   constructor(
-    // HttpClient 是 Angular 通过 HTTP 与远程服务器通讯的机制
-    private http: HttpClient, private messageService: MessageService
-  ) {
+    private http: HttpClient, message: NzMessageService) {
+    super(message);
   }
 
-  // 发送给服务端的api。端口为server.port
-  private api = `${environment.apiUrl}/project`;
+  private PROJECT_API = `${environment.apiUrl}/project`;
+  private ITEM_API = `${environment.apiUrl}/projectItem`;
 
-  private item_api = `${environment.apiUrl}/projectItem`;
-
-  // 观察者模式方法。用post方法发送Demo类型数据，并等待返回的信息
-  // 返回的是json格式，可以在本地建立数据模型，这里用any类型接受
-  addProject(project: Exp): Observable<any> {
-    return this.http.post<any>(this.api + '/addProject', project);
+  /**
+   * @description 增加项目卡片
+   *
+   * @param project 项目卡片信息
+   * @return 执行结果（true: 成功；false: 失败）
+   * @author suwen
+   * @date 2020/5/27 上午10:49
+   */
+  addProject(project: Exp): Observable<result> {
+    return this.http.post<result>(this.PROJECT_API + '/addProject', project).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error('增加项目卡片失败');
+        }
+      }),
+      catchError(this.handleError<result>('增加项目卡片'))
+    );
   }
 
-  addProjectItems(projectItems: ProjectItem[]): Observable<any> {
-    return this.http.post<any>(this.item_api + '/addProjectItems', projectItems);
+  /**
+   * @description 增加实验卡片项目项
+   *
+   * @param projectItems 实验卡片项目项
+   * @return 执行结果（true: 成功；false: 失败）
+   * @author suwen
+   * @date 2020/5/27 上午10:51
+   */
+  addProjectItems(projectItems: ProjectItem[]): Observable<result> {
+    return this.http.post<result>(this.ITEM_API + '/addProjectItems', projectItems).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error('增加实验卡片项目项失败');
+        }
+      }),
+      catchError(this.handleError<result>('增加实验卡片项目项'))
+    );
   }
 
-  getProjects(tid: string): Observable<Exp[]> {
-    const url = `${this.api}/getProject/${tid}`
-    return this.http.get<Exp[]>(url);
+  /**
+   * @description 根据教师编号获取项目卡片
+   *
+   * @param tid 教师编号
+   * @return 项目卡片
+   * @author suwen
+   * @date 2020/5/27 上午10:53
+   */
+  getProjects(tid: string): Observable<result> {
+    const url = `${this.PROJECT_API}/getProject/${tid}`;
+    return this.http.get<result>(url).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error(`根据教师编号获取项目卡片失败，教师编号：${tid}`);
+        }
+      }),
+      catchError(this.handleError<result>(`根据教师编号获取项目卡片失败,教师编号${tid}`))
+    );
   }
 
-  clearDatabase(): Observable<any> {
-    return this.http.delete(this.api + '/clearData');
-  }
-
-  getProjectItems(proId: number): Observable<ProjectItem[]> {
-    const url = `${this.item_api}/getProjectItem/${proId}`;
-    return this.http.get<ProjectItem[]>(url);
-
-  }
-
-  private handleError<T>(operation = 'operation', result?: T) {
-    return (errorResponse: any): Observable<T> => {
-      console.error(errorResponse.error); // log to console instead
-
-      log(`${operation} failed: ${errorResponse.error.message}`);
-
-      // Let the app keep running by returning an empty result.
-      if (result) {
-        return of(result as T);
-      }
-
-      return of();
-    }
+  /**
+   * @description 根据教师编号获取项目卡片项
+   *
+   * @param proId 项目卡片编号
+   * @return 项目卡片项
+   * @author suwen
+   * @date 2020/5/27 上午10:55
+   */
+  getProjectItems(proId: number): Observable<result> {
+    const url = `${this.ITEM_API}/getProjectItem/${proId}`;
+    return this.http.get<result>(url).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error(`根据教师编号获取项目卡片项，项目卡片编号：${proId}`);
+        }
+      }),
+      catchError(this.handleError<result>(`根据教师编号获取项目卡片项，项目卡片编号：${proId}`))
+    );
   }
 
 }

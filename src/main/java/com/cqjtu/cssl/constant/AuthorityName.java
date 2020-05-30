@@ -1,4 +1,4 @@
-package com.cqjtu.cssl.entity;
+package com.cqjtu.cssl.constant;
 
 /**
  * AuthorityName 用户权限枚举

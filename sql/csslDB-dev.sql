@@ -11,7 +11,7 @@
  Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 21/05/2020 16:29:12
+ Date: 26/05/2020 21:11:30
 */
 
 SET NAMES utf8mb4;
@@ -23,31 +23,31 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `arrange`;
 CREATE TABLE `arrange` (
   `aid` int(11) NOT NULL AUTO_INCREMENT COMMENT '时间安排编号',
-  `lab_id` varchar(16) CHARACTER SET utf8mb4  NOT NULL COMMENT '实验室编号',
+  `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室编号',
   `pro_id` int(11) DEFAULT NULL COMMENT '项目编号',
-  `tid` char(12) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '教师编号',
+  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '教师编号',
   `course_id` int(11) DEFAULT NULL COMMENT '课程编号',
-  `lab_class` varchar(128) CHARACTER SET utf8mb4  NOT NULL COMMENT '实验室类型',
-  `lab_remark` varchar(8) CHARACTER SET utf8mb4  NOT NULL DEFAULT '' COMMENT '实验室备注',
-  `exp_proname` varchar(32) CHARACTER SET utf8mb4  DEFAULT NULL COMMENT '实验名称',
+  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '实验室类型',
+  `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL DEFAULT '' COMMENT '实验室备注',
+  `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '实验名称',
   `campus` char(8) DEFAULT NULL COMMENT '校区',
-  `status` tinyint(4) DEFAULT NULL,
+  `status` varchar(12) DEFAULT NULL COMMENT '审核状态',
   PRIMARY KEY (`aid`),
   KEY `fk_relationship_12` (`lab_id`) USING BTREE,
   KEY `fk_relationship_13` (`pro_id`) USING BTREE,
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   KEY `tid` (`tid`),
   KEY `aid` (`aid`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
 
 -- ----------------------------
 -- Records of arrange
 -- ----------------------------
 BEGIN;
-INSERT INTO `arrange` VALUES (1, 'B01406', 1, '256740953460', 17015054, '17级3、4班', '无', '实验', '双福校区', 0);
-INSERT INTO `arrange` VALUES (3, '60201', 3, '123', 14211829, '计算机1班-计算机2班', '', 'python语言', '南岸校区', 1);
-INSERT INTO `arrange` VALUES (4, 'B01406', 13, '123', 14210187, '计算机3班-计算机4班', '', '上机', '双福校区', 2);
-INSERT INTO `arrange` VALUES (5, '60201', 18, '123', 14210669, '曙光班', '', '汇编上机', '南岸校区', 0);
+INSERT INTO `arrange` VALUES (1, 'B01406', 1, '256740953460', 17015054, '17级3、4班', '无', '实验', '双福校区', 'AUDITING');
+INSERT INTO `arrange` VALUES (3, '60201', 3, '123', 14211829, '计算机1班-计算机2班', '无', 'python语言', '南岸校区', 'AUDITING');
+INSERT INTO `arrange` VALUES (4, 'B01406', 13, '123', 14210187, '计算机3班-计算机4班', '无', '上机', '双福校区', 'AUDITING');
+INSERT INTO `arrange` VALUES (5, '60201', 18, '123', 14210669, '曙光班', '无', '汇编上机', '南岸校区', 'AUDITING');
 COMMIT;
 
 -- ----------------------------
@@ -61,7 +61,7 @@ CREATE TABLE `arrange_period` (
   `lab_session` int(11) NOT NULL,
   PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
   CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of arrange_period
@@ -166,7 +166,7 @@ CREATE TABLE `class` (
   PRIMARY KEY (`class_name`,`major_id`) USING BTREE,
   KEY `fk_relationship_8` (`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_8` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of class
@@ -189,7 +189,7 @@ CREATE TABLE `course` (
   `course_college` varchar(32) NOT NULL,
   `course_type` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of course
@@ -249,7 +249,7 @@ CREATE TABLE `exp_project` (
   `book` varchar(128) DEFAULT NULL,
   `software` varchar(32) DEFAULT NULL,
   `exp_tid` char(12) NOT NULL,
-  `lab_status` tinyint(4) DEFAULT NULL,
+  `status` varchar(12) DEFAULT NULL,
   `cname` varchar(32) NOT NULL,
   `con_name` varchar(16) DEFAULT NULL,
   `con_num` int(11) NOT NULL,
@@ -257,16 +257,16 @@ CREATE TABLE `exp_project` (
   PRIMARY KEY (`pro_id`) USING BTREE,
   KEY `cid` (`course_id`),
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of exp_project
 -- ----------------------------
 BEGIN;
-INSERT INTO `exp_project` VALUES (1, '信息技术实践教学中心', 'java程序设计EB', '计算机', 40, '计算机科学与技术', '本科生', 32, '《Java语言程序设计》，辛运帏，饶一梅，人民邮电出版社，2009  ', 'eclipse，SQL Server, jdk', '256740953460', 0, 'java程序设计', '无', 2, 18210177);
-INSERT INTO `exp_project` VALUES (3, '信息技术实践教学中心', 'python语言', '计算机', 40, '计算机科学与技术', '本科生', 45, '《数据预处理》', 'python', '123', 2, 'python', '无', 2, 14211829);
-INSERT INTO `exp_project` VALUES (13, '信息技术实践教学中心', '上机', '设备', 1, '', '', 40, '教材', '软件', '123', 2, '操作系统原理A', '材料', 1, 14210187);
-INSERT INTO `exp_project` VALUES (18, '信息技术实践教学中心', '汇编上机', '计算机', 50, '', '', 0, '教材', '软件', '123', 2, '汇编与计算机组成原理', '材料', 10, 14210669);
+INSERT INTO `exp_project` VALUES (1, '信息技术实践教学中心', 'java程序设计EB', '计算机', 40, '计算机科学与技术', '本科生', 32, '《Java语言程序设计》，辛运帏，饶一梅，人民邮电出版社，2009  ', 'eclipse，SQL Server, jdk', '256740953460', 'AUDITING', 'java程序设计', '无', 2, 18210177);
+INSERT INTO `exp_project` VALUES (3, '信息技术实践教学中心', 'python语言', '计算机', 40, '计算机科学与技术', '本科生', 45, '《数据预处理》', 'python', '123', 'AUDITING', 'python', '无', 2, 14211829);
+INSERT INTO `exp_project` VALUES (13, '信息技术实践教学中心', '上机', '设备', 1, '计算机科学与技术', '本科生', 40, '教材', '软件', '123', 'AUDITING', '操作系统原理A', '材料', 1, 14210187);
+INSERT INTO `exp_project` VALUES (18, '信息技术实践教学中心', '汇编上机', '计算机', 50, '计算机科学与技术', '本科生', 0, '教材', '软件', '123', 'AUDITING', '汇编与计算机组成原理', '材料', 10, 14210669);
 COMMIT;
 
 -- ----------------------------
@@ -290,7 +290,7 @@ CREATE TABLE `lab_arrange_backup` (
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
   CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_arrange_backup
@@ -321,7 +321,7 @@ CREATE TABLE `lab_info` (
   KEY `fk_lab_mange` (`tid`) USING BTREE,
   CONSTRAINT `fk_lab_mange` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_4` FOREIGN KEY (`type_id`) REFERENCES `lab_type` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_info
@@ -357,7 +357,7 @@ CREATE TABLE `lab_type` (
   `type_id` int(11) NOT NULL,
   `type_name` varchar(16) NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of lab_type
@@ -375,7 +375,7 @@ CREATE TABLE `major` (
   `major_id` int(11) NOT NULL,
   `major_name` varchar(32) NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of major
@@ -393,7 +393,7 @@ COMMIT;
 DROP TABLE IF EXISTS `project_item`;
 CREATE TABLE `project_item` (
   `ino` int(11) NOT NULL AUTO_INCREMENT,
-  `iid` varchar(32) CHARACTER SET utf8mb4  NOT NULL,
+  `iid` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `pro_id` int(11) NOT NULL,
   `iname` varchar(32) NOT NULL,
   `itype` varchar(8) NOT NULL,
@@ -403,7 +403,7 @@ CREATE TABLE `project_item` (
   `intend` varchar(256) NOT NULL,
   PRIMARY KEY (`ino`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of project_item
@@ -435,7 +435,7 @@ CREATE TABLE `teach` (
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_7` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teach
@@ -467,7 +467,7 @@ CREATE TABLE `teachclass` (
   KEY `fk_relationship_10` (`class_name`,`major_id`) USING BTREE,
   CONSTRAINT `fk_relationship_10` FOREIGN KEY (`class_name`, `major_id`) REFERENCES `class` (`class_name`, `major_id`),
   CONSTRAINT `fk_relationship_11` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teachclass
@@ -492,20 +492,21 @@ CREATE TABLE `teacher` (
   `tqq` varchar(16) DEFAULT NULL,
   `temail` varchar(32) DEFAULT NULL,
   `tpassword` varchar(16) NOT NULL,
-  `tlimit` tinyint(1) NOT NULL DEFAULT '0',
+  `authority` varchar(12) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4  ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of teacher
 -- ----------------------------
 BEGIN;
-INSERT INTO `teacher` VALUES ('123', '李益才', '15123456789', '123456789', '123456789@qq.com', '123', 0);
-INSERT INTO `teacher` VALUES ('256740953460', '李益才', '15123456789', '123456789', '123456789@qq.com', '123456', 0);
-INSERT INTO `teacher` VALUES ('344847034079', '徐毅', '15123456789', '123456789', '123456789@qq.com', '123456', 0);
-INSERT INTO `teacher` VALUES ('529144083628', '米波', '15123456789', '123456789', '123456789@qq.com', '123456', 0);
-INSERT INTO `teacher` VALUES ('768326701984', '刘君', '15123456789', '123456789', '123456789@qq.com', 'w4dw8d4a8', 0);
-INSERT INTO `teacher` VALUES ('773194542654', '陈禾', '15123456789', '123456789', '123456789@qq.com', 'wad5aw72516', 0);
+INSERT INTO `teacher` VALUES ('123', '李益才', '15123456789', '123456789', '123456789@qq.com', '123', 'ROLE_USER');
+INSERT INTO `teacher` VALUES ('256740953460', '李益才', '15123456789', '123456789', '123456789@qq.com', '123456', 'ROLE_USER');
+INSERT INTO `teacher` VALUES ('344847034079', '徐毅', '15123456789', '123456789', '123456789@qq.com', '123456', 'ROLE_USER');
+INSERT INTO `teacher` VALUES ('456', '李益才', '15123456789', '123456789', '123456789@qq.com', '456', 'ROLE_ADMIN');
+INSERT INTO `teacher` VALUES ('529144083628', '米波', '15123456789', '123456789', '123456789@qq.com', '123456', 'ROLE_USER');
+INSERT INTO `teacher` VALUES ('768326701984', '刘君', '15123456789', '123456789', '123456789@qq.com', 'w4dw8d4a8', 'ROLE_USER');
+INSERT INTO `teacher` VALUES ('773194542654', '陈禾', '15123456789', '123456789', '123456789@qq.com', 'wad5aw72516', 'ROLE_USER');
 COMMIT;
 
 -- ----------------------------
@@ -523,7 +524,7 @@ CREATE TABLE `teacher_msg` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of teacher_msg
@@ -554,7 +555,7 @@ CREATE TABLE `teacher_msg_copy1` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `teacher_msg_copy1_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of teacher_msg_copy1

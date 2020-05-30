@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {TeachPlanService} from "../../service/teach-plan.service";
+import {TeachPlan} from "../../enity/teachPlan";
+import {environment} from "../../../environments/environment";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-teach-table',
@@ -10,159 +13,27 @@ export class TeachTableComponent implements OnInit {
   public planPeriod: any = {
     year: '2019-2020',
   };
-  headElements = ['ID', 'First', 'Last', 'Handle'];
-  elements: any = [
-    {
-      id: 1,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 2,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 3,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 1,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 2,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 3,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 1,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 2,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-    {
-      id: 3,
-      expName: 'Mark',
-      major: 'Otto',
-      grade: '@mdo',
-      class: 'Mark',
-      courseCode: 'Otto',
-      courseName: '@mdo',
-      time: '64',
-      beginToEnd: '1-18',
-      college: '信息学院',
-      region: '1-18',
-      teacher: '信息学院',
-      courseType: '1-18',
-      remark: '信息学院',
-    },
-  ];
 
-  constructor(private teachPlanService: TeachPlanService) {
+  TEACH_PLAN_DOWNLOAD_URL = `${environment.apiUrl}/arrange/getTeachingPlanExcel`;
+
+  teachPlans: TeachPlan[];
+
+  constructor(private teachPlanService: TeachPlanService, private router: Router) {
   }
 
   ngOnInit() {
-    console.log(this.teachPlanService.getTeachingPlan().subscribe());
+    console.log(this.teachPlanService.getTeachingPlan().subscribe(
+      result => {
+        if (result.success) {
+          this.teachPlans = result.data;
+          console.log(result.data);
+        }
+      }
+    ));
+  }
+
+  download() {
+    window.location.href = this.TEACH_PLAN_DOWNLOAD_URL;
   }
 
 }

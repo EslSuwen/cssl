@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ModalComponent } from 'src/app/modal/modal.component';
-import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
-import { FormControl, FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { ProjectService } from '../../service/project.service';
-import { Exp, ProjectItem } from '../../enity/project';
-import { AuthenticationService } from "../../service/authentication.service";
-import { TeacherService } from "../../service/teacher.service";
-import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {MDBModalRef, MDBModalService} from 'angular-bootstrap-md';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NzMessageService} from 'ng-zorro-antd/message';
+import {ProjectService} from '../../service/project.service';
+import {Exp, ProjectItem} from '../../enity/project';
+import {AuthenticationService} from "../../service/authentication.service";
+import {TeacherService} from "../../service/teacher.service";
+import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
+import {Router} from '@angular/router';
+
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
@@ -34,6 +34,7 @@ export class CardComponent implements OnInit {
   headElements = ['课程名', '实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件'];
   controlArray: Array<ProjectItem> = [];
   title: string;
+
   // myList: Array<ProjectItem> = [];
 
   remove(id: any) {
@@ -71,14 +72,18 @@ export class CardComponent implements OnInit {
     };
     // 初始化数据
     this.projectService.getProjects(this.authenticationService.getUserNo())
-      .subscribe(exps => {
-        this.exps = exps;
-        console.log('exps : ' + exps.length);
+      .subscribe(result => {
+        if (result.success) {
+          this.exps = result.data;
+        }
+        console.log('exps : ' + result.data);
       });
     this.teacherService.getTeaches(this.authenticationService.getUserNo())
-      .subscribe(data => {
-        for (let each of data)
-          this.courseList.push({ id: each.courseId, itemName: each.courseName });
+      .subscribe(result => {
+        if (result.success) {
+          for (let each of result.data)
+            this.courseList.push({id: each.courseId, itemName: each.courseName});
+        }
       });
     // 初始化实验卡片表单控制
     this.element = new FormGroup({
@@ -114,16 +119,17 @@ export class CardComponent implements OnInit {
   }
 
   onsubmit() {
-    this.seccess_Message('success');
+    // this.success_Message('success');
     this.saveNewExp();
     console.log(this.controlArray);
     console.log(this.newExp);
-    this.projectService.addProject(this.newExp).subscribe(proId => {
-      if (proId == -1) {
+    this.projectService.addProject(this.newExp).subscribe(result => {
+      if (!result) {
         return;
       }
+      console.log(result.data);
       for (let each of this.controlArray) {
-        each.proId = proId;
+        each.proId = result.data;
       }
       this.exps.push(this.newExp);
       this.projectService.addProjectItems(this.controlArray).subscribe();
@@ -132,8 +138,10 @@ export class CardComponent implements OnInit {
 
   loadProjectItems(proId: number) {
     this.projectService.getProjectItems(proId)
-      .subscribe(datas => {
-        this.projectItems = datas;
+      .subscribe(result => {
+        if (result.success) {
+          this.projectItems = result.data;
+        }
       });
   }
 
@@ -151,6 +159,9 @@ export class CardComponent implements OnInit {
     this.newExp.conNum = this.conNum.value;
     this.newExp.book = this.book.value;
     this.newExp.software = this.software.value;
+    this.newExp.expTime = this.expTime.value;
+    this.newExp.status = 'AUDITING';
+    this.newExp.labStatus = 'UNCHECK';
   }
 
   get expCname() {
@@ -184,32 +195,39 @@ export class CardComponent implements OnInit {
   get software() {
     return this.element.get('software');
   }
-  getexpname(title1: string)  //获取实验项目名称
+
+  getExpName(title1: string)  //获取实验项目名称
   {
     this.title = title1;
   }
+
   confirm(): void {
     this.remove(this.id);
   }
+
   showModal(): void {
     this.isVisible = true;
   }
+
   handleOk(): void {
     this.isConfirmLoading = true;
-    this.additem(this.value1);
+    this.addItem(this.value1);
     setTimeout(() => {
       this.isVisible = false;
       this.isConfirmLoading = false;
     }, 500);
   }
+
   handleCancel(): void {
     this.isVisible = false;
   }
-  additem(time: number) {
-    for (var i = 0; i < time; i++) {
+
+  addItem(time: number) {
+    for (let i = 0; i < time; i++) {
       this.add();
     }
   }
+
   showConfirm(): void {  //确认提交的模态框
     this.confirmModal = this.modal.confirm({
       nzTitle: '确认提交吗',
@@ -220,8 +238,9 @@ export class CardComponent implements OnInit {
         }).catch(() => this.onsubmit())
     });
   }
-  seccess_Message(type: string): void { //提交成功后的显示
+
+  success_Message(type: string): void { //提交成功后的显示
     this.message.create(type, `提交成功!!!,等待管理员审核`);
-    this.router.navigate(['sidenav/personalinfo']);
+    // this.router.navigate(['sidenav/personalinfo']);
   }
 }

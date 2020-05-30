@@ -1,13 +1,15 @@
 package com.cqjtu.cssl.controller;
 
+import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.AuthenticationRequest;
 import com.cqjtu.cssl.entity.AuthenticationResponse;
-import com.cqjtu.cssl.entity.Message;
 import com.cqjtu.cssl.service.TeacherService;
 import com.cqjtu.cssl.utils.JwtTokenUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
@@ -15,10 +17,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -64,13 +66,22 @@ public class AuthenticationController {
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
   @PostMapping("/auth")
-  public AuthenticationResponse login(
-      @NonNull @RequestBody AuthenticationRequest authRequest, HttpServletRequest request) {
+  public ResponseEntity<ResultDto> login(
+      @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
+          AuthenticationRequest authRequest,
+      HttpServletRequest request) {
+
     log.info(authRequest);
     log.info(request.getSession().getAttribute("imageCode"));
 
     if (!authRequest.getImgCode().equals(request.getSession().getAttribute("imageCode"))) {
-      return new AuthenticationResponse("", null, new Message("Wrong imageCode!!!"));
+      return new ResponseEntity<>(
+          ResultDto.builder()
+              .success(false)
+              .code(ReturnCode.RETURN_CODE_40004.getCode())
+              .message("验证码错误")
+              .build(),
+          HttpStatus.FORBIDDEN);
     }
 
     Authentication authentication =
@@ -81,8 +92,15 @@ public class AuthenticationController {
 
     UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
     String token = jwtTokenUtil.generate(userDetails);
-    return new AuthenticationResponse(
-        token, teacherService.getById(authRequest.getUserNo()), new Message("successful"));
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_10001.getCode())
+            .message("登录成功")
+            .data(
+                new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())))
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -124,11 +142,5 @@ public class AuthenticationController {
     responseOutputStream.write(captchaChallengeAsJpeg);
     responseOutputStream.flush();
     responseOutputStream.close();
-  }
-
-  @ExceptionHandler(AuthenticationException.class)
-  @ResponseStatus(HttpStatus.FORBIDDEN)
-  public void handleAuthenticationException(AuthenticationException exception) {
-    log.error(exception.getMessage(), exception);
   }
 }

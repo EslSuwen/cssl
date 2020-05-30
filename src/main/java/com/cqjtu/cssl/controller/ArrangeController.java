@@ -1,24 +1,21 @@
 package com.cqjtu.cssl.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cqjtu.cssl.constant.Audit;
+import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
-import com.cqjtu.cssl.entity.ArrangePeriod;
-import com.cqjtu.cssl.entity.ExpProject;
-import com.cqjtu.cssl.entity.TeachingPlan;
-import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
-import com.cqjtu.cssl.service.ExpProjectService;
 import com.cqjtu.cssl.utils.ExcelUtil;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 实验室安排前端控制器
@@ -33,17 +30,10 @@ import java.util.stream.Collectors;
 public class ArrangeController {
 
   private final ArrangeService arrangeService;
-  private final ArrangePeriodService arrangePeriodService;
-  private final ExpProjectService expProjectService;
 
   @Autowired
-  public ArrangeController(
-      ArrangeService arrangeService,
-      ArrangePeriodService arrangePeriodService,
-      ExpProjectService expProjectService) {
+  public ArrangeController(ArrangeService arrangeService) {
     this.arrangeService = arrangeService;
-    this.arrangePeriodService = arrangePeriodService;
-    this.expProjectService = expProjectService;
   }
 
   /**
@@ -55,8 +45,17 @@ public class ArrangeController {
    * @date 2020/2/21 下午7:32
    */
   @GetMapping("/getInfo/{tid}")
-  public List<Arrange> getArrange(@NonNull @PathVariable String tid) {
-    return arrangeService.findByTid(tid);
+  public ResponseEntity<ResultDto> getArrange(
+      @NonNull @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取排课信息成功")
+            .data(arrangeService.findByTid(tid))
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -68,22 +67,16 @@ public class ArrangeController {
    * @date 2020/2/22 下午1:24
    */
   @PostMapping("/addArrange")
-  public int addArrange(@NonNull @RequestBody Arrange arrange) {
-    int proId = arrange.getProId();
-    arrange.setCourseId(expProjectService.getById(proId).getCourseId());
-    arrangeService.save(arrange);
-    ExpProject exp = expProjectService.getById(arrange.getProId());
-    exp.setLabStatus(2);
-    expProjectService.updateById(exp);
-    int aid =
-        arrangeService
-            .getOne(new QueryWrapper<Arrange>().eq("pro_id", arrange.getProId()))
-            .getAid();
-    for (ArrangePeriod each : arrange.getArrangePeriod()) {
-      each.setAid(aid);
-    }
-    arrangePeriodService.saveBatch(arrange.getArrangePeriod());
-    return 1;
+  public ResponseEntity<ResultDto> addArrange(
+      @NonNull @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(arrangeService.addArrange(arrange))
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message("增加排课信息成功")
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -93,37 +86,40 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/15 下午7:27
    */
-  @GetMapping("auditArrange")
-  public List<Arrange> getAuditArrange() {
+  @GetMapping("getAuditArrange")
+  public ResponseEntity<ResultDto> getAuditArrange() {
 
-    ArrangePeriod arrangePeriod = new ArrangePeriod();
-    arrangePeriod.setAid(123);
-    List<ArrangePeriod> arrangePeriodList = new ArrayList<ArrangePeriod>();
-    arrangePeriodList.add(arrangePeriod);
-    return arrangeService.list(new QueryWrapper<Arrange>().eq("status", 2)).stream()
-        .map(
-            each -> {
-              each.setArrangePeriod(
-                  arrangePeriodService.list(
-                      new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
-              return each;
-            })
-        .collect(Collectors.toList());
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取已申请的实验室安排信息成功")
+            .data(arrangeService.getAuditArrange())
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
    * 管理员审核实验室时间安排
    *
    * @param aid 安排编号
-   * @param status 状态编号
+   * @param status 审核状态
    * @return 操作状态
    * @author suwen
    * @date 2020/5/11 上午9:49
    */
-  @GetMapping("getAuditArrange")
-  public boolean auditArrange(@RequestParam Integer aid, @RequestParam Integer status) {
+  @PutMapping("auditArrange")
+  public ResponseEntity<ResultDto> auditArrange(
+      @NonNull @ApiParam(value = "安排编号", required = true) @RequestParam Integer aid,
+      @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
 
-    return arrangeService.auditArrange(aid, status);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(arrangeService.auditArrange(aid, status))
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("审核实验室时间安排成功")
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -134,8 +130,16 @@ public class ArrangeController {
    * @date 2020/5/13 下午3:41
    */
   @GetMapping("getTeachingPlan")
-  public List<TeachingPlan> getTeachingPlanList() {
-    return arrangeService.getTeachingPlanList();
+  public ResponseEntity<ResultDto> getTeachingPlanList() {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取教学计划表成功")
+            .data(arrangeService.getTeachingPlanList())
+            .build(),
+        HttpStatus.OK);
   }
 
   /**

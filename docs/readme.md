@@ -14,7 +14,385 @@
 **接口路径**：/api-docs
 
 
-# (项目卡片)实验项目-控制器
+# 实验室安排-控制器
+## addArrange
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/addArrange`
+
+
+**请求方式**：`POST`
+
+
+**consumes**:`["application/json"]`
+
+
+**produces**:`["*/*"]`
+
+
+**请求示例**：
+```json
+{
+	"aid": 0,
+	"labId": "",
+	"proId": 0,
+	"campus": "",
+	"status": "",
+	"labClass": "",
+	"courseId": "",
+	"tid": "",
+	"expProname": "",
+	"labRemark": "",
+	"arrangePeriod": [
+		{
+			"aid": 0,
+			"labWeek": 0,
+			"labDay": 0,
+			"labSession": 0
+		}
+	]
+}
+```
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|arrange| 实验室安排实体  | body | true |Arrange  | Arrange   |
+
+**schema属性说明**
+
+
+
+**Arrange**
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|aid| 实验室排课编号  | body | false |integer(int32)  |    |
+|labId| 实验室编号  | body | true |string  |    |
+|proId| 项目ID  | body | true |integer(int32)  |    |
+|campus| 实验室校区  | body | true |string  |    |
+|status| 申请状态,可用值:AUDITING,PASS,FAIL  | body | true |string  |    |
+|labClass| 班级  | body | true |string  |    |
+|courseId| 课程编号  | body | true |string  |    |
+|tid| 教职工号  | body | true |string  |    |
+|expProname| 实验项目名称  | body | false |string  |    |
+|labRemark| 备注  | body | true |string  |    |
+|arrangePeriod| 排课时间  | body | true |array  | ArrangePeriod   |
+
+**ArrangePeriod**
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|aid| 实验室排课编号  | body | true |integer(int32)  |    |
+|labWeek| 开课周次  | body | true |integer(int32)  |    |
+|labDay| 开课星期  | body | true |integer(int32)  |    |
+|labSession| 开课节次  | body | true |integer(int32)  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## auditArrange
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/auditArrange`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|aid| 安排编号  | query | true |integer  |    |
+|status| 审核状态,可用值:AUDITING,PASS,FAIL  | query | true |string  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getAuditArrange
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/getAuditArrange`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+暂无
+
+
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getArrange
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/getInfo/{tid}`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|tid| 教师编号  | path | true |string  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getTeachingPlanList
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/getTeachingPlan`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+暂无
+
+
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getTeachingPlanExcel
+
+
+**接口描述**:
+
+
+**接口地址**:`/arrange/getTeachingPlanExcel`
+
+
+**请求方式**：`GET`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+暂无
+
+
+
+**响应示例**:
+
+```json
+
+```
+
+**响应参数**:
+
+
+暂无
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  ||
+# 实验项目-控制器
 
 ## addNewProjectItem
 
@@ -79,13 +457,23 @@
 **响应示例**:
 
 ```json
-
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
 
 
-暂无
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -96,7 +484,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
+| 200 | OK  |ResultDto|
 ## getProjectItem
 
 
@@ -125,237 +513,34 @@
 **响应示例**:
 
 ```json
-[
-	{
-		"ino": "",
-		"iid": "",
-		"proId": 0,
-		"iname": "",
-		"itype": "",
-		"itime": 0,
-		"ctype": "",
-		"num": 0,
-		"intend": ""
-	}
-]
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|ino| 实验项目id  |string  |    |
-|iid| 实验项目编号  |string  |    |
-|proId| 项目(实验卡片)ID  |integer(int32)  | integer(int32)   |
-|iname| 实验项目名称  |string  |    |
-|itype| 实验类型  |string  |    |
-|itime| 实验项目学时  |integer(int32)  | integer(int32)   |
-|ctype| 必修或选修  |string  |    |
-|num| 分组人数  |integer(int32)  | integer(int32)   |
-|intend| 实验目的  |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |ProjectItem|
-# 实验室安排-控制器
-## addArrange
-
-
-**接口描述**:
-
-
-**接口地址**:`/arrange/addArrange`
-
-
-**请求方式**：`POST`
-
-
-**consumes**:`["application/json"]`
-
-
-**produces**:`["*/*"]`
-
-
-**请求示例**：
-```json
 {
-	"aid": 0,
-	"labId": "",
-	"proId": 0,
-	"campus": "",
-	"status": 0,
-	"labClass": "",
-	"courseId": "",
-	"tid": "",
-	"expProname": "",
-	"labRemark": "",
-	"arrangePeriod": [
-		{
-			"aid": 0,
-			"labWeek": 0,
-			"labDay": 0,
-			"labSession": 0
-		}
-	]
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
 }
 ```
 
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|arrange| 实验室安排实体  | body | true |Arrange  | Arrange   |
-
-**schema属性说明**
-
-
-
-**Arrange**
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|aid| 实验室排课编号  | body | false |integer(int32)  |    |
-|labId| 实验室编号  | body | true |string  |    |
-|proId| 项目ID  | body | true |integer(int32)  |    |
-|campus| 实验室校区  | body | true |string  |    |
-|status| 申请状态  | body | true |integer(int32)  |    |
-|labClass| 班级  | body | true |string  |    |
-|courseId| 课程编号  | body | true |string  |    |
-|tid| 教职工号  | body | true |string  |    |
-|expProname| 实验项目名称  | body | false |string  |    |
-|labRemark| 备注  | body | true |string  |    |
-|arrangePeriod| 排课时间  | body | true |array  | ArrangePeriod   |
-
-**ArrangePeriod**
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|aid| 实验室排课编号  | body | true |integer(int32)  |    |
-|labWeek| 开课周次  | body | true |integer(int32)  |    |
-|labDay| 开课星期  | body | true |integer(int32)  |    |
-|labSession| 开课节次  | body | true |integer(int32)  |    |
-
-**响应示例**:
-
-```json
-
-```
-
-**响应参数**:
-
-
-暂无
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
-## getArrange
-
-
-**接口描述**:
-
-
-**接口地址**:`/arrange/getInfo/{tid}`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|tid| tid  | path | true |string  |    |
-
-**响应示例**:
-
-```json
-[
-	{
-		"aid": 0,
-		"labId": "",
-		"proId": 0,
-		"campus": "",
-		"status": 0,
-		"labClass": "",
-		"courseId": "",
-		"tid": "",
-		"expProname": "",
-		"labRemark": "",
-		"arrangePeriod": [
-			{
-				"aid": 0,
-				"labWeek": 0,
-				"labDay": 0,
-				"labSession": 0
-			}
-		]
-	}
-]
-```
-
 **响应参数**:
 
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|aid| 实验室排课编号  |integer(int32)  | integer(int32)   |
-|labId| 实验室编号  |string  |    |
-|proId| 项目ID  |integer(int32)  | integer(int32)   |
-|campus| 实验室校区  |string  |    |
-|status| 申请状态  |integer(int32)  | integer(int32)   |
-|labClass| 班级  |string  |    |
-|courseId| 课程编号  |string  |    |
-|tid| 教职工号  |string  |    |
-|expProname| 实验项目名称  |string  |    |
-|labRemark| 备注  |string  |    |
-|arrangePeriod| 排课时间  |array  | ArrangePeriod   |
-
-
-
-**schema属性说明**
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
 
-**ArrangePeriod**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|aid | 实验室排课编号   |integer(int32)  |    |
-|labWeek | 开课周次   |integer(int32)  |    |
-|labDay | 开课星期   |integer(int32)  |    |
-|labSession | 开课节次   |integer(int32)  |    |
 
 **响应状态**:
 
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Arrange|
+| 200 | OK  |ResultDto|
 # 授课信息-控制器
 
 ## getTeachInfo
@@ -386,16 +571,12 @@
 **响应示例**:
 
 ```json
-[
-	{
-		"tid": "",
-		"courseId": 0,
-		"applyLimit": 0,
-		"courseName": "",
-		"status": "",
-		"labId": ""
-	}
-]
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
@@ -403,12 +584,10 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|tid| 教职工号  |string  |    |
-|courseId| 课程号  |integer(int32)  | integer(int32)   |
-|applyLimit| 实验室申请权限  |integer(int32)  | integer(int32)   |
-|courseName| 课程名  |string  |    |
-|status| 课程实验室申请状态  |string  |    |
-|labId| 课程实验室编号  |string  |    |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -419,7 +598,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Teach|
+| 200 | OK  |ResultDto|
 # 教师信息-控制器
 
 ## deleteMsg
@@ -445,18 +624,28 @@
 
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
-|mid| mid  | path | true |string  |    |
+|mid| 消息编号  | path | true |string  |    |
 
 **响应示例**:
 
 ```json
-
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
 
 
-暂无
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -467,7 +656,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
+| 200 | OK  |ResultDto|
 ## getCurriculum
 
 
@@ -488,27 +677,21 @@
 
 
 **请求参数**：
-暂无
 
-
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|tid| 教师编号  | query | true |string  |    |
+|week| 周次  | query | true |string  |    |
 
 **响应示例**:
 
 ```json
-[
-	{
-		"cname": "",
-		"labClass": "",
-		"labId": "",
-		"campus": "",
-		"arrangePeriod": {
-			"aid": 0,
-			"labWeek": 0,
-			"labDay": 0,
-			"labSession": 0
-		}
-	}
-]
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
@@ -516,34 +699,21 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|cname| 课程名  |string  |    |
-|labClass| 班级  |string  |    |
-|labId| 实验室编号  |string  |    |
-|campus| 实验室校区  |string  |    |
-|arrangePeriod| 时间安排  |ArrangePeriod  | ArrangePeriod   |
-
-
-
-**schema属性说明**
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
 
-**ArrangePeriod**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|aid | 实验室排课编号   |integer(int32)  |    |
-|labWeek | 开课周次   |integer(int32)  |    |
-|labDay | 开课星期   |integer(int32)  |    |
-|labSession | 开课节次   |integer(int32)  |    |
 
 **响应状态**:
 
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Curriculum|
+| 200 | OK  |ResultDto|
 ## getMsgInfo
 
 
@@ -567,22 +737,17 @@
 
 | 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
 | ------------ | -------------------------------- |-----------|--------|----|--- |
-|tid| tid  | path | true |string  |    |
+|tid| 教师编号  | path | true |string  |    |
 
 **响应示例**:
 
 ```json
-[
-	{
-		"mid": 0,
-		"tid": "",
-		"mtitle": "",
-		"mresult": 0,
-		"mdate": "",
-		"mtext": "",
-		"mstatus": 0
-	}
-]
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
@@ -590,13 +755,10 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|mid| 消息编号  |integer(int32)  | integer(int32)   |
-|tid| 教师编号  |string  |    |
-|mtitle| 通知标题  |string  |    |
-|mresult| 通知结果  |integer(int32)  | integer(int32)   |
-|mdate| 消息创建时间  |string  |    |
-|mtext| 消息内容  |string  |    |
-|mstatus| 消息状态  |integer(int32)  | integer(int32)   |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -607,7 +769,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |TeacherMsg|
+| 200 | OK  |ResultDto|
 ## getTeacherInfo
 
 
@@ -637,19 +799,10 @@
 
 ```json
 {
-	"tid": "",
-	"tname": "",
-	"tphone": "",
-	"tqq": "",
-	"temail": "",
-	"tpassword": "",
-	"tlimit": true,
-	"authorities": [
-		{
-			"id": 0,
-			"name": ""
-		}
-	]
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
 }
 ```
 
@@ -658,35 +811,21 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|tid| 教职工号  |string  |    |
-|tname| 教师姓名  |string  |    |
-|tphone| 教师电话  |string  |    |
-|tqq| 教师QQ  |string  |    |
-|temail| 教师邮箱  |string  |    |
-|tpassword| 密码  |string  |    |
-|tlimit| 权限(是否为管理员)  |boolean  |    |
-|authorities| 用户权限列表  |array  | Authority   |
-
-
-
-**schema属性说明**
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
 
-**Authority**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|id | 编号   |integer(int64)  |    |
-|name | 权限,可用值:ROLE_USER,ROLE_ADMIN   |string  |    |
 
 **响应状态**:
 
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Teacher|
+| 200 | OK  |ResultDto|
 ## readMsg
 
 
@@ -696,10 +835,10 @@
 **接口地址**:`/teacher/readMsg/{mid}`
 
 
-**请求方式**：`GET`
+**请求方式**：`PUT`
 
 
-**consumes**:``
+**consumes**:`["application/json"]`
 
 
 **produces**:`["*/*"]`
@@ -715,13 +854,23 @@
 **响应示例**:
 
 ```json
-
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
 
 
-暂无
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -732,7 +881,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
+| 200 | OK  |ResultDto|
 ## updatePassword
 
 
@@ -742,10 +891,10 @@
 **接口地址**:`/teacher/updatePassword`
 
 
-**请求方式**：`GET`
+**请求方式**：`PUT`
 
 
-**consumes**:``
+**consumes**:`["application/json"]`
 
 
 **produces**:`["*/*"]`
@@ -753,20 +902,33 @@
 
 
 **请求参数**：
-暂无
 
-
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|newPw| 新密码  | query | true |string  |    |
+|oldPw| 当前密码  | query | true |string  |    |
+|tid| 教师编号  | query | true |string  |    |
 
 **响应示例**:
 
 ```json
-
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
 
 
-暂无
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -777,7 +939,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
+| 200 | OK  |ResultDto|
 # 文件传输测试-控制器
 
 ## getFile
@@ -916,434 +1078,6 @@
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
 | 200 | OK  ||
-# 用户信息-控制器
-
-## getAllInfo
-
-
-**接口描述**:
-
-
-**接口地址**:`/user/getAllInfo`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-[
-	{
-		"userName": "",
-		"userNo": "",
-		"userPwd": ""
-	}
-]
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|userName|   |string  |    |
-|userNo|   |string  |    |
-|userPwd|   |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |User|
-## getInfo
-
-
-**接口描述**:
-
-
-**接口地址**:`/user/getInfo`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-{
-	"userName": "",
-	"userNo": "",
-	"userPwd": ""
-}
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|userName|   |string  |    |
-|userNo|   |string  |    |
-|userPwd|   |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |User|
-## update
-
-
-**接口描述**:
-
-
-**接口地址**:`/user/update`
-
-
-**请求方式**：`POST`
-
-
-**consumes**:`["application/json"]`
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|userName|   | query | false |string  |    |
-|userNo|   | query | false |string  |    |
-|userPwd|   | query | false |string  |    |
-
-**响应示例**:
-
-```json
-
-```
-
-**响应参数**:
-
-
-暂无
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
-# 用户安全登录-控制器
-
-## createImageCode
-
-
-**接口描述**:
-
-
-**接口地址**:`/security/createImageCode`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-
-```
-
-**响应参数**:
-
-
-暂无
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
-## toLogin
-
-
-**接口描述**:
-
-
-**接口地址**:`/security/login/{imageCode}`
-
-
-**请求方式**：`POST`
-
-
-**consumes**:`["application/json"]`
-
-
-**produces**:`["*/*"]`
-
-
-**请求示例**：
-```json
-{
-	"userName": "",
-	"userNo": "",
-	"userPwd": ""
-}
-```
-
-
-**请求参数**：
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|imageCode| imageCode  | path | true |string  |    |
-|user| user  | body | true |User  | User   |
-
-**schema属性说明**
-
-
-
-**User**
-
-| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
-| ------------ | -------------------------------- |-----------|--------|----|--- |
-|userName|   | body | false |string  |    |
-|userNo|   | body | false |string  |    |
-|userPwd|   | body | false |string  |    |
-
-**响应示例**:
-
-```json
-{
-	"msg": ""
-}
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|msg| 消息  |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Message|
-## logout
-
-
-**接口描述**:
-
-
-**接口地址**:`/security/logout`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-
-```
-
-**响应参数**:
-
-
-暂无
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
-# 用户测试-控制器
-
-## clearDemodatas
-
-
-**接口描述**:
-
-
-**接口地址**:`/test_user/clearUser`
-
-
-**请求方式**：`DELETE`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-{
-	"msg": ""
-}
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|msg| 消息  |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Message|
-## getUsers
-
-
-**接口描述**:
-
-
-**接口地址**:`/test_user/getUser`
-
-
-**请求方式**：`GET`
-
-
-**consumes**:``
-
-
-**produces**:`["*/*"]`
-
-
-
-**请求参数**：
-暂无
-
-
-
-**响应示例**:
-
-```json
-[
-	{
-		"userName": "",
-		"userNo": "",
-		"userPwd": ""
-	}
-]
-```
-
-**响应参数**:
-
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | -------------------|-------|----------- |
-|userName|   |string  |    |
-|userNo|   |string  |    |
-|userPwd|   |string  |    |
-
-
-
-
-
-**响应状态**:
-
-
-| 状态码         | 说明                            |    schema                         |
-| ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |User|
 # 用户验证-控制器
 
 ## 用户验证
@@ -1394,25 +1128,10 @@
 
 ```json
 {
-	"token": "",
-	"teacher": {
-		"tid": "",
-		"tname": "",
-		"tphone": "",
-		"tqq": "",
-		"temail": "",
-		"tpassword": "",
-		"tlimit": true,
-		"authorities": [
-			{
-				"id": 0,
-				"name": ""
-			}
-		]
-	},
-	"message": {
-		"msg": ""
-	}
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
 }
 ```
 
@@ -1421,49 +1140,21 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|token| 验证token[验证失败为空]  |string  |    |
-|teacher| 登录用户信息  |Teacher  | Teacher   |
-|message| 错误消息  |Message  | Message   |
-
-
-
-**schema属性说明**
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
 
-**Teacher**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|tid | 教职工号   |string  |    |
-|tname | 教师姓名   |string  |    |
-|tphone | 教师电话   |string  |    |
-|tqq | 教师QQ   |string  |    |
-|temail | 教师邮箱   |string  |    |
-|tpassword | 密码   |string  |    |
-|tlimit | 权限(是否为管理员)   |boolean  |    |
-|authorities | 用户权限列表   |array  | Authority   |
-
-**Authority**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|id | 编号   |integer(int64)  |    |
-|name | 权限,可用值:ROLE_USER,ROLE_ADMIN   |string  |    |
-
-**Message**
-
-| 参数名称         | 参数说明                             |    类型 |  schema |
-| ------------ | ------------------|--------|----------- |
-|msg | 消息   |string  |    |
 
 **响应状态**:
 
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |AuthenticationResponse|
+| 200 | OK  |ResultDto|
 ## 生成图片验证码
 
 **接口描述**:生成图片验证码并保存在 session 中。
@@ -1545,7 +1236,7 @@
 	"courseId": "",
 	"conName": "",
 	"conNum": 0,
-	"labStatus": 0
+	"status": ""
 }
 ```
 
@@ -1579,18 +1270,28 @@
 |courseId| 课程编号  | body | true |string  |    |
 |conName| 消耗材料名称  | body | false |string  |    |
 |conNum| 消耗材料数量  | body | false |integer(int32)  |    |
-|labStatus| 申请实验室状态  | body | false |integer(int32)  |    |
+|status| 申请实验室状态,可用值:AUDITING,PASS,FAIL  | body | false |string  |    |
 
 **响应示例**:
 
 ```json
-
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
 
 
-暂无
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -1601,17 +1302,130 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  ||
-## clearProject
+| 200 | OK  |ResultDto|
+## auditProject
 
 
 **接口描述**:
 
 
-**接口地址**:`/project/clearProject`
+**接口地址**:`/project/auditProject`
+
+
+**请求方式**：`PUT`
+
+
+**consumes**:`["application/json"]`
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|proId| 项目卡片编号  | query | true |string  |    |
+|status| 审核状态,可用值:AUDITING,PASS,FAIL  | query | true |string  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## deleteProject
+
+
+**接口描述**:
+
+
+**接口地址**:`/project/deleteProject`
 
 
 **请求方式**：`DELETE`
+
+
+**consumes**:``
+
+
+**produces**:`["*/*"]`
+
+
+
+**请求参数**：
+
+| 参数名称         | 参数说明     |     in |  是否必须      |  数据类型  |  schema  |
+| ------------ | -------------------------------- |-----------|--------|----|--- |
+|proId| 项目卡片编号  | query | true |string  |    |
+
+**响应示例**:
+
+```json
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
+```
+
+**响应参数**:
+
+
+| 参数名称         | 参数说明                             |    类型 |  schema |
+| ------------ | -------------------|-------|----------- |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
+
+
+
+
+
+**响应状态**:
+
+
+| 状态码         | 说明                            |    schema                         |
+| ------------ | -------------------------------- |---------------------- |
+| 200 | OK  |ResultDto|
+## getAuditProjects
+
+
+**接口描述**:
+
+
+**接口地址**:`/project/getAuditProject`
+
+
+**请求方式**：`GET`
 
 
 **consumes**:``
@@ -1630,7 +1444,10 @@
 
 ```json
 {
-	"msg": ""
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
 }
 ```
 
@@ -1639,7 +1456,10 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|msg| 消息  |string  |    |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -1650,7 +1470,7 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |Message|
+| 200 | OK  |ResultDto|
 ## getProjects
 
 
@@ -1679,26 +1499,12 @@
 **响应示例**:
 
 ```json
-[
-	{
-		"proId": 0,
-		"labCenName": "",
-		"expCname": "",
-		"expEqname": "",
-		"eqnum": 0,
-		"expMajor": "",
-		"ssort": "",
-		"expTime": 0,
-		"book": "",
-		"software": "",
-		"expTid": "",
-		"cname": "",
-		"courseId": "",
-		"conName": "",
-		"conNum": 0,
-		"labStatus": 0
-	}
-]
+{
+	"code": "",
+	"data": {},
+	"message": "",
+	"success": true
+}
 ```
 
 **响应参数**:
@@ -1706,22 +1512,10 @@
 
 | 参数名称         | 参数说明                             |    类型 |  schema |
 | ------------ | -------------------|-------|----------- |
-|proId| 项目ID  |integer(int32)  | integer(int32)   |
-|labCenName| 实验室（中心）名称  |string  |    |
-|expCname| 实验课程名  |string  |    |
-|expEqname| 实验设备名  |string  |    |
-|eqnum| 设备数量  |integer(int32)  | integer(int32)   |
-|expMajor| 面向专业  |string  |    |
-|ssort| 学生类别  |string  |    |
-|expTime| 实验总学时  |integer(int32)  | integer(int32)   |
-|book| 实验教材  |string  |    |
-|software| 实验所用软件  |string  |    |
-|expTid| 教职工号  |string  |    |
-|cname| 课程名  |string  |    |
-|courseId| 课程编号  |string  |    |
-|conName| 消耗材料名称  |string  |    |
-|conNum| 消耗材料数量  |integer(int32)  | integer(int32)   |
-|labStatus| 申请实验室状态  |integer(int32)  | integer(int32)   |
+|code|   |string  |    |
+|data|   |object  |    |
+|message|   |string  |    |
+|success|   |boolean  |    |
 
 
 
@@ -1732,4 +1526,4 @@
 
 | 状态码         | 说明                            |    schema                         |
 | ------------ | -------------------------------- |---------------------- |
-| 200 | OK  |ExpProject|
+| 200 | OK  |ResultDto|
