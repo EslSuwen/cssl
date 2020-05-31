@@ -35,6 +35,10 @@ export class CardComponent implements OnInit {
   controlArray: Array<ProjectItem> = [];
   title: string;
 
+  // 学期列表
+  termList = ['请选择学期', '2019/2020(2)', '2019/2020(1)', '2018/2019(2)', '2018/2019(1)']
+  termSelected = '请选择学期';
+
   // myList: Array<ProjectItem> = [];
 
   remove(id: any) {
@@ -42,7 +46,7 @@ export class CardComponent implements OnInit {
   }
 
   add() {
-    const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].iid + 1 : 0;
+    // const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].iid + 1 : 0;
     this.controlArray.push(new ProjectItem());
   }
 
@@ -71,14 +75,7 @@ export class CardComponent implements OnInit {
       // searchPlaceholderText 搜索的默认文字
     };
     // 初始化数据
-    this.projectService.getProjects(this.authenticationService.getUserNo())
-      .subscribe(result => {
-        if (result.success) {
-          this.exps = result.data;
-        }
-        console.log('exps : ' + result.data);
-      });
-    this.teacherService.getTeaches(this.authenticationService.getUserNo())
+    this.teacherService.getTeaches(this.authenticationService.getUserNo(), '2019/2020(2)')
       .subscribe(result => {
         if (result.success) {
           for (let each of result.data)
@@ -93,7 +90,7 @@ export class CardComponent implements OnInit {
       // 设备
       expEqname: new FormControl(null, Validators.required),
       // 设备数量
-      eqnum: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
+      eqnum: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(100)]),
       // 面向专业
       expMajor: new FormControl(null, Validators.required),
       // 学生类别
@@ -111,7 +108,7 @@ export class CardComponent implements OnInit {
       // 消耗材料名称
       conName: new FormControl(null, Validators.required),
       // 消耗材料数量
-      conNum: new FormControl(null, [Validators.required, Validators.min(1), Validators.max(100)]),
+      conNum: new FormControl(null, [Validators.required, Validators.min(0), Validators.max(100)]),
     });
     // 初始化细则
     const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].iid + 1 : 0;
@@ -242,5 +239,16 @@ export class CardComponent implements OnInit {
   success_Message(type: string): void { //提交成功后的显示
     this.message.create(type, `提交成功!!!,等待管理员审核`);
     // this.router.navigate(['sidenav/personalinfo']);
+  }
+
+  onTermSelected() {
+    console.log(this.termSelected);
+    this.projectService.getProjects(this.authenticationService.getUserNo(), this.termSelected)
+      .subscribe(result => {
+        if (result.success) {
+          this.exps = result.data;
+        }
+        console.log('exps : ' + result.data);
+      });
   }
 }

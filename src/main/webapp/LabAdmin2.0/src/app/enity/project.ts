@@ -34,6 +34,8 @@ export class Exp {
   status: string;
   // 申请实验室状态
   labStatus: string;
+  /** 学期 */
+  term: string;
 
   constructor() {
     this.proId = 0;
@@ -70,8 +72,6 @@ export class ProjectItem {
   itype: string;
   // 实验项目学时
   itime: number;
-  // 必修或选修
-  ctype: string;
   // 分组人数
   num: number;
   // 实验目的
@@ -84,7 +84,6 @@ export class ProjectItem {
     this.iname = '';
     this.itype = '';
     this.itime = 0;
-    this.ctype = '';
     this.num = 0;
     this.intend = '';
 

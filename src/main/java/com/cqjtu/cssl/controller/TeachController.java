@@ -4,7 +4,7 @@ import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.service.TeachService;
 import io.swagger.annotations.Api;
-import lombok.NonNull;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +39,16 @@ public class TeachController {
    * @return 授课信息列表
    */
   @GetMapping(value = "/getTeachInfo")
-  public ResponseEntity<ResultDto> getTeachInfo(@NonNull @RequestParam String tid) {
+  public ResponseEntity<ResultDto> getTeachInfo(
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "学期", required = true) @RequestParam String term) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取授课信息成功")
-            .data(teachService.getCourseInfoByTid(tid))
+            .data(teachService.getCourseInfoByTid(tid, term))
             .build(),
         HttpStatus.OK);
   }

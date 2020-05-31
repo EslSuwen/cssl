@@ -46,14 +46,15 @@ export class TeacherService extends HandleError {
   /**
    * @description 根据教师编号获得教师授课信息
    *
+   * @param term 学期
    * @param tid 教师编号
    * @return 教师授课信息
    * @author suwen
    * @date 2020/5/27 下午2:04
    */
-  getTeaches(tid: string): Observable<result> {
+  getTeaches(tid: string, term): Observable<result> {
     const url = `${this.TEACH_API}/getTeachInfo`;
-    return this.http.get<result>(url, {params: {tid}}).pipe(
+    return this.http.get<result>(url, {params: {tid, term}}).pipe(
       tap(response => {
           if (response.success) {
             this.success(response.message);

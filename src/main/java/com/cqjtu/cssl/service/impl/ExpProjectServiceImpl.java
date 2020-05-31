@@ -34,8 +34,8 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   }
 
   @Override
-  public List<ExpProject> getExpByTid(String tid) {
-    return list(new QueryWrapper<ExpProject>().eq("exp_tid", tid));
+  public List<ExpProject> getExpByTid(String tid, String term) {
+    return list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("term", term));
   }
 
   @Override

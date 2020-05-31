@@ -66,15 +66,17 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/2/6 2:52 下午
    */
-  @GetMapping(value = "/getProject/{tid}")
-  public ResponseEntity<ResultDto> getProjects(@NonNull @PathVariable String tid) {
+  @GetMapping(value = "/getProject")
+  public ResponseEntity<ResultDto> getProjects(
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "学期", required = true) @RequestParam String term) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取项目卡片数据成功")
-            .data(expProjectService.getExpByTid(tid))
+            .data(expProjectService.getExpByTid(tid, term))
             .build(),
         HttpStatus.OK);
   }

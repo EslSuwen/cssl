@@ -67,13 +67,16 @@ export class ProjectService extends HandleError {
    * @description 根据教师编号获取项目卡片
    *
    * @param tid 教师编号
+   * @param term 学期
    * @return 项目卡片
    * @author suwen
    * @date 2020/5/27 上午10:53
    */
-  getProjects(tid: string): Observable<result> {
-    const url = `${this.PROJECT_API}/getProject/${tid}`;
-    return this.http.get<result>(url).pipe(
+  getProjects(tid: string, term: string): Observable<result> {
+    const url = `${this.PROJECT_API}/getProject`;
+
+
+    return this.http.get<result>(url, {params: {tid, term}}).pipe(
       tap(response => {
         if (response.success) {
           this.success(response.message);

@@ -54,10 +54,10 @@ public class TeachServiceImpl extends ServiceImpl<TeachMapper, Teach> implements
   }
 
   @Override
-  public List<Teach> getCourseInfoByTid(String tid) {
+  public List<Teach> getCourseInfoByTid(String tid, String term) {
 
     List<Integer> courseIdList =
-        expProjectService.getExpByTid(tid).stream()
+        expProjectService.getExpByTid(tid, term).stream()
             .map(ExpProject::getCourseId)
             .collect(Collectors.toList());
 

@@ -21,16 +21,28 @@ export class TeachTableComponent implements OnInit {
   unused = 2;
 
   searchList = '';
-  filterMajorStatus = [
+  filterMajor = [
     {text: '计算机科学与技术', value: '0'},
     {text: '物联网技术', value: '1'},
     {text: '通信技术', value: '2'},
   ];
-  filterClassStatus = [
+  filterClass = [
     {text: '计算机一班', value: '0'},
     {text: '计算机二班', value: '1'},
     {text: '计算机三班', value: '2'},
   ];
+  filterTerm = [
+    {text: '2019/2020(2)', value: '2019/2020(2)'},
+    {text: '2019/2020(1)', value: '2019/2020(1)'},
+    {text: '2018/2019(2)', value: '2018/2019(2)'},
+    {text: '2018/2019(1)', value: '2018/2019(1)'},
+  ];
+  filterTermSelected = [];
+  filterCourseType = [
+    {text: '必修', value: '必修'},
+    {text: '选修', value: '选修'},
+  ];
+  filterCourseTypeSelected = [];
   public planPeriod: any = {
     year: '2019-2020(1)',
   };
@@ -69,6 +81,12 @@ export class TeachTableComponent implements OnInit {
       this.dataSet = this.teachPlans.filter((each) => each.expMajor !== this.searchList);
       this.searchList = '';
     }
+    if (this.filterTermSelected.length > 0) {
+      this.dataSet = this.dataSet.filter((each) => this.filterTermSelected.indexOf(each.term) !== -1);
+    }
+    if (this.filterCourseTypeSelected.length > 0) {
+      this.dataSet = this.dataSet.filter((each) => this.filterCourseTypeSelected.indexOf(each.courseType) !== -1);
+    }
     this.total = this.dataSet.length;
 
     // 排序不影响条目数量
@@ -87,8 +105,13 @@ export class TeachTableComponent implements OnInit {
     this.updateData(true);
   }
 
-  updateFilter(value: string): void {
-    this.searchList = value;
+  updateTermFilter(value: string[]): void {
+    this.filterTermSelected = value;
+    this.updateData(true);
+  }
+
+  updateCourseTypeFilter(value: string[]): void {
+    this.filterCourseTypeSelected = value;
     this.updateData(true);
   }
 }

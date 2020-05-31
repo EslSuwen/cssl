@@ -38,11 +38,13 @@ public interface ExpProjectService extends IService<ExpProject> {
   /**
    * 根据老师编号和课程号查找对应卡片
    *
+   * @return 实验资料
    * @author suwen
    * @date 2020/5/26 5:57 下午
    * @param tid 老师编号
+   * @param term 学期
    */
-  List<ExpProject> getExpByTid(String tid);
+  List<ExpProject> getExpByTid(String tid,String term);
 
   /**
    * 获取待审核项目卡片数据
