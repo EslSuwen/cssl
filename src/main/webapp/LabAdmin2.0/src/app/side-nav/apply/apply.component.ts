@@ -8,6 +8,7 @@ import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuditService} from 'src/app/service/audit.service';
 import {LabService} from "../../service/lab.service";
+import {DateUtils} from "../../utils/DateTerm";
 
 @Component({
   selector: 'app-apply',
@@ -69,7 +70,7 @@ export class ApplyComponent implements OnInit {
   ngOnInit() {
     this.beizhu = new FormControl();
 
-    this.projectService.getProjects(this.authenticationService.getUserNo())
+    this.projectService.getProjects(this.authenticationService.getUserNo(), DateUtils.nowTerm())
       .subscribe(result => {
         if (result.success) {
           console.log(result.data);
@@ -319,7 +320,7 @@ export class ApplyComponent implements OnInit {
       this.applyService.addArrange(this.applysumbmit).subscribe();
 
       alert('己完成申请！');
-      this.projectService.getProjects(this.authenticationService.getUserNo())
+      this.projectService.getProjects(this.authenticationService.getUserNo(), DateUtils.nowTerm())
         .subscribe(result => {
           if (result.success)
             this.exps = result.data;

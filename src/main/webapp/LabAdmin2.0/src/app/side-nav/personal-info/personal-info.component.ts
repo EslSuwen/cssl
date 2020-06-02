@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../../service/authentication.service';
 import {Teacher} from '../../enity/teacher';
 import {TeacherService} from '../../service/teacher.service';
-import {Curriculum, ArrangePeriod} from '../../enity/arrange';
+import {ArrangePeriod, Curriculum} from '../../enity/arrange';
 import * as $ from 'jquery';
-import { result } from 'src/app/enity/result';
+import {DateUtils} from '../../utils/DateTerm';
+
 
 @Component({
   selector: 'app-personal-info',
@@ -25,6 +26,7 @@ export class PersonalInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(DateUtils.nowTerm())
     this.initCurriculum();
     this.teacher = this.authenticationService.getCurrentUserInfo();
     this.userName = this.teacher.tname;

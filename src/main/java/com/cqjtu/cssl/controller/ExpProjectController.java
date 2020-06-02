@@ -144,4 +144,24 @@ public class ExpProjectController {
             .build(),
         HttpStatus.OK);
   }
+
+  /**
+   * 获得存在学期列表
+   *
+   * @return 学期列表
+   * @author suwen
+   * @date 2020/6/1 下午10:06
+   */
+  @GetMapping(value = "/getTermList")
+  public ResponseEntity<ResultDto> getTermList() {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获得存在学期列表成功")
+            .data(expProjectService.getTermList())
+            .build(),
+        HttpStatus.OK);
+  }
 }

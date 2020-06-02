@@ -44,7 +44,7 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @param tid 老师编号
    * @param term 学期
    */
-  List<ExpProject> getExpByTid(String tid,String term);
+  List<ExpProject> getExpByTid(String tid, String term);
 
   /**
    * 获取待审核项目卡片数据
@@ -53,8 +53,7 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @author suwen
    * @date 2020/5/10 11:14 上午
    */
-  @GetMapping(value = "/getAuditProject")
-   List<ExpProject> getAuditProjects();
+  List<ExpProject> getAuditProjects();
 
   /**
    * 审核项目卡片
@@ -70,11 +69,19 @@ public interface ExpProjectService extends IService<ExpProject> {
   /**
    * 项目卡片增加
    *
-   * @param expProject  项目卡片
+   * @param expProject 项目卡片
    * @return int 状态码
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
   boolean addProject(ExpProject expProject) throws Exception;
 
+  /**
+   * 获得存在学期列表
+   *
+   * @return 学期列表
+   * @author suwen
+   * @date 2020/6/1 下午10:06
+   */
+  List<String> getTermList();
 }

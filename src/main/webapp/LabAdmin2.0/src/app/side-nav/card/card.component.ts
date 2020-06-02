@@ -8,6 +8,7 @@ import {AuthenticationService} from "../../service/authentication.service";
 import {TeacherService} from "../../service/teacher.service";
 import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
 import {Router} from '@angular/router';
+import {DateUtils} from "../../utils/DateTerm";
 
 @Component({
   selector: 'app-card',
@@ -75,7 +76,7 @@ export class CardComponent implements OnInit {
       // searchPlaceholderText 搜索的默认文字
     };
     // 初始化数据
-    this.teacherService.getTeaches(this.authenticationService.getUserNo(), '2019/2020(2)')
+    this.teacherService.getTeaches(this.authenticationService.getUserNo(), DateUtils.nowTerm())
       .subscribe(result => {
         if (result.success) {
           for (let each of result.data)

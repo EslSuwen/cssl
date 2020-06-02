@@ -7,6 +7,7 @@ import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,6 +21,13 @@ import java.util.List;
 @Service
 public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProject>
     implements ExpProjectService {
+
+  private final ExpProjectMapper expProjectMapper;
+
+  @Autowired
+  public ExpProjectServiceImpl(ExpProjectMapper expProjectMapper) {
+    this.expProjectMapper = expProjectMapper;
+  }
 
   @Override
   public boolean isCardExist(String tid, Integer cid) {
@@ -59,5 +67,10 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
     }
     expProject.setLabCenName("信息技术实践教学中心");
     return save(expProject);
+  }
+
+  @Override
+  public List<String> getTermList() {
+    return expProjectMapper.getTermList();
   }
 }
