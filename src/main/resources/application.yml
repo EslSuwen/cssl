@@ -7,7 +7,7 @@ server:                  #配置server
 
 spring:
   profiles:
-    active: dev
+    active: dev2
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver            # 数据库访问配置,主数据源，默认的
@@ -108,6 +108,18 @@ spring:
       url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: Liyu8824
+
+#开发环境配置
+
+---
+spring:
+  profiles: dev2
+  datasource:
+    druid:
+      url: jdbc:mysql://47.107.239.108:3306/csslDB
+      username: root
+      password: Cssl123.
+
 
 
 ---

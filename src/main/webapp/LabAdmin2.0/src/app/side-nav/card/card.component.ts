@@ -114,6 +114,7 @@ export class CardComponent implements OnInit {
     // 初始化细则
     const id = (this.controlArray.length > 0) ? this.controlArray[this.controlArray.length - 1].iid + 1 : 0;
     this.controlArray.push(new ProjectItem());
+    this.setNewExpValue();
   }
 
   onsubmit() {
@@ -160,6 +161,12 @@ export class CardComponent implements OnInit {
     this.newExp.expTime = this.expTime.value;
     this.newExp.status = 'AUDITING';
     this.newExp.labStatus = 'UNCHECK';
+  }
+
+
+  setNewExpValue() {
+    let value = [{'eqnum': '123'}, {'expEqname': '123'}, {'expCname': '123'}, {'conName': '123'}, {'conNum': '123'}, {'expTime': '123'},];
+    this.element.setValue(value);
   }
 
   get expCname() {
