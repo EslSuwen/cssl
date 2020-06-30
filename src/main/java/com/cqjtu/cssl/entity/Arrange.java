@@ -44,10 +44,6 @@ public class Arrange implements Serializable {
   @ApiModelProperty(value = "实验室校区", position = 3, required = true)
   private String campus;
 
-  /** 申请状态 */
-  @ApiModelProperty(value = "申请状态", position = 4, required = true)
-  private Audit status;
-
   /** 班级 */
   @ApiModelProperty(value = "班级", position = 5, required = true)
   private String labClass;

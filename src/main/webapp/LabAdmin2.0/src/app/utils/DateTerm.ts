@@ -1,5 +1,11 @@
 export class DateUtils {
 
+  /**
+   * 获得当前学期
+   *
+   * @author suwen
+   * @date 2020/6/29 上午11:00
+   */
   static nowTerm() {
     const Dates = new Date();
     const year1: number = Dates.getFullYear();

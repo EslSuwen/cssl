@@ -52,8 +52,8 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/5/10 11:14 上午
-   */
-  List<ExpProject> getAuditProjects();
+
+  List<ExpProject> getAuditProjects();*/
 
   /**
    * 审核项目卡片
@@ -63,8 +63,8 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @return 状态
    * @author suwen
    * @date 2020/5/10 上午11:42
-   */
-  boolean auditProject(String proId, Audit Audit);
+
+  boolean auditProject(String proId, Audit Audit);*/
 
   /**
    * 项目卡片增加

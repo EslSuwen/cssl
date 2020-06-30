@@ -99,7 +99,7 @@ security:
     authentication-path: /api/auth
 
 ---
-#开发环境配置
+#开发环境配置1
 
 spring:
   profiles: dev
@@ -109,9 +109,10 @@ spring:
       username: root
       password: Liyu8824
 
-#开发环境配置
 
 ---
+#开发环境配置2
+
 spring:
   profiles: dev2
   datasource:

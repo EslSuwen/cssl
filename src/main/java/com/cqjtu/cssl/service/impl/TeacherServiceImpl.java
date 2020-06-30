@@ -2,7 +2,6 @@ package com.cqjtu.cssl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.Curriculum;
@@ -55,8 +54,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
   public List<Curriculum> getCurriculum(String tid, String week) {
 
     List<Arrange> arrangeList =
-        arrangeMapper.selectList(
-            new QueryWrapper<Arrange>().eq("tid", tid).eq("status", Audit.PASS));
+        arrangeMapper.selectList(new QueryWrapper<Arrange>().eq("tid", tid));
+    //            new QueryWrapper<Arrange>().eq("tid", tid).eq("status", Audit.PASS));
 
     for (Arrange each : arrangeList) {
       each.setArrangePeriod(

@@ -1,6 +1,5 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ExpProject;
@@ -86,20 +85,12 @@ public class ExpProjectController {
    *
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
-   * @date 2020/5/10 11:14 上午
+   * @date 2020/5/10 11:14 上午 @GetMapping(value = "/getAuditProject") public
+   *     ResponseEntity<ResultDto> getAuditProjects() {
+   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
+   *     .code(ReturnCode.RETURN_CODE_20004.getCode()) .message("获取项目卡片待审核数据成功")
+   *     .data(expProjectService.getAuditProjects()) .build(), HttpStatus.OK); }
    */
-  @GetMapping(value = "/getAuditProject")
-  public ResponseEntity<ResultDto> getAuditProjects() {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
-            .message("获取项目卡片待审核数据成功")
-            .data(expProjectService.getAuditProjects())
-            .build(),
-        HttpStatus.OK);
-  }
 
   /**
    * 审核项目卡片
@@ -108,22 +99,13 @@ public class ExpProjectController {
    * @param status 审核状态
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
-   * @date 2020/5/10 11:24 上午
+   * @date 2020/5/10 11:24 上午 @PutMapping(value = "/auditProject") public ResponseEntity<ResultDto>
+   *     auditProject( @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String
+   *     proId, @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
+   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
+   *     .code(ReturnCode.RETURN_CODE_20001.getCode()) .message("审核项目卡片成功")
+   *     .data(expProjectService.auditProject(proId, status)) .build(), HttpStatus.OK); }
    */
-  @PutMapping(value = "/auditProject")
-  public ResponseEntity<ResultDto> auditProject(
-      @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId,
-      @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("审核项目卡片成功")
-            .data(expProjectService.auditProject(proId, status))
-            .build(),
-        HttpStatus.OK);
-  }
 
   /**
    * 项目卡片删除

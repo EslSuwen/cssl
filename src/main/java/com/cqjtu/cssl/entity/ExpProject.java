@@ -71,8 +71,6 @@ public class ExpProject implements Serializable {
   @ApiModelProperty(value = "消耗材料数量", position = 14)
   private Integer conNum;
 
-  @ApiModelProperty(value = "申请状态", position = 15)
-  private Audit status;
 
   @ApiModelProperty(value = "申请实验室状态", position = 16)
   private Audit labStatus;

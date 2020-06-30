@@ -46,17 +46,15 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
     return list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("term", term));
   }
 
-  @Override
   public List<ExpProject> getAuditProjects() {
 
     return list(new QueryWrapper<ExpProject>().eq("status", Audit.AUDITING));
   }
 
-  @Override
   public boolean auditProject(String proId, Audit status) {
 
     ExpProject expProject = new ExpProject();
-    expProject.setStatus(status);
+    // expProject.setStatus(status);
     return update(expProject, new UpdateWrapper<ExpProject>().eq("pro_Id", proId));
   }
 

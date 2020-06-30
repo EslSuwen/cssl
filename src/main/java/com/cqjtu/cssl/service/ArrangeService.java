@@ -35,7 +35,7 @@ public interface ArrangeService extends IService<Arrange> {
    * @author suwen
    * @date 2020/5/11 上午9:49
    */
-  boolean auditArrange(Integer aid, Audit status);
+  // boolean auditArrange(Integer aid, Audit status);
 
   /**
    * 获取教学计划表
@@ -53,7 +53,7 @@ public interface ArrangeService extends IService<Arrange> {
    * @author suwen
    * @date 2020/5/26 下午8:40
    */
-  List<ArrangeAudit> getAuditArrange();
+  // List<ArrangeAudit> getAuditArrange();
 
   /**
    * 增加排课信息
