@@ -110,4 +110,20 @@ export class ProjectService extends HandleError {
     );
   }
 
+  /**
+   * @description 重用以往卡片信息
+   *
+   * @param tid 教师编号
+   * @param courseId 课程编号
+   * @return
+   * @author suwen
+   * @date 2020/7/1 下午5:11
+   */
+  reuseCard(tid: string, courseId: string): Observable<result> {
+    const url = `${this.PROJECT_API}/reuseCard`;
+    return this.http.get<result>(url, {params: {tid, courseId}}).pipe(
+      catchError(this.handleError<result>('重用以往卡片信息'))
+    );
+  }
+
 }

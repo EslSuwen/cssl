@@ -146,4 +146,29 @@ public class ExpProjectController {
             .build(),
         HttpStatus.OK);
   }
+
+  /**
+   * 重用以往卡片信息
+   *
+   * @param tid 教师编号
+   * @param courseId 课程编号
+   * @return 卡片信息
+   * @author suwen
+   * @date 2020/7/1 下午4:52
+   */
+  @GetMapping(value = "/reuseCard")
+  public ResponseEntity<ResultDto> reuseCard(
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "课程编号", required = true) @RequestParam String courseId) {
+
+    ExpProject project = expProjectService.reuseCard(tid, courseId);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(project != null)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("重用以往卡片信息")
+            .data(project)
+            .build(),
+        HttpStatus.OK);
+  }
 }

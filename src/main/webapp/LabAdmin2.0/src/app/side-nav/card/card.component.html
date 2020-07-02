@@ -15,83 +15,74 @@
 <div class="row mt-2 animated fadeIn " *ngIf="switch2">
   <div class="col px-0">
     <div class="card">
-      <h3 class="card-header text-center font-weight-bold">实验项目卡片
+      <h3 class="card-header text-center font-weight-bold">{{nowTerm}} 实验项目卡片
       </h3>
       <div class="card-body">
         <table mdbTable bordered="true" small="true" class="text-center">
           <thead class="black white-text">
           <tr>
-            <th *ngFor="let head of headElements" scope="col">{{head}} </th>
+            <th *ngFor="let head of headElements" scope="col">{{head}}</th>
           </tr>
           </thead>
           <tbody *ngIf="switch2">
-          <tr mdbTableCol [formGroup]="element">
+          <tr mdbTableCol [formGroup]="expCardFG">
             <td style="width: 200px;">
-              <angular2-multiselect [data]="courseList" formControlName="selectedItems1" [settings]="Settings1"
+              <angular2-multiselect [data]="courseList" formControlName="courseSelected"
+                                    [settings]="courseSelectSettings"
                                     (onSelect)="courseSelect($event)">
               </angular2-multiselect>
             </td>
             <td>
               <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="expCname">
-                <mdb-error *ngIf="expCname.invalid && (expCname.dirty || expCname.touched)">请填写内容</mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                <input mdbInput type="text" class="form-control" formControlName="expCname">
+                <mdb-error *ngIf="expCardFG.get('expCname').hasError('required')">填写实验课程名!</mdb-error>
               </div>
             </td>
             <td>
               <div class="row mx-1 my-0">
                 <div class="md-form col p-0 my-0 mr-2">
-                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="expEqname"
+                  <input mdbInput type="text" class="form-control" formControlName="expEqname"
                          placeholder="设备">
-                  <mdb-error *ngIf="expEqname.invalid && (expEqname.dirty || expEqname.touched)" class="mt-0">请填写内容
-                  </mdb-error>
-                  <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                  <mdb-error *ngIf="expCardFG.get('expEqname').hasError('required')">填写设备名!</mdb-error>
                 </div>
                 <div class="md-form m-0 col p-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" formControlName="eqnum" min=0 max=100
+                  <input mdbInput type="number" class="form-control" formControlName="eqnum" min=0 max=100
                          placeholder="数量">
-                  <mdb-error *ngIf="eqNum.invalid && (eqNum.dirty || eqNum.touched)">不能为空,且于1到100</mdb-error>
+                  <mdb-error *ngIf="expCardFG.get('eqnum').invalid">填写合法的数量!</mdb-error>
                 </div>
               </div>
-
             </td>
             <td>
               <div class="row mx-1 my-0">
                 <div class="md-form col p-0 my-0 mr-2">
-                  <input mdbInput mdbValidate type="text" class="form-control" formControlName="conName"
+                  <input mdbInput type="text" class="form-control" formControlName="conName"
                          placeholder="材料">
-                  <mdb-error *ngIf="conName.invalid && (conName.dirty || conName.touched)" class="mt-0">请填写内容
-                  </mdb-error>
-                  <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                  <mdb-error *ngIf="expCardFG.get('conName').invalid">填写材料名称!</mdb-error>
                 </div>
                 <div class="md-form m-0 col p-0">
-                  <input mdbInput mdbValidate type="number" class="form-control" formControlName="conNum" min=0
-                         max=100 placeholder="数量">
-                  <mdb-error *ngIf="conNum.invalid && (conNum.dirty || conNum.touched)">不能为空,且于0到100</mdb-error>
+                  <input mdbInput type="number" class="form-control" formControlName="conNum" min=0 max=100
+                         placeholder="数量">
+                  <mdb-error *ngIf="expCardFG.get('conNum').invalid">填写合法的数量!</mdb-error>
                 </div>
               </div>
-
             </td>
             <td>
               <div class="md-form m-0 col p-0">
-                <input mdbInput mdbValidate type="number" class="form-control" formControlName="expTime" min=0
+                <input mdbInput type="number" class="form-control" formControlName="expTime" min=0
                        max=100>
-                <mdb-error *ngIf="expTime.invalid && (expTime.dirty || expTime.touched)">不能为空,且于1到100</mdb-error>
+                <mdb-error *ngIf="expCardFG.get('expTime').invalid">填写合法的学时!</mdb-error>
               </div>
             </td>
             <td>
               <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="book">
-                <mdb-error *ngIf="book.invalid && (book.dirty || book.touched)">请填写内容</mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                <input mdbInput type="text" class="form-control" formControlName="book">
+                <mdb-error *ngIf="expCardFG.get('book').invalid">填写教材名!</mdb-error>
               </div>
             </td>
             <td>
               <div class="md-form my-0">
-                <input mdbInput mdbValidate type="text" class="form-control" formControlName="software">
-                <mdb-error *ngIf="software.invalid && (software.dirty || software.touched)">请填写内容
-                </mdb-error>
-                <!-- <mdb-success *ngIf="input.valid && (input.dirty || input.touched)">Input valid</mdb-success> -->
+                <input mdbInput type="text" class="form-control" formControlName="software">
+                <mdb-error *ngIf="expCardFG.get('software').invalid">填写软件名!</mdb-error>
               </div>
             </td>
           </tr>
@@ -109,7 +100,6 @@
       </h3>
       <div class="card-body">
         <div id="table" class="table-editable">
-
           <table mdbTable class="table table-bordered table-responsive-md table-striped text-center " small="true"
                  bordered="true">
             <thead>
@@ -125,9 +115,9 @@
             </tr>
             </thead>
             <tbody *ngIf="switch2">
-            <tr *ngFor="let control of controlArray;let id = index">
+            <tr *ngFor="let control of ProjectItemArray;let i = index">
               <td>
-                <span>{{id + 1}}</span>
+                <span>{{i + 1}}</span>
               </td>
               <td>
                 <div class="md-form my-0 py-0">
@@ -150,7 +140,6 @@
                     <option value="验证">验证</option>
                     <option value="综合">综合</option>
                   </select>
-                  <mdb-error *ngIf="iType.invalid && (iType.dirty || iType.touched)">请填写内容</mdb-error>
                 </div>
               </td>
               <td>
@@ -159,7 +148,6 @@
                          [(ngModel)]="control.itime" required min=0 max=100 #iTime="ngModel">
                   <mdb-error *ngIf="iTime.invalid && (iTime.dirty || iTime.touched)">不能为空,且于0到100</mdb-error>
                 </div>
-
               </td>
               <td>
                 <div class="md-form my-0 py-0">
@@ -167,13 +155,11 @@
                          [(ngModel)]="control.num" required min=1 max=100 #Num="ngModel">
                   <mdb-error *ngIf="Num.invalid && (Num.dirty || Num.touched)">不能为空,且于1到100</mdb-error>
                 </div>
-
               </td>
               <td>
                 <div class="md-form px-3  my-0 py-0">
                     <textarea type="text" class="md-textarea form-control p-2" mdbInput rows="1" cols="10"
                               name="iTime{{control.iid}}" [(ngModel)]="control.intend"></textarea>
-
                 </div>
               </td>
               <td>
@@ -189,7 +175,6 @@
           </table>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -268,24 +253,23 @@
 
   </div>
 </div>
-<nz-modal [(nzVisible)]="isVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
-          (nzOnCancel)="handleCancel()">
+<nz-modal [(nzVisible)]="addItemVisible" [nzTitle]="modalTitle" [nzContent]="modalContent" [nzFooter]="modalFooter"
+          (nzOnCancel)="addItemVisible = false">
   <ng-template #modalTitle>
     增加几行？
   </ng-template>
-
   <ng-template #modalContent>
     <nz-row>
       <nz-col nzSpan="12">
-        <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="value1"></nz-slider>
+        <nz-slider [nzMin]="1" [nzMax]="20" [(ngModel)]="addItemNum"></nz-slider>
       </nz-col>
       <div nz-col nzSpan="4">
-        <nz-input-number [nzMin]="1" [nzMax]="20" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="value1">
+        <nz-input-number [nzMin]="1" [nzMax]="20" [ngStyle]="{ marginLeft: '16px' }" [(ngModel)]="addItemNum">
         </nz-input-number>
       </div>
     </nz-row>
   </ng-template>
   <ng-template #modalFooter>
-    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isConfirmLoading">确认</button>
+    <button nz-button nzType="primary" (click)="confirmAddItem();addItemVisible = false">确认</button>
   </ng-template>
 </nz-modal>

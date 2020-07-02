@@ -71,4 +71,13 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   public List<String> getTermList() {
     return expProjectMapper.getTermList();
   }
+
+  @Override
+  public ExpProject reuseCard(String tid, String courseId) {
+    return getOne(
+        new QueryWrapper<ExpProject>()
+            .last("LIMIT 1")
+            .eq("exp_tid", tid)
+            .eq("course_id", courseId));
+  }
 }

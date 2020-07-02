@@ -1,9 +1,7 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ExpProject;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
@@ -52,8 +50,8 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/5/10 11:14 上午
-
-  List<ExpProject> getAuditProjects();*/
+   *     <p>List<ExpProject> getAuditProjects();
+   */
 
   /**
    * 审核项目卡片
@@ -63,8 +61,8 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @return 状态
    * @author suwen
    * @date 2020/5/10 上午11:42
-
-  boolean auditProject(String proId, Audit Audit);*/
+   *     <p>boolean auditProject(String proId, Audit Audit);
+   */
 
   /**
    * 项目卡片增加
@@ -84,4 +82,15 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @date 2020/6/1 下午10:06
    */
   List<String> getTermList();
+
+  /**
+   * 重用以往卡片信息
+   *
+   * @param tid 教师编号
+   * @param courseId 课程编号
+   * @return 卡片信息
+   * @author suwen
+   * @date 2020/7/1 下午4:55
+   */
+  ExpProject reuseCard(String tid, String courseId);
 }
