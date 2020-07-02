@@ -22,7 +22,6 @@ export class CardComponent implements OnInit {
   addItemVisible = false;
   addItemNum = 1; //增加表格的行数
   courseList = [];
-  // courseSelected = [];
   courseSelectSettings = {};
   projectItems: ProjectItem[];
   exps: Exp[]; // 实验卡片
@@ -32,12 +31,11 @@ export class CardComponent implements OnInit {
   id: number;
   headElements = ['课程名', '实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件'];
   ProjectItemArray: Array<ProjectItem> = [];
-  title: string;
+  itemTitle: string;
 
   // 学期列表
   termList = ['请选择学期', '2019/2020(2)', '2019/2020(1)', '2018/2019(2)', '2018/2019(1)']
   termSelected = '请选择学期';
-
 
   constructor(private fb: FormBuilder,
               private modalService: MDBModalService,
@@ -112,16 +110,16 @@ export class CardComponent implements OnInit {
     console.log(exp);
     console.log(this.ProjectItemArray);
     /*this.projectService.addProject(exp).subscribe(result => {
-      if (!result) {
+      if (!result.success) {
         return;
       }
       console.log(result.data);
-      for (let each of this.ProjectItemArray) {
-        each.proId = result.data;
-      }
+      this.ProjectItemArray.map(each=>each.proId=result.data);
       this.exps.push(exp);
       this.projectService.addProjectItems(this.ProjectItemArray).subscribe();
     })*/
+    this.nzMessage.success('提交成功!!!,等待管理员审核');
+    this.switch2 = false;
   }
 
 
@@ -147,12 +145,6 @@ export class CardComponent implements OnInit {
             this.projectService.getProjectItems(result.data.proId).subscribe(result => {
               if (result.success) {
                 this.ProjectItemArray = result.data;
-
-                /*                expItems.map(each => {
-                                  each.proId = 0;
-                                  console.log(each);
-                                  this.ProjectItemArray.push(each);
-                                });*/
                 this.nzMessage.success("导入成功！");
               }
             });
@@ -160,20 +152,6 @@ export class CardComponent implements OnInit {
         });
       }
     });
-  }
-
-  //获取实验项目名称
-  getExpName(title1: string) {
-    this.title = title1;
-  }
-
-  showModal(): void {
-    this.addItemVisible = true;
-  }
-
-  // expItem 控制
-  removeNewItem(id: any) {
-    this.ProjectItemArray.splice(id, 1);
   }
 
   confirmAddItem(): void {
@@ -192,11 +170,6 @@ export class CardComponent implements OnInit {
           setTimeout(Math.random() < 0.0 ? resolve : reject, 3000);
         }).catch(() => this.onSubmit())
     });
-  }
-
-  success_Message(type: string): void { //提交成功后的显示
-    this.nzMessage.create(type, `提交成功!!!,等待管理员审核`);
-    // this.router.navigate(['sidenav/personalinfo']);
   }
 
   onTermSelected() {

@@ -12,7 +12,7 @@
     <nz-tag>点击左边开关切换到填写实验卡片</nz-tag>
   </label>
 </div>
-<div class="row mt-2 animated fadeIn " *ngIf="switch2">
+<div class="row mt-2 animated fadeIn" *ngIf="switch2">
   <div class="col px-0">
     <div class="card">
       <h3 class="card-header text-center font-weight-bold">{{nowTerm}} 实验项目卡片
@@ -93,7 +93,7 @@
     <div class="card">
       <h3 class="card-header text-center font-weight-bold">实验项目细则
         <span class="table-add float-right mb-3 mr-2" *ngIf="switch2">
-          <a class="text-success" (click)="showModal()">
+          <a class="text-success" (click)="this.addItemVisible = true;">
             <mdb-icon fas icon="plus" size="lg"></mdb-icon>
           </a>
         </span>
@@ -167,7 +167,7 @@
                     <button type="button" mdbBtn color="danger" rounded="true" size="sm" class="my-0"
                             data-toggle="modal" data-target="#basicExample" nz-popconfirm
                             nzPopconfirmTitle="Are you sure delete this task?" nzPopconfirmPlacement="topRight"
-                            (nzOnConfirm)="confirm()">移除</button>
+                            (nzOnConfirm)="this.ProjectItemArray.splice(id, 1);">移除</button>
                   </span>
               </td>
             </tr>
@@ -196,7 +196,7 @@
           </tr>
           </thead>
           <tbody *ngIf="!switch2">
-          <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId);getExpName(each.cname)">
+          <tr mdbTableCol *ngFor="let each of exps" (click)="loadProjectItems(each.proId);this.itemTitle=each.cname;">
             <td>{{each.cname}}</td>
             <td>{{each.expCname}}</td>
             <td>{{each.eqnum}}</td>
@@ -209,7 +209,7 @@
         </table>
       </div>
     </div>
-    <h3 class="card-header text-center font-weight-bold">{{title}}实验项目细则
+    <h3 class="card-header text-center font-weight-bold">{{itemTitle}}实验项目细则
     </h3>
     <div class="card-body">
       <div class="table-editable">

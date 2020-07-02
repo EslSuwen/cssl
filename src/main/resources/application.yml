@@ -2,7 +2,7 @@ server:                  #配置server
   tomcat:       #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
-    context-path: /
+    context-path: /cssl
   port: 8090
 
 spring:
