@@ -29,9 +29,13 @@ export class CardComponent implements OnInit {
   modalRef: MDBModalRef; // 模态
   expCardFG: FormGroup;
   id: number;
-  headElements = ['课程名', '实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件'];
+  headElements = ['课程名', '实验课程名', '仪器设备(数量)', '消耗材料(数量)', '实验总学时', '实验教材', '实验所用软件', '操作'];
   ProjectItemArray: Array<ProjectItem> = [];
   itemTitle: string;
+
+  // 修改缓存
+  editItemCache = {};
+  editExpCache = {};
 
   // 学期列表
   termList = ['请选择学期', '2019/2020(2)', '2019/2020(1)', '2018/2019(2)', '2018/2019(1)']
@@ -86,8 +90,6 @@ export class CardComponent implements OnInit {
       conNum: ['', [Validators.required, Validators.min(0), Validators.max(100)]],// 消耗材料数量
     });
 
-    // 初始化细则
-    const id = (this.ProjectItemArray.length > 0) ? this.ProjectItemArray[this.ProjectItemArray.length - 1].iid + 1 : 0;
     this.ProjectItemArray.push(new ProjectItem());
   }
 
@@ -123,12 +125,13 @@ export class CardComponent implements OnInit {
   }
 
 
-  // 响应式更改 expItem 数据
+  // 响应式更新 expItem 数据
   loadProjectItems(proId: number) {
     this.projectService.getProjectItems(proId)
       .subscribe(result => {
         if (result.success) {
           this.projectItems = result.data;
+          this.updateItemEditCache();
         }
       });
   }
@@ -178,8 +181,184 @@ export class CardComponent implements OnInit {
       .subscribe(result => {
         if (result.success) {
           this.exps = result.data;
+          this.updateExpEditCache();
         }
-        console.log('exps : ' + result.data);
       });
+  }
+
+  startItemEdit(ino: number): void {
+    this.editItemCache[ino].edit = true;
+  }
+
+  cancelItemEdit(ino: number): void {
+    this.editItemCache[ino].edit = false;
+  }
+
+  saveItemEdit(ino: number): void {
+
+    if (!this.saveItemCheck(this.editItemCache[ino].data)) {
+      return;
+    }
+
+    // 判断有没有更新
+    /*const index = this.dataSet.findIndex(item => item.key === key);
+    const customer = this.dataSet[index];
+    const editCustomer = this.editCache[key].data;
+    if (customer.id === editCustomer.id
+      && customer.name === editCustomer.name
+      && customer.idCard === editCustomer.idCard
+      && customer.phoneNo === editCustomer.phoneNo
+      && customer.comment === editCustomer.comment) {
+      this.editCache[key].edit = false;
+      return;
+    }
+
+    // 调用修改服务
+    this.customerService.updateCustomer(this.editCache[key].data as Customer).subscribe(result => {
+      if (result !== undefined && result.success !== undefined && result.success) {
+        const index = this.dataSet.findIndex(item => item.key === key);
+        Object.assign(this.dataSet[index], result.data);
+        this.editCache[key].edit = false;
+      }
+    });*/
+    this.editItemCache[ino].edit = false;
+    this.nzMessage.success("修改成功");
+  }
+
+  saveItemCheck(data: any): boolean {
+    // 姓名
+    /*if (data.name == null || !data.name.trim()) {
+      this.message.error('姓名不能为空');
+      return false;
+    }
+
+    // 校验身份证号
+    if (data.idCard == null || !data.idCard.trim()) {
+      this.message.error('身份证号不能为空');
+      return false;
+    }
+
+    let regex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if (!regex.test(data.idCard)) {
+      this.message.error('身份证号不正确');
+      return false;
+    }
+
+    // 校验手机号
+    if (data.phoneNo == null || !data.phoneNo.trim()) {
+      this.message.error('手机号不能为空');
+      return false;
+    }
+
+    regex = /(^[1][3,4,5,7,8][0-9]{9}$)/;
+    if (!regex.test(data.phoneNo)) {
+      this.message.error('手机号不正确');
+      return false;
+    }*/
+
+    return true;
+  }
+
+  deleteItem(ino: number) {
+    this.nzMessage.success("删除成功！");
+  }
+
+  updateItemEditCache(edit: boolean = false): void {
+    this.projectItems.forEach(item => {
+      if (!this.editItemCache[item.ino]) {
+        this.editItemCache[item.ino] = {
+          edit: edit,
+          data: item
+        };
+      }
+    });
+  }
+
+  startExpEdit(proId: number): void {
+    this.editExpCache[proId].edit = true;
+  }
+
+  cancelExpEdit(proId: number): void {
+    this.editExpCache[proId].edit = false;
+  }
+
+  saveExpEdit(proId: number): void {
+
+    if (!this.saveExpCheck(this.editExpCache[proId].data)) {
+      return;
+    }
+
+    // 判断有没有更新
+    /*const index = this.dataSet.findIndex(item => item.key === key);
+    const customer = this.dataSet[index];
+    const editCustomer = this.editCache[key].data;
+    if (customer.id === editCustomer.id
+      && customer.name === editCustomer.name
+      && customer.idCard === editCustomer.idCard
+      && customer.phoneNo === editCustomer.phoneNo
+      && customer.comment === editCustomer.comment) {
+      this.editCache[key].edit = false;
+      return;
+    }
+
+    // 调用修改服务
+    this.customerService.updateCustomer(this.editCache[key].data as Customer).subscribe(result => {
+      if (result !== undefined && result.success !== undefined && result.success) {
+        const index = this.dataSet.findIndex(item => item.key === key);
+        Object.assign(this.dataSet[index], result.data);
+        this.editCache[key].edit = false;
+      }
+    });*/
+    this.editExpCache[proId].edit = false;
+    this.nzMessage.success("修改成功");
+  }
+
+  saveExpCheck(data: any): boolean {
+    // 姓名
+    /*if (data.name == null || !data.name.trim()) {
+      this.message.error('姓名不能为空');
+      return false;
+    }
+
+    // 校验身份证号
+    if (data.idCard == null || !data.idCard.trim()) {
+      this.message.error('身份证号不能为空');
+      return false;
+    }
+
+    let regex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+    if (!regex.test(data.idCard)) {
+      this.message.error('身份证号不正确');
+      return false;
+    }
+
+    // 校验手机号
+    if (data.phoneNo == null || !data.phoneNo.trim()) {
+      this.message.error('手机号不能为空');
+      return false;
+    }
+
+    regex = /(^[1][3,4,5,7,8][0-9]{9}$)/;
+    if (!regex.test(data.phoneNo)) {
+      this.message.error('手机号不正确');
+      return false;
+    }*/
+
+    return true;
+  }
+
+  deleteExp(ino: number) {
+    this.nzMessage.success("删除成功！");
+  }
+
+  updateExpEditCache(edit: boolean = false): void {
+    this.exps.forEach(item => {
+      if (!this.editExpCache[item.proId]) {
+        this.editExpCache[item.proId] = {
+          edit: edit,
+          data: item
+        };
+      }
+    });
   }
 }

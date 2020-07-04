@@ -117,7 +117,7 @@ spring:
   profiles: dev2
   datasource:
     druid:
-      url: jdbc:mysql://47.107.239.108:3306/csslDB?characterEncoding=utf8
+      url: jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8
       username: root
       password: Cssl123.
 
