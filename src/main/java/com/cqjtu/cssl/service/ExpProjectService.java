@@ -93,4 +93,14 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @date 2020/7/1 下午4:55
    */
   ExpProject reuseCard(String tid, String courseId);
+
+  /**
+   * 更新卡片信息
+   *
+   * @param expProject 卡片信息
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/5 下午3:33
+   */
+  Boolean updateExp(ExpProject expProject);
 }

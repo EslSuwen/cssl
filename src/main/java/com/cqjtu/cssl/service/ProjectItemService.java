@@ -22,4 +22,14 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @return List<ProjectItem>
    */
   List<ProjectItem> listByProId(int proId);
+
+  /**
+   * 更新实验卡片项目项信息
+   *
+   * @param projectItem 项目项信息
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/5 下午4:02
+   */
+  boolean updateItem(ProjectItem projectItem);
 }

@@ -73,4 +73,23 @@ public class ProjectItemController {
             .build(),
         HttpStatus.OK);
   }
+
+  /**
+   * 更新实验项目
+   *
+   * @param projectItem 实验项目
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/5 下午4:08
+   */
+  @PutMapping("/updateItem")
+  public ResponseEntity<ResultDto> updateItem(@RequestBody ProjectItem projectItem) {
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(projectItemService.updateItem(projectItem))
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("更新实验项目")
+            .build(),
+        HttpStatus.OK);
+  }
 }

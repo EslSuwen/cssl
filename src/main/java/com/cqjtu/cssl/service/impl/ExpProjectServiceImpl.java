@@ -80,4 +80,9 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
             .eq("exp_tid", tid)
             .eq("course_id", courseId));
   }
+
+  @Override
+  public Boolean updateExp(ExpProject expProject) {
+    return updateById(expProject);
+  }
 }

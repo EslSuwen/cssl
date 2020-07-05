@@ -171,4 +171,23 @@ public class ExpProjectController {
             .build(),
         HttpStatus.OK);
   }
+
+  /**
+   * 更新卡片信息
+   *
+   * @param expProject 卡片信息
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/5 下午4:05
+   */
+  @PutMapping("/updateExp")
+  public ResponseEntity<ResultDto> updateExp(@RequestBody ExpProject expProject) {
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(expProjectService.updateExp(expProject))
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("更新卡片信息")
+            .build(),
+        HttpStatus.OK);
+  }
 }

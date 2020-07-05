@@ -115,7 +115,7 @@ export class ProjectService extends HandleError {
    *
    * @param tid 教师编号
    * @param courseId 课程编号
-   * @return
+   * @return 执行状态
    * @author suwen
    * @date 2020/7/1 下午5:11
    */
@@ -124,6 +124,36 @@ export class ProjectService extends HandleError {
     return this.http.get<result>(url, {params: {tid, courseId}}).pipe(
       catchError(this.handleError<result>('重用以往卡片信息'))
     );
+  }
+
+  /**
+   * 更新卡片信息
+   *
+   * @param exp 卡片信息
+   * @return 执行状态
+   * @author suwen
+   * @date 2020/7/5 下午4:12
+   */
+  updateExp(exp: Exp): Observable<result> {
+    const url = `${this.PROJECT_API}/updateExp`;
+    return this.http.put<result>(url, exp).pipe(
+      catchError(this.handleError<result>('更新卡片信息'))
+    )
+  }
+
+  /**
+   * 更新实验项目信息
+   *
+   * @param item 实验项目
+   * @return 执行状态
+   * @author suwen
+   * @date 2020/7/5 下午4:15
+   */
+  updateItem(item: ProjectItem): Observable<result> {
+    const url = `${this.ITEM_API}/updateItem`;
+    return this.http.put<result>(url, item).pipe(
+      catchError(this.handleError<result>('更新实验项目信息'))
+    )
   }
 
 }

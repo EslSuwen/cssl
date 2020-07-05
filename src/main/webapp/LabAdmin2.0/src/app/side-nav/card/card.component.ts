@@ -175,6 +175,7 @@ export class CardComponent implements OnInit {
     });
   }
 
+  // 学期选择后加载卡片信息
   onTermSelected() {
     console.log(this.termSelected);
     this.projectService.getProjects(this.authenticationService.getUserNo(), this.termSelected)
@@ -186,14 +187,7 @@ export class CardComponent implements OnInit {
       });
   }
 
-  startItemEdit(ino: number): void {
-    this.editItemCache[ino].edit = true;
-  }
-
-  cancelItemEdit(ino: number): void {
-    this.editItemCache[ino].edit = false;
-  }
-
+  // 保存实验
   saveItemEdit(ino: number): void {
 
     if (!this.saveItemCheck(this.editItemCache[ino].data)) {
@@ -221,8 +215,20 @@ export class CardComponent implements OnInit {
         this.editCache[key].edit = false;
       }
     });*/
+
+    this.projectService.updateItem(this.editItemCache[ino].data).subscribe(result => {
+      if (result.success) {
+        this.projectItems.forEach(each => {
+          if (each.ino == ino) {
+            each = this.editItemCache[ino].data;
+          }
+        });
+        this.nzMessage.success("修改成功");
+      } else {
+        this.nzMessage.error("修改失败");
+      }
+    })
     this.editItemCache[ino].edit = false;
-    this.nzMessage.success("修改成功");
   }
 
   saveItemCheck(data: any): boolean {
@@ -274,14 +280,6 @@ export class CardComponent implements OnInit {
     });
   }
 
-  startExpEdit(proId: number): void {
-    this.editExpCache[proId].edit = true;
-  }
-
-  cancelExpEdit(proId: number): void {
-    this.editExpCache[proId].edit = false;
-  }
-
   saveExpEdit(proId: number): void {
 
     if (!this.saveExpCheck(this.editExpCache[proId].data)) {
@@ -309,8 +307,19 @@ export class CardComponent implements OnInit {
         this.editCache[key].edit = false;
       }
     });*/
+    this.projectService.updateExp(this.editExpCache[proId].data).subscribe(result => {
+      if (result.success) {
+        this.exps.forEach(each => {
+          if (each.proId == proId) {
+            each = this.editExpCache[proId].data;
+          }
+        });
+        this.nzMessage.success("修改成功");
+      } else {
+        this.nzMessage.error("修改失败");
+      }
+    })
     this.editExpCache[proId].edit = false;
-    this.nzMessage.success("修改成功");
   }
 
   saveExpCheck(data: any): boolean {

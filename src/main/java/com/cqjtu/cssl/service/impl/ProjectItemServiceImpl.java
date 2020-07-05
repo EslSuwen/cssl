@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.mapper.ProjectItemMapper;
 import com.cqjtu.cssl.service.ProjectItemService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -28,5 +27,10 @@ public class ProjectItemServiceImpl extends ServiceImpl<ProjectItemMapper, Proje
     map.put("pro_Id", proId);
 
     return listByMap(map);
+  }
+
+  @Override
+  public boolean updateItem(ProjectItem projectItem) {
+    return updateById(projectItem);
   }
 }
