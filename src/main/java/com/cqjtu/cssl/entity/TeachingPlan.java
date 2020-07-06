@@ -23,14 +23,17 @@ public class TeachingPlan implements Serializable {
   @ApiModelProperty(value = "面向专业", position = 5, required = true)
   private String expMajor;
 
+  @ApiModelProperty(value = "学期", position = 6, required = true)
+  private String term;
+
   @ApiModelProperty(value = "班级", position = 5, required = true)
   private String labClass;
 
-  @ApiModelProperty(value = "实验课程名", position = 2, required = true)
+  @ApiModelProperty(value = "实验课程名", position = 8, required = true)
   private String expCname;
 
   @ApiModelProperty(value = "课程编号", position = 12, required = true)
-  private String courseId;
+  private Integer courseId;
 
   @ApiModelProperty(value = "实验总学时", position = 7, required = true)
   private Integer expTime;

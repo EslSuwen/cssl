@@ -57,3 +57,5 @@ testem.log
 !/.gitignore
 
 log
+
+rebel.xml

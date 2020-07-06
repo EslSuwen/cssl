@@ -28,7 +28,7 @@ public class ProjectItem implements Serializable {
   @TableId(value = "ino", type = IdType.AUTO)
   private String ino;
 
-  @ApiModelProperty(value = "实验项目编号",position = 1, required = true)
+  @ApiModelProperty(value = "实验项目编号", position = 1, required = true)
   private String iid;
 
   @ApiModelProperty(value = "项目(实验卡片)ID", position = 2, required = true)
@@ -43,12 +43,9 @@ public class ProjectItem implements Serializable {
   @ApiModelProperty(value = "实验项目学时", position = 5, required = true)
   private Integer itime;
 
-  @ApiModelProperty(value = "必修或选修", position = 6, required = true)
-  private String ctype;
-
-  @ApiModelProperty(value = "分组人数", position = 7, required = true)
+  @ApiModelProperty(value = "分组人数", position = 6, required = true)
   private Integer num;
 
-  @ApiModelProperty(value = "实验目的", position = 8, required = true)
+  @ApiModelProperty(value = "实验目的", position = 7, required = true)
   private String intend;
 }

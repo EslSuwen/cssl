@@ -21,7 +21,7 @@ import java.util.Scanner;
  * @author suwen
  * @date 2020/2/21 上午11:32
  */
-public class MybatisPlusCodeGenerator {
+public final class MybatisPlusCodeGenerator {
   // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 
   /** 读取控制台内容 */
