@@ -84,11 +84,32 @@ public class ProjectItemController {
    */
   @PutMapping("/updateItem")
   public ResponseEntity<ResultDto> updateItem(@RequestBody ProjectItem projectItem) {
+
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(projectItemService.updateItem(projectItem))
             .code(ReturnCode.RETURN_CODE_20004.getCode())
             .message("更新实验项目")
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 删除实验项目信息
+   *
+   * @param ino 实验项目编号
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/6 上午9:41
+   */
+  @DeleteMapping("deleteExp")
+  public ResponseEntity<ResultDto> deleteExp(@RequestParam Integer ino) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(projectItemService.deleteItem(ino))
+            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .message("删除实验项目信息")
             .build(),
         HttpStatus.OK);
   }

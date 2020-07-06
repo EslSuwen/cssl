@@ -32,4 +32,14 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @date 2020/7/5 下午4:02
    */
   boolean updateItem(ProjectItem projectItem);
+
+  /**
+   * 删除实验项目
+   *
+   * @param ino 实验项目编号
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/6 上午9:33
+   */
+  Boolean deleteItem(int ino);
 }

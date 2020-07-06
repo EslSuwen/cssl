@@ -103,4 +103,14 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @date 2020/7/5 下午3:33
    */
   Boolean updateExp(ExpProject expProject);
+
+  /**
+   * 删除项目卡片
+   *
+   * @param proId 卡片编号
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/6 上午9:32
+   */
+  Boolean deleteExp(int proId);
 }

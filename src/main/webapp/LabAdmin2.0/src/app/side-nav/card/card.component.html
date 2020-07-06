@@ -297,7 +297,10 @@
             <td>
               <ng-container *ngIf="!editItemCache[each.ino].edit">{{each.itype}}</ng-container>
               <ng-container *ngIf="editItemCache[each.ino].edit">
-                <input type="text" nz-input [(ngModel)]="editItemCache[each.ino].data.itype">
+                <select class="browser-default custom-select" [(ngModel)]="editItemCache[each.ino].data.itype">
+                  <option value="验证">验证</option>
+                  <option value="综合">综合</option>
+                </select>
               </ng-container>
             </td>
             <td>

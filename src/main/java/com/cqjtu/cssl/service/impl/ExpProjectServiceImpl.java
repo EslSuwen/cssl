@@ -85,4 +85,9 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   public Boolean updateExp(ExpProject expProject) {
     return updateById(expProject);
   }
+
+  @Override
+  public Boolean deleteExp(int proId) {
+    return removeById(proId);
+  }
 }

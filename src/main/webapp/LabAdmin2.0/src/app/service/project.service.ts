@@ -156,4 +156,33 @@ export class ProjectService extends HandleError {
     )
   }
 
+  /**
+   * 删除卡片信息
+   *
+   * @param proId 卡片信息
+   * @return 执行状态
+   * @author suwen
+   * @date 2020/7/6 上午9:45
+   */
+  deleteExp(proId: string): Observable<result> {
+    const url = `${this.PROJECT_API}/deleteExp`;
+    return this.http.delete<result>(url, {params: {proId}}).pipe(
+      catchError(this.handleError<result>('删除卡片信息'))
+    )
+  }
+
+  /**
+   * 删除实验项目信息
+   *
+   * @param ino 实验项目
+   * @return 执行状态
+   * @author suwen
+   * @date 2020/7/6 上午9:45
+   */
+  deleteItem(ino: string): Observable<result> {
+    const url = `${this.ITEM_API}/deleteItem`;
+    return this.http.delete<result>(url, {params: {ino}}).pipe(
+      catchError(this.handleError<result>('删除实验项目信息'))
+    )
+  }
 }

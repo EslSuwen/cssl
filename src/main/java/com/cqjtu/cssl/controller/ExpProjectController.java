@@ -182,11 +182,32 @@ public class ExpProjectController {
    */
   @PutMapping("/updateExp")
   public ResponseEntity<ResultDto> updateExp(@RequestBody ExpProject expProject) {
+
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expProjectService.updateExp(expProject))
             .code(ReturnCode.RETURN_CODE_20004.getCode())
             .message("更新卡片信息")
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 删除卡片信息
+   *
+   * @param proId 卡片编号
+   * @return 成功（true）/ 失败 （false）
+   * @author suwen
+   * @date 2020/7/6 上午9:38
+   */
+  @DeleteMapping("deleteExp")
+  public ResponseEntity<ResultDto> deleteExp(@RequestParam Integer proId) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(expProjectService.deleteExp(proId))
+            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .message("删除卡片信息")
             .build(),
         HttpStatus.OK);
   }

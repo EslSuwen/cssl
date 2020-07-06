@@ -194,28 +194,6 @@ export class CardComponent implements OnInit {
       return;
     }
 
-    // 判断有没有更新
-    /*const index = this.dataSet.findIndex(item => item.key === key);
-    const customer = this.dataSet[index];
-    const editCustomer = this.editCache[key].data;
-    if (customer.id === editCustomer.id
-      && customer.name === editCustomer.name
-      && customer.idCard === editCustomer.idCard
-      && customer.phoneNo === editCustomer.phoneNo
-      && customer.comment === editCustomer.comment) {
-      this.editCache[key].edit = false;
-      return;
-    }
-
-    // 调用修改服务
-    this.customerService.updateCustomer(this.editCache[key].data as Customer).subscribe(result => {
-      if (result !== undefined && result.success !== undefined && result.success) {
-        const index = this.dataSet.findIndex(item => item.key === key);
-        Object.assign(this.dataSet[index], result.data);
-        this.editCache[key].edit = false;
-      }
-    });*/
-
     this.projectService.updateItem(this.editItemCache[ino].data).subscribe(result => {
       if (result.success) {
         this.projectItems.forEach(each => {
@@ -232,41 +210,33 @@ export class CardComponent implements OnInit {
   }
 
   saveItemCheck(data: any): boolean {
-    // 姓名
-    /*if (data.name == null || !data.name.trim()) {
-      this.message.error('姓名不能为空');
+
+    if (data.iid == null || !data.iid.trim()) {
+      this.nzMessage.error('实验项目编号不能为空');
       return false;
     }
 
-    // 校验身份证号
-    if (data.idCard == null || !data.idCard.trim()) {
-      this.message.error('身份证号不能为空');
+    if (data.iname == null || !data.iname.trim()) {
+      this.nzMessage.error('实验项目名称不能为空');
       return false;
     }
 
-    let regex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-    if (!regex.test(data.idCard)) {
-      this.message.error('身份证号不正确');
+    if (data.itype == null || !data.itype.trim()) {
+      this.nzMessage.error('实验项目类型不能为空');
       return false;
     }
-
-    // 校验手机号
-    if (data.phoneNo == null || !data.phoneNo.trim()) {
-      this.message.error('手机号不能为空');
-      return false;
-    }
-
-    regex = /(^[1][3,4,5,7,8][0-9]{9}$)/;
-    if (!regex.test(data.phoneNo)) {
-      this.message.error('手机号不正确');
-      return false;
-    }*/
 
     return true;
   }
 
   deleteItem(ino: number) {
-    this.nzMessage.success("删除成功！");
+    this.projectService.deleteItem(ino.toString()).subscribe(resutl => {
+      if (resutl.success) {
+        this.nzMessage.success("删除成功！");
+      } else {
+        this.nzMessage.error("删除失败！");
+      }
+    })
   }
 
   updateItemEditCache(edit: boolean = false): void {
@@ -281,32 +251,10 @@ export class CardComponent implements OnInit {
   }
 
   saveExpEdit(proId: number): void {
-
     if (!this.saveExpCheck(this.editExpCache[proId].data)) {
       return;
     }
 
-    // 判断有没有更新
-    /*const index = this.dataSet.findIndex(item => item.key === key);
-    const customer = this.dataSet[index];
-    const editCustomer = this.editCache[key].data;
-    if (customer.id === editCustomer.id
-      && customer.name === editCustomer.name
-      && customer.idCard === editCustomer.idCard
-      && customer.phoneNo === editCustomer.phoneNo
-      && customer.comment === editCustomer.comment) {
-      this.editCache[key].edit = false;
-      return;
-    }
-
-    // 调用修改服务
-    this.customerService.updateCustomer(this.editCache[key].data as Customer).subscribe(result => {
-      if (result !== undefined && result.success !== undefined && result.success) {
-        const index = this.dataSet.findIndex(item => item.key === key);
-        Object.assign(this.dataSet[index], result.data);
-        this.editCache[key].edit = false;
-      }
-    });*/
     this.projectService.updateExp(this.editExpCache[proId].data).subscribe(result => {
       if (result.success) {
         this.exps.forEach(each => {
@@ -323,41 +271,21 @@ export class CardComponent implements OnInit {
   }
 
   saveExpCheck(data: any): boolean {
-    // 姓名
-    /*if (data.name == null || !data.name.trim()) {
-      this.message.error('姓名不能为空');
+    if (data.expCname == null || !data.expCname.trim()) {
+      this.nzMessage.error('实验课程名不能为空');
       return false;
     }
-
-    // 校验身份证号
-    if (data.idCard == null || !data.idCard.trim()) {
-      this.message.error('身份证号不能为空');
-      return false;
-    }
-
-    let regex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
-    if (!regex.test(data.idCard)) {
-      this.message.error('身份证号不正确');
-      return false;
-    }
-
-    // 校验手机号
-    if (data.phoneNo == null || !data.phoneNo.trim()) {
-      this.message.error('手机号不能为空');
-      return false;
-    }
-
-    regex = /(^[1][3,4,5,7,8][0-9]{9}$)/;
-    if (!regex.test(data.phoneNo)) {
-      this.message.error('手机号不正确');
-      return false;
-    }*/
-
     return true;
   }
 
-  deleteExp(ino: number) {
-    this.nzMessage.success("删除成功！");
+  deleteExp(proId: number) {
+    this.projectService.deleteExp(proId.toString()).subscribe(result => {
+      if (result.success) {
+        this.nzMessage.success("删除成功！");
+      } else {
+        this.nzMessage.error("删除失败！");
+      }
+    });
   }
 
   updateExpEditCache(edit: boolean = false): void {
