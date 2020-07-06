@@ -2,12 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {ApplyService} from '../../service/apply.service';
 import {Exp} from '../../enity/project';
 import {ProjectService} from 'src/app/service/project.service';
-import {Teach} from '../../enity/teacher';
 import {Arrange, ArrangePeriod} from '../../enity/arrange';
 import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuditService} from 'src/app/service/audit.service';
 import {LabService} from "../../service/lab.service";
+import {DateUtils} from "../../utils/DateTerm";
 
 @Component({
   selector: 'app-apply',
@@ -16,33 +16,33 @@ import {LabService} from "../../service/lab.service";
 })
 export class ApplyComponent implements OnInit {
   exps: Exp[]; // 实验卡片
-  applysumbmit = new Arrange();
+  applySubmit = new Arrange();
   arrangePeriod = new Array<ArrangePeriod>();
   // status: number;
   status = 0;
   // 周次
   weekList = [];
-  weekselectedItems = [];
+  weekSelectedItems = [];
   weekSettings = {};
   // 星期
   dayList = [];
-  dayselectedItems = [];
+  daySelectedItems = [];
   daySettings = {};
   // 节次
   timeList = [];
-  timeselectedItems = [];
+  timeSelectedItems = [];
   timeSettings = {};
   // 校区
   regionList = [];
-  regionselectedItems = [];
+  regionSelectedItems = [];
   regionSettings = {};
   // 班级
   classList = [];
-  classselectedItems = [];
+  classSelectedItems = [];
   classSettings = {};
   // 年级
   gradeList = [];
-  gradeselectedItems = [];
+  gradeSelectedItems = [];
   gradeSettings = {};
 
   // 实验室类型
@@ -54,8 +54,6 @@ export class ApplyComponent implements OnInit {
   labNameList = [];
   labNameSelectedItems = [];
   labNameSettings = {};
-
-  teacheList: Array<Teach>;
   beizhu: FormControl;
 
   constructor(private applyService: ApplyService,
@@ -69,7 +67,7 @@ export class ApplyComponent implements OnInit {
   ngOnInit() {
     this.beizhu = new FormControl();
 
-    this.projectService.getProjects(this.authenticationService.getUserNo())
+    this.projectService.getProjects(this.authenticationService.getUserNo(), DateUtils.nowTerm())
       .subscribe(result => {
         if (result.success) {
           console.log(result.data);
@@ -277,59 +275,59 @@ export class ApplyComponent implements OnInit {
 
   // 提交申请
   submit(i) {
-    console.log(this.regionselectedItems.length);
-    if ((this.regionselectedItems.length && this.classselectedItems.length
-      && this.weekselectedItems.length && this.dayselectedItems.length && this.timeselectedItems.length) !== 0) {
+    console.log(this.regionSelectedItems.length);
+    if ((this.regionSelectedItems.length && this.classSelectedItems.length
+      && this.weekSelectedItems.length && this.daySelectedItems.length && this.timeSelectedItems.length) !== 0) {
       // id
-      this.applysumbmit.proId = this.exps[i].proId;
+      this.applySubmit.proId = this.exps[i].proId;
       // 校区
-      this.applysumbmit.campus = this.regionselectedItems[0].itemName;
+      this.applySubmit.campus = this.regionSelectedItems[0].itemName;
       // 教师编号
-      this.applysumbmit.tid = this.authenticationService.getUserNo();
+      this.applySubmit.tid = this.authenticationService.getUserNo();
       // 备注
-      this.applysumbmit.labRemark = this.beizhu.value;
+      this.applySubmit.labRemark = this.beizhu.value;
       // 实验项目名称
-      this.applysumbmit.expProname = this.exps[i].expCname;
+      this.applySubmit.expProname = this.exps[i].expCname;
       // 班级
-      this.applysumbmit.labClass = this.classselectedItems[0].itemName;
-      for (let k = 1; k < this.classselectedItems.length; k++) {
-        this.applysumbmit.labClass = this.applysumbmit.labClass + '-' + this.classselectedItems[k].itemName;
+      this.applySubmit.labClass = this.classSelectedItems[0].itemName;
+      for (let k = 1; k < this.classSelectedItems.length; k++) {
+        this.applySubmit.labClass = this.applySubmit.labClass + '-' + this.classSelectedItems[k].itemName;
       }
       // tslint:disable-next-line: prefer-for-of
-      for (let m = 0; m < this.weekselectedItems.length; m++) {
+      for (let m = 0; m < this.weekSelectedItems.length; m++) {
         // 周次
         // tslint:disable-next-line: prefer-for-of
-        for (let j = 0; j < this.dayselectedItems.length; j++) {
+        for (let j = 0; j < this.daySelectedItems.length; j++) {
           // 星期
           const a = new ArrangePeriod();
 
-          a.labWeek = this.weekselectedItems[m].id;
+          a.labWeek = this.weekSelectedItems[m].id;
 
-          a.labDay = this.dayselectedItems[j].id;
+          a.labDay = this.daySelectedItems[j].id;
 
           // 节次
-          a.labSession = this.timeselectedItems[0].id;
+          a.labSession = this.timeSelectedItems[0].id;
           this.arrangePeriod.push(a);
         }
 
       }
-      this.applysumbmit.arrangePeriod = this.arrangePeriod;
-      console.log(this.applysumbmit);
+      this.applySubmit.arrangePeriod = this.arrangePeriod;
+      console.log(this.applySubmit);
 
-      this.applyService.addArrange(this.applysumbmit).subscribe();
+      // this.applyService.addArrange(this.applySubmit).subscribe();
 
       alert('己完成申请！');
-      this.projectService.getProjects(this.authenticationService.getUserNo())
+      /*this.projectService.getProjects(this.authenticationService.getUserNo(), DateUtils.nowTerm())
         .subscribe(result => {
           if (result.success)
             this.exps = result.data;
-        });
+        });*/
 
     } else {
       alert('确保填写完整的信息哦！');
     }
 
-    this.applysumbmit = new Arrange();
+    this.applySubmit = new Arrange();
     this.arrangePeriod = new Array<ArrangePeriod>();
 
   }

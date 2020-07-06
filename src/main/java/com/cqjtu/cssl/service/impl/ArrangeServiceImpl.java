@@ -60,12 +60,14 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     return arrangeList;
   }
 
+/*
   @Override
   public boolean auditArrange(Integer aid, Audit status) {
     Arrange arrange = new Arrange();
     arrange.setStatus(status);
     return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
   }
+*/
 
   @Override
   public List<TeachingPlan> getTeachingPlanList() {
@@ -76,7 +78,6 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     return teachingPlanList;
   }
 
-  @Override
   public List<ArrangeAudit> getAuditArrange() {
 
     return list(new QueryWrapper<Arrange>().eq("status", Audit.AUDITING)).stream()
@@ -109,7 +110,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   @Override
   public boolean addArrange(Arrange arrange) {
 
-    arrange.setStatus(Audit.AUDITING);
+    // arrange.setStatus(Audit.AUDITING);
     arrange.setCourseId(expProjectService.getById(arrange.getProId()).getCourseId());
     save(arrange);
 

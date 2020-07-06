@@ -44,16 +44,12 @@ public class Arrange implements Serializable {
   @ApiModelProperty(value = "实验室校区", position = 3, required = true)
   private String campus;
 
-  /** 申请状态 */
-  @ApiModelProperty(value = "申请状态", position = 4, required = true)
-  private Audit status;
-
   /** 班级 */
   @ApiModelProperty(value = "班级", position = 5, required = true)
   private String labClass;
 
   @ApiModelProperty(value = "课程编号", position = 6, required = true)
-  private String courseId;
+  private Integer courseId;
 
   @ApiModelProperty(value = "教职工号", position = 7, required = true)
   private String tid;

@@ -19,7 +19,7 @@ import java.util.List;
  * @author susie
  */
 @Log4j2
-public class ExcelUtil {
+public final class ExcelUtil {
 
   /** 方法名：exportExcel 功能：导出Excel 描述： 创建人：typ 创建时间：2018/10/19 16:00 修改人： 修改描述： 修改时间： */
   public static void exportExcel(HttpServletResponse response, List<TeachingPlan> data) {
@@ -47,7 +47,7 @@ public class ExcelUtil {
               data.get(i).getExpMajor(),
               data.get(i).getLabClass(),
               data.get(i).getExpCname(),
-              data.get(i).getCourseId(),
+              data.get(i).getCourseId().toString(),
               data.get(i).getExpTime().toString(),
               data.get(i).getCoursePeriod(),
               data.get(i).getCourseCollege(),

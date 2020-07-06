@@ -26,7 +26,7 @@ export class Arrange {
   labClass: string;
 
   /** 课程编号 */
-  courseId: string;
+  courseId: number;
 
   /** 教职工号 */
   tid: string;
@@ -48,7 +48,7 @@ export class Arrange {
     this.status = 0;
     this.labClass = '';
     this.tid = '';
-    this.courseId = '';
+    this.courseId = 0;
     this.expProname = '';
     this.labRemark = '';
     this.arrangePeriod = new Array<ArrangePeriod>();

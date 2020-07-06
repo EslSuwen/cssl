@@ -63,7 +63,7 @@ public class ExpProject implements Serializable {
   private String cname;
 
   @ApiModelProperty(value = "课程编号", position = 12, required = true)
-  private String courseId;
+  private Integer courseId;
 
   @ApiModelProperty(value = "消耗材料名称", position = 13)
   private String conName;
@@ -71,9 +71,11 @@ public class ExpProject implements Serializable {
   @ApiModelProperty(value = "消耗材料数量", position = 14)
   private Integer conNum;
 
-  @ApiModelProperty(value = "申请状态", position = 15)
-  private Audit status;
 
   @ApiModelProperty(value = "申请实验室状态", position = 16)
   private Audit labStatus;
+
+  @ApiModelProperty(value = "学期", position = 17)
+  private String term;
+
 }

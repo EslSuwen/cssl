@@ -4,13 +4,13 @@ import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.service.TeachService;
 import io.swagger.annotations.Api;
-import lombok.NonNull;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -38,15 +38,17 @@ public class TeachController {
    * @date 2020/3/23 3:10 下午
    * @return 授课信息列表
    */
-  @GetMapping(value = "/getTeachInfo/{tid}")
-  public ResponseEntity<ResultDto> getTeachInfo(@NonNull @PathVariable String tid) {
+  @GetMapping(value = "/getTeachInfo")
+  public ResponseEntity<ResultDto> getTeachInfo(
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "学期", required = true) @RequestParam String term) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取授课信息成功")
-            .data(teachService.getCourseInfoByTid(tid))
+            .data(teachService.getCourseInfoByTid(tid, term))
             .build(),
         HttpStatus.OK);
   }

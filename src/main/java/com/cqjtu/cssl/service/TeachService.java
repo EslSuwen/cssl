@@ -2,7 +2,6 @@ package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.Teach;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -29,7 +28,8 @@ public interface TeachService extends IService<Teach> {
    * @author suwen
    * @date 2020/2/20 上午11:57
    * @param tid 教职工
+   * @param term 学期
    * @return List<com.cqjtu.cssl.entity.Teach> 授课信息列表
    */
-  List<Teach> getCourseInfoByTid(String tid);
+  List<Teach> getCourseInfoByTid(String tid, String term);
 }

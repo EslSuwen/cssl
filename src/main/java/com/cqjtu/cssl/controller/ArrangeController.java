@@ -1,6 +1,5 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
@@ -84,20 +83,12 @@ public class ArrangeController {
    *
    * @return 实验室时间安排列表
    * @author suwen
-   * @date 2020/5/15 下午7:27
+   * @date 2020/5/15 下午7:27 @GetMapping("getAuditArrange") public ResponseEntity<ResultDto>
+   *     getAuditArrange() {
+   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
+   *     .code(ReturnCode.RETURN_CODE_20001.getCode()) .message("获取已申请的实验室安排信息成功")
+   *     .data(arrangeService.getAuditArrange()) .build(), HttpStatus.OK); }
    */
-  @GetMapping("getAuditArrange")
-  public ResponseEntity<ResultDto> getAuditArrange() {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("获取已申请的实验室安排信息成功")
-            .data(arrangeService.getAuditArrange())
-            .build(),
-        HttpStatus.OK);
-  }
 
   /**
    * 管理员审核实验室时间安排
@@ -106,21 +97,14 @@ public class ArrangeController {
    * @param status 审核状态
    * @return 操作状态
    * @author suwen
-   * @date 2020/5/11 上午9:49
+   * @date 2020/5/11 上午9:49 @PutMapping("auditArrange") public ResponseEntity<ResultDto>
+   *     auditArrange( @NonNull @ApiParam(value = "安排编号", required = true) @RequestParam Integer
+   *     aid, @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
+   *     <p>return new ResponseEntity<>( ResultDto.builder()
+   *     .success(arrangeService.auditArrange(aid, status))
+   *     .code(ReturnCode.RETURN_CODE_20004.getCode()) .message("审核实验室时间安排成功") .build(),
+   *     HttpStatus.OK); }
    */
-  @PutMapping("auditArrange")
-  public ResponseEntity<ResultDto> auditArrange(
-      @NonNull @ApiParam(value = "安排编号", required = true) @RequestParam Integer aid,
-      @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(arrangeService.auditArrange(aid, status))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
-            .message("审核实验室时间安排成功")
-            .build(),
-        HttpStatus.OK);
-  }
 
   /**
    * 获取教学计划表

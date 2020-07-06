@@ -2,12 +2,12 @@ server:                  #配置server
   tomcat:       #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
-    context-path: /
+    context-path: /cssl
   port: 8090
 
 spring:
   profiles:
-    active: dev
+    active: dev2
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver            # 数据库访问配置,主数据源，默认的
@@ -99,7 +99,7 @@ security:
     authentication-path: /api/auth
 
 ---
-#开发环境配置
+#开发环境配置1
 
 spring:
   profiles: dev
@@ -111,12 +111,25 @@ spring:
 
 
 ---
+#开发环境配置2
+
+spring:
+  profiles: dev2
+  datasource:
+    druid:
+      url: jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8
+      username: root
+      password: Cssl123.
+
+
+
+---
 #生产环境配置
 
 spring:
   profiles: prod
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/csslDB
+      url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
       username: root
       password: Cssl123.

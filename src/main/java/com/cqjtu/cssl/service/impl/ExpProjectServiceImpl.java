@@ -7,6 +7,7 @@ import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,34 +22,39 @@ import java.util.List;
 public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProject>
     implements ExpProjectService {
 
+  private final ExpProjectMapper expProjectMapper;
+
+  @Autowired
+  public ExpProjectServiceImpl(ExpProjectMapper expProjectMapper) {
+    this.expProjectMapper = expProjectMapper;
+  }
+
   @Override
-  public boolean isCardExist(String tid, String cid) {
+  public boolean isCardExist(String tid, Integer cid) {
 
     return !list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid)).isEmpty();
   }
 
   @Override
-  public ExpProject getExpByTidCid(String tid, String cid) {
+  public ExpProject getExpByTidCid(String tid, Integer cid) {
 
     return getOne(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid));
   }
 
   @Override
-  public List<ExpProject> getExpByTid(String tid) {
-    return list(new QueryWrapper<ExpProject>().eq("exp_tid", tid));
+  public List<ExpProject> getExpByTid(String tid, String term) {
+    return list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("term", term));
   }
 
-  @Override
   public List<ExpProject> getAuditProjects() {
 
     return list(new QueryWrapper<ExpProject>().eq("status", Audit.AUDITING));
   }
 
-  @Override
   public boolean auditProject(String proId, Audit status) {
 
     ExpProject expProject = new ExpProject();
-    expProject.setStatus(status);
+    // expProject.setStatus(status);
     return update(expProject, new UpdateWrapper<ExpProject>().eq("pro_Id", proId));
   }
 
@@ -59,5 +65,29 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
     }
     expProject.setLabCenName("信息技术实践教学中心");
     return save(expProject);
+  }
+
+  @Override
+  public List<String> getTermList() {
+    return expProjectMapper.getTermList();
+  }
+
+  @Override
+  public ExpProject reuseCard(String tid, String courseId) {
+    return getOne(
+        new QueryWrapper<ExpProject>()
+            .last("LIMIT 1")
+            .eq("exp_tid", tid)
+            .eq("course_id", courseId));
+  }
+
+  @Override
+  public Boolean updateExp(ExpProject expProject) {
+    return updateById(expProject);
+  }
+
+  @Override
+  public Boolean deleteExp(int proId) {
+    return removeById(proId);
   }
 }

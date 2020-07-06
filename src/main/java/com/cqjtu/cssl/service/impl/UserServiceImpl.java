@@ -23,14 +23,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     this.userMapper = userMapper;
   }
 
-  /**
-   * 注解式 自定义 mappper 方法调用
-   *
-   * @author suwen
-   * @date 2020/1/12 3:45 下午
-   * @param userName 用户名
-   * @return User 用户
-   */
   public User getUserByName(String userName) {
     return userMapper.selectByUserName(userName);
   }

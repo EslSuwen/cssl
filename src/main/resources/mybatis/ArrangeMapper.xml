@@ -6,6 +6,7 @@
                exp_cname,
                p.course_id,
                exp_major,
+               term,
                lab_class,
                exp_time,
                course_college,

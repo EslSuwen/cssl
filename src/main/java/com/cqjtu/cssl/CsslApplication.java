@@ -11,7 +11,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @author suwen
  * @date 2020/2/21 下午3:29
  */
-@EnableSwagger2
 @MapperScan(basePackages = {"com.cqjtu.cssl.mapper"})
 @SpringBootApplication()
 public class CsslApplication {
