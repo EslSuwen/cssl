@@ -3,6 +3,7 @@ package com.cqjtu.cssl.controller;
 import com.cqjtu.cssl.entity.TestFile;
 import com.cqjtu.cssl.service.TestFileService;
 import io.swagger.annotations.Api;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -20,6 +23,7 @@ import java.io.IOException;
  */
 @Api(tags = "文件传输测试-控制器")
 @RestController
+@Log4j2
 @RequestMapping(path = "/file")
 public class FileTestController {
 
@@ -55,24 +59,21 @@ public class FileTestController {
    * @date 2020/2/6 2:45 下午
    */
   @PostMapping(value = "/upload")
-  public String upload(@RequestParam("file") MultipartFile file) throws IOException {
-    //        System.out.println("后台文件上传函数");
-    System.out.println("获取到的文件名称为：" + file);
-    String filePath = file.getOriginalFilename(); // 获取文件的名称
-    //        filePath = "G:/" + filePath; // 这是文件的保存路径，如果不设置就会保存到项目的根目录
+  public String upload(@RequestParam("file") MultipartFile file, @RequestParam("test") String test)
+      throws IOException {
+    log.info("后台文件上传函数");
+    log.info("获取到的文件名称为：" + file.getOriginalFilename());
+    // 获取文件的名称
+    String filePath = file.getOriginalFilename();
 
-    //        BufferedOutputStream outputStream = new BufferedOutputStream(new
-    // FileOutputStream(filePath));
-    //
-    //        outputStream.write(file.getBytes());
-    //        outputStream.flush();
-    //        outputStream.close();
+    assert filePath != null;
+    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(filePath));
 
-    TestFile testFile = new TestFile(Math.round(100), file.getOriginalFilename(), file.getBytes());
+    outputStream.write(file.getBytes());
+    outputStream.flush();
+    outputStream.close();
 
-    testFileService.save(testFile);
-
-    //        testFileService.addUser();
+    log.info(test);
 
     return "客户资料上传成功";
   }
