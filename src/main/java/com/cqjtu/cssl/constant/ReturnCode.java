@@ -15,6 +15,8 @@ public enum ReturnCode {
   RETURN_CODE_20004("20004", "更新成功"),
   RETURN_CODE_20005("20005", "新增成功"),
   RETURN_CODE_20006("20006", "删除成功"),
+  RETURN_CODE_20007("20007", "上传成功"),
+
 
   /** 客户端错误 */
   RETURN_CODE_40001("40001", "不存在该账号"),

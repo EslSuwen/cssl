@@ -58,7 +58,7 @@ public final class MybatisPlusCodeGenerator {
     // 数据源配置
     DataSourceConfig dsc = new DataSourceConfig();
     dsc.setUrl(
-        "jdbc:mysql://47.107.239.108/:3306/csslDB-dev?characterEncoding=utf8");
+        "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8");
     // dsc.setSchemaName("public");
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("root");

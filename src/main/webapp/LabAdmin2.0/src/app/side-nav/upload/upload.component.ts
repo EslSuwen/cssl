@@ -100,7 +100,8 @@ export class UploadComponent implements OnInit {
     let api = 'http://localhost:8090/cssl/file/upload'
     let formData = new FormData();
     formData.append('file', file);
-    formData.append('test', '123456');
+    formData.append('typeName', 'attend');
+    formData.append('proId', '24');
     console.log(formData.get('file'));
     this.http.post(api, formData).subscribe(result => console.log(result));
   }

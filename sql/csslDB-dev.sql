@@ -5,13 +5,13 @@
  Source Server Type    : MySQL
  Source Server Version : 50729
  Source Host           : 47.107.239.108:3306
- Source Schema         : csslDB
+ Source Schema         : csslDB-dev
 
  Target Server Type    : MySQL
  Target Server Version : 50729
  File Encoding         : 65001
 
- Date: 04/07/2020 14:32:36
+ Date: 07/07/2020 16:51:06
 */
 
 SET NAMES utf8mb4;
@@ -250,6 +250,42 @@ INSERT INTO `course` VALUES (19212769, '基于FPGA的SOC设计', '信息科学�
 COMMIT;
 
 -- ----------------------------
+-- Table structure for exp_file
+-- ----------------------------
+DROP TABLE IF EXISTS `exp_file`;
+CREATE TABLE `exp_file` (
+  `pro_id` int(11) NOT NULL AUTO_INCREMENT,
+  `attend` int(8) DEFAULT NULL,
+  `task` int(8) DEFAULT NULL,
+  `grade` int(8) DEFAULT NULL,
+  `scheme` int(8) DEFAULT NULL,
+  `report` int(8) DEFAULT NULL,
+  PRIMARY KEY (`pro_id`) USING BTREE,
+  CONSTRAINT `pro_id` FOREIGN KEY (`pro_id`) REFERENCES `exp_project` (`pro_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of exp_file
+-- ----------------------------
+BEGIN;
+COMMIT;
+
+-- ----------------------------
+-- Table structure for exp_file_store
+-- ----------------------------
+DROP TABLE IF EXISTS `exp_file_store`;
+CREATE TABLE `exp_file_store` (
+  `no` int(11) NOT NULL AUTO_INCREMENT,
+  `pro_id` int(11) NOT NULL,
+  `type_name` varchar(8) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `file` mediumblob NOT NULL,
+  PRIMARY KEY (`no`),
+  KEY `file_pro_id` (`pro_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+
+-- ----------------------------
 -- Table structure for exp_project
 -- ----------------------------
 DROP TABLE IF EXISTS `exp_project`;
@@ -286,7 +322,7 @@ INSERT INTO `exp_project` VALUES (13, '信息技术实践教学中心', '上机'
 INSERT INTO `exp_project` VALUES (18, '信息技术实践教学中心', '汇编上机', '计算机', 50, '计算机科学与技术', '本科生', 30, '教材', '软件', '123', 'UNCHECK', '汇编与计算机组成原理', '材料', 10, 14210669, '2019/2020(2)');
 INSERT INTO `exp_project` VALUES (22, '信息技术实践教学中心', '移动app开发', '计算机', 40, '计算机科学与技术', '本科生', 30, '教材无', 'android studio', '123', 'AUDITING', '移动互联APP', '无', 0, 14211374, '2019/2020(2)');
 INSERT INTO `exp_project` VALUES (23, '信息技术实践教学中心', '上机实验', '计算机', 40, '计算机科学与技术', '本科生', 24, '教材1', 'vs', '123', 'AUDITING', '高级语言程序设计', '无', 0, 17015054, '2019/2020(2)');
-INSERT INTO `exp_project` VALUES (24, '信息技术实践教学中心', '大数据概论实验', '计算机', 40, '计算机科学与技术', '本科生', 40, '实验教材', '实验所用软件', '123', 'AUDITING', '大数据概论', '无', 0, 17015184, '2019/2020(1)');
+INSERT INTO `exp_project` VALUES (24, '信息技术实践教学中心', '大数据概论实验11', '计算机', 40, '计算机科学与技术', '本科生', 40, '实验教材', '实验所用软件', '123', 'AUDITING', '大数据概论', '无', 0, 17015184, '2019/2020(1)');
 INSERT INTO `exp_project` VALUES (25, '信息技术实践教学中心', '实验课程名', '计算机', 0, '计算机科学与技术', '本科生', 40, '实验教材', '实验所用软件', '344847034079', 'AUDITING', '汇编与计算机组成原理', '无', 0, 14210669, '2019/2020(2)');
 INSERT INTO `exp_project` VALUES (26, '信息技术实践教学中心', '实验课程名', '计算机', 0, '计算机科学与技术', '本科生', 40, '实验教材', '实验所用软件', '344847034079', 'AUDITING', '信息论与编码B', '无', 0, 14211346, '2019/2020(2)');
 INSERT INTO `exp_project` VALUES (27, '信息技术实践教学中心', '实验课程名', '计算机', 0, '计算机科学与技术', '本科生', 40, '实验教材', '实验所用软件', '344847034079', 'AUDITING', '移动互联APP', '无', 0, 14211374, '2019/2020(2)');
@@ -600,7 +636,6 @@ CREATE TABLE `teacher_msg` (
 BEGIN;
 INSERT INTO `teacher_msg` VALUES (23, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
 INSERT INTO `teacher_msg` VALUES (24, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
-INSERT INTO `teacher_msg` VALUES (25, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
 INSERT INTO `teacher_msg` VALUES (26, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
 INSERT INTO `teacher_msg` VALUES (27, '123', '实验室安排通知', 1, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 0);
 INSERT INTO `teacher_msg` VALUES (28, '123', '实验室安排通知', 0, '管理员未通过你关于通信原理实验课的课程安排，请联系管理员', '2020-03-24 19:27:25', 1);
