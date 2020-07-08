@@ -24,6 +24,9 @@ export class ExpFile {
   /** 实验报告 */
   report: number;
 
+  /** 文件 */
+  files: Array<ExpFileStore>;
+
   constructor() {
     this.proId = 0;
     this.attend = 0;
@@ -32,4 +35,29 @@ export class ExpFile {
     this.scheme = 0;
     this.report = 0;
   }
+}
+
+/**
+ * 实验卡片文件储存实体
+ *
+ * @author suwen
+ * @since 2020-07-8
+ */
+export class ExpFileStore {
+
+  /** 编号 */
+  no: number;
+
+  /** 项目ID */
+  proId: number;
+
+  /** 项目文件类型名 */
+  typeName: string;
+
+  /** 文件名 */
+  name: string;
+
+  /** 文件 */
+  file: any;
+
 }

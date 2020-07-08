@@ -19,16 +19,21 @@
         <table mdbTable bordered="true" small="true" class="text-center">
           <thead class="green white-text">
           <tr>
-            <th>文件名</th>
+            <th>文件类型</th>
             <th>状态</th>
+            <th>文件</th>
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let each of fileInputName;let no=index">
-            <td>{{each?.name}}</td>
+          <tr *ngFor="let each of fileStatusArray;let no=index">
+            <td>{{each?.typeName}}</td>
             <td>
-              <button type="button" class="btn btn-outline-success disabled btn-sm">已上传</button>
-              <button type="button" class="btn btn-outline-danger disabled btn-sm">未上传</button>
+              <button type="button" *ngIf="each?.status" class="btn btn-outline-success disabled btn-sm">已上传</button>
+              <button type="button" *ngIf="!each?.status" class="btn btn-outline-danger disabled btn-sm">未上传</button>
+            </td>
+            <td>
+              <button nz-button [nzType]="'primary'" *ngIf="each?.status" (click)="onCheckFile(each?.status)">
+                {{each?.fileName}}</button>
             </td>
           </tbody>
         </table>
@@ -51,7 +56,7 @@
           <!-- 这里放上传文件表单 -->
           <div class="row m-3 ">
             <div class="col-5 m-3" *ngFor="let fi of fileInputName">
-              <ng2-file-input [drop-text]="fi?.name" (onAdded)="fileChange(fi?.typeName,$event)"></ng2-file-input>
+              <ng2-file-input [drop-text]="fi?.typeName" (onAdded)="fileChange(fi?.typeName,$event)"></ng2-file-input>
             </div>
           </div>
         </mdb-card>
@@ -64,7 +69,10 @@
 </div>
 <div class="row">
   <div class="col-4 mx-auto mt-4">
-    <button mdbBtn type="button" color="success" block="true" outline="true" (click)="onsubmit()"
+    <div *ngIf="nzProgressVisible">
+      <nz-progress [nzPercent]="nzProgress" nzStatus="active"></nz-progress>
+    </div>
+    <button mdbBtn type="button" color="success" block="true" outline="true" (click)="showConfirm()"
             class="rounded-pill" mdbWavesEffect>提交
     </button>
 
