@@ -8,6 +8,8 @@ import {ProjectService} from "../../service/project.service";
 import {AuthenticationService} from "../../service/authentication.service";
 import {TeacherService} from "../../service/teacher.service";
 import {HttpClient} from "@angular/common/http";
+import {ExpFileService} from "../../service/exp-file.service";
+import {ExpFile} from "../../enity/exp-file";
 
 @Component({
   selector: 'app-upload',
@@ -16,7 +18,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class UploadComponent implements OnInit {
   modalRef: MDBModalRef;
-
+  expFile: ExpFile;
   // 学期列表
   termList = ['请选择学期', '2019/2020(2)', '2019/2020(1)', '2018/2019(2)', '2018/2019(1)']
   termSelected = DateUtils.nowTerm();
@@ -25,14 +27,15 @@ export class UploadComponent implements OnInit {
   courseSelected: string;
   courseSelectSettings = {};
 
+
   switch1: any;
   // 文件上传的控件
   fileInputName = [
-    {name: '考勤名单', typeName: 'attend'},
-    {name: '实验任务书', typeName: 'task'},
-    {name: '实验成绩', typeName: 'grade'},
-    {name: '评分标准表', typeName: 'scheme'},
-    {name: '实验报告', typeName: 'report'},];
+    {name: '考勤名单', typeName: 'attend', status: 1, fileName: "ok"},
+    {name: '实验任务书', typeName: 'task', status: 1, fileName: "ok"},
+    {name: '实验成绩', typeName: 'grade', status: 1, fileName: "ok"},
+    {name: '评分标准表', typeName: 'scheme', status: 1, fileName: "ok"},
+    {name: '实验报告', typeName: 'report', status: 1, fileName: "ok"}];
 
   fromData: FormData;
 
@@ -43,7 +46,8 @@ export class UploadComponent implements OnInit {
     private projectService: ProjectService,
     private authenticationService: AuthenticationService,
     private teacherService: TeacherService,
-    public http: HttpClient,) {
+    public http: HttpClient,
+    private expFileService: ExpFileService) {
 
   }
 
@@ -94,16 +98,23 @@ export class UploadComponent implements OnInit {
   courseSelect(item: any) {
     console.log(item.id);
     console.log(item.itemName);
+    this.expFileService.getFileStatus(item.id).subscribe(result => {
+      if (result.success) {
+        this.expFile = result.data;
+        this.nzMessage.success("获取文件关联信息成功");
+      } else {
+        this.nzMessage.error("获取文件关联信息失败");
+      }
+    })
   }
 
   fileChange(typeName: string, e: any) {
-    let api = 'http://localhost:8090/cssl/file/upload'
     let formData = new FormData();
     formData.append('file', e.file);
     formData.append('typeName', typeName);
     formData.append('proId', '24');
     console.log(formData.get('file'));
     console.log(typeName);
-    this.http.post(api, formData).subscribe(result => console.log(result));
+    this.expFileService.addExpFile(formData).subscribe(result => console.log(result));
   }
 }
