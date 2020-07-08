@@ -25,11 +25,14 @@ export class UploadComponent implements OnInit {
   courseSelected: string;
   courseSelectSettings = {};
 
-  statusList = [{fileName: '考勤名单'}, {fileName: '实验任务书'}, {fileName: '实验成绩'}, {fileName: '评分标准表'}];
-
   switch1: any;
   // 文件上传的控件
-  fileInputName = ['考勤名单', '实验任务书', '实验成绩', '评分标准表', '实验报告'];
+  fileInputName = [
+    {name: '考勤名单', typeName: 'attend'},
+    {name: '实验任务书', typeName: 'task'},
+    {name: '实验成绩', typeName: 'grade'},
+    {name: '评分标准表', typeName: 'scheme'},
+    {name: '实验报告', typeName: 'report'},];
 
   fromData: FormData;
 
@@ -93,16 +96,14 @@ export class UploadComponent implements OnInit {
     console.log(item.itemName);
   }
 
-  fileChange(e) {
-    let file = e.file; // 获取图片这里只操作一张图片
-    console.log(e);
-    console.log(file);
+  fileChange(typeName: string, e: any) {
     let api = 'http://localhost:8090/cssl/file/upload'
     let formData = new FormData();
-    formData.append('file', file);
-    formData.append('typeName', 'attend');
+    formData.append('file', e.file);
+    formData.append('typeName', typeName);
     formData.append('proId', '24');
     console.log(formData.get('file'));
+    console.log(typeName);
     this.http.post(api, formData).subscribe(result => console.log(result));
   }
 }
