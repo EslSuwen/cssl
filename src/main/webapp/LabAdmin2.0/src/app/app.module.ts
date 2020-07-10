@@ -9,8 +9,7 @@ import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularMultiSelectModule} from 'angular2-multiselect-dropdown';
 import {OwlDateTimeModule, OwlNativeDateTimeModule} from 'ng-pick-datetime';
-import { QuillModule } from 'ngx-quill';
-
+import {QuillModule} from 'ngx-quill';
 // import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {Ng2FileInputModule} from 'ng2-file-input';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
@@ -38,7 +37,7 @@ import zh from '@angular/common/locales/zh';
 import {ApplyManageComponent} from './side-nav/apply-manage/apply-manage.component';
 import {Code404Component} from './code404/code404.component';
 import {AuditLabComponent} from './side-nav/audit-lab/audit-lab.component';
-import { FutextComponent } from './side-nav/futext/futext.component';
+import {FutextComponent} from './side-nav/futext/futext.component';
 
 registerLocaleData(zh);
 
