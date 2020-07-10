@@ -9,4 +9,15 @@ import com.cqjtu.cssl.entity.ExpFile;
  * @author suwen
  * @since 2020-07-07
  */
-public interface ExpFileService extends IService<ExpFile> {}
+public interface ExpFileService extends IService<ExpFile> {
+
+  /**
+   * 获得文件状态
+   *
+   * @param proId 项目编号
+   * @return 文件状态
+   * @author suwen
+   * @date 2020/7/8 上午9:18
+   */
+  ExpFile getFileStatus(Integer proId);
+}

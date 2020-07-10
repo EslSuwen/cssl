@@ -14,4 +14,10 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ExpFileServiceImpl extends ServiceImpl<ExpFileMapper, ExpFile>
-    implements ExpFileService {}
+    implements ExpFileService {
+
+  @Override
+  public ExpFile getFileStatus(Integer proId) {
+    return getById(proId);
+  }
+}

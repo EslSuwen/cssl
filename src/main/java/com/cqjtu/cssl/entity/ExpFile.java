@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 项目(实验卡片)文件关联实体类
@@ -42,4 +44,8 @@ public class ExpFile implements Serializable {
 
   @ApiModelProperty(value = "实验报告", required = true)
   private Integer report;
+
+  @ApiModelProperty(value = "文件列表")
+  @TableField(exist = false)
+  private List<ExpFileStore> files;
 }
