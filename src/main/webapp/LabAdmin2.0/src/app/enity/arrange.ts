@@ -4,7 +4,6 @@
  * @author suwen
  * @since 2020-02-23
  */
-
 export class Arrange {
 
   /** 实验室排课编号 */

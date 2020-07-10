@@ -1,15 +1,25 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.entity.TestFile;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.entity.ExpFileStore;
+import com.cqjtu.cssl.service.ExpFileService;
+import com.cqjtu.cssl.service.ExpFileStoreService;
 import com.cqjtu.cssl.service.TestFileService;
 import io.swagger.annotations.Api;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -20,15 +30,25 @@ import java.io.IOException;
  */
 @Api(tags = "文件传输测试-控制器")
 @RestController
+@Log4j2
 @RequestMapping(path = "/file")
 public class FileTestController {
 
   private final TestFileService testFileService;
+  private final ExpFileService expFileService;
+  private final ExpFileStoreService expFileStoreService;
 
   @Autowired
-  public FileTestController(TestFileService testFileService) {
+  public FileTestController(
+      TestFileService testFileService,
+      ExpFileService expFileService,
+      ExpFileStoreService expFileStoreService) {
     this.testFileService = testFileService;
+    this.expFileService = expFileService;
+    this.expFileStoreService = expFileStoreService;
   }
+
+  @Autowired
 
   /**
    * 获取文件
@@ -55,26 +75,43 @@ public class FileTestController {
    * @date 2020/2/6 2:45 下午
    */
   @PostMapping(value = "/upload")
-  public String upload(@RequestParam("file") MultipartFile file) throws IOException {
-    //        System.out.println("后台文件上传函数");
-    System.out.println("获取到的文件名称为：" + file);
-    String filePath = file.getOriginalFilename(); // 获取文件的名称
-    //        filePath = "G:/" + filePath; // 这是文件的保存路径，如果不设置就会保存到项目的根目录
+  public ResponseEntity<ResultDto> upload(
+      @RequestParam("file") MultipartFile file,
+      @RequestParam("proId") String proId,
+      @RequestParam("typeName") String typeName)
+      throws IOException {
+    log.info("后台文件上传函数");
+    log.info(proId);
+    log.info(typeName);
+    log.info("获取到的文件名称为：" + file.getOriginalFilename());
+    // 获取文件的名称
+    String filePath = file.getOriginalFilename();
 
-    //        BufferedOutputStream outputStream = new BufferedOutputStream(new
-    // FileOutputStream(filePath));
-    //
-    //        outputStream.write(file.getBytes());
-    //        outputStream.flush();
-    //        outputStream.close();
+    assert filePath != null;
+    BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(filePath));
 
-    TestFile testFile = new TestFile(Math.round(100), file.getOriginalFilename(), file.getBytes());
+    outputStream.write(file.getBytes());
+    outputStream.flush();
+    outputStream.close();
 
-    testFileService.save(testFile);
+    ExpFileStore expFileStore =
+        ExpFileStore.builder()
+            .proId(Integer.valueOf(proId))
+            .file(file.getBytes())
+            .name(file.getOriginalFilename())
+            .typeName(typeName)
+            .build();
 
-    //        testFileService.addUser();
+    log.info(expFileStore);
+    expFileStoreService.save(expFileStore);
 
-    return "客户资料上传成功";
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20007.getCode())
+            .message("资料上传成功")
+            .build(),
+        HttpStatus.OK);
   }
 
   /**
@@ -82,20 +119,17 @@ public class FileTestController {
    *
    * @param request 服务器请求
    * @param response 服务器响应
-   * @return java.lang.String
    * @author suwen
    * @date 2020/2/6 2:47 下午
    */
   @GetMapping("/getImage")
-  public String getImage(
+  public void getImage(
       HttpServletRequest request,
       HttpServletResponse response /*@RequestBody FileHelper[] file_from_sever*/)
       throws Exception {
 
-    System.out.println("getImage()被调用");
-
-    TestFile testFile = testFileService.getById(28);
-    byte[] bytes = testFile.getFile();
+    byte[] bytes =
+        expFileStoreService.getOne(new QueryWrapper<ExpFileStore>().last("LIMIT 1")).getFile();
 
     // 向浏览器发通知，我要发送是图片
     response.setContentType("image/jpeg");
@@ -103,7 +137,5 @@ public class FileTestController {
     sos.write(bytes);
     sos.flush();
     sos.close();
-
-    return null;
   }
 }
