@@ -38,6 +38,7 @@ import {ApplyManageComponent} from './side-nav/apply-manage/apply-manage.compone
 import {Code404Component} from './code404/code404.component';
 import {AuditLabComponent} from './side-nav/audit-lab/audit-lab.component';
 import {FutextComponent} from './side-nav/futext/futext.component';
+import { ShowNoticeComponent } from './side-nav/show-notice/show-notice.component';
 
 registerLocaleData(zh);
 
@@ -62,6 +63,7 @@ const appRoutes: Routes = [
       {path: 'applyexproom', component: ApplyExpRoomComponent,},
       {path: 'updatepassword', component: UpdatePasswordComponent,},
       {path: 'message', component: MessageComponent,},
+      {path: "show-notice", component: ShowNoticeComponent},
       {path: "futext", component: FutextComponent},
 
 
@@ -93,6 +95,7 @@ const appRoutes: Routes = [
     Code404Component,
     AuditLabComponent,
     FutextComponent,
+    ShowNoticeComponent,
   ],
   imports: [
     BrowserModule,
