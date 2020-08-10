@@ -1,9 +1,11 @@
 package com.cqjtu.cssl;
 
+import com.cqjtu.cssl.config.SecurityProperties;
+import com.cqjtu.cssl.config.FileProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
 /**
  * Spring Boot 入口
@@ -12,7 +14,11 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * @date 2020/2/21 下午3:29
  */
 @MapperScan(basePackages = {"com.cqjtu.cssl.mapper"})
-@SpringBootApplication()
+@SpringBootApplication
+@EnableConfigurationProperties({
+        FileProperties.class,
+        SecurityProperties.class
+})
 public class CsslApplication {
 
   public static void main(String[] args) {
