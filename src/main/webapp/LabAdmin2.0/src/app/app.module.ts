@@ -39,6 +39,7 @@ import {ApplyManageComponent} from './side-nav/apply-manage/apply-manage.compone
 import {Code404Component} from './code404/code404.component';
 import {AuditLabComponent} from './side-nav/audit-lab/audit-lab.component';
 import { FutextComponent } from './side-nav/futext/futext.component';
+import { CardInfoComponent } from './side-nav/card-info/card-info.component';
 
 registerLocaleData(zh);
 
@@ -58,19 +59,19 @@ const appRoutes: Routes = [
       {path: 'notify', component: NotifyComponent,},
       {path: 'upload', component: UploadComponent,},
       {path: 'card', component: CardComponent,},
+      {path: 'cardInfo',component: CardInfoComponent},
       {path: 'teachtable', component: TeachTableComponent,},
       {path: 'apply', component: ApplyComponent,},
       {path: 'applyexproom', component: ApplyExpRoomComponent,},
       {path: 'updatepassword', component: UpdatePasswordComponent,},
       {path: 'message', component: MessageComponent,},
-      {path: "futext", component: FutextComponent},
+      {path: 'futext', component: FutextComponent},
 
-
-      {path: "**", component: Code404Component},
-      {path: "audit-lab", component: AuditLabComponent},
+      {path: '**', component: Code404Component},
+      {path: 'audit-lab', component: AuditLabComponent},
     ],
   },
-  {path: "**", component: Code404Component},];
+  {path: '**', component: Code404Component},];
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ const appRoutes: Routes = [
     Code404Component,
     AuditLabComponent,
     FutextComponent,
+    CardInfoComponent,
   ],
   imports: [
     BrowserModule,
