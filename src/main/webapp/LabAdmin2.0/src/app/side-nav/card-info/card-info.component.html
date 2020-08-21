@@ -1,12 +1,7 @@
 <div class="row mt-2">
   <div class="col px-0">
     <div class="card">
-      <h3 class="card-header text-center font-weight-bold text-uppercase pt-3">{{planPeriod.year}} 学期教学计划执行表
-      </h3>
-      <div class="card-body">
-        <button mdbBtn type="submit" gradient="blue" mdbWavesEffect (click)="download()">下载教学计划表
-        </button>
-      </div>
+      <h3 class="card-header text-center font-weight-bold text-uppercase pt-3">学期实验课信息总览</h3>
       <div class="card-body">
         <nz-table
           #TeachTable
@@ -39,7 +34,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let each of TeachTable.data;let no=index">
+          <tr *ngFor="let each of TeachTable.data;let no=index" (click)="showInfoModal(no)">
             <th scope="row">{{no + 1}}</th>
             <td>{{each.labName}}</td>
             <td>{{each.term}}</td>
@@ -61,3 +56,68 @@
     </div>
   </div>
 </div>
+
+<nz-modal [(nzVisible)]="isNzModalVisible" (nzOnCancel)="isNzModalVisible=false">
+  <nz-card style="width: 100%;" nzTitle="详细信息" nzBordered="false">
+    <nz-card-tab>
+      <nz-tabset nzSize="large" [(nzSelectedIndex)]="tabIndex">
+        <nz-tab nzTitle="实验室信息"></nz-tab>
+        <nz-tab nzTitle="文件信息"></nz-tab>
+      </nz-tabset>
+    </nz-card-tab>
+    <div *ngIf="tabIndex==0">
+      <div class="card-body col-12 px-0 mx-auto mb-6">
+        <table mdbTable bordered="true" class="text-center">
+          <thead class="green white-text">
+          <tr>
+            <th>实验室编号</th>
+            <th>实验室负责人</th>
+            <th>实验室名称</th>
+            <th>实验室类型</th>
+            <th>校区</th>
+            <th>人数容量</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td>{{labInfo?.labId}}</td>
+            <td>{{labInfo?.tname}}</td>
+            <td>{{labInfo?.labName}}</td>
+            <td>{{labInfo?.typeName}}</td>
+            <td>{{labInfo?.labCampus}}</td>
+            <td>{{labInfo?.labCap}}</td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div *ngIf="tabIndex==1">
+      <div class="card-body col-12 px-0 mx-auto mb-6">
+        <table mdbTable bordered="true" class="text-center">
+          <thead class="green white-text">
+          <tr>
+            <th>文件类型</th>
+            <th>状态</th>
+            <th>文件</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let each of fileStatusArray;let no=index">
+            <td>{{each?.typeName}}</td>
+            <td>
+              <button type="button" *ngIf="each?.status" class="btn btn-outline-success disabled btn-sm">已上传</button>
+              <button type="button" *ngIf="!each?.status" class="btn btn-outline-danger disabled btn-sm">未上传</button>
+            </td>
+            <td>
+              <button nz-button [nzType]="'primary'" *ngIf="each?.status" (click)="onCheckFile(each?.status)">
+                {{each?.fileName}}</button>
+            </td>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </nz-card>
+  <div *nzModalFooter>
+    <span>提醒教师完善信息：</span>
+    <button nz-button nzType="primary" (click)="handleOk()" [nzLoading]="isMsgConfirmLoading">发送</button>
+  </div>
+</nz-modal>

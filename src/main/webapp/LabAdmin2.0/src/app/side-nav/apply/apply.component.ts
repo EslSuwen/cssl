@@ -7,7 +7,7 @@ import {FormControl} from '@angular/forms';
 import {AuthenticationService} from "../../service/authentication.service";
 import {AuditService} from 'src/app/service/audit.service';
 import {LabService} from "../../service/lab.service";
-import {DateUtils} from "../../utils/DateTerm";
+import {DateUtils} from "../../utils/DateUtils";
 
 @Component({
   selector: 'app-apply',

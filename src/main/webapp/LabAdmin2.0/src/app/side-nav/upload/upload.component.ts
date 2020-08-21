@@ -3,7 +3,7 @@ import {MDBModalRef} from 'angular-bootstrap-md';
 import {NzModalService} from 'ng-zorro-antd/modal';
 import {NzMessageService} from 'ng-zorro-antd/message';
 import {Router} from '@angular/router';
-import {DateUtils} from "../../utils/DateTerm";
+import {DateUtils} from "../../utils/DateUtils";
 import {ProjectService} from "../../service/project.service";
 import {AuthenticationService} from "../../service/authentication.service";
 import {TeacherService} from "../../service/teacher.service";

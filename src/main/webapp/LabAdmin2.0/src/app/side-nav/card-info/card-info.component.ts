@@ -1,8 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {TeachPlan} from "../../enity/teachPlan";
 import {TeachPlanService} from "../../service/teach-plan.service";
 import {Router} from "@angular/router";
+import {NzMessageService, NzModalService} from "ng-zorro-antd";
+import {ExpFileService} from "../../service/exp-file.service";
+import {LabService} from "../../service/lab.service";
+import {LabInfo} from "../../enity/labInfo";
+import {TeacherService} from "../../service/teacher.service";
+import {TeacherMsg} from "../../enity/teacher";
 
 @Component({
   selector: 'app-card-info',
@@ -19,6 +25,25 @@ export class CardInfoComponent implements OnInit {
   sortKey = null;
   rooms = [];
   unused = 2;
+
+  //nz modal
+  isNzModalVisible = false;
+  isMsgConfirmLoading = false;
+
+  //nz tabInfo
+  tabInfo: any = {};
+
+  //nz tab
+  tabIndex = 0;
+  labInfo = new LabInfo();
+
+  fileStatusArray: Array<fileStatus>;
+  fileInputName = [
+    {typeName: '考勤名单'},
+    {typeName: '实验任务书'},
+    {typeName: '实验成绩'},
+    {typeName: '评分标准表'},
+    {typeName: '实验报告'}];
 
   searchList = '';
   filterMajor = [
@@ -51,7 +76,14 @@ export class CardInfoComponent implements OnInit {
 
   teachPlans: TeachPlan[];
 
-  constructor(private teachPlanService: TeachPlanService, private router: Router) {
+  constructor(private teachPlanService: TeachPlanService,
+              private teacherService: TeacherService,
+              private labService: LabService,
+              private router: Router,
+              private modalService: NzModalService,
+              private expFileService: ExpFileService,
+              private nzMessage: NzMessageService,
+  ) {
   }
 
   ngOnInit() {
@@ -64,6 +96,40 @@ export class CardInfoComponent implements OnInit {
         }
       }
     );
+    this.initFileStatus();
+  }
+
+  initFileStatus() {
+    this.fileStatusArray = new Array<fileStatus>();
+    this.fileInputName.forEach(each => this.fileStatusArray.push(new fileStatus(each.typeName)));
+  }
+
+  onCheckFile(fileNo: number) {
+    window.location.href = `${environment.apiUrl}/expFile/getFile?no=${fileNo}`;
+  }
+
+  expSelect(proId: number) {
+    this.expFileService.getFileStatus(proId).subscribe(result => {
+      if (result.success) {
+        this.initFileStatus();
+        if (result.data && result.data.files) {
+          result.data.files.forEach(each => {
+            this.fileStatusArray.forEach(file => {
+              if (each.typeName == file.typeName) {
+                file.fileName = each.name;
+                file.status = each.no;
+              }
+            });
+          });
+        }
+        this.nzMessage.success("获取文件关联信息成功");
+      }
+    })
+    this.labService.getLabByProId(proId).subscribe(result => {
+      if (result.success && result.data) {
+        this.labInfo = result.data;
+      }
+    })
   }
 
   download() {
@@ -113,5 +179,32 @@ export class CardInfoComponent implements OnInit {
   updateCourseTypeFilter(value: string[]): void {
     this.filterCourseTypeSelected = value;
     this.updateData(true);
+  }
+
+  showInfoModal(index: number): void {
+    this.tabInfo = this.dataSet[index];
+    this.isNzModalVisible = true;
+    this.expSelect(this.tabInfo.proId);
+  }
+
+  handleOk(): void {
+    this.isMsgConfirmLoading = true;
+    let msg = new TeacherMsg(this.tabInfo.tid, '请更新实验卡片信息', `请更新课程：${this.tabInfo.expCname} 的信息。`);
+    this.teacherService.addMsgInfo(msg).subscribe(r => this.isMsgConfirmLoading = false);
+  }
+
+}
+
+class fileStatus {
+  name: string;
+  typeName: string;
+  status: number;
+  fileName: string;
+
+  constructor(typeName: string) {
+    this.name = '';
+    this.typeName = typeName;
+    this.status = 0;
+    this.fileName = '';
   }
 }

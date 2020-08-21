@@ -1,4 +1,6 @@
 // 教师个人信息类
+import {DateUtils} from "../utils/DateUtils";
+
 export class Teacher {
   // 教职工号 String tID tid
   tid: string;
@@ -50,18 +52,34 @@ export class Teach {
  */
 export class TeacherMsg {
 
+  /** 消息编号 */
   mid: number;
 
+  /** 教师编号 */
   tid: string;
 
+  /** 通知标题 */
   mtitle: string;
 
+  /** 通知结果 */
+  mresult: number;
+
+  /** 消息创建时间 */
   mdate: string;
 
+  /** 消息内容 */
   mtext: string;
 
+  /** 消息状态 */
   mstatus: number;
 
-  mresult: number;
+  constructor(tid?: string, mtitile?: string, mtext?: string, mresult?: number, mdate?: string, mstatus?: number) {
+    this.tid = tid ? tid : '';
+    this.mtitle = mtitile ? mtitile : '';
+    this.mdate = mdate ? mdate : DateUtils.dateFormat();
+    this.mtext = mtext ? mtext : '';
+    this.mstatus = mstatus ? mstatus : 0;
+    this.mresult = mresult ? mresult : 0;
+  }
 
 }
