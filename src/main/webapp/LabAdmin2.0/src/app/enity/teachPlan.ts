@@ -1,4 +1,5 @@
 export class TeachPlan {
+  proId: number;
   labName: string;
   term: string;
   expMajor: string;
@@ -10,6 +11,7 @@ export class TeachPlan {
   courseCollege: string;
   campus: string;
   tname: string;
+  tid:string;
   courseType: string;
   labRemark: string;
 }

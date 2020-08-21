@@ -1,6 +1,5 @@
 package com.cqjtu.cssl.controller;
 
-
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.service.LabInfoService;
@@ -28,78 +27,100 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/lab")
 public class LabController {
 
-    private final LabInfoService labInfoService;
+  private final LabInfoService labInfoService;
 
-    @Autowired
-    public LabController(LabInfoService labInfoService) {
-        this.labInfoService = labInfoService;
-    }
+  @Autowired
+  public LabController(LabInfoService labInfoService) {
+    this.labInfoService = labInfoService;
+  }
 
-    /**
-     * 根据实验室编号获得实验室信息
-     *
-     * @param labId 实验室编号
-     * @return 实验室信息
-     * @author suwen
-     * @date 2020/5/29 h午9:41
-     */
-    @GetMapping("/getLab")
-    public ResponseEntity<ResultDto> getLabById(
-            @NonNull @ApiParam(value = "实验室编号", required = true) @RequestParam Integer labId) {
+  /**
+   * 根据实验室编号获得实验室信息
+   *
+   * @param labId 实验室编号
+   * @return 实验室信息
+   * @author suwen
+   * @date 2020/5/29 上午9:41
+   */
+  @GetMapping("/getLab")
+  public ResponseEntity<ResultDto> getLabById(
+      @NonNull @ApiParam(value = "实验室编号", required = true) @RequestParam Integer labId) {
 
-        return new ResponseEntity<>(
-                ResultDto.builder()
-                        .success(true)
-                        .code(ReturnCode.RETURN_CODE_20001.getCode())
-                        .message("获取实验室信息成功")
-                        .data(labInfoService.getById(labId))
-                        .build(),
-                HttpStatus.OK);
-    }
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取实验室信息成功")
+            .data(labInfoService.getById(labId))
+            .build(),
+        HttpStatus.OK);
+  }
 
-    /**
-     * 根据实验室编号获得实验室信息
-     *
-     * @param typeId 实验室类型编号
-     * @return 实验室信息
-     * @author suwen
-     * @date 2020/5/29 h午9:41
-     */
-    @GetMapping("/getLabByTypeId")
-    public ResponseEntity<ResultDto> getLabByTypeId(
-            @NonNull @ApiParam(value = "实验室类型编号", required = true) @RequestParam Integer typeId) {
+  /**
+   * 根据实验室编号获得实验室信息
+   *
+   * @param typeId 实验室类型编号
+   * @return 实验室信息
+   * @author suwen
+   * @date 2020/5/29 上午9:41
+   */
+  @GetMapping("/getLabByTypeId")
+  public ResponseEntity<ResultDto> getLabByTypeId(
+      @NonNull @ApiParam(value = "实验室类型编号", required = true) @RequestParam Integer typeId) {
 
-        return new ResponseEntity<>(
-                ResultDto.builder()
-                        .success(true)
-                        .code(ReturnCode.RETURN_CODE_20001.getCode())
-                        .message("获取实验室信息成功")
-                        .data(labInfoService.getLabByTypeId(typeId))
-                        .build(),
-                HttpStatus.OK);
-    }
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取实验室信息成功")
+            .data(labInfoService.getLabByTypeId(typeId))
+            .build(),
+        HttpStatus.OK);
+  }
 
-    /**
-     * 根据实验室编号获得实验室信息
-     *
-     * @param typeId 实验室类型编号
-     * @param campus 校区
-     * @return 实验室信息
-     * @author suwen
-     * @date 2020/5/29 h午9:41
-     */
-    @GetMapping("/getLabByTypeIdCampus")
-    public ResponseEntity<ResultDto> getLabByTypeIdCampus(
-            @NonNull @ApiParam(value = "实验室类型编号", required = true) @RequestParam Integer typeId,
-            @NonNull @ApiParam(value = "校区", required = true) @RequestParam String campus) {
+  /**
+   * 根据实验室编号获得实验室信息
+   *
+   * @param typeId 实验室类型编号
+   * @param campus 校区
+   * @return 实验室信息
+   * @author suwen
+   * @date 2020/5/29 上午9:41
+   */
+  @GetMapping("/getLabByTypeIdCampus")
+  public ResponseEntity<ResultDto> getLabByTypeIdCampus(
+      @NonNull @ApiParam(value = "实验室类型编号", required = true) @RequestParam Integer typeId,
+      @NonNull @ApiParam(value = "校区", required = true) @RequestParam String campus) {
 
-        return new ResponseEntity<>(
-                ResultDto.builder()
-                        .success(true)
-                        .code(ReturnCode.RETURN_CODE_20001.getCode())
-                        .message("获取实验室信息成功")
-                        .data(labInfoService.getLabByTypeIdCampus(typeId, campus))
-                        .build(),
-                HttpStatus.OK);
-    }
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取实验室信息成功")
+            .data(labInfoService.getLabByTypeIdCampus(typeId, campus))
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 根据实验室编号获得实验室信息
+   *
+   * @param proId 项目编号
+   * @return 实验室信息
+   * @author suwen
+   * @date 2020/8/21 上午11:32
+   */
+  @GetMapping("/getLabByProId")
+  public ResponseEntity<ResultDto> getLabByProId(
+      @ApiParam(value = "项目编号", required = true) @RequestParam Integer proId) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取实验室信息成功")
+            .data(labInfoService.getLabByProId(proId))
+            .build(),
+        HttpStatus.OK);
+  }
 }

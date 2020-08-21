@@ -4,7 +4,7 @@ import {Teacher} from '../../enity/teacher';
 import {TeacherService} from '../../service/teacher.service';
 import {ArrangePeriod, Curriculum} from '../../enity/arrange';
 import * as $ from 'jquery';
-import {DateUtils} from '../../utils/DateTerm';
+import {DateUtils} from '../../utils/DateUtils';
 
 
 @Component({

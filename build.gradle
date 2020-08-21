@@ -15,6 +15,9 @@ repositories {
 }
 
 dependencies {
+
+    compile 'cn.hutool:hutool-all:5.3.10'
+
     compile group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '2.0.3'
 
     compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'

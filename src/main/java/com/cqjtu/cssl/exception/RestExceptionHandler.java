@@ -17,6 +17,8 @@ import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 /**
+ * 异常包装类
+ *
  * @author guangyong.yang
  * @date 2019-01-05
  */

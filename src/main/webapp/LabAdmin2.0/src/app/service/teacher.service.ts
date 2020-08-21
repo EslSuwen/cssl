@@ -6,6 +6,7 @@ import {catchError, tap} from 'rxjs/operators';
 import {HandleError} from './handle-error';
 import {NzMessageService} from 'ng-zorro-antd';
 import {result} from '../enity/result';
+import {TeacherMsg} from "../enity/teacher";
 
 @Injectable({
   providedIn: 'root'
@@ -87,6 +88,28 @@ export class TeacherService extends HandleError {
         }
       ),
       catchError(this.handleError<result>(`getMsgInfo id=${tid}`))
+    );
+  }
+
+  /**
+   * @description 创建教师消息
+   *
+   * @param msg 教师消息
+   * @author suwen
+   * @date 2020/8/21 下午2:26
+   */
+  addMsgInfo(msg: TeacherMsg): Observable<result> {
+    const url = `${this.TEACHER_API}/addTeacherMsg`;
+    return this.http.post<result>(url, msg).pipe(
+      tap(response => {
+          if (response.success) {
+            this.success(response.message);
+          } else {
+            this.error('创建教师消息失败');
+          }
+        }
+      ),
+      catchError(this.handleError<result>('创建教师消息失败'))
     );
   }
 

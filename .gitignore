@@ -8,6 +8,7 @@
 **/out
 # Only exists if Bazel was run
 **/bazel-out
+files
 
 # dependencies
 **/node_modules

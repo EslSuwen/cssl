@@ -36,6 +36,25 @@ public class TeacherController {
   }
 
   /**
+   * 增加教师消息
+   *
+   * @param teacherMsg 消息
+   * @author suwen
+   * @date 2020/8/21 下午2:23
+   */
+  @PostMapping("/addTeacherMsg")
+  public ResponseEntity<ResultDto> addTeacherMsg(@RequestBody TeacherMsg teacherMsg) {
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message(ReturnCode.RETURN_CODE_20005.getMessage())
+            .data(teacherMsgService.save(teacherMsg))
+            .build(),
+        HttpStatus.CREATED);
+  }
+
+  /**
    * 根据教师 id 获取教师信息
    *
    * @author suwen
