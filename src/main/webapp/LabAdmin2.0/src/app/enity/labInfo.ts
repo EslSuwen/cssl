@@ -37,7 +37,7 @@ export class LabInfo {
     this.tid = '';
     this.typeId = 0;
     this.labName = '';
-    this.labCampus = 'init';
+    this.labCampus = '';
     this.labCap = 0;
     this.labArea = 0;
     this.tname = '';

@@ -125,7 +125,6 @@ export class Curriculum {
   /** 排课时间 */
   arrangePeriod: ArrangePeriod;
 
-
   constructor() {
     this.cname = '';
     this.labClass = '';
