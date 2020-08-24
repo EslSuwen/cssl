@@ -1,61 +1,27 @@
-# 实验室管理系统
+# MdbAngularFree
 
-> （Course scheduling system of Laboratory）
+This expProject was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.2.
 
-> （基于 springboot2.0 angular8 实现）
+## Development server
 
-为解决高校实验室建设和管理中存在的这些问题，以本校信息学院的信息技术实践中心实验室建设为依托，展开实验室管理系统研究与开发。
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## 技术堆栈
+## Code scaffolding
 
-* Spring Boot 2.2.1.RELEASE
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-* Spring Security
+## Build
 
-* Spring Data
+Run `ng build` to build the expProject. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-* Spring Actuator
+## Running unit tests
 
-* JWT
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-* knife4j
+## Running end-to-end tests
 
-* lombok
+Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-* mysql
+## Further help
 
-* Angular 9
-
-* NG-ZORRO
-
-*测试工具：* Postman
-*代码质量检查：* Sonar
-*CI：* Jenkins
-*推荐IDE：* IntelliJ IDEA、WebStorm/Visual Studio Code
-
-> Java代码中使用了lombok注解，IDE需安装lombok插件。
-
-*注意:* 本项目基于 JDK1.8
-
-项目开发过程中，加强了技术融入，而且严格按照阿里巴巴Java代码规范标准进行编写的。
-
-## 特点
-
-* 简单易用
-* RESTful API
-* 易于重构和维护
-* 代码规范
-* ...
-
-
-## 使用方法
-
-### 1. IntelliJ IDEA（或其他编译工具）
-
-1. 将项目导入到**IntelliJ IDEA**中，然后利用gradle版本控制工具导入jar。
-2. 打开**application.yml**更改数据库连接信息。
-3. 进入**webapp**文件夹中更改**environment.ts**中前端的接口
-4. **ng serve**启动前端项目，或者**ng build**编译到SpringBoot中,最后启动主函数App.java即可。最后打开浏览器，输入<http://localhost:8090/cssl>，即可浏览系统。
-
-------
-
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
