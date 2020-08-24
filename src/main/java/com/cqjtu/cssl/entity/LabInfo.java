@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -45,4 +46,12 @@ public class LabInfo implements Serializable {
 
   @ApiModelProperty(value = "实验室面积", position = 6, required = true)
   private BigDecimal labArea;
+
+  @ApiModelProperty(value = "实验室负责人名", position = 7, required = true)
+  @TableField(exist = false)
+  private String tname;
+
+  @ApiModelProperty(value = "实验室类型", position = 8, required = true)
+  @TableField(exist = false)
+  private String typeName;
 }

@@ -5,27 +5,18 @@ import com.cqjtu.cssl.service.ArrangePeriodService;
 import com.cqjtu.cssl.service.ArrangeService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.sql.DataSource;
-import java.sql.SQLException;
+import org.springframework.test.context.junit4.SpringRunner;
 
 @Log4j2
 @SpringBootTest
-class CsslApplicationTests {
+@RunWith(SpringRunner.class)
+public class CsslApplicationTests {
 
-  @Autowired private DataSource dataSource;
   @Autowired private ArrangeService arrangeService;
   @Autowired private ArrangePeriodService arrangePeriodService;
-
-  @Test
-  void contextLoads() {}
-
-  @Test
-  public void testDataSource() throws SQLException {
-    System.out.println(dataSource.getConnection());
-  }
 
   @Test
   public void testOutArrange() {

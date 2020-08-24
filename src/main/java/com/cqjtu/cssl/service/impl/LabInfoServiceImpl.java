@@ -17,18 +17,22 @@ import java.util.List;
  */
 @Service
 public class LabInfoServiceImpl extends ServiceImpl<LabInfoMapper, LabInfo>
-        implements LabInfoService {
+    implements LabInfoService {
 
-    @Override
-    public List<LabInfo> getLabByTypeId(Integer typeId) {
+  @Override
+  public List<LabInfo> getLabByTypeId(Integer typeId) {
 
-        return list(new QueryWrapper<LabInfo>().eq("type_id", typeId));
-    }
+    return list(new QueryWrapper<LabInfo>().eq("type_id", typeId));
+  }
 
-    @Override
-    public List<LabInfo> getLabByTypeIdCampus(Integer typeId, String campus) {
+  @Override
+  public List<LabInfo> getLabByTypeIdCampus(Integer typeId, String campus) {
 
-        return list(new QueryWrapper<LabInfo>().eq("type_id", typeId).eq("lab_campus", campus));
-    }
+    return list(new QueryWrapper<LabInfo>().eq("type_id", typeId).eq("lab_campus", campus));
+  }
+
+  @Override
+  public LabInfo getLabByProId(Integer proId) {
+    return baseMapper.getLabByProId(proId);
+  }
 }
-
