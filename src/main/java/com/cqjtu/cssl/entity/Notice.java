@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -7,7 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.time.LocalDateTime;
 
 /**
@@ -31,11 +31,15 @@ public class Notice implements Serializable {
   private String tid;
 
   @ApiModelProperty(value = "通知发布时间")
-  private LocalDateTime noticeDate;
+  private String noticeDate;
 
   @ApiModelProperty(value = "通知标题")
   private String noticeHead;
 
   @ApiModelProperty(value = "通知正文")
-  private Blob noticeContent;
+  private String noticeContent;
+
+  @TableField(exist = false)
+  @ApiModelProperty(value = "通知发布人姓名")
+  private String tname;
 }
