@@ -6,7 +6,10 @@ import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
 import com.cqjtu.cssl.service.ExpFileService;
 import com.cqjtu.cssl.service.ExpFileStoreService;
+import com.cqjtu.cssl.service.FileService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +20,16 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
  * 项目资料控制器
+ *
+ * <p>TODO 重构：文件存在磁盘上
  *
  * @author suwen
  * @date 2020/7/7 上午9:42
@@ -35,11 +42,16 @@ public class ExpFileController {
 
   private final ExpFileService expFileService;
   private final ExpFileStoreService expFileStoreService;
+  private final FileService fileService;
 
   @Autowired
-  public ExpFileController(ExpFileService expFileService, ExpFileStoreService expFileStoreService) {
+  public ExpFileController(
+      ExpFileService expFileService,
+      ExpFileStoreService expFileStoreService,
+      FileService fileService) {
     this.expFileService = expFileService;
     this.expFileStoreService = expFileStoreService;
+    this.fileService = fileService;
   }
 
   /**
@@ -151,5 +163,16 @@ public class ExpFileController {
       log.info("设置浏览器下载失败！");
       e.printStackTrace();
     }
+  }
+
+  @ApiOperation(value = "上传文件")
+  @PostMapping("/file/upload")
+  public ResponseEntity<File> uploadFile(
+      @ApiParam(name = "file", value = "待上传文件", required = true) @RequestPart(name = "file")
+          MultipartFile multipartFile)
+      throws IOException {
+    String fileName = fileService.storeFile(multipartFile);
+    File file = fileService.loadFileAsResource(fileName).getFile();
+    return new ResponseEntity<>(file, HttpStatus.CREATED);
   }
 }

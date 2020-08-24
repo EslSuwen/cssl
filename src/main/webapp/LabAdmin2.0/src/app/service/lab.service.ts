@@ -33,10 +33,10 @@ export class LabService extends HandleError {
         if (response.success) {
           this.success(response.message);
         } else {
-          this.error(`根据实验室编号获取实验室信息失败， labId：${labId}`);
+          this.error(`根据实验室编号获取实验室信息失败，labId：${labId}`);
         }
       }),
-      catchError(this.handleError<result>(`根据实验室编号获取实验室信息失败， labId：${labId}`))
+      catchError(this.handleError<result>(`根据实验室编号获取实验室信息失败，labId：${labId}`))
     );
   }
 
@@ -55,7 +55,7 @@ export class LabService extends HandleError {
         if (response.success) {
           this.success(response.message);
         } else {
-          this.error(`根据实验室类型编号获取实验室信息，  typeId：${typeId}`);
+          this.error(`根据实验室类型编号获取实验室信息，typeId：${typeId}`);
         }
       }),
       catchError(this.handleError<result>(`根据实验室类型编号获取实验室信息，typeId：${typeId}`))
@@ -78,10 +78,35 @@ export class LabService extends HandleError {
         if (response.success) {
           this.success(response.message);
         } else {
-          this.error(`根据实验室类型编号获取实验室信息，  typeId：${typeId}，campus: ${campus}`);
+          this.error(`根据实验室类型编号获取实验室信息，typeId：${typeId}，campus: ${campus}`);
         }
       }),
       catchError(this.handleError<result>(`根据实验室类型编号校区获取实验室信息，typeId：${typeId}，campus: ${campus}`))
+    );
+  }
+
+  /**
+   * @description 根据实验室类型编号校区获取实验室信息
+   *
+   * @param proId 项目编号
+   * @return 实验室信息
+   * @author suwen
+   * @date 2020/8/21 下午13:46
+   */
+  getLabByProId(proId: string | number): Observable<result> {
+    const url = `${this.LAB_API}/getLabByProId`;
+    if (typeof proId == "number") {
+      proId = proId.toString();
+    }
+    return this.http.get<result>(url, {params: {proId}}).pipe(
+      tap(response => {
+        if (response.success) {
+          this.success(response.message);
+        } else {
+          this.error(`根据实验室类型编号获取实验室信息, proId：${proId}`);
+        }
+      }),
+      catchError(this.handleError<result>(`根据实验室类型编号校区获取实验室信息, proId：${proId}`))
     );
   }
 

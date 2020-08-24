@@ -8,7 +8,7 @@ import {AuthenticationService} from "../../service/authentication.service";
 import {TeacherService} from "../../service/teacher.service";
 import {NzModalRef, NzModalService} from 'ng-zorro-antd/modal';
 import {Router} from '@angular/router';
-import {DateUtils} from "../../utils/DateTerm";
+import {DateUtils} from "../../utils/DateUtils";
 
 @Component({
   selector: 'app-card',

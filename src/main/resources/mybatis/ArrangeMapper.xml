@@ -2,7 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqjtu.cssl.mapper.ArrangeMapper">
     <select id="getTeachingPlanList" resultType="com.cqjtu.cssl.entity.TeachingPlan">
-        select lab_name,
+        select p.pro_id,
+               lab_name,
                exp_cname,
                p.course_id,
                exp_major,
@@ -12,6 +13,7 @@
                course_college,
                course_type,
                tname,
+               t.tid,
                lab_remark,
                campus
         from exp_project p,
