@@ -1,14 +1,16 @@
-# 实验室管理系统
+# 实验室管理系统-后台
 
 > （Course scheduling system of Laboratory）
 
 > （基于 springboot2.0 angular8 实现）
 
+> 前台项目仓库：[cssl-front-end](https://github.com/EslSuwen/cssl-front-end)
+
 为解决高校实验室建设和管理中存在的这些问题，以本校信息学院的信息技术实践中心实验室建设为依托，展开实验室管理系统研究与开发。
 
 ## 技术堆栈
 
-* Spring Boot 2.2.1.RELEASE
+* Spring Boot 2.2.8.RELEASE
 
 * Spring Security
 
@@ -24,7 +26,7 @@
 
 * mysql
 
-* Angular 9
+* Angular 8
 
 * NG-ZORRO
 
