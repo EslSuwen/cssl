@@ -47,7 +47,7 @@ public class NoticeController {
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取通知信息成功")
-            .data(noticeService.getById(nid))
+            .data(noticeService.getNotice(nid))
             .build(),
         HttpStatus.OK);
   }

@@ -24,12 +24,12 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
 
   @Override
   public Notice getNotice(Integer nid) {
-    return getById(nid);
+    return baseMapper.getById(nid);
   }
 
   @Override
   public List<Notice> getAllNotice() {
-    return list();
+    return baseMapper.list();
   }
 
   @Override
