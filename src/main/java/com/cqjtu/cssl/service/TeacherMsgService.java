@@ -2,6 +2,7 @@ package com.cqjtu.cssl.service;
 
 import com.cqjtu.cssl.entity.TeacherMsg;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import java.util.List;
 
@@ -22,4 +23,34 @@ public interface TeacherMsgService extends IService<TeacherMsg> {
    * @return 授课信息列表
    */
   List<TeacherMsg> getMsgListByTid(String tid);
+
+  /**
+   * 新增消息
+   *
+   * @param msg 消息
+   * @return bool
+   * @author suwen
+   * @date 2020/8/26 下午5:30
+   */
+  Boolean addMsg(TeacherMsg msg);
+
+  /**
+   * 删除消息
+   *
+   * @param ino 消息编号
+   * @return bool
+   * @author suwen
+   * @date 2020/8/26 下午5:31
+   */
+  Boolean removeMsg(Integer ino);
+
+  /**
+   * 删除消息
+   *
+   * @param msg 消息
+   * @return bool
+   * @author suwen
+   * @date 2020/8/26 下午5:31
+   */
+  Boolean updateMsg(TeacherMsg msg);
 }

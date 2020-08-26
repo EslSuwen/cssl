@@ -21,7 +21,7 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @param proId 项目卡片编号
    * @return List<ProjectItem>
    */
-  List<ProjectItem> listByProId(int proId);
+  List<ProjectItem> listByProId(Integer proId);
 
   /**
    * 更新实验卡片项目项信息
@@ -31,7 +31,7 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @author suwen
    * @date 2020/7/5 下午4:02
    */
-  boolean updateItem(ProjectItem projectItem);
+  Boolean updateItem(ProjectItem projectItem);
 
   /**
    * 删除实验项目
@@ -41,5 +41,5 @@ public interface ProjectItemService extends IService<ProjectItem> {
    * @author suwen
    * @date 2020/7/6 上午9:33
    */
-  Boolean deleteItem(int ino);
+  Boolean deleteItem(Integer ino);
 }

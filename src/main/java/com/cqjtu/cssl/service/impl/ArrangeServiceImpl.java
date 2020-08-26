@@ -5,16 +5,17 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.dto.ArrangeAudit;
-import com.cqjtu.cssl.entity.Arrange;
-import com.cqjtu.cssl.entity.ArrangePeriod;
-import com.cqjtu.cssl.entity.ExpProject;
-import com.cqjtu.cssl.entity.TeachingPlan;
+import com.cqjtu.cssl.entity.*;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
 import com.cqjtu.cssl.service.*;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -24,60 +25,91 @@ import java.util.stream.Collectors;
  * @since 2020-02-21
  */
 @Service
+@Log4j2
 public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     implements ArrangeService {
 
   private final ArrangePeriodService arrangePeriodService;
   private final ExpProjectService expProjectService;
-  private final ArrangeMapper arrangeMapper;
   private final LabInfoService labInfoService;
   private final TeacherService teacherService;
   private final CourseService courseService;
+  private final RedisTemplate<String, Object> redisTemplate;
+  private final ValueOperations<String, Object> redisOperations;
 
   @Autowired
   public ArrangeServiceImpl(
       ArrangePeriodService arrangePeriodService,
       ExpProjectService expProjectService,
-      ArrangeMapper arrangeMapper,
       LabInfoService labInfoService,
       TeacherService teacherService,
-      CourseService courseService) {
+      CourseService courseService,
+      RedisTemplate<String, Object> redisTemplate,
+      ValueOperations<String, Object> redisOperations) {
     this.arrangePeriodService = arrangePeriodService;
     this.expProjectService = expProjectService;
-    this.arrangeMapper = arrangeMapper;
     this.labInfoService = labInfoService;
     this.teacherService = teacherService;
     this.courseService = courseService;
+    this.redisTemplate = redisTemplate;
+    this.redisOperations = redisOperations;
   }
 
   @Override
+  @SuppressWarnings("unchecked")
   public List<Arrange> findByTid(String tid) {
-    List<Arrange> arrangeList = list(new QueryWrapper<Arrange>().eq("tid", tid));
-    for (Arrange each : arrangeList) {
-      each.setArrangePeriod(
-          arrangePeriodService.list(new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid())));
+    String key = "arrange_tid_" + tid;
+    Boolean hasKey = redisTemplate.hasKey(key);
+    List<Arrange> arrangeList;
+    if (hasKey != null && hasKey) {
+      arrangeList = (List<Arrange>) redisOperations.get(key);
+      log.info("从缓存中获得数据-----------> noticeList");
+    } else {
+      arrangeList =
+          list(new QueryWrapper<Arrange>().eq("tid", tid)).stream()
+              .peek(
+                  each ->
+                      each.setArrangePeriod(
+                          arrangePeriodService.list(
+                              new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid()))))
+              .collect(Collectors.toList());
+      log.info("查询数据库获得数据-----------> noticeList");
+      redisOperations.set(key, arrangeList, 5, TimeUnit.HOURS);
     }
     return arrangeList;
   }
 
-/*
-  @Override
-  public boolean auditArrange(Integer aid, Audit status) {
-    Arrange arrange = new Arrange();
-    arrange.setStatus(status);
-    return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
-  }
-*/
+  /* TODO 审核时间安排
+    @Override
+    public boolean auditArrange(Integer aid, Audit status) {
+      Arrange arrange = new Arrange();
+      arrange.setStatus(status);
+      return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
+    }
+  */
 
   @Override
+  @SuppressWarnings("unchecked")
   public List<TeachingPlan> getTeachingPlanList() {
-    List<TeachingPlan> teachingPlanList = arrangeMapper.getTeachingPlanList();
-    for (TeachingPlan each : teachingPlanList) {
-      each.setCoursePeriod(arrangeMapper.getCoursePeriodByCid(each.getCourseId()));
+    String key = "TeachingPlan";
+    Boolean hasKey = redisTemplate.hasKey(key);
+    List<TeachingPlan> teachingPlanList;
+    if (hasKey != null && hasKey) {
+      teachingPlanList = (List<TeachingPlan>) redisOperations.get(key);
+      log.info("从缓存中获得数据-----------> noticeList");
+    } else {
+      teachingPlanList =
+          baseMapper.getTeachingPlanList().stream()
+              .peek(
+                  each -> each.setCoursePeriod(baseMapper.getCoursePeriodByCid(each.getCourseId())))
+              .collect(Collectors.toList());
+      log.info("查询数据库获得数据-----------> noticeList");
+      redisOperations.set(key, teachingPlanList, 5, TimeUnit.HOURS);
     }
     return teachingPlanList;
   }
 
+  /** TODO 审核时间安排 */
   public List<ArrangeAudit> getAuditArrange() {
 
     return list(new QueryWrapper<Arrange>().eq("status", Audit.AUDITING)).stream()
@@ -101,14 +133,14 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
                           new QueryWrapper<ArrangePeriod>()
                               .last("LIMIT 1")
                               .eq("aid", each.getAid())))
-                  .period(arrangeMapper.getCoursePeriodByCid(each.getCourseId()))
+                  .period(baseMapper.getCoursePeriodByCid(each.getCourseId()))
                   .build();
             })
         .collect(Collectors.toList());
   }
 
   @Override
-  public boolean addArrange(Arrange arrange) {
+  public Boolean addArrange(Arrange arrange) {
 
     // arrange.setStatus(Audit.AUDITING);
     arrange.setCourseId(expProjectService.getById(arrange.getProId()).getCourseId());
@@ -122,13 +154,21 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     expProjectService.update(
         expProject, new UpdateWrapper<ExpProject>().eq("pro_id", arrange.getProId()));
 
-    return arrangePeriodService.saveBatch(
-        arrange.getArrangePeriod().stream()
-            .map(
-                each -> {
-                  each.setAid(aid);
-                  return each;
-                })
-            .collect(Collectors.toList()));
+    boolean result =
+        arrangePeriodService.saveBatch(
+            arrange.getArrangePeriod().stream()
+                .peek(each -> each.setAid(aid))
+                .collect(Collectors.toList()));
+    String key = "arrange_tid_" + arrange.getTid();
+    Boolean hasKey = redisTemplate.hasKey(key);
+    if (result && hasKey != null && hasKey) {
+      redisTemplate.delete(key);
+    }
+    return result;
+  }
+
+  @Override
+  public String findLabByClsNo(String tid, Integer courseNo) {
+    return baseMapper.findLabByClsNo(tid, courseNo);
   }
 }

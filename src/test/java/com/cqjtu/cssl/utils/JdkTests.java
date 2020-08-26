@@ -78,4 +78,12 @@ public class JdkTests {
     Path targetLocation = Paths.get("./files/test/img/test.jpeg").toAbsolutePath().normalize();
     Files.createFile(targetLocation);
   }
+
+  @Test
+  public void booleanTest() {
+    Boolean bool = false;
+    String key = String.format("exp_tid_{%s}_term_{%s}", "str1", "str2");
+    System.out.println(key);
+    System.out.println(bool);
+  }
 }

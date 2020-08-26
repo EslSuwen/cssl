@@ -49,7 +49,7 @@ public class TeacherController {
             .success(true)
             .code(ReturnCode.RETURN_CODE_20005.getCode())
             .message(ReturnCode.RETURN_CODE_20005.getMessage())
-            .data(teacherMsgService.save(teacherMsg))
+            .data(teacherMsgService.addMsg(teacherMsg))
             .build(),
         HttpStatus.CREATED);
   }
@@ -62,14 +62,14 @@ public class TeacherController {
    * @return 教师信息
    */
   @GetMapping(value = "/getTeacherInfo/{tid}")
-  public ResponseEntity<ResultDto> getTeacherInfo(@NonNull @PathVariable String tid) {
+  public ResponseEntity<ResultDto> getTeacherInfo(@PathVariable String tid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取教师信息成功")
-            .data(teacherService.getById(tid))
+            .data(teacherService.getTeacher(tid))
             .build(),
         HttpStatus.OK);
   }
@@ -84,7 +84,7 @@ public class TeacherController {
    */
   @GetMapping(value = "/getMsgInfo/{tid}")
   public ResponseEntity<ResultDto> getMsgInfo(
-      @NonNull @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
+      @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -103,13 +103,13 @@ public class TeacherController {
    * @date 2020/3/24 12:28 下午
    */
   @PutMapping(value = "/readMsg/{mid}")
-  public ResponseEntity<ResultDto> readMsg(@NonNull @PathVariable String mid) {
+  public ResponseEntity<ResultDto> readMsg(@PathVariable String mid) {
 
-    @NonNull TeacherMsg teacherMsg = teacherMsgService.getById(mid);
+    TeacherMsg teacherMsg = teacherMsgService.getById(mid);
     teacherMsg.setMstatus(1);
     return new ResponseEntity<>(
         ResultDto.builder()
-            .success(teacherMsgService.updateById(teacherMsg))
+            .success(teacherMsgService.updateMsg(teacherMsg))
             .code(ReturnCode.RETURN_CODE_20004.getCode())
             .message("用户消息已读成功")
             .build(),
@@ -125,11 +125,11 @@ public class TeacherController {
    */
   @GetMapping(value = "/deleteMsg/{mid}")
   public ResponseEntity<ResultDto> deleteMsg(
-      @NonNull @ApiParam(value = "消息编号", required = true) @PathVariable String mid) {
+      @ApiParam(value = "消息编号", required = true) @PathVariable Integer mid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
-            .success(teacherMsgService.removeById(mid))
+            .success(teacherMsgService.removeMsg(mid))
             .code(ReturnCode.RETURN_CODE_20006.getCode())
             .message("教师删除消息成功")
             .build(),
@@ -148,9 +148,9 @@ public class TeacherController {
    */
   @PutMapping("/updatePassword")
   public ResponseEntity<ResultDto> updatePassword(
-      @NonNull @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
-      @NonNull @ApiParam(value = "当前密码", required = true) @RequestParam String oldPw,
-      @NonNull @ApiParam(value = "新密码", required = true) @RequestParam String newPw) {
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "当前密码", required = true) @RequestParam String oldPw,
+      @ApiParam(value = "新密码", required = true) @RequestParam String newPw) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -172,8 +172,8 @@ public class TeacherController {
    */
   @GetMapping("/getCurriculum")
   public ResponseEntity<ResultDto> getCurriculum(
-      @NonNull @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
-      @NonNull @ApiParam(value = "周次", required = true) @RequestParam String week) {
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "周次", required = true) @RequestParam String week) {
 
     return new ResponseEntity<>(
         ResultDto.builder()

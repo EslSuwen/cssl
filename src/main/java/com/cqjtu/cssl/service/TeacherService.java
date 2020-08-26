@@ -24,7 +24,7 @@ public interface TeacherService extends IService<Teacher> {
    * @param newPw 新密码
    * @return 状态码
    */
-  boolean updatePassword(String tid, String oldPw, String newPw);
+  Boolean updatePassword(String tid, String oldPw, String newPw);
 
   /**
    * 查询某周的课程安排
@@ -36,4 +36,14 @@ public interface TeacherService extends IService<Teacher> {
    * @date 2020/4/20 上午10:46
    */
   List<Curriculum> getCurriculum(String tid, String week);
+
+  /**
+   * 通过教师编号查询信息
+   *
+   * @param tid 教师编号
+   * @return 教师信息
+   * @author suwen
+   * @date 2020/8/26 下午5:53
+   */
+  Teacher getTeacher(String tid);
 }

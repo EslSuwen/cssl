@@ -31,7 +31,7 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
   }
 
   @Override
-  public boolean saveFile(ExpFileStore expFileStore) throws Exception {
+  public boolean saveFile(ExpFileStore expFileStore) {
     Integer proId = expFileStore.getProId();
     String typeName = expFileStore.getTypeName();
     remove(new QueryWrapper<ExpFileStore>().eq("pro_id", proId).eq("type_name", typeName));
@@ -63,7 +63,7 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
           expFile.setReport(no);
           break;
         default:
-          throw new Exception("typeName error");
+          throw new IllegalArgumentException("typeName error");
       }
       if (!expFileService.updateById(expFile)) {
         return expFileService.save(expFile);

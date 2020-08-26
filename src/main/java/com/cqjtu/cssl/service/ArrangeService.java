@@ -1,8 +1,6 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cqjtu.cssl.constant.Audit;
-import com.cqjtu.cssl.dto.ArrangeAudit;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.TeachingPlan;
 
@@ -63,5 +61,16 @@ public interface ArrangeService extends IService<Arrange> {
    * @author suwen
    * @date 2020/5/26 下午8:41
    */
-  boolean addArrange(Arrange arrange);
+  Boolean addArrange(Arrange arrange);
+
+  /**
+   * 通过课程编号查询实验室编号
+   *
+   * @param courseNo 课程编号
+   * @param tid 教师编号
+   * @return 实验室编号
+   * @author suwen
+   * @date 2020/2/23 下午1:32
+   */
+  String findLabByClsNo(String tid, Integer courseNo);
 }
