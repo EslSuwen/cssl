@@ -16,6 +16,10 @@ repositories {
 
 dependencies {
 
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     compile 'cn.hutool:hutool-all:5.3.10'
 
     compile group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '2.0.3'
