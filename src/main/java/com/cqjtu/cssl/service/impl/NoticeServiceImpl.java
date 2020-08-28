@@ -92,7 +92,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
       // 再将更新后的数据加入缓存
       notice = baseMapper.getById(notice.getNid());
@@ -111,7 +111,7 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除了缓存中的key-----------> " + key);
+        log.info("删除了缓存中的key-----------> " + key);
       }
     }
     return result;

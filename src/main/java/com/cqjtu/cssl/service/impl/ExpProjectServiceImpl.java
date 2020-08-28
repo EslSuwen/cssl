@@ -8,7 +8,6 @@ import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpProjectService;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.math3.analysis.function.Exp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -94,7 +93,7 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;
@@ -136,7 +135,7 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;
@@ -152,7 +151,7 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;

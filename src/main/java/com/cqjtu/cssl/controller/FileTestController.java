@@ -59,10 +59,9 @@ public class FileTestController {
   @GetMapping("/file")
   public void getFile(/*@RequestBody FileHelper[] file_from_sever*/ ) {
 
-    //    System.out.println("getFile()被调用");
+    //    log.info("getFile()被调用");
 
     //        List<FileHelper> files=new ArrayList<>();
-    System.out.println();
   }
 
   /**

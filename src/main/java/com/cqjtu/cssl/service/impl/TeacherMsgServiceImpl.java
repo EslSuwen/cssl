@@ -62,7 +62,7 @@ public class TeacherMsgServiceImpl extends ServiceImpl<TeacherMsgMapper, Teacher
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;
@@ -77,7 +77,7 @@ public class TeacherMsgServiceImpl extends ServiceImpl<TeacherMsgMapper, Teacher
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;
@@ -91,7 +91,7 @@ public class TeacherMsgServiceImpl extends ServiceImpl<TeacherMsgMapper, Teacher
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;

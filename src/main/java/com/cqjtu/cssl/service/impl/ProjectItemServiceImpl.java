@@ -62,7 +62,7 @@ public class ProjectItemServiceImpl extends ServiceImpl<ProjectItemMapper, Proje
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;
@@ -77,7 +77,7 @@ public class ProjectItemServiceImpl extends ServiceImpl<ProjectItemMapper, Proje
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
         redisTemplate.delete(key);
-        System.out.println("删除缓存中的key-----------> " + key);
+        log.info("删除缓存中的key-----------> " + key);
       }
     }
     return result;

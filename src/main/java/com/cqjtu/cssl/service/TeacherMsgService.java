@@ -1,8 +1,7 @@
 package com.cqjtu.cssl.service;
 
-import com.cqjtu.cssl.entity.TeacherMsg;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.cqjtu.cssl.entity.TeacherMsg;
 
 import java.util.List;
 

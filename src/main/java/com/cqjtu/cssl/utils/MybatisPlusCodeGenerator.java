@@ -25,8 +25,10 @@ public final class MybatisPlusCodeGenerator {
   // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 
   private static final String DB_URL =
-      "jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
-  // "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8";
+      // "jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
+      "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8";
+
+  private static final String DB_PWD = "Cssl123.";
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {
@@ -64,8 +66,7 @@ public final class MybatisPlusCodeGenerator {
     // dsc.setSchemaName("public");
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("root");
-//    dsc.setPassword("Cssl123.");
-    dsc.setPassword("Liyu8824");
+    dsc.setPassword(DB_PWD);
     mpg.setDataSource(dsc);
 
     // 包配置
