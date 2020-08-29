@@ -3,6 +3,7 @@ package com.cqjtu.cssl.utils;
 import com.cqjtu.cssl.exception.FileException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -77,5 +78,11 @@ public class JdkTests {
   public void creatFile() throws IOException {
     Path targetLocation = Paths.get("./files/test/img/test.jpeg").toAbsolutePath().normalize();
     Files.createFile(targetLocation);
+  }
+
+  @Test
+  public void sysDir() {
+    System.out.println(System.getProperty("user.dir"));
+    System.out.println(ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/");
   }
 }

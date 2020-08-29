@@ -7,7 +7,7 @@ server:                             #配置server
 
 spring:
   profiles:
-    active: dev2
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver       # 数据库访问配置,主数据源，默认的
@@ -29,7 +29,7 @@ spring:
     ## Redis数据库索引（默认为0）
     database: 0
     ## Redis服务器地址
-    host: localhost
+    host: 47.107.239.108
     ## Redis服务器连接端口
     port: 6379
     ## Redis服务器连接密码（默认为空）
