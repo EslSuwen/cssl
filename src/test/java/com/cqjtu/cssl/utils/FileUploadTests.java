@@ -1,5 +1,7 @@
 package com.cqjtu.cssl.utils;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
 import com.cqjtu.cssl.service.FileService;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Before;
@@ -13,9 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
@@ -53,7 +53,7 @@ public class FileUploadTests {
             new FileInputStream(file) // 文件流
             );
     log.info(fileService.storeFile(mockMultipartFile, "testpath"));
-//    log.info(fileService.storeFile(mockMultipartFile));
+    //    log.info(fileService.storeFile(mockMultipartFile));
   }
 
   @Test
@@ -80,5 +80,16 @@ public class FileUploadTests {
         .getResponse()
         .setCharacterEncoding(StandardCharsets.UTF_8.name());
     resultActions.andDo(print());
+  }
+
+  @Test
+  public void fileUtilTest() {
+    String path = System.getProperty("user.dir") + "/CSSL_FILES/noticeFile/";
+    BufferedInputStream in = FileUtil.getInputStream(new File(""));
+    BufferedOutputStream out = FileUtil.getOutputStream(path + "testcopy.jpg");
+    long copySize = IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);
+    IoUtil.close(in);
+    IoUtil.close(out);
+    System.out.println(copySize);
   }
 }

@@ -1,10 +1,12 @@
 package com.cqjtu.cssl.controller;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.file.FileReader;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.NoticeFile;
 import com.cqjtu.cssl.service.NoticeFileService;
-import com.cqjtu.cssl.utils.FileUtil;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 通知文件 前端控制器
@@ -28,6 +36,7 @@ import java.io.IOException;
 public class NoticeFileController {
 
   private final NoticeFileService noticeFileService;
+  private final String DEFAULT_PATH = System.getProperty("user.dir") + "/CSSL_FILES/noticeFile/";
 
   @Autowired
   public NoticeFileController(NoticeFileService noticeFileService) {
@@ -44,34 +53,25 @@ public class NoticeFileController {
   @PostMapping("/add")
   public ResponseEntity<ResultDto> add(NoticeFile noticeFile, @RequestParam MultipartFile nFile)
       throws IOException {
-    noticeFile.setFile(nFile.getBytes());
 
     log.info(noticeFile);
     log.info(nFile);
 
     if (!nFile.isEmpty()) {
-      // 获取文件名称,包含后缀
-      String fileName = nFile.getOriginalFilename();
-
-      // 存放在这个路径下：该路径是该工程目录下的static文件下：(注：该文件可能需要自己创建)
-      // 放在static下的原因是，存放的是静态文件资源，即通过浏览器输入本地服务器地址，加文件名时是可以访问到的
-      String path = System.getProperty("user.dir") + "/CSSL_FILES/noticeFile/";
-
-      try {
-        // 该方法是对文件写入的封装，在util类中，导入该包即可使用，后面会给出方法
-        FileUtil.fileupload(nFile.getBytes(), path, fileName);
-      } catch (IOException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
+      String targetPath = DEFAULT_PATH + nFile.getOriginalFilename();
+      noticeFile.setFilePath(targetPath);
+      InputStream in = nFile.getInputStream();
+      BufferedOutputStream out = FileUtil.getOutputStream(new File(targetPath));
+      IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);
+      IoUtil.close(in);
+      IoUtil.close(out);
     }
 
     return new ResponseEntity<>(
         ResultDto.builder()
-            .success(true)
+            .success(noticeFileService.save(noticeFile))
             .code(ReturnCode.RETURN_CODE_20005.getCode())
             .message("通知文件" + ReturnCode.RETURN_CODE_20005.getMessage())
-            //            .data(noticeFileService.save(noticeFile))
             .build(),
         HttpStatus.CREATED);
   }
@@ -130,5 +130,36 @@ public class NoticeFileController {
             .data(noticeFileService.removeById(id))
             .build(),
         HttpStatus.CREATED);
+  }
+
+  /**
+   * 文件下载
+   *
+   * @param fileId 文件编号
+   * @author suwen
+   * @date 2020/8/30 上午10:42
+   */
+  @GetMapping("/getFile/{fileId}")
+  public void getFileDownload(@PathVariable Integer fileId, HttpServletResponse response) {
+    String fileName = noticeFileService.getById(fileId).getFileName();
+    String filePath = DEFAULT_PATH + fileName;
+    try {
+      FileReader fileReader = new FileReader(filePath);
+      response.reset();
+      response.setCharacterEncoding("utf-8");
+      response.setContentType("multipart/form-data");
+      response.setHeader(
+          "Content-disposition",
+          "attachment; filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+      ServletOutputStream sos = response.getOutputStream();
+
+      sos.write(fileReader.readBytes());
+      sos.flush();
+      sos.close();
+      log.info(fileName + "设置浏览器下载成功！");
+    } catch (Exception e) {
+      log.info(fileName + "设置浏览器下载失败！");
+      e.printStackTrace();
+    }
   }
 }

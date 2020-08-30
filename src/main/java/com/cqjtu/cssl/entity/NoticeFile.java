@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -9,8 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.sql.Blob;
-import java.time.LocalDateTime;
 
 /**
  * 通知文件
@@ -39,6 +38,10 @@ public class NoticeFile implements Serializable {
   @ApiModelProperty(value = "通知文件发布时间")
   private String fileDate;
 
-  @ApiModelProperty(value = "通知文件")
-  private byte[] file;
+  @ApiModelProperty(value = "通知文件路径")
+  private String filePath;
+
+  @ApiModelProperty(value = "通知发布人编号")
+  @TableField(exist = false)
+  private String tname;
 }

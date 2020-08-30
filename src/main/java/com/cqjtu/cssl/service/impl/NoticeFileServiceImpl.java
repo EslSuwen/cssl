@@ -47,7 +47,7 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
       noticeFileList = (List<NoticeFile>) redisOperations.get(key);
       log.info("从缓存中获得数据-----------> notice_file_list");
     } else {
-      noticeFileList = baseMapper.getAllNoticeFile();
+      noticeFileList = baseMapper.list();
       log.info("查询数据库获得数据-----------> notice_file_list");
       redisOperations.set(key, noticeFileList, 5, TimeUnit.HOURS);
     }

@@ -3,6 +3,7 @@ package com.cqjtu.cssl.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.NoticeFile;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -14,11 +15,22 @@ import java.util.List;
 public interface NoticeFileMapper extends BaseMapper<NoticeFile> {
 
   /**
-   * 获取文件列表（除文件）
+   * 查找所有通知文件
    *
-   * @return 文件列表
    * @author suwen
-   * @date 2020/8/28 上午10:34
+   * @return 通知文件列表
+   * @date 2020/8/30 下午13:09
    */
-  List<NoticeFile> getAllNoticeFile();
+  List<NoticeFile> list();
+
+  /**
+   * 通过编号查找通知文件
+   *
+   * @param fileId 通知编号
+   * @author suwen
+   * @return 通知信息
+   * @date 2020/8/30 下午13:08
+   */
+  @Override
+  NoticeFile selectById(Serializable fileId);
 }
