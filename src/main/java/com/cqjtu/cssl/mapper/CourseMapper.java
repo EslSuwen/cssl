@@ -3,8 +3,6 @@ package com.cqjtu.cssl.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Course;
 
-import java.util.List;
-
 /**
  * 课程 Mapper 接口
  *

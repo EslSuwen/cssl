@@ -2,7 +2,6 @@ package com.cqjtu.cssl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.LabInfo;
-import org.apache.ibatis.annotations.Select;
 
 /**
  * 实验室 Mapper 接口

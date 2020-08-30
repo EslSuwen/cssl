@@ -1,8 +1,6 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cqjtu.cssl.constant.Audit;
-import com.cqjtu.cssl.dto.ArrangeAudit;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.TeachingPlan;
 

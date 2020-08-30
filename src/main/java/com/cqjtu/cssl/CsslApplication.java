@@ -1,7 +1,7 @@
 package com.cqjtu.cssl;
 
-import com.cqjtu.cssl.config.SecurityProperties;
 import com.cqjtu.cssl.config.FileProperties;
+import com.cqjtu.cssl.config.SecurityProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

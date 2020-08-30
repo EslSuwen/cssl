@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.mapper;
 
-import com.cqjtu.cssl.entity.TeacherMsg;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cqjtu.cssl.entity.TeacherMsg;
 
 /**
  * <p>

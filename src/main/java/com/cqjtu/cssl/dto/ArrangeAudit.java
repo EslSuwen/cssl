@@ -1,6 +1,5 @@
 package com.cqjtu.cssl.dto;
 
-import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import lombok.Builder;
 import lombok.Data;

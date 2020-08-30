@@ -2,7 +2,6 @@ package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.ExpFileStore;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
