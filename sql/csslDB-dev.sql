@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : ali_cloud
+ Source Server         : mysql
  Source Server Type    : MySQL
- Source Server Version : 50729
- Source Host           : 47.107.239.108:3306
- Source Schema         : csslDB-dev
+ Source Server Version : 80018
+ Source Host           : localhost:3306
+ Source Schema         : csslDB
 
  Target Server Type    : MySQL
- Target Server Version : 50729
+ Target Server Version : 80018
  File Encoding         : 65001
 
- Date: 28/08/2020 22:36:42
+ Date: 31/08/2020 12:04:58
 */
 
 SET NAMES utf8mb4;
@@ -37,7 +37,7 @@ CREATE TABLE `arrange` (
   KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
   KEY `tid` (`tid`),
   KEY `aid` (`aid`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC COMMENT='实验时间安排';
 
 -- ----------------------------
 -- Table structure for arrange_period
@@ -50,7 +50,7 @@ CREATE TABLE `arrange_period` (
   `lab_session` int(11) NOT NULL,
   PRIMARY KEY (`aid`,`lab_week`,`lab_day`,`lab_session`),
   CONSTRAINT `aid` FOREIGN KEY (`aid`) REFERENCES `arrange` (`aid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for class
@@ -64,7 +64,7 @@ CREATE TABLE `class` (
   PRIMARY KEY (`class_id`) USING BTREE,
   KEY `class_major` (`major_id`),
   CONSTRAINT `class_major` FOREIGN KEY (`major_id`) REFERENCES `major` (`major_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for course
@@ -76,7 +76,7 @@ CREATE TABLE `course` (
   `course_college` varchar(32) NOT NULL,
   `course_type` varchar(8) DEFAULT NULL,
   PRIMARY KEY (`course_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for exp_file
@@ -102,10 +102,10 @@ CREATE TABLE `exp_file_store` (
   `pro_id` int(11) NOT NULL,
   `type_name` varchar(12) NOT NULL,
   `name` varchar(64) NOT NULL,
-  `file` mediumblob NOT NULL,
+  `file_path` varchar(256) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   PRIMARY KEY (`no`),
   KEY `file_pro_id` (`pro_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for exp_project
@@ -132,30 +132,7 @@ CREATE TABLE `exp_project` (
   PRIMARY KEY (`pro_id`) USING BTREE,
   KEY `cid` (`course_id`),
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Table structure for lab_arrange_backup
--- ----------------------------
-DROP TABLE IF EXISTS `lab_arrange_backup`;
-CREATE TABLE `lab_arrange_backup` (
-  `lab_week` int(11) NOT NULL,
-  `lab_day` int(11) NOT NULL,
-  `lab_session` varchar(16) NOT NULL,
-  `lab_id` varchar(16) NOT NULL,
-  `pro_id` int(11) DEFAULT NULL,
-  `tid` char(12) DEFAULT NULL,
-  `course_id` int(11) DEFAULT NULL,
-  `lab_class` varchar(128) NOT NULL,
-  `lab_remark` varchar(8) NOT NULL,
-  `exp_proname` varchar(32) NOT NULL,
-  PRIMARY KEY (`lab_week`,`lab_day`,`lab_session`,`lab_id`) USING BTREE,
-  KEY `fk_relationship_12` (`lab_id`) USING BTREE,
-  KEY `fk_relationship_13` (`pro_id`) USING BTREE,
-  KEY `fk_relationship_14` (`tid`,`course_id`) USING BTREE,
-  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`),
-  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for lab_info
@@ -174,7 +151,7 @@ CREATE TABLE `lab_info` (
   KEY `fk_lab_mange` (`tid`) USING BTREE,
   CONSTRAINT `fk_lab_mange` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_4` FOREIGN KEY (`type_id`) REFERENCES `lab_type` (`type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for lab_type
@@ -184,7 +161,7 @@ CREATE TABLE `lab_type` (
   `type_id` int(11) NOT NULL,
   `type_name` varchar(16) NOT NULL,
   PRIMARY KEY (`type_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for major
@@ -195,7 +172,7 @@ CREATE TABLE `major` (
   `major_name` varchar(32) NOT NULL,
   `college` varchar(32) NOT NULL,
   PRIMARY KEY (`major_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for notice
@@ -203,14 +180,14 @@ CREATE TABLE `major` (
 DROP TABLE IF EXISTS `notice`;
 CREATE TABLE `notice` (
   `nid` int(11) NOT NULL AUTO_INCREMENT COMMENT '通知编号',
-  `tid` char(12) CHARACTER SET utf8mb4 NOT NULL COMMENT '通知发布人编号',
+  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '通知发布人编号',
   `notice_date` datetime DEFAULT NULL COMMENT '通知发布时间',
-  `notice_head` varchar(64) DEFAULT NULL COMMENT '通知标题',
-  `notice_content` text COMMENT '通知正文',
+  `notice_head` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '通知标题',
+  `notice_content` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '通知正文',
   PRIMARY KEY (`nid`) USING BTREE,
   KEY `tid_key` (`tid`),
-  CONSTRAINT `tid_key` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COMMENT='通知信息表，通知由管理员发布。';
+  CONSTRAINT `tid_key` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON UPDATE RESTRICT
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='通知信息表，通知由管理员发布。';
 
 -- ----------------------------
 -- Table structure for notice_file
@@ -221,9 +198,9 @@ CREATE TABLE `notice_file` (
   `file_name` varchar(64) DEFAULT NULL COMMENT '通知文件名',
   `tid` int(11) DEFAULT NULL COMMENT '通知发布人编号',
   `file_date` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '通知文件发布时间',
-  `file` mediumblob COMMENT '通知文件',
+  `file_path` varchar(256) DEFAULT NULL COMMENT '通知文件路径',
   PRIMARY KEY (`file_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='通知文件';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='通知文件';
 
 -- ----------------------------
 -- Table structure for project_item
@@ -240,7 +217,7 @@ CREATE TABLE `project_item` (
   `intend` varchar(256) NOT NULL,
   PRIMARY KEY (`ino`) USING BTREE,
   KEY `fk_relationship_5` (`pro_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for teach
@@ -254,7 +231,7 @@ CREATE TABLE `teach` (
   KEY `fk_relationship_7` (`course_id`) USING BTREE,
   CONSTRAINT `fk_relationship_6` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`),
   CONSTRAINT `fk_relationship_7` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for teachclass
@@ -266,7 +243,7 @@ CREATE TABLE `teachclass` (
   `class_name` varchar(16) NOT NULL,
   `major_id` int(11) NOT NULL,
   PRIMARY KEY (`tid`,`course_id`,`class_name`,`major_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for teacher
@@ -281,7 +258,7 @@ CREATE TABLE `teacher` (
   `tpassword` varchar(16) NOT NULL,
   `authority` varchar(12) NOT NULL DEFAULT '0',
   PRIMARY KEY (`tid`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Table structure for teacher_msg
@@ -298,7 +275,7 @@ CREATE TABLE `teacher_msg` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `tid` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Table structure for teacher_msg_copy1
@@ -315,6 +292,6 @@ CREATE TABLE `teacher_msg_copy1` (
   PRIMARY KEY (`mid`),
   KEY `tid` (`tid`),
   CONSTRAINT `teacher_msg_copy1_ibfk_1` FOREIGN KEY (`tid`) REFERENCES `teacher` (`tid`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 SET FOREIGN_KEY_CHECKS = 1;

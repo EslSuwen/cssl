@@ -29,7 +29,7 @@ spring:
     ## Redis数据库索引（默认为0）
     database: 0
     ## Redis服务器地址
-    host: 47.107.239.108
+    # host: 47.107.239.108
     ## Redis服务器连接端口
     port: 6379
     ## Redis服务器连接密码（默认为空）
@@ -45,7 +45,7 @@ spring:
         ## 连接池中的最小空闲连接
         min-idle: 0
     ## 连接超时时间（毫秒）
-    timeout: 1200
+    timeout: 5000
   devtools:                           #热部署
     restart:
       enabled: true
@@ -136,6 +136,8 @@ spring:
       url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: Liyu8824
+  redis:
+    host: 47.107.239.108
 
 
 ---
@@ -148,6 +150,8 @@ spring:
       url: jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8
       username: root
       password: Cssl123.
+  redis:
+    host: 47.107.239.108
 
 
 
@@ -161,3 +165,5 @@ spring:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
       username: root
       password: Cssl123.
+  redis:
+    host: localhost
