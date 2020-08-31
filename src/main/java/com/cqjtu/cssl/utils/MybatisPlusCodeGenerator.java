@@ -24,12 +24,16 @@ import java.util.Scanner;
 public final class MybatisPlusCodeGenerator {
   // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 
+  private static final String DB_URL =
+      // "jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
+      "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8";
+
+  private static final String DB_PWD = "Cssl123.";
+
   /** 读取控制台内容 */
   public static String scanner(String tip) {
     Scanner scanner = new Scanner(System.in);
-    StringBuilder help = new StringBuilder();
-    help.append("请输入" + tip + "：");
-    System.out.println(help.toString());
+    System.out.println("请输入" + tip + "：");
     if (scanner.hasNext()) {
       String ipt = scanner.next();
       if (StringUtils.isNotEmpty(ipt)) {
@@ -52,17 +56,17 @@ public final class MybatisPlusCodeGenerator {
     gc.setOpen(false);
     // service 命名方式 如下配置 %s 为占位符
     gc.setServiceName("%sService");
-    // gc.setSwagger2(true); 实体属性 Swagger2 注解
+    // 实体属性 Swagger2 注解
+    gc.setSwagger2(true);
     mpg.setGlobalConfig(gc);
 
     // 数据源配置
     DataSourceConfig dsc = new DataSourceConfig();
-    dsc.setUrl(
-        "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8");
+    dsc.setUrl(DB_URL);
     // dsc.setSchemaName("public");
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
     dsc.setUsername("root");
-    dsc.setPassword("Cssl123.");
+    dsc.setPassword(DB_PWD);
     mpg.setDataSource(dsc);
 
     // 包配置

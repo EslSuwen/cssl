@@ -3,6 +3,7 @@ package com.cqjtu.cssl.utils;
 import com.cqjtu.cssl.exception.FileException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,8 +24,8 @@ public class JdkTests {
 
   @Test
   public void pathSeparator() {
-    System.out.println("separator: " + File.separator);
-    System.out.println("pathSeparator: " + File.pathSeparator);
+    log.info("separator: " + File.separator);
+    log.info("pathSeparator: " + File.pathSeparator);
   }
 
   @Test
@@ -39,13 +40,13 @@ public class JdkTests {
     Path path = Paths.get("./files").toAbsolutePath().normalize();
     if (path.toFile().exists() && path.toFile().isDirectory()) {
       try {
-        System.out.println("默认目录不存在，创建目录。");
+        log.info("默认目录不存在，创建目录。");
         Files.createDirectories(path);
       } catch (Exception ex) {
         throw new FileException("默认目录异常！", ex);
       }
     } else {
-      System.out.println("默认目录读取成功。");
+      log.info("默认目录读取成功。");
     }
     // 读取测试文件
     try {
@@ -59,13 +60,13 @@ public class JdkTests {
       Files.createFile(targetLocation);
       if (targetLocation.toFile().exists() && targetLocation.toFile().isDirectory()) {
         try {
-          System.out.println("保存目录不存在，创建目录。");
+          log.info("保存目录不存在，创建目录。");
           Files.createDirectories(targetLocation);
         } catch (Exception ex) {
           throw new FileException("保存目录异常！", ex);
         }
       } else {
-        System.out.println("保存目录读取成功。");
+        log.info("保存目录读取成功。");
       }
       Files.copy(filePath, targetLocation, StandardCopyOption.REPLACE_EXISTING);
     } catch (MalformedURLException ex) {
@@ -77,5 +78,11 @@ public class JdkTests {
   public void creatFile() throws IOException {
     Path targetLocation = Paths.get("./files/test/img/test.jpeg").toAbsolutePath().normalize();
     Files.createFile(targetLocation);
+  }
+
+  @Test
+  public void sysDir() {
+    System.out.println(System.getProperty("user.dir"));
+    System.out.println(ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/");
   }
 }

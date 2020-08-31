@@ -25,7 +25,7 @@ import java.util.Enumeration;
 @Component
 public class WebLogAspect {
 
-  private Logger logger = LoggerFactory.getLogger(this.getClass());
+  private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   ThreadLocal<Long> startTime = new ThreadLocal<Long>();
 
@@ -66,7 +66,7 @@ public class WebLogAspect {
     Enumeration<String> enu = request.getParameterNames();
     while (enu.hasMoreElements()) {
       String paraName = (String) enu.nextElement();
-      System.out.println(paraName + ": " + request.getParameter(paraName));
+      logger.info(paraName + ": " + request.getParameter(paraName));
     }
   }
 

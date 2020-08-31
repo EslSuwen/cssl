@@ -20,17 +20,17 @@ public class CsslApplicationTests {
 
   @Test
   public void testOutArrange() {
-    System.out.println(arrangeService.list());
+    log.info(arrangeService.list());
   }
 
   @Test
   public void testOutArrangePeriod() {
-    System.out.println(arrangePeriodService.list());
+    log.info(arrangePeriodService.list());
   }
 
   @Test
   public void testMapOutArrange() {
-    System.out.println(arrangeService.findByTid("1"));
+    log.info(arrangeService.findByTid("1"));
   }
 
   @Test

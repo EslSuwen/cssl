@@ -125,7 +125,7 @@ public class AuthenticationController {
       // 使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
       BufferedImage challenge = defaultKaptcha.createImage(createText);
       ImageIO.write(challenge, "jpg", jpegOutputStream);
-      System.out.println("createImageCode:{}" + request.getSession().getAttribute("imageCode"));
+      log.info("createImageCode:{}" + request.getSession().getAttribute("imageCode"));
       log.info("createImageCode:" + createText);
     } catch (IllegalArgumentException e) {
       response.sendError(HttpServletResponse.SC_NOT_FOUND);

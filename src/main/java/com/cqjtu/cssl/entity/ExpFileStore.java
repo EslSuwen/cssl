@@ -39,6 +39,6 @@ public class ExpFileStore implements Serializable {
   @ApiModelProperty(value = "文件名", required = true)
   private String name;
 
-  @ApiModelProperty(value = "文件", required = true)
-  private byte[] file;
+  @ApiModelProperty(value = "文件路径", required = true)
+  private String filePath;
 }

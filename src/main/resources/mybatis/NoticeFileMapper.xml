@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqjtu.cssl.mapper.NoticeFileMapper">
+
+    <select id="list" resultType="com.cqjtu.cssl.entity.NoticeFile">
+        SELECT file_id, tname, file_name, f.tid, file_date, file_path
+        FROM notice_file f, teacher t
+ 		WHERE f.tid = t.tid
+    </select>
+
+    <select id="selectById" resultType="com.cqjtu.cssl.entity.NoticeFile">
+        SELECT file_id, tname, file_name, f.tid, file_date, file_path
+        FROM notice_file f, teacher t
+ 		WHERE f.tid = t.tid AND file_id=#{fileId}
+    </select>
+
+</mapper>

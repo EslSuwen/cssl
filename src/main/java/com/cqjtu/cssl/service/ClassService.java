@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.entity.Class;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * 班级服务接口
  *

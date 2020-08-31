@@ -2,6 +2,7 @@ package com.cqjtu.cssl.exception;
 
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
+import io.lettuce.core.RedisCommandTimeoutException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,6 +69,20 @@ public class RestExceptionHandler {
             .success(false)
             .build(),
         HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(value = RedisCommandTimeoutException.class)
+  @ResponseBody
+  public ResponseEntity<ResultDto> handleRedisCommandTimeoutException(
+      RedisCommandTimeoutException e) {
+    log.error(e.getMessage(), e);
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .code(ReturnCode.RETURN_CODE_40007.getCode())
+            .message("redis 缓存连接超时，请重试")
+            .success(false)
+            .build(),
+        HttpStatus.REQUEST_TIMEOUT);
   }
 
   @ExceptionHandler(value = Exception.class)
