@@ -94,8 +94,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and() // don't create session
         .authorizeRequests()
-        .requestMatchers(EndpointRequest.to(actuatorExposures))
-        .hasRole(ROLE_ADMIN)
+        //        .requestMatchers(EndpointRequest.to(actuatorExposures))
+        //        .hasRole(ROLE_ADMIN)
         .requestMatchers(EndpointRequest.toAnyEndpoint())
         .permitAll()
         .antMatchers(securityProperties.getJwt().getAuthenticationPath())

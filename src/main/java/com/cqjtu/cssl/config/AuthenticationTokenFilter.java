@@ -34,23 +34,33 @@ public class AuthenticationTokenFilter extends OncePerRequestFilter {
       throws ServletException, IOException {
     String authToken = request.getHeader(securityProperties.getJwt().getHeader());
 
-    if (authToken != null && authToken.startsWith("Bearer ")) {
-      authToken = authToken.substring(7);
-    }
-    UserDetails user = jwtTokenUtil.verify(authToken);
-    log.info("user: " + user + "  URI: " + request.getRequestURI());
+    String agentUri = request.getRequestURI();
 
-    if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-      log.info(
-          "checking authentication for user "
-              + user.getUsername()
-              + " with tab "
-              + user.getAuthorities());
-      UsernamePasswordAuthenticationToken authentication =
-          new UsernamePasswordAuthenticationToken(user.getUsername(), "N/A", user.getAuthorities());
-      authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-      SecurityContextHolder.getContext().setAuthentication(authentication);
+    if (!agentUri.contains("actuator")
+        && !agentUri.contains("instances")
+        && !agentUri.contains("applications")) {
+      // 略过 actuator 请求
+      if (authToken != null && authToken.startsWith("Bearer ")) {
+        authToken = authToken.substring(7);
+      }
+      UserDetails user = jwtTokenUtil.verify(authToken);
+      log.info("user: " + user + "  URI: " + request.getRequestURI());
+      log.info(authToken);
+
+      if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        log.info(
+            "checking authentication for user "
+                + user.getUsername()
+                + " with tab "
+                + user.getAuthorities());
+        UsernamePasswordAuthenticationToken authentication =
+            new UsernamePasswordAuthenticationToken(
+                user.getUsername(), "N/A", user.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+      }
     }
+
     chain.doFilter(request, response);
   }
 }

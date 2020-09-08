@@ -7,7 +7,7 @@ server:                             #配置server
 
 spring:
   profiles:
-    active: prod
+    active: dev2
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver       # 数据库访问配置,主数据源，默认的
@@ -62,27 +62,20 @@ spring:
       file-size-threshold: 2KB       # 文件写入磁盘的阈值
       max-file-size: 200MB           # 最大文件大小
       max-request-size: 200MB        # 最大请求大小
+  security:
+    user:
+      name: root
+      password: password
+  boot:
+    admin:
+      client:
+        url: http://localhost:8090/cssl
+        instance:
+          name: ${info.app.name}
+          metadata: # 这个name与password用于在注册到管理端时，使管理端有权限获取客户端端点数据
+            user.name: ${spring.security.user.name}
+            user.password: ${spring.security.user.password}
 
-# mybatis-plus相关配置
-mybatis-plus:
-  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
-  mapper-locations: classpath:mybatis/*Mapper.xml
-  # 以下配置均有默认值,可以不设置
-  global-config:
-    db-config:
-      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
-      id-type: auto
-      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
-      field-strategy: NOT_EMPTY
-      #数据库类型
-      db-type: MYSQL
-  configuration:
-    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
-    map-underscore-to-camel-case: true
-    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
-    call-setters-on-nulls: true
-    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 logging:
   config: classpath:log4j2/log4j2.xml
@@ -109,7 +102,8 @@ management:
     web:
       base-path: /actuator
       exposure:
-        include: health,info,env
+        #        include: health,info,env
+        include: "*"
   endpoint:
     health:
       show-details: always
@@ -149,7 +143,7 @@ spring:
     druid:
       url: jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8
       username: root
-      password: Cssl123.
+      password: Liyu8824
   redis:
     host: 47.115.8.44
 

@@ -43,7 +43,9 @@ dependencies {
 
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'de.codecentric:spring-boot-admin-starter-server:2.3.0'
+    implementation 'de.codecentric:spring-boot-admin-starter-client:2.3.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
 
