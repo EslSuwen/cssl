@@ -1,29 +1,26 @@
 package com.cqjtu.cssl.controller;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.AuthenticationRequest;
 import com.cqjtu.cssl.entity.AuthenticationResponse;
+import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.service.TeacherService;
-import com.cqjtu.cssl.utils.JwtTokenUtil;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.imageio.ImageIO;
@@ -40,35 +37,23 @@ import java.awt.image.BufferedImage;
  */
 @Api(tags = "用户验证-控制器")
 @RestController
-@RequestMapping(value = "${api.base-path}", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
 @Log4j2
 public class AuthenticationController {
 
-  private final JwtTokenUtil jwtTokenUtil;
-  private final UserDetailsService userDetailsService;
-  private final AuthenticationManager authenticationManager;
   private final DefaultKaptcha defaultKaptcha;
   private final TeacherService teacherService;
 
   @Autowired
-  public AuthenticationController(
-      AuthenticationManager authenticationManager,
-      JwtTokenUtil jwtTokenUtil,
-      @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
-      DefaultKaptcha defaultKaptcha,
-      TeacherService teacherService) {
-    this.authenticationManager = authenticationManager;
-    this.jwtTokenUtil = jwtTokenUtil;
-    this.userDetailsService = userDetailsService;
+  public AuthenticationController(DefaultKaptcha defaultKaptcha, TeacherService teacherService) {
     this.defaultKaptcha = defaultKaptcha;
     this.teacherService = teacherService;
   }
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
-  @PostMapping("/auth")
+  @PostMapping("/login")
   public ResponseEntity<ResultDto> login(
-      @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
-          AuthenticationRequest authRequest,
+      @ApiParam(value = "请求登录模型", required = true) @RequestBody AuthenticationRequest authRequest,
       HttpServletRequest request) {
 
     log.info(authRequest);
@@ -81,24 +66,38 @@ public class AuthenticationController {
               .code(ReturnCode.RETURN_CODE_40004.getCode())
               .message("验证码错误")
               .build(),
-          HttpStatus.FORBIDDEN);
+          HttpStatus.BAD_REQUEST);
     }
 
-    Authentication authentication =
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                authRequest.getUserNo(), authRequest.getPassword()));
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-
-    UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
-    String token = jwtTokenUtil.generate(userDetails);
+    Teacher teacher = teacherService.getById(authRequest.getUserNo());
+    if (teacher == null) {
+      return new ResponseEntity<>(
+          ResultDto.builder()
+              .success(false)
+              .code(ReturnCode.RETURN_CODE_40001.getCode())
+              .message(ReturnCode.RETURN_CODE_40001.getMessage())
+              .build(),
+          HttpStatus.BAD_REQUEST);
+    } else if (!teacher.getTpassword().equals(authRequest.getPassword())) {
+      return new ResponseEntity<>(
+          ResultDto.builder()
+              .success(false)
+              .code(ReturnCode.RETURN_CODE_40002.getCode())
+              .message(ReturnCode.RETURN_CODE_40002.getMessage())
+              .build(),
+          HttpStatus.BAD_REQUEST);
+    }
+    StpUtil.setLoginId(authRequest.getUserNo());
     return new ResponseEntity<>(
         ResultDto.builder()
-            .success(true)
+            .success(StpUtil.isLogin())
             .code(ReturnCode.RETURN_CODE_10001.getCode())
-            .message("登录成功")
+            .message(authRequest.getUserNo() + ReturnCode.RETURN_CODE_10001.getMessage())
             .data(
-                new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())))
+                AuthenticationResponse.builder()
+                    .token(StpUtil.getTokenValue())
+                    .teacher(teacher)
+                    .build())
             .build(),
         HttpStatus.OK);
   }

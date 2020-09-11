@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.controller;
 
+import cn.dev33.satoken.annotation.SaCheckLogin;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.TeacherMsg;
@@ -82,6 +83,7 @@ public class TeacherController {
    * @date 2020/3/23 17:28 下午
    * @return 授课信息列表
    */
+  @SaCheckLogin
   @GetMapping(value = "/getMsgInfo/{tid}")
   public ResponseEntity<ResultDto> getMsgInfo(
       @NonNull @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {

@@ -1,5 +1,7 @@
 package com.cqjtu.cssl.exception;
 
+import cn.dev33.satoken.exception.NotLoginException;
+import cn.dev33.satoken.exception.NotPermissionException;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import io.lettuce.core.RedisCommandTimeoutException;
@@ -88,13 +90,22 @@ public class RestExceptionHandler {
   @ExceptionHandler(value = Exception.class)
   @ResponseBody
   public ResponseEntity<ResultDto> handleOtherException(Exception e) {
+
+    String code, message;
+    if (e instanceof NotLoginException) {
+      code = ReturnCode.RETURN_CODE_40001.getCode();
+      message = "账号未登录";
+    } else if (e instanceof NotPermissionException) {
+      NotPermissionException ee = (NotPermissionException) e;
+      code = ReturnCode.RETURN_CODE_40001.getCode();
+      message = "无此权限：" + ee.getCode();
+    } else {
+      code = ReturnCode.RETURN_CODE_40099.getCode();
+      message = ReturnCode.RETURN_CODE_40099.getMessage();
+    }
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
-        ResultDto.builder()
-            .code(ReturnCode.RETURN_CODE_40099.getCode())
-            .message(e.getMessage())
-            .success(false)
-            .build(),
-        HttpStatus.BAD_REQUEST);
+            ResultDto.builder().code(code).message(message).success(false).build(),
+            HttpStatus.BAD_REQUEST);
   }
 }

@@ -2,10 +2,7 @@ package com.cqjtu.cssl.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * 验证请求返回模型
@@ -18,6 +15,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class AuthenticationResponse {
 
   @ApiModelProperty(value = "验证token[验证失败为空]")
