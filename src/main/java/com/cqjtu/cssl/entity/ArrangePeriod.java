@@ -37,5 +37,4 @@ public class ArrangePeriod implements Serializable {
   /** 开课节次 */
   @ApiModelProperty(value = "开课节次", position = 3, required = true)
   private Integer labSession;
-
 }

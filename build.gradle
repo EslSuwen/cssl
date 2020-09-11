@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.2.8.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'java'
 }
 
@@ -20,56 +20,60 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    compile 'cn.hutool:hutool-all:5.3.10'
+    implementation 'cn.hutool:hutool-all:5.3.10'
 
-    compile group: 'com.github.xiaoymin', name: 'knife4j-spring-boot-starter', version: '2.0.3'
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:2.0.3'
 
-    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.4'
-    compile group: 'org.apache.poi', name: 'poi-ooxml', version: '4.1.2'
-    compile group: 'org.apache.poi', name: 'poi', version: '4.1.2'
+    implementation 'commons-beanutils:commons-beanutils:1.9.4'
+    implementation 'org.apache.poi:poi-ooxml:4.1.2'
+    implementation 'org.apache.poi:poi:4.1.2'
 
-    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.29'
-    compile group: 'com.baomidou', name: 'mybatis-plus-generator', version: '3.3.1'
-    implementation 'com.auth0:java-jwt:3.10.0'
+    implementation 'com.auth0:java-jwt:3.10.3'
 
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     testCompileOnly 'org.projectlombok:lombok:1.18.12'
 
-    compile group: 'com.baomidou', name: 'mybatis-plus-boot-starter', version: '3.3.1'
+    implementation 'org.freemarker:freemarker:2.3.30'
 
-    compile group: 'com.github.penggle', name: 'kaptcha', version: '2.3.2'
+    implementation 'com.baomidou:mybatis-plus-generator:3.4.0'
 
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.4.0'
+
+    implementation 'com.github.penggle:kaptcha:2.3.2'
+
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'de.codecentric:spring-boot-admin-starter-server:2.3.0'
-    implementation 'de.codecentric:spring-boot-admin-starter-client:2.3.0'
+
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    compile group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 
-    compile('org.springframework.boot:spring-boot-starter-web')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    compile('org.springframework.boot:spring-boot-starter-log4j2')
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 
-    compile('org.springframework.boot:spring-boot-devtools')
+    implementation 'org.springframework.boot:spring-boot-devtools'
 
-    compile('org.springframework.boot:spring-boot-starter-aop')
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
-    compile('org.springframework:spring-context-support')
+    implementation 'org.springframework:spring-context-support'
 
-    compile('com.alibaba:druid-spring-boot-starter:1.1.14')
+    implementation 'com.alibaba:druid-spring-boot-starter:1.1.14'
 
-    compile('org.apache.commons:commons-lang3:3.8.1')
+    implementation 'org.apache.commons:commons-lang3:3.11'
 
-    compile('mysql:mysql-connector-java')
+    implementation 'mysql:mysql-connector-java'
 
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 configurations {
     providedRuntime
     // remove default logger
     all*.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    all*.exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+    all*.exclude group: 'log4j', module: 'slog4j'
 }

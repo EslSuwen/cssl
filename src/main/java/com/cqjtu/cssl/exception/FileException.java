@@ -6,12 +6,12 @@ package com.cqjtu.cssl.exception;
  * @author suwen
  * @date 2020/8/10 下午1:26
  */
-public class FileException extends RuntimeException{
-    public FileException(String message) {
-        super(message);
-    }
+public class FileException extends RuntimeException {
+  public FileException(String message) {
+    super(message);
+  }
 
-    public FileException(String message, Throwable cause) {
-        super(message, cause);
-    }
+  public FileException(String message, Throwable cause) {
+    super(message, cause);
+  }
 }

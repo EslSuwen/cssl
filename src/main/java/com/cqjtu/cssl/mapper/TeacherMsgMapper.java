@@ -4,13 +4,9 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.TeacherMsg;
 
 /**
- * <p>
- *  Mapper 接口
- * </p>
+ * Mapper 接口
  *
  * @author suwen
  * @since 2020-03-23
  */
-public interface TeacherMsgMapper extends BaseMapper<TeacherMsg> {
-
-}
+public interface TeacherMsgMapper extends BaseMapper<TeacherMsg> {}

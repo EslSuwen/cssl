@@ -125,7 +125,8 @@ public final class ExcelUtil {
       response.setContentType("multipart/form-data");
       response.setHeader(
           "Content-disposition",
-          "attachment; filename=" + new String((fileName + ".xls").getBytes(), StandardCharsets.ISO_8859_1));
+          "attachment; filename="
+              + new String((fileName + ".xls").getBytes(), StandardCharsets.ISO_8859_1));
       OutputStream os = new BufferedOutputStream(response.getOutputStream());
 
       // 将excel写入到输出流中

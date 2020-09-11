@@ -60,14 +60,14 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     return arrangeList;
   }
 
-/*
-  @Override
-  public boolean auditArrange(Integer aid, Audit status) {
-    Arrange arrange = new Arrange();
-    arrange.setStatus(status);
-    return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
-  }
-*/
+  /*
+    @Override
+    public boolean auditArrange(Integer aid, Audit status) {
+      Arrange arrange = new Arrange();
+      arrange.setStatus(status);
+      return update(arrange, new UpdateWrapper<Arrange>().eq("aid", aid));
+    }
+  */
 
   @Override
   public List<TeachingPlan> getTeachingPlanList() {

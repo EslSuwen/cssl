@@ -1,5 +1,5 @@
-server:                             #配置server
-  tomcat:                           #springboot乱码解决
+server: #配置server
+  tomcat: #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
     context-path: /cssl
@@ -46,10 +46,10 @@ spring:
         min-idle: 0
     ## 连接超时时间（毫秒）
     timeout: 5000
-  devtools:                           #热部署
+  devtools: #热部署
     restart:
       enabled: true
-  http:                               #springboot乱码解决
+  http: #springboot乱码解决
     encoding:
       force: true
       charset: utf-8
@@ -66,16 +66,11 @@ spring:
     user:
       name: root
       password: password
-  boot:
-    admin:
-      client:
-        url: http://localhost:8090/cssl
-        instance:
-          name: ${info.app.name}
-          metadata: # 这个name与password用于在注册到管理端时，使管理端有权限获取客户端端点数据
-            user.name: ${spring.security.user.name}
-            user.password: ${spring.security.user.password}
 
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:mybatis/*Mapper.xml
 
 logging:
   config: classpath:log4j2/log4j2.xml

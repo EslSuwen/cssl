@@ -26,9 +26,10 @@ public final class MybatisPlusCodeGenerator {
 
   private static final String DB_URL =
       // "jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
-      "jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8";
-
-  private static final String DB_PWD = "Cssl123.";
+      "jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8";
+  private static final String DB_PWD = "Liyu8824";
+  private static final String DB_USER = "root";
+  private  static final String PACKAGE_PARENT="com.cqjtu";
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {
@@ -36,7 +37,7 @@ public final class MybatisPlusCodeGenerator {
     System.out.println("请输入" + tip + "：");
     if (scanner.hasNext()) {
       String ipt = scanner.next();
-      if (StringUtils.isNotEmpty(ipt)) {
+      if (StringUtils.isNotBlank(ipt)) {
         return ipt;
       }
     }
@@ -65,14 +66,14 @@ public final class MybatisPlusCodeGenerator {
     dsc.setUrl(DB_URL);
     // dsc.setSchemaName("public");
     dsc.setDriverName("com.mysql.cj.jdbc.Driver");
-    dsc.setUsername("root");
+    dsc.setUsername(DB_USER);
     dsc.setPassword(DB_PWD);
     mpg.setDataSource(dsc);
 
     // 包配置
     PackageConfig pc = new PackageConfig();
     pc.setModuleName(scanner("模块名"));
-    pc.setParent("com.cqjtu");
+    pc.setParent(PACKAGE_PARENT);
     mpg.setPackageInfo(pc);
 
     // 自定义配置
