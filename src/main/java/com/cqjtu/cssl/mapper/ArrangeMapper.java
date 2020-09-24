@@ -34,15 +34,15 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    * @author suwen
    * @date 2020/5/13 下午3:33
    */
-  List<TeachingPlan> getTeachingPlanList();
+  List<TeachingPlan> getTeachingPlanList(String term);
 
   /**
    * 根据课程编号查询课程起止周
    *
-   * @param courseId 课程编号
+   * @param proId 项目卡片编号
    * @return 课程起止周
    * @author suwen
    * @date 2020/5/13 下午4:40
    */
-  String getCoursePeriodByCid(Integer courseId);
+  String getCoursePeriodByProId(Integer proId);
 }

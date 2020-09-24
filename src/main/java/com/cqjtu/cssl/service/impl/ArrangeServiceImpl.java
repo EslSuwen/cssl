@@ -29,7 +29,6 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
 
   private final ArrangePeriodService arrangePeriodService;
   private final ExpProjectService expProjectService;
-  private final ArrangeMapper arrangeMapper;
   private final LabInfoService labInfoService;
   private final TeacherService teacherService;
   private final CourseService courseService;
@@ -38,13 +37,11 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   public ArrangeServiceImpl(
       ArrangePeriodService arrangePeriodService,
       ExpProjectService expProjectService,
-      ArrangeMapper arrangeMapper,
       LabInfoService labInfoService,
       TeacherService teacherService,
       CourseService courseService) {
     this.arrangePeriodService = arrangePeriodService;
     this.expProjectService = expProjectService;
-    this.arrangeMapper = arrangeMapper;
     this.labInfoService = labInfoService;
     this.teacherService = teacherService;
     this.courseService = courseService;
@@ -70,10 +67,10 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   */
 
   @Override
-  public List<TeachingPlan> getTeachingPlanList() {
-    List<TeachingPlan> teachingPlanList = arrangeMapper.getTeachingPlanList();
+  public List<TeachingPlan> getTeachingPlanList(String term) {
+    List<TeachingPlan> teachingPlanList = baseMapper.getTeachingPlanList(term);
     for (TeachingPlan each : teachingPlanList) {
-      each.setCoursePeriod(arrangeMapper.getCoursePeriodByCid(each.getCourseId()));
+      each.setCoursePeriod(baseMapper.getCoursePeriodByProId(each.getProId()));
     }
     return teachingPlanList;
   }
@@ -101,7 +98,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
                           new QueryWrapper<ArrangePeriod>()
                               .last("LIMIT 1")
                               .eq("aid", each.getAid())))
-                  .period(arrangeMapper.getCoursePeriodByCid(each.getCourseId()))
+                  .period(baseMapper.getCoursePeriodByProId(each.getCourseId()))
                   .build();
             })
         .collect(Collectors.toList());
@@ -124,11 +121,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
 
     return arrangePeriodService.saveBatch(
         arrange.getArrangePeriod().stream()
-            .map(
-                each -> {
-                  each.setAid(aid);
-                  return each;
-                })
+            .peek(each -> each.setAid(aid))
             .collect(Collectors.toList()));
   }
 }

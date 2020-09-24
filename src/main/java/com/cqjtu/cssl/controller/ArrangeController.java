@@ -1,10 +1,12 @@
 package com.cqjtu.cssl.controller;
 
+import cn.hutool.core.io.IoUtil;
+import cn.hutool.poi.excel.ExcelUtil;
+import cn.hutool.poi.excel.ExcelWriter;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.service.ArrangeService;
-import com.cqjtu.cssl.utils.ExcelUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import lombok.NonNull;
@@ -15,6 +17,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * 实验室安排前端控制器
@@ -113,15 +117,15 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午3:41
    */
-  @GetMapping("getTeachingPlan")
-  public ResponseEntity<ResultDto> getTeachingPlanList() {
+  @GetMapping("/getTeachingPlan/{term}")
+  public ResponseEntity<ResultDto> getTeachingPlanList(@PathVariable String term) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取教学计划表成功")
-            .data(arrangeService.getTeachingPlanList())
+            .data(arrangeService.getTeachingPlanList(term))
             .build(),
         HttpStatus.OK);
   }
@@ -132,8 +136,37 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午5:51
    */
-  @GetMapping("getTeachingPlanExcel")
-  public void getTeachingPlanExcel(HttpServletResponse httpResponse) {
-    ExcelUtil.exportExcel(httpResponse, arrangeService.getTeachingPlanList());
+  @GetMapping("/getTeachingPlanExcel/{term}")
+  public void getTeachingPlanExcel(@PathVariable String term, HttpServletResponse response)
+      throws IOException {
+
+    ExcelWriter writer = ExcelUtil.getWriter(true);
+    writer.merge(15, "教学计划表");
+    writer.addHeaderAlias("labName", "实验室名");
+    writer.addHeaderAlias("expMajor", "");
+    writer.addHeaderAlias("term", "");
+    writer.addHeaderAlias("labClass", "");
+    writer.addHeaderAlias("expCname", "");
+    writer.addHeaderAlias("courseId", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("", "");
+
+    writer.write(arrangeService.getTeachingPlanList(term), true);
+    OutputStream out = response.getOutputStream();
+    response.setContentType(
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
+    response.setHeader("Content-Disposition", "attachment;filename=教学计划表.xlsx");
+
+    writer.flush(out, true);
+    writer.close();
+    IoUtil.close(out);
   }
 }

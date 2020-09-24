@@ -6,6 +6,7 @@ import com.cqjtu.cssl.mapper.NoticeMapper;
 import com.cqjtu.cssl.service.NoticeService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -41,18 +42,23 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
     String key = "notice_" + nid;
     ValueOperations<String, Object> operations = redisTemplate.opsForValue();
     // 判断redis中是否有键为key的缓存
-    Boolean hasKey = redisTemplate.hasKey(key);
     Notice notice;
-    if (hasKey != null && hasKey) {
-      notice = (Notice) operations.get(key);
-      log.info("从缓存中获得数据：" + notice);
-      log.info("------------------------------------");
-    } else {
+    try {
+      Boolean hasKey = redisTemplate.hasKey(key);
+      if (hasKey != null && hasKey) {
+        notice = (Notice) operations.get(key);
+        log.info("从缓存中获得数据：" + notice);
+        log.info("------------------------------------");
+      } else {
+        notice = baseMapper.getById(nid);
+        log.info("查询数据库获得数据：" + notice);
+        log.info("------------------------------------");
+        // 写入缓存
+        operations.set(key, notice, 5, TimeUnit.HOURS);
+      }
+    } catch (QueryTimeoutException e) {
       notice = baseMapper.getById(nid);
-      log.info("查询数据库获得数据：" + notice);
-      log.info("------------------------------------");
-      // 写入缓存
-      operations.set(key, notice, 5, TimeUnit.HOURS);
+      log.info("缓存读取失败：" + notice);
     }
     return notice;
   }

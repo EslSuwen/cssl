@@ -26,7 +26,6 @@ dependencies {
 
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.apache.poi:poi-ooxml:4.1.2'
-    implementation 'org.apache.poi:poi:4.1.2'
 
     implementation 'com.auth0:java-jwt:3.10.3'
 

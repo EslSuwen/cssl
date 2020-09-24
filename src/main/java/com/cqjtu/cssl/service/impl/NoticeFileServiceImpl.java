@@ -7,6 +7,7 @@ import com.cqjtu.cssl.mapper.NoticeFileMapper;
 import com.cqjtu.cssl.service.NoticeFileService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -41,15 +42,20 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
   @SuppressWarnings("unchecked")
   public List<NoticeFile> list() {
     String key = "notice_file_list";
-    Boolean hasKey = redisTemplate.hasKey(key);
     List<NoticeFile> noticeFileList;
-    if (hasKey != null && hasKey) {
-      noticeFileList = (List<NoticeFile>) redisOperations.get(key);
-      log.info("从缓存中获得数据-----------> notice_file_list");
-    } else {
+    try {
+      Boolean hasKey = redisTemplate.hasKey(key);
+      if (hasKey != null && hasKey) {
+        noticeFileList = (List<NoticeFile>) redisOperations.get(key);
+        log.info("从缓存中获得数据-----------> notice_file_list");
+      } else {
+        noticeFileList = baseMapper.list();
+        log.info("查询数据库获得数据-----------> notice_file_list");
+        redisOperations.set(key, noticeFileList, 5, TimeUnit.HOURS);
+      }
+    } catch (QueryTimeoutException e) {
       noticeFileList = baseMapper.list();
-      log.info("查询数据库获得数据-----------> notice_file_list");
-      redisOperations.set(key, noticeFileList, 5, TimeUnit.HOURS);
+      log.info("redis 缓存连接失败-----------> notice_file_list");
     }
     return noticeFileList;
   }

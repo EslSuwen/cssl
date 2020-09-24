@@ -38,11 +38,12 @@ public interface ArrangeService extends IService<Arrange> {
   /**
    * 获取教学计划表
    *
+   * @param term 学期
    * @return java.util.List<教学计划表>
    * @author suwen
    * @date 2020/5/13 下午3:44
    */
-  List<TeachingPlan> getTeachingPlanList();
+  List<TeachingPlan> getTeachingPlanList(String term);
 
   /**
    * 获取已申请的实验室安排信息
