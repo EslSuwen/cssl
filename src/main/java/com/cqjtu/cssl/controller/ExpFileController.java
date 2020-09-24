@@ -1,7 +1,6 @@
 package com.cqjtu.cssl.controller;
 
 import cn.hutool.core.io.file.FileReader;
-import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
@@ -37,7 +36,8 @@ public class ExpFileController {
 
   private final ExpFileService expFileService;
   private final ExpFileStoreService expFileStoreService;
-  private final String DEFAULT_PATH = System.getProperty("user.dir") + "/CSSL_FILES/expFile/";
+  private final String DEFAULT_PATH = System.getProperty("user.dir");
+  private final String FILE_PREFIX = "/CSSL_FILES/expFile/";
 
   @Autowired
   public ExpFileController(ExpFileService expFileService, ExpFileStoreService expFileStoreService) {
@@ -131,8 +131,7 @@ public class ExpFileController {
       @RequestParam Integer fileNo, @RequestParam String term, HttpServletResponse response) {
     ExpFileStore expFileStore = expFileStoreService.getById(fileNo);
     String fileName = expFileStore.getName();
-    Integer proId = expFileStore.getProId();
-    String filePath = StrUtil.format("{}{}/{}/{}", DEFAULT_PATH, term, proId, fileName);
+    String filePath = DEFAULT_PATH + expFileStore.getFilePath();
     log.info(filePath);
     try {
       FileReader fileReader = new FileReader(filePath);

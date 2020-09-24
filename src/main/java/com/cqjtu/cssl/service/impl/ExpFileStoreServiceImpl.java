@@ -36,7 +36,8 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
 
   private final ExpFileService expFileService;
   private final ExpProjectMapper expProjectMapper;
-  private final String DEFAULT_PATH = System.getProperty("user.dir") + "/CSSL_FILES/expFile/";
+  private final String DEFAULT_PATH = System.getProperty("user.dir");
+  private final String FILE_PREFIX = "/CSSL_FILES/expFile/";
 
   @Autowired
   public ExpFileStoreServiceImpl(ExpFileService expFileService, ExpProjectMapper expProjectMapper) {
@@ -49,7 +50,9 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
     Integer proId = expFileStore.getProId();
     String typeName = expFileStore.getTypeName();
     ExpProject expProject = expProjectMapper.selectById(proId);
-    String pathPrefix = StrUtil.format("{}{}/{}/", DEFAULT_PATH, expProject.getTerm(), proId);
+    String fileName = file.getOriginalFilename();
+    String pathPrefix =
+        StrUtil.format("{}{}/{}/", DEFAULT_PATH + FILE_PREFIX, expProject.getTerm(), proId);
     log.info(pathPrefix);
     ExpFileStore expFileStoreOld =
         getOne(new QueryWrapper<ExpFileStore>().eq("pro_id", proId).eq("type_name", typeName));
@@ -63,9 +66,10 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
       }
     }
     // 保存到目标目录
-    String targetPath = pathPrefix + file.getOriginalFilename();
-    expFileStore.setFilePath(targetPath);
-    expFileStore.setName(file.getOriginalFilename());
+    String targetPath = pathPrefix + fileName;
+    expFileStore.setFilePath(
+        StrUtil.format("{}{}/{}/{}", FILE_PREFIX, expProject.getTerm(), proId, fileName));
+    expFileStore.setName(fileName);
     InputStream in = file.getInputStream();
     BufferedOutputStream out = FileUtil.getOutputStream(new File(targetPath));
     IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);

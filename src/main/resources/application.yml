@@ -7,7 +7,7 @@ server: #配置server
 
 spring:
   profiles:
-    active: dev2
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver       # 数据库访问配置,主数据源，默认的
@@ -122,7 +122,7 @@ spring:
   profiles: dev
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: Liyu8824
   redis:

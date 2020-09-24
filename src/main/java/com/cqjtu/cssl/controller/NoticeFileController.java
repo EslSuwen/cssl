@@ -36,7 +36,8 @@ import java.nio.charset.StandardCharsets;
 public class NoticeFileController {
 
   private final NoticeFileService noticeFileService;
-  private final String DEFAULT_PATH = System.getProperty("user.dir") + "/CSSL_FILES/noticeFile/";
+  private final String DEFAULT_PATH = System.getProperty("user.dir");
+  private final String FILE_PREFIX = "/CSSL_FILES/noticeFile/";
 
   @Autowired
   public NoticeFileController(NoticeFileService noticeFileService) {
@@ -58,8 +59,9 @@ public class NoticeFileController {
     log.info(nFile);
 
     if (!nFile.isEmpty()) {
-      String targetPath = DEFAULT_PATH + nFile.getOriginalFilename();
-      noticeFile.setFilePath(targetPath);
+      String fileName = nFile.getOriginalFilename();
+      String targetPath = DEFAULT_PATH + FILE_PREFIX + fileName;
+      noticeFile.setFilePath(FILE_PREFIX + fileName);
       InputStream in = nFile.getInputStream();
       BufferedOutputStream out = FileUtil.getOutputStream(new File(targetPath));
       IoUtil.copy(in, out, IoUtil.DEFAULT_BUFFER_SIZE);
@@ -141,8 +143,10 @@ public class NoticeFileController {
    */
   @GetMapping("/getFile/{fileId}")
   public void getFileDownload(@PathVariable Integer fileId, HttpServletResponse response) {
-    String fileName = noticeFileService.getById(fileId).getFileName();
-    String filePath = DEFAULT_PATH + fileName;
+    NoticeFile noticeFile = noticeFileService.getById(fileId);
+    String fileName = noticeFile.getFileName();
+    String filePath = DEFAULT_PATH + noticeFile.getFilePath();
+    log.info("fileName: " + filePath);
     try {
       FileReader fileReader = new FileReader(filePath);
       response.reset();
