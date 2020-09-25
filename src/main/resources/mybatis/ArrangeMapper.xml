@@ -46,5 +46,10 @@
         WHERE class_name LIKE #{grade}
     </select>
 
+    <select id="getArrangePeriodByClassId" resultType="com.cqjtu.cssl.entity.ArrangePeriod">
+        SELECT *
+        FROM arrange_period
+        WHERE aid IN (SELECT aid FROM arrange WHERE lab_class REGEXP #{classId})
+    </select>
 
 </mapper>

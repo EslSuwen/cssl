@@ -9,7 +9,6 @@ import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.service.ArrangeService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class ArrangeController {
    */
   @GetMapping("/getInfo/{tid}")
   public ResponseEntity<ResultDto> getArrange(
-      @NonNull @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
+      @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -71,7 +70,7 @@ public class ArrangeController {
    */
   @PostMapping("/addArrange")
   public ResponseEntity<ResultDto> addArrange(
-      @NonNull @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
+      @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -80,6 +79,21 @@ public class ArrangeController {
             .message("增加排课信息成功")
             .build(),
         HttpStatus.OK);
+  }
+
+  /**
+   * 增加排课信息冲突检测
+   *
+   * @param arrange 排课信息
+   * @return MessageHelper
+   * @author suwen
+   * @date 2020/2/22 下午1:24
+   */
+  @PostMapping("/ifAddArrange")
+  public ResponseEntity<ResultDto> ifAddArrange(
+      @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
+
+    return arrangeService.ifAddArrange(arrange);
   }
 
   /**
@@ -102,8 +116,8 @@ public class ArrangeController {
    * @return 操作状态
    * @author suwen
    * @date 2020/5/11 上午9:49 @PutMapping("auditArrange") public ResponseEntity<ResultDto>
-   *     auditArrange( @NonNull @ApiParam(value = "安排编号", required = true) @RequestParam Integer
-   *     aid, @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
+   *     auditArrange( @ApiParam(value = "安排编号", required = true) @RequestParam Integer
+   *     aid, @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
    *     <p>return new ResponseEntity<>( ResultDto.builder()
    *     .success(arrangeService.auditArrange(aid, status))
    *     .code(ReturnCode.RETURN_CODE_20004.getCode()) .message("审核实验室时间安排成功") .build(),

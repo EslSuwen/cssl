@@ -55,7 +55,6 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
 
     List<Arrange> arrangeList =
         arrangeMapper.selectList(new QueryWrapper<Arrange>().eq("tid", tid));
-    //            new QueryWrapper<Arrange>().eq("tid", tid).eq("status", Audit.PASS));
 
     for (Arrange each : arrangeList) {
       each.setArrangePeriod(

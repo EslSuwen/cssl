@@ -65,4 +65,6 @@ public class Arrange implements Serializable {
   @ApiModelProperty(value = "排课时间", position = 10, required = true)
   @TableField(exist = false)
   private List<ArrangePeriod> arrangePeriod;
+
+
 }

@@ -2,8 +2,7 @@ package com.cqjtu.cssl.entity;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
@@ -14,9 +13,12 @@ import java.io.Serializable;
  * @author suwen
  * @since 2020-02-21
  */
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @ApiModel(description = "实验室安排上课时间")
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"labWeek", "labDay", "labSession"})
 @Accessors(chain = true)
 public class ArrangePeriod implements Serializable {
 

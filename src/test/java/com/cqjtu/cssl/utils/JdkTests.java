@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.utils;
 
+import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.exception.FileException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -84,5 +85,18 @@ public class JdkTests {
   public void sysDir() {
     System.out.println(System.getProperty("user.dir"));
     System.out.println(ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/");
+  }
+
+  @Test
+  public void equalArrangePeriod() {
+    ArrangePeriod arrange =
+        ArrangePeriod.builder().aid(0).labWeek(1).labDay(1).labSession(1).build();
+    ArrangePeriod arrange1 =
+        ArrangePeriod.builder().aid(1).labWeek(1).labDay(1).labSession(1).build();
+    ArrangePeriod arrange2 =
+        ArrangePeriod.builder().aid(2).labWeek(1).labDay(1).labSession(1).build();
+
+    System.out.println(arrange.equals(arrange1));
+    System.out.println(arrange1.equals(arrange2));
   }
 }
