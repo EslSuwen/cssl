@@ -141,32 +141,50 @@ public class ArrangeController {
       throws IOException {
 
     ExcelWriter writer = ExcelUtil.getWriter(true);
-    writer.merge(15, "教学计划表");
+    writer.merge(14, "教学计划表");
+    writer.addHeaderAlias("proId", "编号");
     writer.addHeaderAlias("labName", "实验室名");
-    writer.addHeaderAlias("expMajor", "");
-    writer.addHeaderAlias("term", "");
-    writer.addHeaderAlias("labClass", "");
-    writer.addHeaderAlias("expCname", "");
-    writer.addHeaderAlias("courseId", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
-    writer.addHeaderAlias("", "");
+    writer.addHeaderAlias("expMajor", "专业名");
+    writer.addHeaderAlias("term", "学期");
+    writer.addHeaderAlias("labClass", "班级");
+    writer.addHeaderAlias("expCname", "实验课程名");
+    writer.addHeaderAlias("courseId", "课程编号");
+    writer.addHeaderAlias("expTime", "学时");
+    writer.addHeaderAlias("coursePeriod", "行课周期");
+    writer.addHeaderAlias("courseCollege", "开课学院");
+    writer.addHeaderAlias("campus", "校区");
+    writer.addHeaderAlias("tname", "教师名");
+    writer.addHeaderAlias("tid", "教师工号");
+    writer.addHeaderAlias("courseType", "课程类型");
+    writer.addHeaderAlias("labRemark", "备注");
 
     writer.write(arrangeService.getTeachingPlanList(term), true);
     OutputStream out = response.getOutputStream();
     response.setContentType(
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-    response.setHeader("Content-Disposition", "attachment;filename=教学计划表.xlsx");
+    response.setHeader("Content-Disposition", "attachment;filename=" + term + ".xlsx");
 
     writer.flush(out, true);
     writer.close();
     IoUtil.close(out);
+  }
+
+  /**
+   * 通过年级获取班级名单
+   *
+   * @param grade 年级
+   * @return 班级名单
+   */
+  @GetMapping("/getClassByGrade/{grade}")
+  public ResponseEntity<ResultDto> getClassByGrade(@PathVariable Integer grade) {
+    grade = grade % 100;
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .message("获取班级信息成功")
+            .data(arrangeService.getClassByGrade(grade))
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .build(),
+        HttpStatus.OK);
   }
 }

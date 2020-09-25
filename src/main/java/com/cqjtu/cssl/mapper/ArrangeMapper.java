@@ -45,4 +45,14 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    * @date 2020/5/13 下午4:40
    */
   String getCoursePeriodByProId(Integer proId);
+
+  /**
+   * 通过年级获取班级名单
+   *
+   * @param grade 年级
+   * @return 班级名单
+   * @author suwen
+   * @date 2020/5/13 下午4:40
+   */
+  List<String> getClassByGrade(String grade);
 }

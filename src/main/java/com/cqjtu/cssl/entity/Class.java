@@ -1,5 +1,7 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -22,12 +24,16 @@ public class Class implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @TableId(type = IdType.AUTO)
+  @ApiModelProperty(value = "班级编号")
+  private Integer classId;
+
   @ApiModelProperty(value = "班级名称", required = true)
   private String className;
 
-  @ApiModelProperty(value = "专业ID", position = 1, required = true)
+  @ApiModelProperty(value = "专业Id", required = true)
   private Integer majorId;
 
-  @ApiModelProperty(value = "班级人数", position = 2, required = true)
-  private Integer classNum;
+  @ApiModelProperty(value = "班级人数", required = true)
+  private Integer studentNum;
 }

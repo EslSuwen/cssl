@@ -40,5 +40,11 @@
           and p.pro_id = #{proId}
     </select>
 
+    <select id="getClassByGrade" resultType="com.cqjtu.cssl.entity.Class">
+        SELECT *
+        FROM `class`
+        WHERE class_name LIKE #{grade}
+    </select>
+
 
 </mapper>

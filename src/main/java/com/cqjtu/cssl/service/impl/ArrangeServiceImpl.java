@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.dto.ArrangeAudit;
@@ -107,21 +107,27 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   @Override
   public boolean addArrange(Arrange arrange) {
 
-    // arrange.setStatus(Audit.AUDITING);
     arrange.setCourseId(expProjectService.getById(arrange.getProId()).getCourseId());
     save(arrange);
 
-    int aid = getOne(new QueryWrapper<Arrange>().eq("pro_id", arrange.getProId())).getAid();
+    int aid =
+        getOne(new QueryWrapper<Arrange>().last("LIMIT 1").eq("pro_id", arrange.getProId()))
+            .getAid();
 
     // 更新项目卡片中实验室申请状态
     ExpProject expProject = new ExpProject();
-    expProject.setLabStatus(Audit.AUDITING);
-    expProjectService.update(
-        expProject, new UpdateWrapper<ExpProject>().eq("pro_id", arrange.getProId()));
+    expProject.setProId(arrange.getProId());
+    expProject.setLabStatus(Audit.PASS);
+    expProjectService.updateById(expProject);
 
     return arrangePeriodService.saveBatch(
         arrange.getArrangePeriod().stream()
             .peek(each -> each.setAid(aid))
             .collect(Collectors.toList()));
+  }
+
+  @Override
+  public List<String> getClassByGrade(Integer grade) {
+    return baseMapper.getClassByGrade(StrUtil.format("%{}%", grade));
   }
 }

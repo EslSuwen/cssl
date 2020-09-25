@@ -63,4 +63,14 @@ public interface ArrangeService extends IService<Arrange> {
    * @date 2020/5/26 下午8:41
    */
   boolean addArrange(Arrange arrange);
+
+  /**
+   * 通过年级获取班级名单
+   *
+   * @param grade 年级
+   * @return 班级名单
+   * @author suwen
+   * @date 2020/5/13 下午4:40
+   */
+  List<String> getClassByGrade(Integer grade);
 }
