@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   /** 放行白名单 */
   private static String[] WHITE_LIST = {
+    // TODO 调试关闭验证
     "/**",
     "/**/*.css,",
     "/**/*.jpg,",

@@ -77,6 +77,9 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     List<TeachingPlan> teachingPlanList = baseMapper.getTeachingPlanList(term);
     for (TeachingPlan each : teachingPlanList) {
       each.setCoursePeriod(baseMapper.getCoursePeriodByProId(each.getProId()));
+      each.setLabClass(
+          baseMapper.getClassNameByAid(
+              getOne(new QueryWrapper<Arrange>().eq("pro_id", each.getProId())).getAid()));
     }
     return teachingPlanList;
   }

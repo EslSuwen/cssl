@@ -8,7 +8,6 @@
                p.course_id,
                exp_major,
                term,
-               lab_class,
                exp_time,
                course_college,
                course_type,
@@ -60,7 +59,7 @@
               (SELECT class_id FROM arrange_class WHERE aid = #{aid})
     </select>
 
-    <select id="getClassNameByAid" resultType="com.cqjtu.cssl.entity.Class">
+    <select id="getClassNameByAid" resultType="java.lang.String">
         SELECT CONVERT(group_concat(class_name) USING utf8mb4) lab_class
         FROM class
         WHERE class_id IN (SELECT class_id FROM arrange_class WHERE aid = #{aid})
