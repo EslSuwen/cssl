@@ -3,10 +3,10 @@ package com.cqjtu.cssl.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
+import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.TeachingPlan;
 import org.springframework.http.ResponseEntity;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -75,8 +75,7 @@ public interface ArrangeService extends IService<Arrange> {
    * @author suwen
    * @date 2020/5/13 下午4:40
    */
-  List<String> getClassByGrade(Integer grade);
-
+  List<Class> getClassByGrade(Integer grade);
 
   /**
    * 排课时间增加冲突检测
@@ -85,5 +84,4 @@ public interface ArrangeService extends IService<Arrange> {
    * @return
    */
   ResponseEntity<ResultDto> ifAddArrange(Arrange arrange);
-
 }

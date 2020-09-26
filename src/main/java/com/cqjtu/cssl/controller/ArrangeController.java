@@ -61,35 +61,14 @@ public class ArrangeController {
   }
 
   /**
-   * 增加排课信息
-   *
-   * @param arrange 排课信息
-   * @return MessageHelper
-   * @author suwen
-   * @date 2020/2/22 下午1:24
-   */
-  @PostMapping("/addArrange")
-  public ResponseEntity<ResultDto> addArrange(
-      @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(arrangeService.addArrange(arrange))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("增加排课信息成功")
-            .build(),
-        HttpStatus.OK);
-  }
-
-  /**
    * 增加排课信息冲突检测
    *
    * @param arrange 排课信息
    * @return MessageHelper
    * @author suwen
-   * @date 2020/2/22 下午1:24
+   * @date 2020/9/26 早先10:05
    */
-  @PostMapping("/ifAddArrange")
+  @PostMapping("/AddArrange")
   public ResponseEntity<ResultDto> ifAddArrange(
       @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
 
@@ -184,14 +163,13 @@ public class ArrangeController {
   }
 
   /**
-   * 通过年级获取班级名单
+   * 通过年级获取班级名单 TODO 增加字段 grade
    *
    * @param grade 年级
    * @return 班级名单
    */
   @GetMapping("/getClassByGrade/{grade}")
   public ResponseEntity<ResultDto> getClassByGrade(@PathVariable Integer grade) {
-    grade = grade % 100;
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)

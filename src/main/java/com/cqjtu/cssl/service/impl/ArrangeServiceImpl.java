@@ -7,12 +7,9 @@ import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ArrangeAudit;
 import com.cqjtu.cssl.dto.ResultDto;
-import com.cqjtu.cssl.entity.Arrange;
-import com.cqjtu.cssl.entity.ArrangePeriod;
-import com.cqjtu.cssl.entity.ExpProject;
-import com.cqjtu.cssl.entity.TeachingPlan;
+import com.cqjtu.cssl.entity.Class;
+import com.cqjtu.cssl.entity.*;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
-import com.cqjtu.cssl.mapper.ClassMapper;
 import com.cqjtu.cssl.service.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -42,12 +38,6 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   private final LabInfoService labInfoService;
   private final TeacherService teacherService;
   private final CourseService courseService;
-  private ClassMapper classMapper;
-
-  @Autowired
-  public void setClassMapper(ClassMapper classMapper) {
-    this.classMapper = classMapper;
-  }
 
   @Autowired
   public ArrangeServiceImpl(
@@ -143,8 +133,8 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   }
 
   @Override
-  public List<String> getClassByGrade(Integer grade) {
-    return baseMapper.getClassByGrade(StrUtil.format("%{}%", grade));
+  public List<Class> getClassByGrade(Integer grade) {
+    return baseMapper.getClassByGrade(grade);
   }
 
   @Override
@@ -152,13 +142,9 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
 
     List<ArrangePeriod> arrangePeriodList = new ArrayList<>();
 
-    List<String> classIds = Arrays.asList(arrange.getLabClass().split("-"));
-    // TODO 查询仍有 bug, 出现数据遗漏
-    classIds.forEach(
-        each ->
-            arrangePeriodList.addAll(
-                baseMapper.getArrangePeriodByClassId(
-                    StrUtil.format("'^{}-|-{}-|-{}$'", each, each, each))));
+    List<Class> classInfo = arrange.getLabClassInfo();
+    classInfo.forEach(
+        each -> arrangePeriodList.addAll(baseMapper.getArrangePeriodByClassId(each.getClassId())));
     log.info(arrangePeriodList);
     log.info(arrange.getArrangePeriod());
     Optional<ArrangePeriod> arrangePeriodOptional =
@@ -166,27 +152,26 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     if (!arrangePeriodOptional.isPresent()) {
       return new ResponseEntity<>(
           ResultDto.builder()
-              .success(true)
+              .success(addArrange(arrange))
               .message("课程时间安排增加没有冲突")
               .code(ReturnCode.RETURN_CODE_20001.getCode())
               .build(),
           HttpStatus.OK);
     }
     ArrangePeriod arrangePeriod = arrangePeriodOptional.get();
-    List<String> existClassIds =
-        Arrays.asList(getById(arrangePeriod.getAid()).getLabClass().split("-").clone());
-    log.info(existClassIds);
-    log.info(classIds);
-    Optional<String> classId = classIds.stream().filter(existClassIds::contains).findFirst();
-    log.info(classId);
-    String className = classMapper.selectById(classId.orElse("")).getClassName();
+    List<Class> existClass = baseMapper.getClassByAid(arrangePeriod.getAid());
+    log.info(existClass);
+    log.info(classInfo);
+    Class conflictClass =
+        classInfo.stream().filter(existClass::contains).findFirst().orElse(new Class());
+    log.info(conflictClass);
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(false)
             .message(
                 StrUtil.format(
                     "{} 班在第 {} 周，星期 {}，第 {} 节课程冲突！",
-                    className,
+                    conflictClass.getClassName(),
                     arrangePeriod.getLabWeek(),
                     arrangePeriod.getLabDay(),
                     arrangePeriod.getLabSession()))

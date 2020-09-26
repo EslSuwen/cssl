@@ -18,7 +18,7 @@ import java.io.Serializable;
  */
 @ApiModel(description = "班级实体")
 @Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(of = {"classId"})
 @Accessors(chain = true)
 public class Class implements Serializable {
 
@@ -27,6 +27,9 @@ public class Class implements Serializable {
   @TableId(type = IdType.AUTO)
   @ApiModelProperty(value = "班级编号")
   private Integer classId;
+
+  @ApiModelProperty(value = "年级")
+  private Integer grade;
 
   @ApiModelProperty(value = "班级名称", required = true)
   private String className;
