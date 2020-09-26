@@ -29,7 +29,6 @@ speed-measure-plugin*.json
 *.settings/
 *.sublime-workspace
 *.rebel.xml
-**/static
 
 # IDE - VSCode
 .vscode/*
