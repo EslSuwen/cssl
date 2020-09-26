@@ -11,7 +11,7 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 25/09/2020 19:06:18
+ Date: 26/09/2020 10:57:49
 */
 
 SET NAMES utf8mb4;
@@ -27,7 +27,6 @@ CREATE TABLE `arrange`  (
   `pro_id` int NULL DEFAULT NULL COMMENT '项目编号',
   `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '教师编号',
   `course_id` int NULL DEFAULT NULL COMMENT '课程编号',
-  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL COMMENT '实验室类型',
   `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '实验室备注',
   `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '实验名称',
   `campus` char(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '校区',
@@ -38,6 +37,15 @@ CREATE TABLE `arrange`  (
   INDEX `tid`(`tid`) USING BTREE,
   INDEX `aid`(`aid`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '实验时间安排' ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Table structure for arrange_class
+-- ----------------------------
+DROP TABLE IF EXISTS `arrange_class`;
+CREATE TABLE `arrange_class`  (
+  `aid` int NOT NULL COMMENT '排课编号',
+  `class_id` int NOT NULL COMMENT '班级编号'
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '排课班级' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for arrange_period
@@ -58,6 +66,7 @@ CREATE TABLE `arrange_period`  (
 DROP TABLE IF EXISTS `class`;
 CREATE TABLE `class`  (
   `class_id` int NOT NULL AUTO_INCREMENT,
+  `grade` int NOT NULL,
   `class_name` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `major_id` int NOT NULL,
   `student_num` int NULL DEFAULT NULL,
@@ -133,29 +142,6 @@ CREATE TABLE `exp_project`  (
   INDEX `cid`(`course_id`) USING BTREE,
   CONSTRAINT `cid` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Table structure for lab_arrange_backup
--- ----------------------------
-DROP TABLE IF EXISTS `lab_arrange_backup`;
-CREATE TABLE `lab_arrange_backup`  (
-  `lab_week` int NOT NULL,
-  `lab_day` int NOT NULL,
-  `lab_session` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `lab_id` varchar(16) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pro_id` int NULL DEFAULT NULL,
-  `tid` char(12) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `course_id` int NULL DEFAULT NULL,
-  `lab_class` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `lab_remark` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `exp_proname` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`lab_week`, `lab_day`, `lab_session`, `lab_id`) USING BTREE,
-  INDEX `fk_relationship_12`(`lab_id`) USING BTREE,
-  INDEX `fk_relationship_13`(`pro_id`) USING BTREE,
-  INDEX `fk_relationship_14`(`tid`, `course_id`) USING BTREE,
-  CONSTRAINT `fk_relationship_14` FOREIGN KEY (`tid`, `course_id`) REFERENCES `teach` (`tid`, `course_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Relationship_12` FOREIGN KEY (`lab_id`) REFERENCES `lab_info` (`lab_id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for lab_info
