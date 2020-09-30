@@ -7,7 +7,6 @@ import com.cqjtu.cssl.service.TeacherMsgService;
 import com.cqjtu.cssl.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,7 +61,7 @@ public class TeacherController {
    * @return 教师信息
    */
   @GetMapping(value = "/getTeacherInfo/{tid}")
-  public ResponseEntity<ResultDto> getTeacherInfo(@NonNull @PathVariable String tid) {
+  public ResponseEntity<ResultDto> getTeacherInfo(@PathVariable String tid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -84,7 +83,7 @@ public class TeacherController {
    */
   @GetMapping(value = "/getMsgInfo/{tid}")
   public ResponseEntity<ResultDto> getMsgInfo(
-      @NonNull @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
+      @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -103,9 +102,9 @@ public class TeacherController {
    * @date 2020/3/24 12:28 下午
    */
   @PutMapping(value = "/readMsg/{mid}")
-  public ResponseEntity<ResultDto> readMsg(@NonNull @PathVariable String mid) {
+  public ResponseEntity<ResultDto> readMsg(@PathVariable String mid) {
 
-    @NonNull TeacherMsg teacherMsg = teacherMsgService.getById(mid);
+    TeacherMsg teacherMsg = teacherMsgService.getById(mid);
     teacherMsg.setMstatus(1);
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -125,7 +124,7 @@ public class TeacherController {
    */
   @GetMapping(value = "/deleteMsg/{mid}")
   public ResponseEntity<ResultDto> deleteMsg(
-      @NonNull @ApiParam(value = "消息编号", required = true) @PathVariable String mid) {
+      @ApiParam(value = "消息编号", required = true) @PathVariable String mid) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -148,9 +147,9 @@ public class TeacherController {
    */
   @PutMapping("/updatePassword")
   public ResponseEntity<ResultDto> updatePassword(
-      @NonNull @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
-      @NonNull @ApiParam(value = "当前密码", required = true) @RequestParam String oldPw,
-      @NonNull @ApiParam(value = "新密码", required = true) @RequestParam String newPw) {
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "当前密码", required = true) @RequestParam String oldPw,
+      @ApiParam(value = "新密码", required = true) @RequestParam String newPw) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -172,8 +171,8 @@ public class TeacherController {
    */
   @GetMapping("/getCurriculum")
   public ResponseEntity<ResultDto> getCurriculum(
-      @NonNull @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
-      @NonNull @ApiParam(value = "周次", required = true) @RequestParam String week) {
+      @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
+      @ApiParam(value = "周次", required = true) @RequestParam String week) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
@@ -181,6 +180,25 @@ public class TeacherController {
             .code(ReturnCode.RETURN_CODE_20004.getCode())
             .message("获取教师该周课表")
             .data(teacherService.getCurriculum(tid, week))
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 判断教师是否存在
+   *
+   * @param tid 教师编号
+   * @author suwen
+   * @date 2020/9/30 下午4:20
+   */
+  @GetMapping("/ifTeacher/{tid}")
+  public ResponseEntity<ResultDto> ifTeacher(@PathVariable String tid) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(teacherService.getById(tid) != null)
+            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .message("检查用户是否存在")
             .build(),
         HttpStatus.OK);
   }

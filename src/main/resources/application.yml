@@ -158,3 +158,16 @@ spring:
       password: Liyu8824
   redis:
     host: localhost
+
+---
+#生产环境配置2
+
+spring:
+  profiles: prod2
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
+      username: root
+      password: Cssl123.
+  redis:
+    host: 47.115.8.44
