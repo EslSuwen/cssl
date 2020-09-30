@@ -2,6 +2,8 @@ package com.cqjtu.cssl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Arrange;
+import com.cqjtu.cssl.entity.ArrangePeriod;
+import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.TeachingPlan;
 import org.apache.ibatis.annotations.Select;
 
@@ -34,15 +36,49 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    * @author suwen
    * @date 2020/5/13 下午3:33
    */
-  List<TeachingPlan> getTeachingPlanList();
+  List<TeachingPlan> getTeachingPlanList(String term);
 
   /**
    * 根据课程编号查询课程起止周
    *
-   * @param courseId 课程编号
+   * @param proId 项目卡片编号
    * @return 课程起止周
    * @author suwen
    * @date 2020/5/13 下午4:40
    */
-  String getCoursePeriodByCid(Integer courseId);
+  String getCoursePeriodByProId(Integer proId);
+
+  /**
+   * 通过年级获取班级名单
+   *
+   * @param grade 年级
+   * @return 班级名单
+   * @author suwen
+   * @date 2020/5/13 下午4:40
+   */
+  List<Class> getClassByGrade(Integer grade);
+
+  /**
+   * 根据班级编号获取时间安排
+   *
+   * @param classId 班级编号
+   * @return 时间安排
+   */
+  List<ArrangePeriod> getArrangePeriodByClassId(Integer classId);
+
+  /**
+   * 根据时间安排编号获取课程信息
+   *
+   * @param aid 时间安排编号
+   * @return 课程信息
+   */
+  List<Class> getClassByAid(Integer aid);
+
+  /**
+   * 根据时间安排编号获取课程名
+   *
+   * @param aid 时间安排编号
+   * @return 课程名
+   */
+  String getClassNameByAid(Integer aid);
 }

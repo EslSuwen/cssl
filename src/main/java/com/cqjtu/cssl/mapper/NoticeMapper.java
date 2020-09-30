@@ -12,22 +12,22 @@ import java.util.List;
  * @since 2020-08-24
  */
 public interface NoticeMapper extends BaseMapper<Notice> {
-    /**
-     * 通过编号查找通知
-     *
-     * @param nid 通知编号
-     * @author suwen
-     * @return 通知信息
-     * @date 2020/8/24 下午12:53
-     */
-    Notice getById(Integer nid);
+  /**
+   * 通过编号查找通知
+   *
+   * @param nid 通知编号
+   * @author suwen
+   * @return 通知信息
+   * @date 2020/8/24 下午12:53
+   */
+  Notice getById(Integer nid);
 
-    /**
-     * 查找所有通知
-     *
-     * @author suwen
-     * @return 通知信息列表
-     * @date 2020/8/24 下午12:53
-     */
-    List<Notice> list();
+  /**
+   * 查找所有通知
+   *
+   * @author suwen
+   * @return 通知信息列表
+   * @date 2020/8/24 下午12:53
+   */
+  List<Notice> list();
 }

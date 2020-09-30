@@ -15,10 +15,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  */
 @MapperScan(basePackages = {"com.cqjtu.cssl.mapper"})
 @SpringBootApplication
-@EnableConfigurationProperties({
-        FileProperties.class,
-        SecurityProperties.class
-})
+@EnableConfigurationProperties({FileProperties.class, SecurityProperties.class})
 public class CsslApplication {
 
   public static void main(String[] args) {

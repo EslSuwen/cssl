@@ -13,4 +13,4 @@ import org.springframework.stereotype.Service;
  * @since 2020-02-27
  */
 @Service
-public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService { }
+public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {}

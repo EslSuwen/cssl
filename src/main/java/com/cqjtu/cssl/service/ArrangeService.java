@@ -1,8 +1,11 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
+import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.TeachingPlan;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -38,11 +41,12 @@ public interface ArrangeService extends IService<Arrange> {
   /**
    * 获取教学计划表
    *
+   * @param term 学期
    * @return java.util.List<教学计划表>
    * @author suwen
    * @date 2020/5/13 下午3:44
    */
-  List<TeachingPlan> getTeachingPlanList();
+  List<TeachingPlan> getTeachingPlanList(String term);
 
   /**
    * 获取已申请的实验室安排信息
@@ -62,4 +66,22 @@ public interface ArrangeService extends IService<Arrange> {
    * @date 2020/5/26 下午8:41
    */
   boolean addArrange(Arrange arrange);
+
+  /**
+   * 通过年级获取班级名单
+   *
+   * @param grade 年级
+   * @return 班级名单
+   * @author suwen
+   * @date 2020/5/13 下午4:40
+   */
+  List<Class> getClassByGrade(Integer grade);
+
+  /**
+   * 排课时间增加冲突检测
+   *
+   * @param arrange
+   * @return
+   */
+  ResponseEntity<ResultDto> ifAddArrange(Arrange arrange);
 }

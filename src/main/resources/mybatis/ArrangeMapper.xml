@@ -8,7 +8,6 @@
                p.course_id,
                exp_major,
                term,
-               lab_class,
                exp_time,
                course_college,
                course_type,
@@ -25,9 +24,10 @@
           and l.lab_id = a.lab_id
           and t.tid = p.exp_tid
           and p.course_id = c.course_id
+          and term = #{term}
     </select>
 
-    <select id="getCoursePeriodByCid" resultType="string">
+    <select id="getCoursePeriodByProId" resultType="string">
         select concat(MIN(lab_week), '-', MAX(lab_week))
         FROM exp_project p,
              arrange a,
@@ -36,8 +36,33 @@
         where p.pro_id = a.pro_id
           and a.aid = ap.aid
           and p.course_id = c.course_id
-          and p.course_id = #{courseId}
+          and p.pro_id = #{proId}
     </select>
 
+    <select id="getClassByGrade" resultType="com.cqjtu.cssl.entity.Class">
+        SELECT *
+        FROM `class`
+        WHERE grade = #{grade}
+    </select>
+
+    <select id="getArrangePeriodByClassId" resultType="com.cqjtu.cssl.entity.ArrangePeriod">
+        SELECT *
+        FROM arrange_period
+        WHERE aid IN (SELECT aid FROM arrange_class WHERE class_id = #{classId})
+    </select>
+
+
+    <select id="getClassByAid" resultType="com.cqjtu.cssl.entity.Class">
+        SELECT *
+        FROM class
+        WHERE class_id IN
+              (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+    </select>
+
+    <select id="getClassNameByAid" resultType="java.lang.String">
+        SELECT CONVERT(group_concat(class_name) USING utf8mb4) lab_class
+        FROM class
+        WHERE class_id IN (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+    </select>
 
 </mapper>

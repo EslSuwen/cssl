@@ -9,6 +9,7 @@ import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.mapper.*;
 import com.cqjtu.cssl.service.TeacherService;
 import lombok.NonNull;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @author Aplin suwen
  * @since 2020-02-27
  */
+@Log4j2
 @Service
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
     implements TeacherService {
@@ -55,12 +57,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
 
     List<Arrange> arrangeList =
         arrangeMapper.selectList(new QueryWrapper<Arrange>().eq("tid", tid));
-    //            new QueryWrapper<Arrange>().eq("tid", tid).eq("status", Audit.PASS));
 
     for (Arrange each : arrangeList) {
       each.setArrangePeriod(
           arrangePeriodMapper.selectList(
               new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid()).eq("lab_week", week)));
+      each.setLabClass(arrangeMapper.getClassNameByAid(each.getAid()));
     }
     List<Curriculum> curriculumList = new ArrayList<>();
 

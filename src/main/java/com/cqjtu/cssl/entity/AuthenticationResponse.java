@@ -25,5 +25,4 @@ public class AuthenticationResponse {
 
   @ApiModelProperty(position = 1, value = "登录用户信息")
   Teacher teacher;
-
 }

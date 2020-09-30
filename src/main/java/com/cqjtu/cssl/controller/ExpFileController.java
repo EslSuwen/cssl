@@ -1,7 +1,9 @@
 package com.cqjtu.cssl.controller;
 
+import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
@@ -19,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -37,7 +40,8 @@ public class ExpFileController {
 
   private final ExpFileService expFileService;
   private final ExpFileStoreService expFileStoreService;
-  private final String DEFAULT_PATH = System.getProperty("user.dir") + "/CSSL_FILES/expFile/";
+  private final String DEFAULT_PATH = System.getProperty("user.dir");
+  private final String FILE_PREFIX = "/CSSL_FILES/expFile/";
 
   @Autowired
   public ExpFileController(ExpFileService expFileService, ExpFileStoreService expFileStoreService) {
@@ -131,8 +135,7 @@ public class ExpFileController {
       @RequestParam Integer fileNo, @RequestParam String term, HttpServletResponse response) {
     ExpFileStore expFileStore = expFileStoreService.getById(fileNo);
     String fileName = expFileStore.getName();
-    Integer proId = expFileStore.getProId();
-    String filePath = StrUtil.format("{}{}/{}/{}", DEFAULT_PATH, term, proId, fileName);
+    String filePath = DEFAULT_PATH + expFileStore.getFilePath();
     log.info(filePath);
     try {
       FileReader fileReader = new FileReader(filePath);
@@ -150,6 +153,37 @@ public class ExpFileController {
       log.info(fileName + "设置浏览器下载成功！");
     } catch (Exception e) {
       log.info(fileName + "设置浏览器下载失败！");
+      e.printStackTrace();
+    }
+  }
+
+  @GetMapping("/getFilesZip")
+  public void getFilesZipByProId(
+      @RequestParam Integer proId, @RequestParam String term, HttpServletResponse response) {
+    log.info(proId + term);
+    String filePath = StrUtil.format("{}{}{}/{}", DEFAULT_PATH, FILE_PREFIX, term, proId);
+    log.info(filePath);
+    log.info(FileUtil.exist(filePath));
+    if (!FileUtil.exist(filePath)) {
+      return;
+    }
+    File zip = ZipUtil.zip(filePath);
+    try {
+      response.reset();
+      response.setCharacterEncoding("utf-8");
+      response.setContentType("multipart/form-data");
+      response.setHeader(
+          "Content-disposition",
+          "attachment; filename="
+              + new String(zip.getName().getBytes(), StandardCharsets.ISO_8859_1));
+      ServletOutputStream sos = response.getOutputStream();
+
+      sos.write(FileUtil.readBytes(zip));
+      sos.flush();
+      sos.close();
+      log.info(zip.getName() + "设置浏览器下载成功！");
+    } catch (Exception e) {
+      log.info(zip.getName() + "设置浏览器下载失败！");
       e.printStackTrace();
     }
   }

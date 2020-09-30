@@ -1,5 +1,5 @@
-server:                             #配置server
-  tomcat:                           #springboot乱码解决
+server: #配置server
+  tomcat: #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
     context-path: /cssl
@@ -45,11 +45,11 @@ spring:
         ## 连接池中的最小空闲连接
         min-idle: 0
     ## 连接超时时间（毫秒）
-    timeout: 5000
-  devtools:                           #热部署
+    timeout: 3000
+  devtools: #热部署
     restart:
       enabled: true
-  http:                               #springboot乱码解决
+  http: #springboot乱码解决
     encoding:
       force: true
       charset: utf-8
@@ -62,26 +62,16 @@ spring:
       file-size-threshold: 2KB       # 文件写入磁盘的阈值
       max-file-size: 200MB           # 最大文件大小
       max-request-size: 200MB        # 最大请求大小
+  security:
+    user:
+      name: root
+      password: password
 
 # mybatis-plus相关配置
 mybatis-plus:
   # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
   mapper-locations: classpath:mybatis/*Mapper.xml
-  # 以下配置均有默认值,可以不设置
-  global-config:
-    db-config:
-      #主键类型 AUTO:"数据库ID自增" INPUT:"用户输入ID",ID_WORKER:"全局唯一ID (数字类型唯一ID)", UUID:"全局唯一ID UUID";
-      id-type: auto
-      #字段策略 IGNORED:"忽略判断"  NOT_NULL:"非 NULL 判断")  NOT_EMPTY:"非空判断"
-      field-strategy: NOT_EMPTY
-      #数据库类型
-      db-type: MYSQL
   configuration:
-    # 是否开启自动驼峰命名规则映射:从数据库列名到Java属性驼峰命名的类似映射
-    map-underscore-to-camel-case: true
-    # 如果查询结果中包含空值的列，则 MyBatis 在映射的时候，不会映射这个字段
-    call-setters-on-nulls: true
-    # 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 logging:
@@ -109,7 +99,8 @@ management:
     web:
       base-path: /actuator
       exposure:
-        include: health,info,env
+        #        include: health,info,env
+        include: "*"
   endpoint:
     health:
       show-details: always
@@ -133,11 +124,11 @@ spring:
   profiles: dev
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      url: jdbc:mysql://localhost:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
       username: root
       password: Liyu8824
   redis:
-    host: 47.107.239.108
+    host: 47.115.8.44
 
 
 ---
@@ -147,11 +138,11 @@ spring:
   profiles: dev2
   datasource:
     druid:
-      url: jdbc:mysql://47.107.239.108:3306/csslDB-dev?characterEncoding=utf8
+      url: jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8
       username: root
-      password: Cssl123.
+      password: Liyu8824
   redis:
-    host: 47.107.239.108
+    host: 47.115.8.44
 
 
 
@@ -164,6 +155,6 @@ spring:
     druid:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
       username: root
-      password: Cssl123.
+      password: Liyu8824
   redis:
     host: localhost

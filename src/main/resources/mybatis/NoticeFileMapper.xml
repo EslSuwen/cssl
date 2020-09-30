@@ -4,14 +4,17 @@
 
     <select id="list" resultType="com.cqjtu.cssl.entity.NoticeFile">
         SELECT file_id, tname, file_name, f.tid, file_date, file_path
-        FROM notice_file f, teacher t
- 		WHERE f.tid = t.tid
+        FROM notice_file f,
+             teacher t
+        WHERE f.tid = t.tid
     </select>
 
     <select id="selectById" resultType="com.cqjtu.cssl.entity.NoticeFile">
         SELECT file_id, tname, file_name, f.tid, file_date, file_path
-        FROM notice_file f, teacher t
- 		WHERE f.tid = t.tid AND file_id=#{fileId}
+        FROM notice_file f,
+             teacher t
+        WHERE f.tid = t.tid
+          AND file_id = #{fileId}
     </select>
 
 </mapper>
