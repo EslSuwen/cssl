@@ -10,4 +10,26 @@
 
 <mapper namespace="com.cqjtu.cssl.mapper.TeachMapper">
 
+    <select id="selectAll" resultType="com.cqjtu.cssl.entity.Teach">
+        SELECT teach.tid, course.course_id, tname, course_name
+        FROM teach,
+             teacher,
+             course
+        WHERE teach.tid = teacher.tid
+          AND teach.course_id = course.course_id
+          AND teacher.tid = #{tid}
+    </select>
+
+    <select id="selectAvailableCourse" resultType="com.cqjtu.cssl.entity.Course">
+        SELECT *
+        from course
+        WHERE course_id NOT IN (SELECT course.course_id
+                                FROM teach,
+                                     teacher,
+                                     course
+                                WHERE teach.tid = teacher.tid
+                                  AND teach.course_id = course.course_id
+                                  AND teacher.tid = #{tid})
+    </select>
+
 </mapper>

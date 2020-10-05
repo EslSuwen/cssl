@@ -24,7 +24,7 @@ public class Class implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @TableId(type = IdType.AUTO)
+  @TableId
   @ApiModelProperty(value = "班级编号")
   private Integer classId;
 

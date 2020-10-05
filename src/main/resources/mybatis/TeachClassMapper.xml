@@ -8,6 +8,6 @@
         time : 2020/1/*
 -->
 
-<mapper namespace="com.cqjtu.cssl.mapper.TeachclassMapper">
+<mapper namespace="com.cqjtu.cssl.mapper.TeachClassMapper">
 
 </mapper>

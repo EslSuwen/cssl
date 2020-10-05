@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cqjtu.cssl.entity.Course;
 import com.cqjtu.cssl.entity.Teach;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface TeachService extends IService<Teach> {
    * @param tid 教职工
    * @return 所教课程
    */
-  List<String> findCourseByTeacher(String tid);
+  List<Teach> getTeachByTid(String tid);
 
   /**
    * 通过教职工号查询出他的所有教的课程
@@ -32,4 +33,14 @@ public interface TeachService extends IService<Teach> {
    * @return List<com.cqjtu.cssl.entity.Teach> 授课信息列表
    */
   List<Teach> getCourseInfoByTid(String tid, String term);
+
+  /**
+   * 通过教师编号查找可增加课程信息
+   *
+   * @param tid 教师编号
+   * @return 课程
+   * @author suwen
+   * @date 2020/10/5 下午3:08
+   */
+  List<Course> selectAvailableCourse(String tid);
 }
