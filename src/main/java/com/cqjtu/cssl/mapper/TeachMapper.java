@@ -3,7 +3,6 @@ package com.cqjtu.cssl.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Course;
 import com.cqjtu.cssl.entity.Teach;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -34,4 +33,15 @@ public interface TeachMapper extends BaseMapper<Teach> {
      * @date 2020/10/5 下午3:08
      */
     List<Course> selectAvailableCourse(String tid);
+
+  /**
+   * 通过教职工号查询出他的所教且过滤已经填写卡片信息的课程
+   *
+   * @param tid 教职工编号
+   * @param term 学期
+   * @return 授课信息列表
+   * @author suwen
+   * @date 2020/10/5 下午7:14
+   */
+  List<Teach> getCourseInfoByTid(String tid, String term);
 }

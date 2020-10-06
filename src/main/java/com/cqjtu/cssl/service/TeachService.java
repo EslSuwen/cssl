@@ -24,11 +24,11 @@ public interface TeachService extends IService<Teach> {
   List<Teach> getTeachByTid(String tid);
 
   /**
-   * 通过教职工号查询出他的所有教的课程
+   * 通过教职工号查询出他的所教且过滤已经填写卡片信息的课程
    *
    * @author suwen
    * @date 2020/2/20 上午11:57
-   * @param tid 教职工
+   * @param tid 教职工编号
    * @param term 学期
    * @return List<com.cqjtu.cssl.entity.Teach> 授课信息列表
    */

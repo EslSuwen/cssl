@@ -2,4 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqjtu.cssl.mapper.ExpProjectMapper">
 
+    <select id="getByTidTerm" resultType="com.cqjtu.cssl.entity.ExpProject">
+        SELECT pro_id,
+               exp_cname,
+               exp_eqname,
+               eqnum,
+               exp_time,
+               book,
+               software,
+               lab_status,
+               con_name,
+               con_num,
+               term,
+               course_name
+        FROM exp_project,
+             course
+        WHERE exp_project.course_id = course.course_id
+          AND exp_tid = #{param1}
+          AND term = #{param2}
+    </select>
 </mapper>

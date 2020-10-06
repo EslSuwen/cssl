@@ -9,7 +9,6 @@ import com.cqjtu.cssl.entity.NoticeFile;
 import com.cqjtu.cssl.service.NoticeFileService;
 import io.swagger.annotations.Api;
 import lombok.extern.log4j.Log4j2;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

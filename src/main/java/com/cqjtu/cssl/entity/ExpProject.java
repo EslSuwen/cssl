@@ -1,79 +1,70 @@
 package com.cqjtu.cssl.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.cqjtu.cssl.constant.Audit;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
 /**
- * 项目(实验卡片)实体类
+ * 项目(实验卡片)
  *
- * @author suwen Aplin
- * @since 2020-02-27
+ * @author suwen
+ * @since 2020-10-05
  */
-@ApiModel(description = "项目实体")
 @Data
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
+@ApiModel(value = "ExpProject对象", description = "项目(实验卡片)")
 public class ExpProject implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "项目ID", required = true)
+  @ApiModelProperty(value = "项目编号")
   @TableId(value = "pro_id", type = IdType.AUTO)
   private Integer proId;
 
-  @ApiModelProperty(value = "实验室（中心）名称", position = 1, required = true)
-  private String labCenName;
-
-  @ApiModelProperty(value = "实验课程名", position = 2, required = true)
+  @ApiModelProperty(value = "实验课程名")
   private String expCname;
 
-  @ApiModelProperty(value = "实验设备名", position = 3, required = true)
+  @ApiModelProperty(value = "实验设备名")
   private String expEqname;
 
-  @ApiModelProperty(value = "设备数量", position = 4, required = true)
+  @ApiModelProperty(value = "设备数量")
   private Integer eqnum;
 
-  @ApiModelProperty(value = "面向专业", position = 5, required = true)
-  private String expMajor;
-
-  @ApiModelProperty(value = "学生类别", position = 6, required = true)
-  private String ssort;
-
-  @ApiModelProperty(value = "实验总学时", position = 7, required = true)
+  @ApiModelProperty(value = "实验总学时")
   private Integer expTime;
 
-  @ApiModelProperty(value = "实验教材", position = 8, required = true)
+  @ApiModelProperty(value = "实验教材")
   private String book;
 
-  @ApiModelProperty(value = "实验所用软件", position = 9, required = true)
+  @ApiModelProperty(value = "实验所用软件")
   private String software;
 
-  @ApiModelProperty(value = "教职工号", position = 10, required = true)
+  @ApiModelProperty(value = "授课教师编号")
   private String expTid;
 
-  @ApiModelProperty(value = "课程名", position = 11, required = true)
-  private String cname;
-
-  @ApiModelProperty(value = "课程编号", position = 12, required = true)
-  private Integer courseId;
-
-  @ApiModelProperty(value = "消耗材料名称", position = 13)
-  private String conName;
-
-  @ApiModelProperty(value = "消耗材料数量", position = 14)
-  private Integer conNum;
-
-  @ApiModelProperty(value = "申请实验室状态", position = 16)
+  @ApiModelProperty(value = "申请实验室状态")
   private Audit labStatus;
 
-  @ApiModelProperty(value = "学期", position = 17)
+  @ApiModelProperty(value = "消耗材料名称")
+  private String conName;
+
+  @ApiModelProperty(value = "消耗材料数量")
+  private Integer conNum;
+
+  @ApiModelProperty(value = "课程编号")
+  private Integer courseId;
+
+  @ApiModelProperty(value = "学期")
   private String term;
+
+  @ApiModelProperty(value = "实验课程名")
+  @TableField(exist = false)
+  private String courseName;
 }

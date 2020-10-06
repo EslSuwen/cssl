@@ -9,9 +9,9 @@ import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpFileStoreMapper;
-import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpFileService;
 import com.cqjtu.cssl.service.ExpFileStoreService;
+import com.cqjtu.cssl.service.ExpProjectService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,22 +34,26 @@ import java.util.List;
 public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, ExpFileStore>
     implements ExpFileStoreService {
 
-  private final ExpFileService expFileService;
-  private final ExpProjectMapper expProjectMapper;
+  private  ExpFileService expFileService;
+  private  ExpProjectService expProjectService;
   private final String DEFAULT_PATH = System.getProperty("user.dir");
   private final String FILE_PREFIX = "/CSSL_FILES/expFile/";
 
   @Autowired
-  public ExpFileStoreServiceImpl(ExpFileService expFileService, ExpProjectMapper expProjectMapper) {
+  public void setExpFileService(ExpFileService expFileService) {
     this.expFileService = expFileService;
-    this.expProjectMapper = expProjectMapper;
+  }
+
+  @Autowired
+  public void setExpProjectService(ExpProjectService expProjectService) {
+    this.expProjectService = expProjectService;
   }
 
   @Override
   public boolean saveFile(ExpFileStore expFileStore, MultipartFile file) throws IOException {
     Integer proId = expFileStore.getProId();
     String typeName = expFileStore.getTypeName();
-    ExpProject expProject = expProjectMapper.selectById(proId);
+    ExpProject expProject = expProjectService.getById(proId);
     String fileName = file.getOriginalFilename();
     String pathPrefix =
         StrUtil.format("{}{}/{}/", DEFAULT_PATH + FILE_PREFIX, expProject.getTerm(), proId);
