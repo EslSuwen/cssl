@@ -2,29 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqjtu.cssl.mapper.ArrangeMapper">
     <select id="getTeachingPlanList" resultType="com.cqjtu.cssl.entity.TeachingPlan">
-        select p.pro_id,
-               lab_name,
-               exp_cname,
+        SELECT p.pro_id,
                p.course_id,
-               exp_major,
                term,
                exp_time,
                course_college,
                course_type,
                tname,
                t.tid,
-               lab_remark,
-               campus
-        from exp_project p,
-             arrange a,
-             lab_info l,
+               c.course_name,
+               exp_cname
+        FROM exp_project p,
              teacher t,
              course c
-        where p.pro_id = a.pro_id
-          and l.lab_id = a.lab_id
-          and t.tid = p.exp_tid
-          and p.course_id = c.course_id
-          and term = #{term}
+        WHERE t.tid = p.exp_tid
+          AND p.course_id = c.course_id
     </select>
 
     <select id="getCoursePeriodByProId" resultType="string">
@@ -59,10 +51,23 @@
               (SELECT class_id FROM arrange_class WHERE aid = #{aid})
     </select>
 
+    <select id="getClassByProId" resultType="com.cqjtu.cssl.entity.Class">
+        SELECT *
+        FROM class
+        WHERE class_id IN
+              (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+    </select>
+
     <select id="getClassNameByAid" resultType="java.lang.String">
         SELECT CONVERT(group_concat(class_name) USING utf8mb4) lab_class
         FROM class
         WHERE class_id IN (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+    </select>
+
+    <select id="getClassNameByProId" resultType="java.lang.String">
+        SELECT CONVERT(group_concat(class_name) USING utf8mb4) lab_class
+        FROM class
+        WHERE class_id IN (SELECT class_id FROM exp_class WHERE pro_id = #{proId})
     </select>
 
 </mapper>

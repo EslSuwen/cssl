@@ -73,13 +73,12 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   */
 
   @Override
-  public List<TeachingPlan> getTeachingPlanList(String term) {
-    List<TeachingPlan> teachingPlanList = baseMapper.getTeachingPlanList(term);
+  public List<TeachingPlan> getTeachingPlanList() {
+    List<TeachingPlan> teachingPlanList = baseMapper.getTeachingPlanList();
+    // TODO 排课暂停使用
     for (TeachingPlan each : teachingPlanList) {
       each.setCoursePeriod(baseMapper.getCoursePeriodByProId(each.getProId()));
-      each.setLabClass(
-          baseMapper.getClassNameByAid(
-              getOne(new QueryWrapper<Arrange>().eq("pro_id", each.getProId())).getAid()));
+      each.setLabClass(baseMapper.getClassNameByProId(each.getProId()));
     }
     return teachingPlanList;
   }

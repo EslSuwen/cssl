@@ -36,7 +36,7 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    * @author suwen
    * @date 2020/5/13 下午3:33
    */
-  List<TeachingPlan> getTeachingPlanList(String term);
+  List<TeachingPlan> getTeachingPlanList();
 
   /**
    * 根据课程编号查询课程起止周
@@ -75,10 +75,28 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
   List<Class> getClassByAid(Integer aid);
 
   /**
+   * 根据项目编号获取课程信息
+   *
+   * @param proId 项目编号
+   * @return 课程信息
+   */
+  List<Class> getClassByProId(Integer proId);
+
+  /**
    * 根据时间安排编号获取课程名
    *
    * @param aid 时间安排编号
    * @return 课程名
    */
   String getClassNameByAid(Integer aid);
+
+
+  /**
+   * 根据项目编号获取课程名
+   *
+   * @param proId 项目编号
+   * @return 课程名
+   */
+  String getClassNameByProId(Integer proId);
+
 }
