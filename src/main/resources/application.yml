@@ -60,8 +60,8 @@ spring:
     multipart:
       enabled: true                  # 开启 multipart 上传功能
       file-size-threshold: 2KB       # 文件写入磁盘的阈值
-      max-file-size: 200MB           # 最大文件大小
-      max-request-size: 200MB        # 最大请求大小
+      max-file-size: 4096MB           # 最大文件大小
+      max-request-size: 4096MB        # 最大请求大小
   security:
     user:
       name: root

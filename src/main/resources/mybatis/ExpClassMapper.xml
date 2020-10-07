@@ -2,4 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqjtu.cssl.mapper.ExpClassMapper">
 
+    <select id="getByProId" resultType="com.cqjtu.cssl.entity.ExpClass">
+        SELECT pro_id, exp_class.class_id, class_name
+        FROM exp_class,
+             class
+        WHERE class.class_id = exp_class.class_id
+          AND pro_id = #{proId}
+    </select>
+
 </mapper>

@@ -27,8 +27,10 @@ public class ExpFile implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "项目ID", required = true)
-  @TableId(value = "pro_id", type = IdType.INPUT)
   private Integer proId;
+
+  @ApiModelProperty(value = "班级编号", required = true)
+  private Integer classId;
 
   @ApiModelProperty(value = "考勤名单", required = true)
   private Integer attend;

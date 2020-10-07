@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.mapper.ExpFileMapper;
@@ -17,7 +18,8 @@ public class ExpFileServiceImpl extends ServiceImpl<ExpFileMapper, ExpFile>
     implements ExpFileService {
 
   @Override
-  public ExpFile getFileStatus(Integer proId) {
-    return getById(proId);
+  public ExpFile getFileStatus(Integer proId, Integer classId) {
+    return getOne(
+        new QueryWrapper<ExpFile>().eq("pro_id", proId).eq("class_id", classId).last("LIMIT 1"));
   }
 }

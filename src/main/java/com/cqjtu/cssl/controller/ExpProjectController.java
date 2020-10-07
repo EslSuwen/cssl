@@ -106,7 +106,7 @@ public class ExpProjectController {
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取项目班级数据成功")
-            .data(expClassService.list(new QueryWrapper<ExpClass>().eq("pro_id", proId)))
+            .data(expClassService.getByProId(proId))
             .build(),
         HttpStatus.OK);
   }

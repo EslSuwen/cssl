@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,4 +26,8 @@ public class ExpClass implements Serializable {
 
   @ApiModelProperty(value = "班级编号")
   private Integer classId;
+
+  @ApiModelProperty(value = "班级编号")
+  @TableField(exist = false)
+  private String className;
 }
