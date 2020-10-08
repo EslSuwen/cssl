@@ -1,5 +1,6 @@
 package com.cqjtu.cssl.service.impl;
 
+import com.cqjtu.cssl.constant.AuthorityName;
 import com.cqjtu.cssl.entity.Authority;
 import com.cqjtu.cssl.entity.Teacher;
 import com.cqjtu.cssl.mapper.TeacherMapper;
@@ -15,7 +16,7 @@ import java.util.List;
 import static com.cqjtu.cssl.utils.AuthorityUtil.createGrantedAuthorities;
 
 /**
- * SpringBoot UserDetails 服务实现类
+ * SpringBoot UserDetails 服务实现类 实现权限列表加载
  *
  * @author suwen
  * @date 2020/2/26 下午12:20
@@ -34,7 +35,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String userNo) {
     Teacher teacher = teacherMapper.selectById(userNo);
     List<Authority> authorities = new ArrayList<>();
-    authorities.add(new Authority(1L, teacher.getAuthority()));
+    for (int i = teacher.getAuthority(); i >= 0; i--) {
+      authorities.add(new Authority(1L, AuthorityName.valueOf(i)));
+    }
     teacher.setAuthorities(authorities);
     return create(teacher);
   }

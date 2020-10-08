@@ -2,7 +2,6 @@ package com.cqjtu.cssl.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.cqjtu.cssl.constant.AuthorityName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -27,7 +26,7 @@ public class Teacher implements Serializable {
   private static final long serialVersionUID = 1L;
 
   @ApiModelProperty(value = "教职工号", required = true)
-  @TableId()
+  @TableId
   private String tid;
 
   @ApiModelProperty(value = "教师姓名", position = 1, required = true)
@@ -45,8 +44,8 @@ public class Teacher implements Serializable {
   @ApiModelProperty(value = "密码", position = 5, required = true)
   private String tpassword;
 
-  @ApiModelProperty(value = "权限(是否为管理员)", position = 6, required = true)
-  private AuthorityName authority;
+  @ApiModelProperty(value = "权限等级(0:教师用户;1:管理员用户;2:管理员用户)", position = 6, required = true)
+  private Integer authority;
 
   @ApiModelProperty(value = "用户权限列表", position = 7)
   @TableField(exist = false)

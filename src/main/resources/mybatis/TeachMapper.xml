@@ -4,10 +4,41 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--
-        author : rty
+        author : suwen
         time : 2020/1/*
 -->
 
 <mapper namespace="com.cqjtu.cssl.mapper.TeachMapper">
+
+    <select id="selectAll" resultType="com.cqjtu.cssl.entity.Teach">
+        SELECT teach.tid, course.course_id, tname, course_name
+        FROM teach,
+             teacher,
+             course
+        WHERE teach.tid = teacher.tid
+          AND teach.course_id = course.course_id
+          AND teacher.tid = #{tid}
+    </select>
+
+    <select id="selectAvailableCourse" resultType="com.cqjtu.cssl.entity.Course">
+        SELECT *
+        from course
+        WHERE course_id NOT IN (SELECT course.course_id
+                                FROM teach,
+                                     teacher,
+                                     course
+                                WHERE teach.tid = teacher.tid
+                                  AND teach.course_id = course.course_id
+                                  AND teacher.tid = #{tid})
+    </select>
+
+    <select id="getCourseInfoByTid" resultType="com.cqjtu.cssl.entity.Teach">
+        SELECT tid, teach.course_id, course_name
+        FROM teach,
+             course
+        WHERE tid = #{param1}
+          AND teach.course_id = course.course_id
+          AND teach.course_id NOT IN (SELECT course_id FROM exp_project WHERE exp_tid = #{param1} AND term = #{param2})
+    </select>
 
 </mapper>

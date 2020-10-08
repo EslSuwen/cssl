@@ -20,8 +20,9 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @date 2020/2/6 3:57 下午
    * @param tid 老师编号
    * @param cid 课程号
+   * @param term 学期
    */
-  boolean isCardExist(String tid, Integer cid);
+  boolean isCardExist(String tid, Integer cid, String term);
 
   /**
    * 根据老师编号和课程号查找对应卡片
@@ -113,4 +114,13 @@ public interface ExpProjectService extends IService<ExpProject> {
    * @date 2020/7/6 上午9:32
    */
   Boolean deleteExp(int proId);
+
+  /**
+   * 根据教师编号课程号学期查找项目
+   *
+   * @param tid 老师编号
+   * @param term 学期
+   * @return exp
+   */
+  List<ExpProject> getByTidTerm(String tid, String term);
 }

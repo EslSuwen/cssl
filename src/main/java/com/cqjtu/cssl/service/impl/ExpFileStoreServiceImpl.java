@@ -7,11 +7,10 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
-import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpFileStoreMapper;
-import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpFileService;
 import com.cqjtu.cssl.service.ExpFileStoreService;
+import com.cqjtu.cssl.service.ExpProjectService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,41 +33,75 @@ import java.util.List;
 public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, ExpFileStore>
     implements ExpFileStoreService {
 
-  private final ExpFileService expFileService;
-  private final ExpProjectMapper expProjectMapper;
+  private ExpFileService expFileService;
+  private ExpProjectService expProjectService;
   private final String DEFAULT_PATH = System.getProperty("user.dir");
   private final String FILE_PREFIX = "/CSSL_FILES/expFile/";
 
   @Autowired
-  public ExpFileStoreServiceImpl(ExpFileService expFileService, ExpProjectMapper expProjectMapper) {
+  public void setExpFileService(ExpFileService expFileService) {
     this.expFileService = expFileService;
-    this.expProjectMapper = expProjectMapper;
   }
 
+  @Autowired
+  public void setExpProjectService(ExpProjectService expProjectService) {
+    this.expProjectService = expProjectService;
+  }
+
+  /**
+   * TODO 重构: ExpFile 与 ExpFileStore 间用主键连接，避免愚蠢的 switch
+   *
+   * @date 2020-10-07
+   */
   @Override
   public boolean saveFile(ExpFileStore expFileStore, MultipartFile file) throws IOException {
     Integer proId = expFileStore.getProId();
     String typeName = expFileStore.getTypeName();
-    ExpProject expProject = expProjectMapper.selectById(proId);
+    String term = expProjectService.getById(proId).getTerm();
     String fileName = file.getOriginalFilename();
+    Integer classId = expFileStore.getClassId();
     String pathPrefix =
-        StrUtil.format("{}{}/{}/", DEFAULT_PATH + FILE_PREFIX, expProject.getTerm(), proId);
+        StrUtil.format("{}{}/{}/{}/", DEFAULT_PATH + FILE_PREFIX, term, proId, classId);
     log.info(pathPrefix);
-    ExpFileStore expFileStoreOld =
-        getOne(new QueryWrapper<ExpFileStore>().eq("pro_id", proId).eq("type_name", typeName));
-    // 如果文件己存在则先删除
-    if (expFileStoreOld != null) {
-      String oldFilePath = pathPrefix + expFileStoreOld.getName();
-      log.info(oldFilePath);
-      if (FileUtil.exist(oldFilePath)) {
-        FileUtil.del(oldFilePath);
-        removeById(expFileStoreOld.getNo());
+
+    ExpFile expFile = expFileService.getFileStatus(proId, classId);
+    if (expFile != null) {
+      Integer oldFileNo;
+      switch (typeName) {
+        case "考勤名单":
+          oldFileNo = expFile.getAttend();
+          break;
+        case "实验任务书":
+          oldFileNo = expFile.getTask();
+          break;
+        case "实验成绩":
+          oldFileNo = expFile.getGrade();
+          break;
+        case "评分标准表":
+          oldFileNo = expFile.getScheme();
+          break;
+        case "实验报告":
+          oldFileNo = expFile.getReport();
+          break;
+        default:
+          throw new IllegalArgumentException("typeName error");
       }
+      // 如果文件己存在则先删除
+      if (oldFileNo != null) {
+        String oldFilePath = pathPrefix + getById(oldFileNo).getName();
+        log.info(oldFilePath);
+        if (FileUtil.exist(oldFilePath)) {
+          FileUtil.del(oldFilePath);
+          removeById(oldFileNo);
+        }
+      }
+    } else {
+      expFile = new ExpFile();
     }
     // 保存到目标目录
     String targetPath = pathPrefix + fileName;
     expFileStore.setFilePath(
-        StrUtil.format("{}{}/{}/{}", FILE_PREFIX, expProject.getTerm(), proId, fileName));
+        StrUtil.format("{}{}/{}/{}/{}", FILE_PREFIX, term, proId, classId, fileName));
     expFileStore.setName(fileName);
     InputStream in = file.getInputStream();
     BufferedOutputStream out = FileUtil.getOutputStream(new File(targetPath));
@@ -77,15 +110,9 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
     IoUtil.close(out);
 
     if (save(expFileStore)) {
-      Integer no =
-          getOne(
-                  new QueryWrapper<ExpFileStore>()
-                      .eq("pro_id", proId)
-                      .eq("type_name", typeName)
-                      .last("LIMIT 1"))
-              .getNo();
-      ExpFile expFile = new ExpFile();
+      Integer no = expFileStore.getNo();
       expFile.setProId(proId);
+      expFile.setClassId(classId);
       switch (typeName) {
         case "考勤名单":
           expFile.setAttend(no);
@@ -105,7 +132,12 @@ public class ExpFileStoreServiceImpl extends ServiceImpl<ExpFileStoreMapper, Exp
         default:
           throw new IllegalArgumentException("typeName error");
       }
-      if (!expFileService.updateById(expFile)) {
+      if (!expFileService.update(
+          expFile,
+          new QueryWrapper<ExpFile>()
+              .eq("pro_id", proId)
+              .eq("class_id", classId)
+              .last("LIMIT 1"))) {
         return expFileService.save(expFile);
       }
       return true;

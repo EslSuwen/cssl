@@ -1,17 +1,21 @@
 package com.cqjtu.cssl.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.constant.ReturnCode;
 import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.entity.ExpClass;
 import com.cqjtu.cssl.entity.ExpProject;
+import com.cqjtu.cssl.service.ExpClassService;
 import com.cqjtu.cssl.service.ExpProjectService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * 项目卡片控制器
@@ -26,6 +30,12 @@ import org.springframework.web.bind.annotation.*;
 public class ExpProjectController {
 
   private final ExpProjectService expProjectService;
+  private ExpClassService expClassService;
+
+  @Autowired
+  public void setExpClassService(ExpClassService expClassService) {
+    this.expClassService = expClassService;
+  }
 
   @Autowired
   public ExpProjectController(ExpProjectService expProjectService) {
@@ -36,12 +46,12 @@ public class ExpProjectController {
    * 项目卡片增加
    *
    * @param expProject 请求体变量 项目卡片
-   * @return int 状态码
+   * @return pro
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
   @PostMapping(value = "/addProject")
-  public ResponseEntity<ResultDto> addNewProject(@NonNull @RequestBody ExpProject expProject)
+  public ResponseEntity<ResultDto> addNewProject(@RequestBody ExpProject expProject)
       throws Exception {
 
     return new ResponseEntity<>(
@@ -50,9 +60,53 @@ public class ExpProjectController {
             .code(ReturnCode.RETURN_CODE_20005.getCode())
             .message("增加卡片成功")
             .data(
-                expProjectService
-                    .getExpByTidCid(expProject.getExpTid(), expProject.getCourseId())
-                    .getProId())
+                expProjectService.getOne(
+                    new QueryWrapper<ExpProject>()
+                        .eq("exp_tid", expProject.getExpTid())
+                        .eq("course_id", expProject.getCourseId())
+                        .eq("term", expProject.getTerm())
+                        .last("LIMIT 1")))
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 项目班级增加
+   *
+   * @param expClassList 项目班级
+   * @author suwen
+   * @date 2020/2/6 2:51 下午
+   */
+  @PostMapping("/addExpClass")
+  public ResponseEntity<ResultDto> addExpClass(@RequestBody List<ExpClass> expClassList) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(expClassService.saveBatch(expClassList))
+            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .message("增加项目班级成功")
+            .build(),
+        HttpStatus.OK);
+  }
+
+  /**
+   * 获取项目班级数据
+   *
+   * @param proId 项目编号
+   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
+   * @author suwen
+   * @date 2020/10/6 2:52 下午
+   */
+  @GetMapping(value = "/getExpClass/{proId}")
+  public ResponseEntity<ResultDto> getExpClass(
+      @ApiParam(value = "项目编号", required = true) @PathVariable Integer proId) {
+
+    return new ResponseEntity<>(
+        ResultDto.builder()
+            .success(true)
+            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .message("获取项目班级数据成功")
+            .data(expClassService.getByProId(proId))
             .build(),
         HttpStatus.OK);
   }
@@ -75,7 +129,7 @@ public class ExpProjectController {
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取项目卡片数据成功")
-            .data(expProjectService.getExpByTid(tid, term))
+            .data(expProjectService.getByTidTerm(tid, term))
             .build(),
         HttpStatus.OK);
   }
@@ -100,8 +154,8 @@ public class ExpProjectController {
    * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
    * @author suwen
    * @date 2020/5/10 11:24 上午 @PutMapping(value = "/auditProject") public ResponseEntity<ResultDto>
-   *     auditProject( @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String
-   *     proId, @NonNull @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
+   *     auditProject( @ApiParam(value = "项目卡片编号", required = true) @RequestParam String
+   *     proId, @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
    *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
    *     .code(ReturnCode.RETURN_CODE_20001.getCode()) .message("审核项目卡片成功")
    *     .data(expProjectService.auditProject(proId, status)) .build(), HttpStatus.OK); }
@@ -115,7 +169,7 @@ public class ExpProjectController {
    */
   @DeleteMapping(value = "/deleteProject")
   public ResponseEntity<ResultDto> deleteProject(
-      @NonNull @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId) {
+      @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId) {
 
     return new ResponseEntity<>(
         ResultDto.builder()

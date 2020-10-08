@@ -122,7 +122,7 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/28 上午11:03
    */
-  @GetMapping("/remove/{id}")
+  @DeleteMapping("/remove/{id}")
   public ResponseEntity<ResultDto> remove(@PathVariable Integer id) {
     return new ResponseEntity<>(
         ResultDto.builder()

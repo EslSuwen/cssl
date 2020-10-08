@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,16 +54,47 @@ public class ExpFileController {
    * 获得文件状态
    *
    * @param proId 项目卡片编号
+   * @param classId 班级编号
    * @return 文件状态
    * @author suwen
    * @date 2020/7/8 上午9:20
    */
-  @GetMapping("/getFileStatus/{proId}")
-  public ResponseEntity<ResultDto> getFileStatus(@PathVariable Integer proId) {
+  @GetMapping("/getFileStatus")
+  public ResponseEntity<ResultDto> getFileStatus(
+      @RequestParam Integer proId, @RequestParam Integer classId) {
 
-    ExpFile expFile = expFileService.getById(proId);
-    List<ExpFileStore> expFileStoreList =
-        expFileStoreService.list(new QueryWrapper<ExpFileStore>().eq("pro_id", proId));
+    ExpFile expFile =
+        expFileService.getOne(
+            new QueryWrapper<ExpFile>()
+                .eq("pro_id", proId)
+                .eq("class_id", classId)
+                .last("LIMIT 1"));
+    if (expFile == null) {
+      return new ResponseEntity<>(
+          ResultDto.builder()
+              .success(true)
+              .message("文件状态为空")
+              .code(ReturnCode.RETURN_CODE_20001.getCode())
+              .build(),
+          HttpStatus.OK);
+    }
+    List<Integer> ids = new ArrayList<>();
+    if (expFile.getAttend() != null) {
+      ids.add(expFile.getAttend());
+    }
+    if (expFile.getTask() != null) {
+      ids.add(expFile.getTask());
+    }
+    if (expFile.getGrade() != null) {
+      ids.add(expFile.getGrade());
+    }
+    if (expFile.getScheme() != null) {
+      ids.add(expFile.getScheme());
+    }
+    if (expFile.getReport() != null) {
+      ids.add(expFile.getReport());
+    }
+    List<ExpFileStore> expFileStoreList = expFileStoreService.listByIds(ids);
     if (!expFileStoreList.isEmpty()) {
       expFile.setFiles(expFileStoreList);
     }
@@ -102,7 +134,7 @@ public class ExpFileController {
   }
 
   /**
-   * 获取文件储存信息除文件
+   * 获取文件储存信息(除文件)
    *
    * @param proId 卡片编号
    * @return 件储存信息

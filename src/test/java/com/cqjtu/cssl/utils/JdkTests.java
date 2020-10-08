@@ -1,6 +1,8 @@
 package com.cqjtu.cssl.utils;
 
+import com.cqjtu.cssl.constant.AuthorityName;
 import com.cqjtu.cssl.entity.ArrangePeriod;
+import com.cqjtu.cssl.entity.Authority;
 import com.cqjtu.cssl.exception.FileException;
 import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * jdk 特性测试
@@ -98,5 +102,14 @@ public class JdkTests {
 
     System.out.println(arrange.equals(arrange1));
     System.out.println(arrange1.equals(arrange2));
+  }
+
+  @Test
+  public void enumAuthorityName() {
+    List<Authority> authorities = new ArrayList<>();
+    for (int i = 2; i >= 0; i--) {
+      authorities.add(new Authority(1L, AuthorityName.valueOf(i)));
+    }
+    System.out.println(authorities);
   }
 }

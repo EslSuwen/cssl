@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,9 +31,6 @@ public class ExpFileStore implements Serializable {
   @TableId(value = "no", type = IdType.AUTO)
   private Integer no;
 
-  @ApiModelProperty(value = "项目ID", required = true)
-  private Integer proId;
-
   @ApiModelProperty(value = "项目文件类型名", required = true)
   private String typeName;
 
@@ -41,4 +39,12 @@ public class ExpFileStore implements Serializable {
 
   @ApiModelProperty(value = "文件路径", required = true)
   private String filePath;
+
+  @ApiModelProperty(value = "项目ID", required = true)
+  @TableField(exist = false)
+  private Integer proId;
+
+  @ApiModelProperty(value = "班级编号", required = true)
+  @TableField(exist = false)
+  private Integer classId;
 }

@@ -23,4 +23,13 @@ public interface ExpProjectMapper extends BaseMapper<ExpProject> {
    */
   @Select("SELECT DISTINCT term FROM exp_project;")
   List<String> getTermList();
+
+  /**
+   * 根据教师编号课程号学期查找项目
+   *
+   * @param tid 老师编号
+   * @param term 学期
+   * @return exp
+   */
+  List<ExpProject> getByTidTerm(String tid, String term);
 }

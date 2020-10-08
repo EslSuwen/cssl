@@ -9,4 +9,4 @@ import com.cqjtu.cssl.entity.TeachClass;
  * @author suwen
  * @date 2020/2/6 3:30 下午
  */
-public interface TeachclassMapper extends BaseMapper<TeachClass> {}
+public interface TeachClassMapper extends BaseMapper<TeachClass> {}

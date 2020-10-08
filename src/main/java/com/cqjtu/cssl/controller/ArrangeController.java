@@ -110,15 +110,15 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午3:41
    */
-  @GetMapping("/getTeachingPlan/{term}")
-  public ResponseEntity<ResultDto> getTeachingPlanList(@PathVariable String term) {
+  @GetMapping("/getTeachingPlan")
+  public ResponseEntity<ResultDto> getTeachingPlanList() {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取教学计划表成功")
-            .data(arrangeService.getTeachingPlanList(term))
+            .data(arrangeService.getTeachingPlanList())
             .build(),
         HttpStatus.OK);
   }
@@ -129,15 +129,12 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午5:51
    */
-  @GetMapping("/getTeachingPlanExcel/{term}")
-  public void getTeachingPlanExcel(@PathVariable String term, HttpServletResponse response)
-      throws IOException {
+  @GetMapping("/getTeachingPlanExcel")
+  public void getTeachingPlanExcel(HttpServletResponse response) throws IOException {
 
     ExcelWriter writer = ExcelUtil.getWriter(true);
     writer.merge(14, "教学计划表");
-    writer.addHeaderAlias("proId", "编号");
-    writer.addHeaderAlias("labName", "实验室名");
-    writer.addHeaderAlias("expMajor", "专业名");
+    writer.addHeaderAlias("proId", "卡片编号");
     writer.addHeaderAlias("term", "学期");
     writer.addHeaderAlias("labClass", "班级");
     writer.addHeaderAlias("expCname", "实验课程名");
@@ -151,11 +148,11 @@ public class ArrangeController {
     writer.addHeaderAlias("courseType", "课程类型");
     writer.addHeaderAlias("labRemark", "备注");
 
-    writer.write(arrangeService.getTeachingPlanList(term), true);
+    writer.write(arrangeService.getTeachingPlanList(), true);
     OutputStream out = response.getOutputStream();
     response.setContentType(
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8");
-    response.setHeader("Content-Disposition", "attachment;filename=" + term + ".xlsx");
+    response.setHeader("Content-Disposition", "attachment;filename=卡片总览表.xlsx");
 
     writer.flush(out, true);
     writer.close();
@@ -163,7 +160,7 @@ public class ArrangeController {
   }
 
   /**
-   * 通过年级获取班级名单 TODO 增加字段 grade
+   * 通过年级获取班级名单
    *
    * @param grade 年级
    * @return 班级名单

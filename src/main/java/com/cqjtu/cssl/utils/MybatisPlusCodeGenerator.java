@@ -25,11 +25,11 @@ public final class MybatisPlusCodeGenerator {
   // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中
 
   private static final String DB_URL =
-      // "jdbc:mysql://localhost:3306/csslDB?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
-      "jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8";
+      "jdbc:mysql://localhost:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true";
+  // "jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8";
   private static final String DB_PWD = "Liyu8824";
   private static final String DB_USER = "root";
-  private  static final String PACKAGE_PARENT="com.cqjtu";
+  private static final String PACKAGE_PARENT = "com.cqjtu";
 
   /** 读取控制台内容 */
   public static String scanner(String tip) {

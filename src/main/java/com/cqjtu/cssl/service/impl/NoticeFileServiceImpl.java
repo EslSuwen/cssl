@@ -7,14 +7,12 @@ import com.cqjtu.cssl.mapper.NoticeFileMapper;
 import com.cqjtu.cssl.service.NoticeFileService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.QueryTimeoutException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * 通知文件 服务实现类
@@ -41,7 +39,8 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
   @Override
   @SuppressWarnings("unchecked")
   public List<NoticeFile> list() {
-    String key = "notice_file_list";
+    return baseMapper.list();
+    /*    String key = "notice_file_list";
     List<NoticeFile> noticeFileList;
     try {
       Boolean hasKey = redisTemplate.hasKey(key);
@@ -53,11 +52,11 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
         log.info("查询数据库获得数据-----------> notice_file_list");
         redisOperations.set(key, noticeFileList, 5, TimeUnit.HOURS);
       }
-    } catch (QueryTimeoutException e) {
+    } catch (QueryTimeoutException | RedisConnectionException e) {
       noticeFileList = baseMapper.list();
       log.info("redis 缓存连接失败-----------> notice_file_list");
     }
-    return noticeFileList;
+    return noticeFileList;*/
   }
 
   @Override
@@ -76,7 +75,8 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
   }
 
   public boolean removeCache(boolean result) {
-    if (result) {
+    return result;
+    /*    if (result) {
       String key = "notice_file_list";
       Boolean hasKey = redisTemplate.hasKey(key);
       if (hasKey != null && hasKey) {
@@ -84,6 +84,6 @@ public class NoticeFileServiceImpl extends ServiceImpl<NoticeFileMapper, NoticeF
         log.info("删除缓存中的key-----------> " + key);
       }
     }
-    return result;
+    return result;*/
   }
 }

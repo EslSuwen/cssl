@@ -7,7 +7,6 @@ import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.mapper.ExpProjectMapper;
 import com.cqjtu.cssl.service.ExpProjectService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,17 +21,14 @@ import java.util.List;
 public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProject>
     implements ExpProjectService {
 
-  private final ExpProjectMapper expProjectMapper;
-
-  @Autowired
-  public ExpProjectServiceImpl(ExpProjectMapper expProjectMapper) {
-    this.expProjectMapper = expProjectMapper;
-  }
-
   @Override
-  public boolean isCardExist(String tid, Integer cid) {
+  public boolean isCardExist(String tid, Integer cid, String term) {
 
-    return !list(new QueryWrapper<ExpProject>().eq("exp_tid", tid).eq("course_id", cid)).isEmpty();
+    return !list(new QueryWrapper<ExpProject>()
+            .eq("exp_tid", tid)
+            .eq("course_id", cid)
+            .eq("term", term))
+        .isEmpty();
   }
 
   @Override
@@ -54,22 +50,21 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   public boolean auditProject(String proId, Audit status) {
 
     ExpProject expProject = new ExpProject();
-    // expProject.setStatus(status);
-    return update(expProject, new UpdateWrapper<ExpProject>().eq("pro_Id", proId));
+    expProject.setLabStatus(status);
+    return update(expProject, new UpdateWrapper<ExpProject>().eq("pro_id", proId));
   }
 
   @Override
-  public boolean addProject(ExpProject expProject) throws Exception {
-    if (isCardExist(expProject.getExpTid(), expProject.getCourseId())) {
-      throw new Exception("该卡片已经存在");
+  public boolean addProject(ExpProject expProject) {
+    if (isCardExist(expProject.getExpTid(), expProject.getCourseId(), expProject.getTerm())) {
+      throw new IllegalArgumentException("该卡片已经存在");
     }
-    expProject.setLabCenName("信息技术实践教学中心");
     return save(expProject);
   }
 
   @Override
   public List<String> getTermList() {
-    return expProjectMapper.getTermList();
+    return baseMapper.getTermList();
   }
 
   @Override
@@ -89,5 +84,10 @@ public class ExpProjectServiceImpl extends ServiceImpl<ExpProjectMapper, ExpProj
   @Override
   public Boolean deleteExp(int proId) {
     return removeById(proId);
+  }
+
+  @Override
+  public List<ExpProject> getByTidTerm(String tid, String term) {
+    return baseMapper.getByTidTerm(tid, term);
   }
 }
