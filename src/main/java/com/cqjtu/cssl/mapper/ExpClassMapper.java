@@ -2,7 +2,6 @@ package com.cqjtu.cssl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.ExpClass;
-import org.apache.commons.math3.analysis.function.Exp;
 
 import java.util.List;
 
@@ -14,11 +13,11 @@ import java.util.List;
  */
 public interface ExpClassMapper extends BaseMapper<ExpClass> {
 
-    /**
-     * 根据项目编号获取项目班级
-     *
-     * @param proId 项目编号
-     * @return 项目班级
-     */
-    List<ExpClass> getByProId(Integer proId);
+  /**
+   * 根据项目编号获取项目班级
+   *
+   * @param proId 项目编号
+   * @return 项目班级
+   */
+  List<ExpClass> getByProId(Integer proId);
 }

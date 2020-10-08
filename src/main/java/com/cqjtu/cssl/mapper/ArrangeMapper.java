@@ -90,7 +90,6 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    */
   String getClassNameByAid(Integer aid);
 
-
   /**
    * 根据项目编号获取课程名
    *
@@ -98,5 +97,4 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
    * @return 课程名
    */
   String getClassNameByProId(Integer proId);
-
 }

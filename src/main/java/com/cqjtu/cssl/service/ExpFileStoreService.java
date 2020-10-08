@@ -25,8 +25,7 @@ public interface ExpFileStoreService extends IService<ExpFileStore> {
    * @author suwen
    * @date 2020/7/8 上午9:30
    */
-  boolean saveFile(ExpFileStore expFileStore, MultipartFile file)
-      throws IOException;
+  boolean saveFile(ExpFileStore expFileStore, MultipartFile file) throws IOException;
 
   /**
    * 获取文件储存信息除文件

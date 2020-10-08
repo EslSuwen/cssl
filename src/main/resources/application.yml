@@ -23,7 +23,14 @@ spring:
       test-on-return: false
       pool-prepared-statements: true  # 打开PSCache，并且指定每个连接上PSCache的大小
       max-pool-prepared-statement-per-connection-size: 20
-      filters: stat                   # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,log4j2,config                   # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filter:
+        stat:
+          merge-sql: true
+          slow-sql-millis: 5000
+        config:
+          enabled: true
+
   ## Redis 配置
   redis:
     ## Redis数据库索引（默认为0）
@@ -87,7 +94,7 @@ info:
   app:
     name: Course scheduling system of Laboratory
     abbrName: cssl
-    version: v1.0-Alpha
+    version: v2.0-Beta
 
 api:
   base-path: /api
@@ -117,6 +124,18 @@ security:
     issuer: suwen
     authentication-path: /api/auth
 
+# 数据库加密
+
+datasource:
+  dev:
+    username: root
+    password: dFIqLYDm1cmEpNleXHWQFdSdldkgOxdcHG5loAGpNMG355cf91v5hjz34cpKd7eOIfkq4uNfv9OGKvd+gOGVmg==
+    publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJo4V1XjNbsPDFe/foiud1IX05dEmU03gb7fjpTcaT8Na3KwZ+szC6IHCq1+hAAl2B6siU3+DGnwcn5N1tPAPMECAwEAAQ==
+  prod:
+    username: root
+    password: LftC/2nC7whrKpSBkyaeCPlhP2m5ilclXJwuSInGoq/ISiwXjRZyOorGDiVj+ohhCDfYL0MoJ3eWSQMydNbnYw==
+    publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAN1+HtvlA7gaod0ZifVFO7+CEPT5pbwG8OuysaYNwMqOYMM8Abzv7rLzDw3XtfSbyM/dp6qXJd0yLn8ocrppTNcCAwEAAQ==
+
 ---
 #开发环境配置1
 
@@ -125,8 +144,9 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
-      username: root
-      password: Liyu8824
+      username: ${datasource.dev.username}
+      password: ${datasource.dev.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
   redis:
     host: 47.115.8.44
 
@@ -139,8 +159,9 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8
-      username: root
-      password: Liyu8824
+      username: ${datasource.dev.username}
+      password: ${datasource.dev.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
   redis:
     host: 47.115.8.44
 
@@ -154,8 +175,9 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
-      username: root
-      password: Liyu8824
+      username: ${datasource.dev.username}
+      password: ${datasource.dev.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
   redis:
     host: localhost
 
@@ -167,7 +189,8 @@ spring:
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
-      username: root
-      password: Cssl123.
+      username: ${datasource.prod.username}
+      password: ${datasource.prod.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.prod.publicKey}
   redis:
     host: 47.115.8.44

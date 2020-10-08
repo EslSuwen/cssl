@@ -130,8 +130,7 @@ public class ArrangeController {
    * @date 2020/5/13 下午5:51
    */
   @GetMapping("/getTeachingPlanExcel")
-  public void getTeachingPlanExcel(HttpServletResponse response)
-      throws IOException {
+  public void getTeachingPlanExcel(HttpServletResponse response) throws IOException {
 
     ExcelWriter writer = ExcelUtil.getWriter(true);
     writer.merge(14, "教学计划表");

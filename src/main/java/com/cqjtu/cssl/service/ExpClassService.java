@@ -13,11 +13,11 @@ import java.util.List;
  */
 public interface ExpClassService extends IService<ExpClass> {
 
-    /**
-     * 根据项目编号获取项目班级
-     *
-     * @param proId 项目编号
-     * @return 项目班级
-     */
-    List<ExpClass> getByProId(Integer proId);
+  /**
+   * 根据项目编号获取项目班级
+   *
+   * @param proId 项目编号
+   * @return 项目班级
+   */
+  List<ExpClass> getByProId(Integer proId);
 }
