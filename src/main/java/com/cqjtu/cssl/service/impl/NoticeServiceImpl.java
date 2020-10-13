@@ -64,8 +64,8 @@ public class NoticeServiceImpl extends ServiceImpl<NoticeMapper, Notice> impleme
   }
 
   @Override
-  public List<Notice> getAllNotice() {
-    return baseMapper.list();
+  public List<Notice> getAllNotice(String noticeType) {
+    return baseMapper.list(noticeType);
   }
 
   @Override

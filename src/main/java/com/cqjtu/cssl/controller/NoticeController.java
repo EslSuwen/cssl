@@ -58,15 +58,15 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:07
    */
-  @GetMapping("/getAllNotice")
-  public ResponseEntity<ResultDto> getAllNotice() {
+  @GetMapping("/getAllNotice/{noticeType}")
+  public ResponseEntity<ResultDto> getAllNotice(@PathVariable String noticeType) {
 
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
             .code(ReturnCode.RETURN_CODE_20001.getCode())
             .message("获取所有通知信息成功")
-            .data(noticeService.getAllNotice())
+            .data(noticeService.getAllNotice(noticeType))
             .build(),
         HttpStatus.OK);
   }

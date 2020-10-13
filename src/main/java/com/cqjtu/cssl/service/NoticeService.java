@@ -40,8 +40,9 @@ public interface NoticeService extends IService<Notice> {
    * @author suwen
    * @return 通知信息列表
    * @date 2020/8/24 下午12:53
+   * @param noticeType 通知类型
    */
-  List<Notice> getAllNotice();
+  List<Notice> getAllNotice(String noticeType);
 
   /**
    * 通过条件查找所有通知

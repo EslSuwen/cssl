@@ -32,6 +32,9 @@ public class Notice implements Serializable {
   @ApiModelProperty(value = "通知发布人编号")
   private String tid;
 
+  @ApiModelProperty(value = "通知类型")
+  private String noticeType;
+
   @ApiModelProperty(value = "通知发布时间")
   private String noticeDate;
 

@@ -74,16 +74,6 @@ public class AuthenticationController {
     log.info(authRequest);
     log.info(request.getSession().getAttribute("imageCode"));
 
-    if (!authRequest.getImgCode().equals(request.getSession().getAttribute("imageCode"))) {
-      return new ResponseEntity<>(
-          ResultDto.builder()
-              .success(false)
-              .code(ReturnCode.RETURN_CODE_40004.getCode())
-              .message("验证码错误")
-              .build(),
-          HttpStatus.FORBIDDEN);
-    }
-
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(

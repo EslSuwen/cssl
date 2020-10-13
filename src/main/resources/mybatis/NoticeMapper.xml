@@ -10,9 +10,10 @@
           AND nid = #{nid}
     </select>
     <select id="list" resultType="com.cqjtu.cssl.entity.Notice">
-        SELECT nid, n.tid, tname, notice_date, notice_head
+        SELECT nid, n.tid, notice_type, tname, notice_date, notice_head
         FROM notice n,
              teacher t
         WHERE n.tid = t.tid
+          AND notice_type = #{noticeType}
     </select>
 </mapper>
