@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Teach;
 import com.cqjtu.cssl.service.TeachService;
@@ -49,7 +49,7 @@ public class TeachController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取授课信息成功")
             .data(teachService.getCourseInfoByTid(tid, term))
             .build(),
@@ -71,7 +71,7 @@ public class TeachController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取授课信息成功")
             .data(teachService.getTeachByTid(tid))
             .build(),
@@ -93,7 +93,7 @@ public class TeachController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取可用授课课程成功")
             .data(teachService.selectAvailableCourse(tid))
             .build(),
@@ -114,8 +114,8 @@ public class TeachController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teachService.saveBatch(teaches))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("授课信息" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message("授课信息" + ResultCode.SUCCESS_ADD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -138,8 +138,8 @@ public class TeachController {
             .success(
                 teachService.remove(
                     new QueryWrapper<Teach>().eq("tid", tid).eq("course_id", courseId)))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("授课信息" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
+            .message("授课信息" + ResultCode.SUCCESS_DELETE_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }

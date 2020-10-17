@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.Course;
@@ -63,8 +63,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message(ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message(ResultCode.SUCCESS_ADD_DATA.getMessage())
             .data(teacherMsgService.save(teacherMsg))
             .build(),
         HttpStatus.CREATED);
@@ -83,7 +83,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取教师信息成功")
             .data(teacherService.getById(tid))
             .build(),
@@ -105,7 +105,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取教师信息成功")
             .data(teacherMsgService.getMsgListByTid(tid))
             .build(),
@@ -126,7 +126,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherMsgService.updateById(teacherMsg))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
             .message("用户消息已读成功")
             .build(),
         HttpStatus.OK);
@@ -146,7 +146,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherMsgService.removeById(mid))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("教师删除消息成功")
             .build(),
         HttpStatus.OK);
@@ -171,7 +171,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherService.updatePassword(tid, oldPw, newPw))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
             .message("教师修改密码成功")
             .build(),
         HttpStatus.OK);
@@ -194,7 +194,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取教师该周课表")
             .data(teacherService.getCurriculum(tid, week))
             .build(),
@@ -214,7 +214,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherService.getById(tid) != null)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("检查用户是否存在")
             .build(),
         HttpStatus.OK);
@@ -233,7 +233,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(classService.getById(classId) != null)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("检查班级是否存在")
             .build(),
         HttpStatus.OK);
@@ -252,7 +252,7 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(courseService.getById(courseId) != null)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("检查课程是否存在")
             .build(),
         HttpStatus.OK);
@@ -271,8 +271,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherService.save(teacher))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("增加教师" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message("增加教师" + ResultCode.SUCCESS_ADD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -292,8 +292,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(classService.save(newClass))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("增加班级" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message("增加班级" + ResultCode.SUCCESS_ADD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -311,8 +311,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(courseService.save(course))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("增加课程" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message("增加课程" + ResultCode.SUCCESS_ADD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -329,8 +329,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("教师信息" + ReturnCode.RETURN_CODE_20001.getMessage())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
+            .message("教师信息" + ResultCode.SUCCESS_GET_DATA.getMessage())
             .data(teacherService.list())
             .build(),
         HttpStatus.OK);
@@ -348,8 +348,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("班级信息" + ReturnCode.RETURN_CODE_20001.getMessage())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
+            .message("班级信息" + ResultCode.SUCCESS_GET_DATA.getMessage())
             .data(classService.list())
             .build(),
         HttpStatus.OK);
@@ -367,8 +367,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("课程信息" + ReturnCode.RETURN_CODE_20001.getMessage())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
+            .message("课程信息" + ResultCode.SUCCESS_GET_DATA.getMessage())
             .data(courseService.list())
             .build(),
         HttpStatus.OK);
@@ -386,8 +386,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherService.updateById(teacher))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
-            .message("教师信息" + ReturnCode.RETURN_CODE_20004.getMessage())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
+            .message("教师信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -404,8 +404,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(classService.updateById(newClass))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
-            .message("班级信息" + ReturnCode.RETURN_CODE_20004.getMessage())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
+            .message("班级信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -422,8 +422,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(courseService.updateById(course))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
-            .message("课程信息" + ReturnCode.RETURN_CODE_20004.getMessage())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
+            .message("课程信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -439,8 +439,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(teacherService.removeById(tid))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
-            .message("教师信息" + ReturnCode.RETURN_CODE_20006.getMessage())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
+            .message("教师信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -456,8 +456,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(classService.removeById(classId))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
-            .message("班级信息" + ReturnCode.RETURN_CODE_20006.getMessage())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
+            .message("班级信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }
@@ -473,8 +473,8 @@ public class TeacherController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(courseService.removeById(courseId))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
-            .message("课程信息" + ReturnCode.RETURN_CODE_20006.getMessage())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
+            .message("课程信息" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.OK);
   }

@@ -3,7 +3,7 @@ package com.cqjtu.cssl.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.NoticeFile;
 import com.cqjtu.cssl.service.NoticeFileService;
@@ -72,8 +72,8 @@ public class NoticeFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(noticeFileService.save(noticeFile))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
-            .message("通知文件" + ReturnCode.RETURN_CODE_20005.getMessage())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
+            .message("通知文件" + ResultCode.SUCCESS_ADD_DATA.getMessage())
             .build(),
         HttpStatus.CREATED);
   }
@@ -89,8 +89,8 @@ public class NoticeFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("通知文件" + ReturnCode.RETURN_CODE_20001.getMessage())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
+            .message("通知文件" + ResultCode.SUCCESS_GET_DATA.getMessage())
             .data(noticeFileService.list())
             .build(),
         HttpStatus.CREATED);
@@ -108,8 +108,8 @@ public class NoticeFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
-            .message("通知文件" + ReturnCode.RETURN_CODE_20001.getMessage())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
+            .message("通知文件" + ResultCode.SUCCESS_GET_DATA.getMessage())
             .data(noticeFileService.getById(id))
             .build(),
         HttpStatus.CREATED);
@@ -127,8 +127,8 @@ public class NoticeFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
-            .message("通知文件" + ReturnCode.RETURN_CODE_20006.getMessage())
+            .code(ResultCode.SUCCESS_UPLOAD_DATA.getCode())
+            .message("通知文件" + ResultCode.SUCCESS_DELETE_DATA.getMessage())
             .data(noticeFileService.removeById(id))
             .build(),
         HttpStatus.CREATED);

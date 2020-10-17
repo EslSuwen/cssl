@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.constant.Audit;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ArrangeAudit;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Class;
@@ -156,7 +156,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
           ResultDto.builder()
               .success(addArrange(arrange))
               .message("课程时间安排增加没有冲突")
-              .code(ReturnCode.RETURN_CODE_20001.getCode())
+              .code(ResultCode.SUCCESS_GET_DATA.getCode())
               .build(),
           HttpStatus.OK);
     }
@@ -177,7 +177,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
                     arrangePeriod.getLabWeek(),
                     arrangePeriod.getLabDay(),
                     arrangePeriod.getLabSession()))
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .build(),
         HttpStatus.OK);
   }

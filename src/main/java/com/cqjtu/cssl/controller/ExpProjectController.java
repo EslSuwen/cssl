@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ExpClass;
 import com.cqjtu.cssl.entity.ExpProject;
@@ -57,7 +57,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expProjectService.addProject(expProject))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
             .message("增加卡片成功")
             .data(
                 expProjectService.getOne(
@@ -83,7 +83,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expClassService.saveBatch(expClassList))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
             .message("增加项目班级成功")
             .build(),
         HttpStatus.OK);
@@ -104,7 +104,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取项目班级数据成功")
             .data(expClassService.getByProId(proId))
             .build(),
@@ -127,7 +127,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取项目卡片数据成功")
             .data(expProjectService.getByTidTerm(tid, term))
             .build(),
@@ -174,7 +174,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
             .message("删除项目卡片成功")
             .data(expProjectService.removeById(proId))
             .build(),
@@ -194,7 +194,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获得存在学期列表成功")
             .data(expProjectService.getTermList())
             .build(),
@@ -219,7 +219,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(project != null)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("重用以往卡片信息")
             .data(project)
             .build(),
@@ -240,7 +240,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expProjectService.updateExp(expProject))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
             .message("更新卡片信息")
             .build(),
         HttpStatus.OK);
@@ -260,7 +260,7 @@ public class ExpProjectController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expProjectService.deleteExp(proId))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
             .message("删除卡片信息")
             .build(),
         HttpStatus.OK);

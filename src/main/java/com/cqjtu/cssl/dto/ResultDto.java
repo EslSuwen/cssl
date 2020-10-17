@@ -12,7 +12,7 @@ import lombok.Data;
 @Builder
 public class ResultDto {
   /** 返回码 */
-  private String code;
+  private Integer code;
 
   /** 返回消息 */
   private String message;

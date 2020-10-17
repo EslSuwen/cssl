@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.service.LabInfoService;
 import io.swagger.annotations.Api;
@@ -49,7 +49,7 @@ public class LabController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取实验室信息成功")
             .data(labInfoService.getById(labId))
             .build(),
@@ -71,7 +71,7 @@ public class LabController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取实验室信息成功")
             .data(labInfoService.getLabByTypeId(typeId))
             .build(),
@@ -95,7 +95,7 @@ public class LabController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取实验室信息成功")
             .data(labInfoService.getLabByTypeIdCampus(typeId, campus))
             .build(),
@@ -117,7 +117,7 @@ public class LabController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取实验室信息成功")
             .data(labInfoService.getLabByProId(proId))
             .build(),

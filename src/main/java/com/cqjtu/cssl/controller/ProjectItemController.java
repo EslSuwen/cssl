@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.service.ProjectItemService;
@@ -46,7 +46,7 @@ public class ProjectItemController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(projectItemService.saveBatch(projectItems))
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
             .message("实验项目项增加成功")
             .build(),
         HttpStatus.OK);
@@ -67,7 +67,7 @@ public class ProjectItemController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("实验项目项获取成功")
             .data(projectItemList)
             .build(),
@@ -88,7 +88,7 @@ public class ProjectItemController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(projectItemService.updateItem(projectItem))
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
             .message("更新实验项目")
             .build(),
         HttpStatus.OK);
@@ -108,7 +108,7 @@ public class ProjectItemController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(projectItemService.deleteItem(ino))
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
             .message("删除实验项目信息")
             .build(),
         HttpStatus.OK);

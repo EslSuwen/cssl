@@ -3,7 +3,7 @@ package com.cqjtu.cssl.controller;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.service.ArrangeService;
@@ -53,7 +53,7 @@ public class ArrangeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取排课信息成功")
             .data(arrangeService.findByTid(tid))
             .build(),
@@ -116,7 +116,7 @@ public class ArrangeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取教学计划表成功")
             .data(arrangeService.getTeachingPlanList())
             .build(),
@@ -172,7 +172,7 @@ public class ArrangeController {
             .success(true)
             .message("获取班级信息成功")
             .data(arrangeService.getClassByGrade(grade))
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .build(),
         HttpStatus.OK);
   }

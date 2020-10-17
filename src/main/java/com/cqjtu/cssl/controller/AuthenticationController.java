@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.AuthenticationRequest;
 import com.cqjtu.cssl.entity.AuthenticationResponse;
@@ -70,10 +70,7 @@ public class AuthenticationController {
       @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
           AuthenticationRequest authRequest,
       HttpServletRequest request) {
-
     log.info(authRequest);
-    log.info(request.getSession().getAttribute("imageCode"));
-
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -85,8 +82,8 @@ public class AuthenticationController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_10001.getCode())
-            .message("登录成功")
+            .code(ResultCode.SUCCESS_LOGIN.getCode())
+            .message(ResultCode.SUCCESS_LOGIN.getMessage())
             .data(
                 new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())))
             .build(),
@@ -111,17 +108,14 @@ public class AuthenticationController {
       // 生产验证码字符串并保存到session中
       String createText = defaultKaptcha.createText();
       request.getSession().setAttribute("imageCode", createText);
-
       // 使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
       BufferedImage challenge = defaultKaptcha.createImage(createText);
       ImageIO.write(challenge, "jpg", jpegOutputStream);
-      log.info("createImageCode:{}" + request.getSession().getAttribute("imageCode"));
       log.info("createImageCode:" + createText);
     } catch (IllegalArgumentException e) {
       response.sendError(HttpServletResponse.SC_NOT_FOUND);
       return;
     }
-
     // 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组
     captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
     response.setHeader("Cache-Control", "no-store");

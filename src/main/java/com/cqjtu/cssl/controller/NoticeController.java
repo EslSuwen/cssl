@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.Notice;
 import com.cqjtu.cssl.service.NoticeService;
@@ -45,7 +45,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取通知信息成功")
             .data(noticeService.getNotice(nid))
             .build(),
@@ -64,7 +64,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取所有通知信息成功")
             .data(noticeService.getAllNotice(noticeType))
             .build(),
@@ -83,7 +83,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("条件查询通知信息成功")
             .data(noticeService.getNoticeByMap(conditionsMap))
             .build(),
@@ -104,7 +104,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20005.getCode())
+            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
             .message("增加通知信息成功")
             .data(noticeService.addNotice(notice))
             .build(),
@@ -125,7 +125,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20004.getCode())
+            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
             .message("修改通知信息成功")
             .data(noticeService.updateNotice(notice))
             .build(),
@@ -145,7 +145,7 @@ public class NoticeController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20006.getCode())
+            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
             .message("删除通知信息成功")
             .data(noticeService.removeNotice(nid))
             .build(),

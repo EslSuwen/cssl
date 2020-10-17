@@ -1,6 +1,6 @@
 package com.cqjtu.cssl.exception;
 
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import io.lettuce.core.RedisCommandTimeoutException;
 import lombok.extern.log4j.Log4j2;
@@ -51,7 +51,7 @@ public class RestExceptionHandler {
     log.trace(ex.getMessage(), ex);
     return new ResponseEntity<>(
         ResultDto.builder()
-            .code(ReturnCode.RETURN_CODE_40006.getCode())
+            .code(ResultCode.PARAM_ERROR.getCode())
             .message(sb.toString())
             .success(false)
             .build(),
@@ -64,7 +64,7 @@ public class RestExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         ResultDto.builder()
-            .code(ReturnCode.RETURN_CODE_40007.getCode())
+            .code(ResultCode.SERVER_ERROR.getCode())
             .message(e.getMessage())
             .success(false)
             .build(),
@@ -78,8 +78,8 @@ public class RestExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         ResultDto.builder()
-            .code(ReturnCode.RETURN_CODE_40007.getCode())
-            .message("redis 缓存连接超时，请重试")
+            .code(ResultCode.REDIS_TIME_OUT.getCode())
+            .message(ResultCode.REDIS_TIME_OUT.getMessage())
             .success(false)
             .build(),
         HttpStatus.REQUEST_TIMEOUT);
@@ -91,7 +91,7 @@ public class RestExceptionHandler {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
         ResultDto.builder()
-            .code(ReturnCode.RETURN_CODE_40099.getCode())
+            .code(ResultCode.SERVER_ERROR.getCode())
             .message(e.getMessage())
             .success(false)
             .build(),

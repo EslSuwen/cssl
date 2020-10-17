@@ -5,7 +5,7 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.cqjtu.cssl.constant.ReturnCode;
+import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ResultDto;
 import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
@@ -74,7 +74,7 @@ public class ExpFileController {
           ResultDto.builder()
               .success(true)
               .message("文件状态为空")
-              .code(ReturnCode.RETURN_CODE_20001.getCode())
+              .code(ResultCode.SUCCESS_GET_DATA.getCode())
               .build(),
           HttpStatus.OK);
     }
@@ -103,7 +103,7 @@ public class ExpFileController {
         ResultDto.builder()
             .success(true)
             .message("获得文件状态成功")
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .data(expFile)
             .build(),
         HttpStatus.OK);
@@ -127,7 +127,7 @@ public class ExpFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(expFileStoreService.saveFile(expFileStore, file))
-            .code(ReturnCode.RETURN_CODE_20007.getCode())
+            .code(ResultCode.SUCCESS_UPLOAD_DATA.getCode())
             .message("文件上传成功")
             .build(),
         HttpStatus.OK);
@@ -147,7 +147,7 @@ public class ExpFileController {
     return new ResponseEntity<>(
         ResultDto.builder()
             .success(true)
-            .code(ReturnCode.RETURN_CODE_20001.getCode())
+            .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("获取文件储存信息成功")
             .data(expFileStoreService.getById(proId))
             .build(),
