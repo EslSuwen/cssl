@@ -193,4 +193,4 @@ spring:
       password: ${datasource.prod.password}
       connection-properties: config.decrypt=true;config.decrypt.key=${datasource.prod.publicKey}
   redis:
-    host: 47.115.8.44
+    host: localhost
