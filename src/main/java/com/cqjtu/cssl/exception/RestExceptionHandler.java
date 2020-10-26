@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.exception;
 
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import io.lettuce.core.RedisCommandTimeoutException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
@@ -29,7 +29,7 @@ public class RestExceptionHandler {
 
   @ExceptionHandler({ConstraintViolationException.class, MethodArgumentNotValidException.class})
   @ResponseBody
-  public ResponseEntity<ResultDto> handler(Exception ex) {
+  public ResponseEntity<Result> handler(Exception ex) {
 
     StringBuilder sb = new StringBuilder();
     if (ex instanceof ConstraintViolationException) {
@@ -50,7 +50,7 @@ public class RestExceptionHandler {
 
     log.trace(ex.getMessage(), ex);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .code(ResultCode.PARAM_ERROR.getCode())
             .message(sb.toString())
             .success(false)
@@ -60,10 +60,10 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(value = CompareException.class)
   @ResponseBody
-  public ResponseEntity<ResultDto> handleCompareException(CompareException e) {
+  public ResponseEntity<Result> handleCompareException(CompareException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .code(ResultCode.SERVER_ERROR.getCode())
             .message(e.getMessage())
             .success(false)
@@ -73,11 +73,11 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(value = RedisCommandTimeoutException.class)
   @ResponseBody
-  public ResponseEntity<ResultDto> handleRedisCommandTimeoutException(
+  public ResponseEntity<Result> handleRedisCommandTimeoutException(
       RedisCommandTimeoutException e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .code(ResultCode.REDIS_TIME_OUT.getCode())
             .message(ResultCode.REDIS_TIME_OUT.getMessage())
             .success(false)
@@ -87,10 +87,10 @@ public class RestExceptionHandler {
 
   @ExceptionHandler(value = Exception.class)
   @ResponseBody
-  public ResponseEntity<ResultDto> handleOtherException(Exception e) {
+  public ResponseEntity<Result> handleOtherException(Exception e) {
     log.error(e.getMessage(), e);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .code(ResultCode.SERVER_ERROR.getCode())
             .message(e.getMessage())
             .success(false)

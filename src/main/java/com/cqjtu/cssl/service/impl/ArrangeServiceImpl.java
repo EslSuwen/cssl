@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cqjtu.cssl.constant.Audit;
 import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.ArrangeAudit;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.*;
 import com.cqjtu.cssl.mapper.ArrangeMapper;
@@ -131,7 +131,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   }
 
   @Override
-  public ResponseEntity<ResultDto> ifAddArrange(Arrange arrange) {
+  public ResponseEntity<Result> ifAddArrange(Arrange arrange) {
 
     List<ArrangePeriod> arrangePeriodList = new ArrayList<>();
 
@@ -144,7 +144,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
         arrangePeriodList.stream().filter(arrange.getArrangePeriod()::contains).findFirst();
     if (!arrangePeriodOptional.isPresent()) {
       return new ResponseEntity<>(
-          ResultDto.builder()
+          Result.builder()
               .success(addArrange(arrange))
               .message("课程时间安排增加没有冲突")
               .code(ResultCode.SUCCESS_GET_DATA.getCode())
@@ -159,7 +159,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
         classInfo.stream().filter(existClass::contains).findFirst().orElse(new Class());
     log.info(conflictClass);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .success(false)
             .message(
                 StrUtil.format(

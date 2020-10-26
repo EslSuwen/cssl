@@ -4,10 +4,12 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.NoticeFile;
 import com.cqjtu.cssl.service.NoticeFileService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,8 +53,11 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/28 上午11:01
    */
+  @ApiOperation("增加通知文件")
   @PostMapping("/add")
-  public ResponseEntity<ResultDto> add(NoticeFile noticeFile, @RequestParam MultipartFile nFile)
+  public ResponseEntity<Result> add(
+      @ApiParam(value = "通知文件信息", required = true) NoticeFile noticeFile,
+      @ApiParam(value = "通知文件内容", required = true) @RequestParam MultipartFile nFile)
       throws IOException {
 
     log.info(noticeFile);
@@ -68,12 +73,11 @@ public class NoticeFileController {
       IoUtil.close(in);
       IoUtil.close(out);
     }
-
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .success(noticeFileService.save(noticeFile))
-            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
-            .message("通知文件" + ResultCode.SUCCESS_ADD_DATA.getMessage())
+            .code(ResultCode.SUCCESS_UPLOAD_DATA.getCode())
+            .message("通知文件" + ResultCode.SUCCESS_UPLOAD_DATA.getMessage())
             .build(),
         HttpStatus.CREATED);
   }
@@ -84,16 +88,10 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/28 上午11:03
    */
+  @ApiOperation("获取通知文件列表")
   @GetMapping("/getAll")
-  public ResponseEntity<ResultDto> getAll() {
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("通知文件" + ResultCode.SUCCESS_GET_DATA.getMessage())
-            .data(noticeFileService.list())
-            .build(),
-        HttpStatus.CREATED);
+  public ResponseEntity<Result> getAll() {
+    return Result.successGet(noticeFileService.list());
   }
 
   /**
@@ -103,16 +101,11 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/28 上午11:03
    */
+  @ApiOperation("通过编号获取通知文件详细")
   @GetMapping("/getById/{id}")
-  public ResponseEntity<ResultDto> getById(@PathVariable Integer id) {
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("通知文件" + ResultCode.SUCCESS_GET_DATA.getMessage())
-            .data(noticeFileService.getById(id))
-            .build(),
-        HttpStatus.CREATED);
+  public ResponseEntity<Result> getById(
+      @ApiParam(value = "通知文件编号", required = true) @PathVariable Integer id) {
+    return Result.successGet(noticeFileService.getById(id));
   }
 
   /**
@@ -122,16 +115,11 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/28 上午11:03
    */
+  @ApiOperation("通过编号删除通知文件")
   @DeleteMapping("/remove/{id}")
-  public ResponseEntity<ResultDto> remove(@PathVariable Integer id) {
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_UPLOAD_DATA.getCode())
-            .message("通知文件" + ResultCode.SUCCESS_DELETE_DATA.getMessage())
-            .data(noticeFileService.removeById(id))
-            .build(),
-        HttpStatus.CREATED);
+  public ResponseEntity<Result> remove(
+      @ApiParam(value = "通知文件编号", required = true) @PathVariable Integer id) {
+    return Result.successDelete(noticeFileService.removeById(id));
   }
 
   /**
@@ -141,8 +129,11 @@ public class NoticeFileController {
    * @author suwen
    * @date 2020/8/30 上午10:42
    */
+  @ApiOperation("文件下载")
   @GetMapping("/getFile/{fileId}")
-  public void getFileDownload(@PathVariable Integer fileId, HttpServletResponse response) {
+  public void getFileDownload(
+      @ApiParam(value = "通知文件编号", required = true) @PathVariable Integer fileId,
+      HttpServletResponse response) {
     NoticeFile noticeFile = noticeFileService.getById(fileId);
     String fileName = noticeFile.getFileName();
     String filePath = DEFAULT_PATH + noticeFile.getFilePath();

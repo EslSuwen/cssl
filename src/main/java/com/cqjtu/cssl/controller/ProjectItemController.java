@@ -1,13 +1,12 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.ProjectItem;
 import com.cqjtu.cssl.service.ProjectItemService;
 import io.swagger.annotations.Api;
-import lombok.NonNull;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,17 +38,11 @@ public class ProjectItemController {
    * @author suwen
    * @date 2020/2/6 2:55 下午
    */
-  @PostMapping(value = "/addProjectItems")
-  public ResponseEntity<ResultDto> addNewProjectItem(
-      @NonNull @RequestBody List<ProjectItem> projectItems) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(projectItemService.saveBatch(projectItems))
-            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
-            .message("实验项目项增加成功")
-            .build(),
-        HttpStatus.OK);
+  @ApiOperation("实验项目项增加")
+  @PostMapping("/addProjectItems")
+  public ResponseEntity<Result> addNewProjectItem(
+      @ApiParam(value = "实验项目", required = true) @RequestBody List<ProjectItem> projectItems) {
+    return Result.successAdd(projectItemService.saveBatch(projectItems));
   }
 
   /**
@@ -60,18 +53,11 @@ public class ProjectItemController {
    * @author suwen
    * @date 2020/2/6 2:55 下午
    */
-  @GetMapping(value = "/getProjectItem/{proId}")
-  public ResponseEntity<ResultDto> getProjectItem(@NonNull @PathVariable("proId") Integer proId) {
-
-    @NonNull List<ProjectItem> projectItemList = projectItemService.listByProId(proId);
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("实验项目项获取成功")
-            .data(projectItemList)
-            .build(),
-        HttpStatus.OK);
+  @ApiOperation("获取实验项目")
+  @GetMapping("/getProjectItem/{proId}")
+  public ResponseEntity<Result> getProjectItem(
+      @ApiParam(value = "项目编号", required = true) @PathVariable("proId") Integer proId) {
+    return Result.successGet(projectItemService.listByProId(proId));
   }
 
   /**
@@ -82,16 +68,11 @@ public class ProjectItemController {
    * @author suwen
    * @date 2020/7/5 下午4:08
    */
+  @ApiOperation("更新实验项目")
   @PutMapping("/updateItem")
-  public ResponseEntity<ResultDto> updateItem(@RequestBody ProjectItem projectItem) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(projectItemService.updateItem(projectItem))
-            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
-            .message("更新实验项目")
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> updateItem(
+      @ApiParam(value = "实验项目", required = true) @RequestBody ProjectItem projectItem) {
+    return Result.successUpdate(projectItemService.updateItem(projectItem));
   }
 
   /**
@@ -102,15 +83,10 @@ public class ProjectItemController {
    * @author suwen
    * @date 2020/7/6 上午9:41
    */
-  @DeleteMapping("deleteExp")
-  public ResponseEntity<ResultDto> deleteExp(@RequestParam Integer ino) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(projectItemService.deleteItem(ino))
-            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
-            .message("删除实验项目信息")
-            .build(),
-        HttpStatus.OK);
+  @ApiOperation("删除实验项目信息")
+  @DeleteMapping("/deleteExp")
+  public ResponseEntity<Result> deleteExp(
+      @ApiParam(value = "实验项目编号", required = true) @RequestParam Integer ino) {
+    return Result.successDelete(projectItemService.deleteItem(ino));
   }
 }

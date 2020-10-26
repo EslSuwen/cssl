@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.Class;
 import com.cqjtu.cssl.entity.TeachingPlan;
@@ -63,5 +63,5 @@ public interface ArrangeService extends IService<Arrange> {
    * @param arrange 排课信息
    * @return 冲突
    */
-  ResponseEntity<ResultDto> ifAddArrange(Arrange arrange);
+  ResponseEntity<Result> ifAddArrange(Arrange arrange);
 }

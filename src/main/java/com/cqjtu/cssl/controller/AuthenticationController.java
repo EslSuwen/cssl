@@ -1,7 +1,7 @@
 package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.AuthenticationRequest;
 import com.cqjtu.cssl.entity.AuthenticationResponse;
 import com.cqjtu.cssl.service.TeacherService;
@@ -15,7 +15,6 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -66,28 +65,20 @@ public class AuthenticationController {
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
   @PostMapping("/auth")
-  public ResponseEntity<ResultDto> login(
+  public ResponseEntity<Result> login(
       @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
-          AuthenticationRequest authRequest,
-      HttpServletRequest request) {
+          AuthenticationRequest authRequest) {
     log.info(authRequest);
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
                 authRequest.getUserNo(), authRequest.getPassword()));
     SecurityContextHolder.getContext().setAuthentication(authentication);
-
     UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUserNo());
     String token = jwtTokenUtil.generate(userDetails);
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_LOGIN.getCode())
-            .message(ResultCode.SUCCESS_LOGIN.getMessage())
-            .data(
-                new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())))
-            .build(),
-        HttpStatus.OK);
+    return Result.success(
+        new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())),
+        ResultCode.SUCCESS_LOGIN);
   }
 
   /**

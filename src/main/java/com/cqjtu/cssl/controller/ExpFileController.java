@@ -6,12 +6,13 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
 import com.cqjtu.cssl.service.ExpFileService;
 import com.cqjtu.cssl.service.ExpFileStoreService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,10 +60,10 @@ public class ExpFileController {
    * @author suwen
    * @date 2020/7/8 上午9:20
    */
+  @ApiOperation("获得文件状态")
   @GetMapping("/getFileStatus")
-  public ResponseEntity<ResultDto> getFileStatus(
+  public ResponseEntity<Result> getFileStatus(
       @RequestParam Integer proId, @RequestParam Integer classId) {
-
     ExpFile expFile =
         expFileService.getOne(
             new QueryWrapper<ExpFile>()
@@ -71,7 +72,7 @@ public class ExpFileController {
                 .last("LIMIT 1"));
     if (expFile == null) {
       return new ResponseEntity<>(
-          ResultDto.builder()
+          Result.builder()
               .success(true)
               .message("文件状态为空")
               .code(ResultCode.SUCCESS_GET_DATA.getCode())
@@ -98,15 +99,7 @@ public class ExpFileController {
     if (!expFileStoreList.isEmpty()) {
       expFile.setFiles(expFileStoreList);
     }
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .message("获得文件状态成功")
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .data(expFile)
-            .build(),
-        HttpStatus.OK);
+    return Result.successGet(expFile);
   }
 
   /**
@@ -117,20 +110,14 @@ public class ExpFileController {
    * @author suwen
    * @date 2020/7/8 上午10:16
    */
+  @ApiOperation("增加项目实验文件")
   @PostMapping("/addExpFile")
-  public ResponseEntity<ResultDto> addExpFile(
+  public ResponseEntity<Result> addExpFile(
       ExpFileStore expFileStore, @RequestParam MultipartFile file) throws IOException {
-
     log.info(expFileStore);
     log.info(file.getOriginalFilename());
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(expFileStoreService.saveFile(expFileStore, file))
-            .code(ResultCode.SUCCESS_UPLOAD_DATA.getCode())
-            .message("文件上传成功")
-            .build(),
-        HttpStatus.OK);
+    return Result.success(
+        expFileStoreService.saveFile(expFileStore, file), ResultCode.SUCCESS_UPLOAD_DATA);
   }
 
   /**
@@ -141,17 +128,10 @@ public class ExpFileController {
    * @author suwen
    * @date 2020/7/8 下午1:38
    */
+  @ApiOperation(value = "获取文件储存信息", notes = "获取文件储存信息(除文件)")
   @GetMapping("/getById/{proId}")
-  public ResponseEntity<ResultDto> getById(@PathVariable Integer proId) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取文件储存信息成功")
-            .data(expFileStoreService.getById(proId))
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> getById(@PathVariable Integer proId) {
+    return Result.successGet(expFileStoreService.getById(proId));
   }
 
   /**
@@ -162,6 +142,7 @@ public class ExpFileController {
    * @author suwen
    * @date 2020/8/31 上午12:42
    */
+  @ApiOperation("获取 expFile")
   @GetMapping("/getFile")
   public void getFileDownload(
       @RequestParam Integer fileNo, @RequestParam String term, HttpServletResponse response) {
@@ -178,7 +159,6 @@ public class ExpFileController {
           "Content-disposition",
           "attachment; filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
       ServletOutputStream sos = response.getOutputStream();
-
       sos.write(fileReader.readBytes());
       sos.flush();
       sos.close();
@@ -189,6 +169,16 @@ public class ExpFileController {
     }
   }
 
+  /**
+   * 获取文件压缩包
+   *
+   * @param proId 项目编号
+   * @param term 学期
+   * @return void
+   * @author suwen
+   * @date 2020/10/26 10:08
+   */
+  @ApiOperation("获取文件压缩包")
   @GetMapping("/getFilesZip")
   public void getFilesZipByProId(
       @RequestParam Integer proId, @RequestParam String term, HttpServletResponse response) {

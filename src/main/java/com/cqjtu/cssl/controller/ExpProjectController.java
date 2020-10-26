@@ -2,12 +2,13 @@ package com.cqjtu.cssl.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.ExpClass;
 import com.cqjtu.cssl.entity.ExpProject;
 import com.cqjtu.cssl.service.ExpClassService;
 import com.cqjtu.cssl.service.ExpProjectService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,11 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
-  @PostMapping(value = "/addProject")
-  public ResponseEntity<ResultDto> addNewProject(@RequestBody ExpProject expProject)
-      throws Exception {
-
+  @ApiOperation("项目卡片增加")
+  @PostMapping("/addProject")
+  public ResponseEntity<Result> addNewProject(@RequestBody ExpProject expProject) throws Exception {
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .success(expProjectService.addProject(expProject))
             .code(ResultCode.SUCCESS_ADD_DATA.getCode())
             .message("增加卡片成功")
@@ -77,16 +77,10 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/2/6 2:51 下午
    */
+  @ApiOperation("项目班级增加")
   @PostMapping("/addExpClass")
-  public ResponseEntity<ResultDto> addExpClass(@RequestBody List<ExpClass> expClassList) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(expClassService.saveBatch(expClassList))
-            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
-            .message("增加项目班级成功")
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> addExpClass(@RequestBody List<ExpClass> expClassList) {
+    return Result.successGet(expClassService.saveBatch(expClassList));
   }
 
   /**
@@ -97,18 +91,11 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/10/6 2:52 下午
    */
-  @GetMapping(value = "/getExpClass/{proId}")
-  public ResponseEntity<ResultDto> getExpClass(
+  @ApiOperation("获取项目班级数据")
+  @GetMapping("/getExpClass/{proId}")
+  public ResponseEntity<Result> getExpClass(
       @ApiParam(value = "项目编号", required = true) @PathVariable Integer proId) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取项目班级数据成功")
-            .data(expClassService.getByProId(proId))
-            .build(),
-        HttpStatus.OK);
+    return Result.successGet(expClassService.getByProId(proId));
   }
 
   /**
@@ -119,47 +106,13 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/2/6 2:52 下午
    */
-  @GetMapping(value = "/getProject")
-  public ResponseEntity<ResultDto> getProjects(
+  @ApiOperation("获取项目卡片数据")
+  @GetMapping("/getProject")
+  public ResponseEntity<Result> getProjects(
       @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
       @ApiParam(value = "学期", required = true) @RequestParam String term) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取项目卡片数据成功")
-            .data(expProjectService.getByTidTerm(tid, term))
-            .build(),
-        HttpStatus.OK);
+    return Result.successGet(expProjectService.getByTidTerm(tid, term));
   }
-
-  /**
-   * 获取待审核项目卡片数据
-   *
-   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
-   * @author suwen
-   * @date 2020/5/10 11:14 上午 @GetMapping(value = "/getAuditProject") public
-   *     ResponseEntity<ResultDto> getAuditProjects() {
-   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
-   *     .code(ReturnCode.RETURN_CODE_20004.getCode()) .message("获取项目卡片待审核数据成功")
-   *     .data(expProjectService.getAuditProjects()) .build(), HttpStatus.OK); }
-   */
-
-  /**
-   * 审核项目卡片
-   *
-   * @param proId 项目卡片编号
-   * @param status 审核状态
-   * @return java.lang.Iterable<com.cqjtu.cssl.entity.Project>
-   * @author suwen
-   * @date 2020/5/10 11:24 上午 @PutMapping(value = "/auditProject") public ResponseEntity<ResultDto>
-   *     auditProject( @ApiParam(value = "项目卡片编号", required = true) @RequestParam String
-   *     proId, @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
-   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
-   *     .code(ReturnCode.RETURN_CODE_20001.getCode()) .message("审核项目卡片成功")
-   *     .data(expProjectService.auditProject(proId, status)) .build(), HttpStatus.OK); }
-   */
 
   /**
    * 项目卡片删除
@@ -167,18 +120,11 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/2/6 2:53 下午
    */
-  @DeleteMapping(value = "/deleteProject")
-  public ResponseEntity<ResultDto> deleteProject(
+  @ApiOperation("项目卡片删除")
+  @DeleteMapping("/deleteProject")
+  public ResponseEntity<Result> deleteProject(
       @ApiParam(value = "项目卡片编号", required = true) @RequestParam String proId) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
-            .message("删除项目卡片成功")
-            .data(expProjectService.removeById(proId))
-            .build(),
-        HttpStatus.OK);
+    return Result.success(expProjectService.removeById(proId), ResultCode.SUCCESS_DELETE_DATA);
   }
 
   /**
@@ -188,17 +134,10 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/6/1 下午10:06
    */
-  @GetMapping(value = "/getTermList")
-  public ResponseEntity<ResultDto> getTermList() {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获得存在学期列表成功")
-            .data(expProjectService.getTermList())
-            .build(),
-        HttpStatus.OK);
+  @ApiOperation("获得存在学期列表")
+  @GetMapping("/getTermList")
+  public ResponseEntity<Result> getTermList() {
+    return Result.successGet(expProjectService.getTermList());
   }
 
   /**
@@ -210,14 +149,14 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/7/1 下午4:52
    */
-  @GetMapping(value = "/reuseCard")
-  public ResponseEntity<ResultDto> reuseCard(
+  @ApiOperation("重用以往卡片信息")
+  @GetMapping("/reuseCard")
+  public ResponseEntity<Result> reuseCard(
       @ApiParam(value = "教师编号", required = true) @RequestParam String tid,
       @ApiParam(value = "课程编号", required = true) @RequestParam String courseId) {
-
     ExpProject project = expProjectService.reuseCard(tid, courseId);
     return new ResponseEntity<>(
-        ResultDto.builder()
+        Result.builder()
             .success(project != null)
             .code(ResultCode.SUCCESS_GET_DATA.getCode())
             .message("重用以往卡片信息")
@@ -234,16 +173,10 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/7/5 下午4:05
    */
+  @ApiOperation("更新卡片信息")
   @PutMapping("/updateExp")
-  public ResponseEntity<ResultDto> updateExp(@RequestBody ExpProject expProject) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(expProjectService.updateExp(expProject))
-            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
-            .message("更新卡片信息")
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> updateExp(@RequestBody ExpProject expProject) {
+    return Result.successUpdate(expProjectService.updateExp(expProject));
   }
 
   /**
@@ -254,15 +187,9 @@ public class ExpProjectController {
    * @author suwen
    * @date 2020/7/6 上午9:38
    */
-  @DeleteMapping("deleteExp")
-  public ResponseEntity<ResultDto> deleteExp(@RequestParam Integer proId) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(expProjectService.deleteExp(proId))
-            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
-            .message("删除卡片信息")
-            .build(),
-        HttpStatus.OK);
+  @ApiOperation("删除卡片信息")
+  @DeleteMapping("/deleteExp")
+  public ResponseEntity<Result> deleteExp(@RequestParam Integer proId) {
+    return Result.successDelete(expProjectService.deleteExp(proId));
   }
 }
