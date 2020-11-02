@@ -1,6 +1,7 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cqjtu.cssl.entity.ExpFile;
 import com.cqjtu.cssl.entity.ExpFileStore;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public interface ExpFileStoreService extends IService<ExpFileStore> {
    * @author suwen
    * @date 2020/7/8 上午9:30
    */
-  boolean saveFile(ExpFileStore expFileStore, MultipartFile file) throws IOException;
+  boolean saveFile(ExpFile expFile, MultipartFile file) throws IOException;
 
   /**
    * 获取文件储存信息除文件

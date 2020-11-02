@@ -1,6 +1,8 @@
 package com.cqjtu.cssl.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 项目(实验卡片)文件关联实体类
@@ -24,28 +25,23 @@ public class ExpFile implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "项目ID", required = true)
+  @ApiModelProperty(value = "项目编号", required = true)
+  @TableId(type = IdType.AUTO)
+  private Long fileId;
+
+  @ApiModelProperty(value = "项目编号", required = true)
   private Integer proId;
 
-  @ApiModelProperty(value = "班级编号", required = true)
-  private Integer classId;
+  @ApiModelProperty(value = "文件类型编号", required = true)
+  private Integer fileType;
 
-  @ApiModelProperty(value = "考勤名单", required = true)
-  private Integer attend;
+  @ApiModelProperty(value = "文件名", required = true)
+  private String fileName;
 
-  @ApiModelProperty(value = "实验任务书", required = true)
-  private Integer task;
+  @ApiModelProperty(value = "文件路径", required = true)
+  private String filePath;
 
-  @ApiModelProperty(value = "实验成绩", required = true)
-  private Integer grade;
-
-  @ApiModelProperty(value = "评分标准表", required = true)
-  private Integer scheme;
-
-  @ApiModelProperty(value = "实验报告", required = true)
-  private Integer report;
-
-  @ApiModelProperty(value = "文件列表")
+  @ApiModelProperty(value = "文件类型名", required = true)
   @TableField(exist = false)
-  private List<ExpFileStore> files;
+  private String typeName;
 }

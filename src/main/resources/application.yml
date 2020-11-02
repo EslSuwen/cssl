@@ -3,6 +3,10 @@ server: #配置server
     uri-encoding: UTF-8
   servlet:
     context-path: /cssl
+    encoding:
+      force: true
+      charset: utf-8
+      enabled: true
   port: 8090
 
 spring:
@@ -55,11 +59,6 @@ spring:
     timeout: 3000
   devtools: #热部署
     restart:
-      enabled: true
-  http: #springboot乱码解决
-    encoding:
-      force: true
-      charset: utf-8
       enabled: true
   jpa:
     open-in-view: false

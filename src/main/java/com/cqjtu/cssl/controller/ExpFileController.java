@@ -5,10 +5,10 @@ import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cqjtu.cssl.constant.ExpFileType;
 import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.ExpFile;
-import com.cqjtu.cssl.entity.ExpFileStore;
 import com.cqjtu.cssl.service.ExpFileService;
 import com.cqjtu.cssl.service.ExpFileStoreService;
 import io.swagger.annotations.Api;
@@ -25,7 +25,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -55,22 +54,16 @@ public class ExpFileController {
    * 获得文件状态
    *
    * @param proId 项目卡片编号
-   * @param classId 班级编号
    * @return 文件状态
    * @author suwen
    * @date 2020/7/8 上午9:20
    */
   @ApiOperation("获得文件状态")
-  @GetMapping("/getFileStatus")
-  public ResponseEntity<Result> getFileStatus(
-      @RequestParam Integer proId, @RequestParam Integer classId) {
-    ExpFile expFile =
-        expFileService.getOne(
-            new QueryWrapper<ExpFile>()
-                .eq("pro_id", proId)
-                .eq("class_id", classId)
-                .last("LIMIT 1"));
-    if (expFile == null) {
+  @GetMapping("/getFileStatus/{proId}")
+  public ResponseEntity<Result> getFileStatus(@PathVariable Integer proId) {
+    List<ExpFile> expFileList =
+        expFileService.list(new QueryWrapper<ExpFile>().eq("pro_id", proId));
+    if (expFileList == null || expFileList.isEmpty()) {
       return new ResponseEntity<>(
           Result.builder()
               .success(true)
@@ -79,27 +72,9 @@ public class ExpFileController {
               .build(),
           HttpStatus.OK);
     }
-    List<Integer> ids = new ArrayList<>();
-    if (expFile.getAttend() != null) {
-      ids.add(expFile.getAttend());
-    }
-    if (expFile.getTask() != null) {
-      ids.add(expFile.getTask());
-    }
-    if (expFile.getGrade() != null) {
-      ids.add(expFile.getGrade());
-    }
-    if (expFile.getScheme() != null) {
-      ids.add(expFile.getScheme());
-    }
-    if (expFile.getReport() != null) {
-      ids.add(expFile.getReport());
-    }
-    List<ExpFileStore> expFileStoreList = expFileStoreService.listByIds(ids);
-    if (!expFileStoreList.isEmpty()) {
-      expFile.setFiles(expFileStoreList);
-    }
-    return Result.successGet(expFile);
+    return Result.successGet(
+        expFileList.stream()
+            .map(each -> each.setTypeName(ExpFileType.convertName(each.getFileType()))));
   }
 
   /**
@@ -112,12 +87,11 @@ public class ExpFileController {
    */
   @ApiOperation("增加项目实验文件")
   @PostMapping("/addExpFile")
-  public ResponseEntity<Result> addExpFile(
-      ExpFileStore expFileStore, @RequestParam MultipartFile file) throws IOException {
-    log.info(expFileStore);
+  public ResponseEntity<Result> addExpFile(ExpFile expFile, @RequestParam MultipartFile file)
+      throws IOException {
+    log.info(expFile);
     log.info(file.getOriginalFilename());
-    return Result.success(
-        expFileStoreService.saveFile(expFileStore, file), ResultCode.SUCCESS_UPLOAD_DATA);
+    return Result.success(expFileService.saveFile(expFile, file), ResultCode.SUCCESS_UPLOAD_DATA);
   }
 
   /**
@@ -137,18 +111,16 @@ public class ExpFileController {
   /**
    * 获取 expFile
    *
-   * @param fileNo 文件编号
-   * @param term 学期
+   * @param fileId 文件编号
    * @author suwen
    * @date 2020/8/31 上午12:42
    */
   @ApiOperation("获取 expFile")
   @GetMapping("/getFile")
-  public void getFileDownload(
-      @RequestParam Integer fileNo, @RequestParam String term, HttpServletResponse response) {
-    ExpFileStore expFileStore = expFileStoreService.getById(fileNo);
-    String fileName = expFileStore.getName();
-    String filePath = DEFAULT_PATH + expFileStore.getFilePath();
+  public void getFileDownload(@RequestParam Integer fileId, HttpServletResponse response) {
+    ExpFile expFile = expFileService.getById(fileId);
+    String fileName = expFile.getFileName();
+    String filePath = DEFAULT_PATH + expFile.getFilePath();
     log.info(filePath);
     try {
       FileReader fileReader = new FileReader(filePath);
