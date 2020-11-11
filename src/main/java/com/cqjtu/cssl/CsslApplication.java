@@ -1,6 +1,5 @@
 package com.cqjtu.cssl;
 
-import com.cqjtu.cssl.config.FileProperties;
 import com.cqjtu.cssl.config.SecurityProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -15,7 +14,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
  */
 @MapperScan(basePackages = {"com.cqjtu.cssl.mapper"})
 @SpringBootApplication
-@EnableConfigurationProperties({FileProperties.class, SecurityProperties.class})
+@EnableConfigurationProperties({SecurityProperties.class})
 public class CsslApplication {
 
   public static void main(String[] args) {

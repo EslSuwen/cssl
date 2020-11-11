@@ -22,7 +22,7 @@ dependencies {
 
     implementation 'cn.hutool:hutool-all:5.3.10'
 
-    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:2.0.3'
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.1'
 
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.apache.poi:poi-ooxml:4.1.2'
