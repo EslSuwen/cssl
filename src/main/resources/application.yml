@@ -12,7 +12,7 @@ server:                     #配置server
 spring:
   profiles:
     active:
-      - dev
+      - dev2
       - property
   datasource:
     druid:

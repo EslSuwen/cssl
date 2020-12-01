@@ -18,12 +18,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Authority {
-  @ApiModelProperty(value = "编号", position = 0, required = true)
+  @ApiModelProperty(value = "编号", required = true)
   private Long id;
 
-  @ApiModelProperty(value = "权限", position = 1, required = true)
+  @ApiModelProperty(value = "权限", required = true)
   private AuthorityName name;
-  /*
-  @ApiModelProperty(value = "已验证用户列表", position = 2, required = true)
-  private List<User> users;*/
 }

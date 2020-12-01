@@ -1,4 +1,4 @@
-package com.cqjtu.cssl.dto;
+package com.cqjtu.cssl.dto.output;
 
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.cqjtu.cssl.entity;
+package com.cqjtu.cssl.dto.output;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

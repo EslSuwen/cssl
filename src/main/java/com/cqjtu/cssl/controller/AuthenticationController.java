@@ -2,17 +2,14 @@ package com.cqjtu.cssl.controller;
 
 import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.Result;
-import com.cqjtu.cssl.entity.AuthenticationRequest;
-import com.cqjtu.cssl.entity.AuthenticationResponse;
+import com.cqjtu.cssl.dto.input.AuthenticationRequest;
+import com.cqjtu.cssl.dto.output.AuthenticationResponse;
 import com.cqjtu.cssl.service.TeacherService;
 import com.cqjtu.cssl.utils.JwtTokenUtil;
-import com.google.code.kaptcha.impl.DefaultKaptcha;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tomcat.util.http.fileupload.ByteArrayOutputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.MediaType;
@@ -23,13 +20,12 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
+import javax.validation.Valid;
 
 /**
  * 用户验证控制器
@@ -39,14 +35,13 @@ import java.awt.image.BufferedImage;
  */
 @Api(tags = "用户验证-控制器")
 @RestController
-@RequestMapping(value = "${api.base-path}", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping("/auth")
 @Log4j2
 public class AuthenticationController {
 
   private final JwtTokenUtil jwtTokenUtil;
   private final UserDetailsService userDetailsService;
   private final AuthenticationManager authenticationManager;
-  private final DefaultKaptcha defaultKaptcha;
   private final TeacherService teacherService;
 
   @Autowired
@@ -54,19 +49,17 @@ public class AuthenticationController {
       AuthenticationManager authenticationManager,
       JwtTokenUtil jwtTokenUtil,
       @Qualifier("userDetailsServiceImpl") UserDetailsService userDetailsService,
-      DefaultKaptcha defaultKaptcha,
       TeacherService teacherService) {
     this.authenticationManager = authenticationManager;
     this.jwtTokenUtil = jwtTokenUtil;
     this.userDetailsService = userDetailsService;
-    this.defaultKaptcha = defaultKaptcha;
     this.teacherService = teacherService;
   }
 
   @ApiOperation(value = "用户验证", notes = "进行用户验证，成功返回 token,失败返回空。")
-  @PostMapping("/auth")
+  @PostMapping
   public ResponseEntity<Result> login(
-      @NonNull @ApiParam(value = "请求登录模型", required = true) @RequestBody
+      @Valid @ApiParam(value = "请求登录模型", required = true) @RequestBody
           AuthenticationRequest authRequest) {
     log.info(authRequest);
     Authentication authentication =
@@ -79,43 +72,5 @@ public class AuthenticationController {
     return Result.success(
         new AuthenticationResponse(token, teacherService.getById(authRequest.getUserNo())),
         ResultCode.SUCCESS_LOGIN);
-  }
-
-  /**
-   * 生成图片验证码
-   *
-   * @author suwen
-   * @date 2020/2/8 1:33 下午
-   * @param request http 请求
-   * @param response http 响应
-   */
-  @ApiOperation(value = "生成图片验证码", notes = "生成图片验证码并保存在 session 中。")
-  @GetMapping("/createImageCode")
-  public void createImageCode(HttpServletRequest request, HttpServletResponse response)
-      throws Exception {
-    byte[] captchaChallengeAsJpeg;
-    ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
-    try {
-      // 生产验证码字符串并保存到session中
-      String createText = defaultKaptcha.createText();
-      request.getSession().setAttribute("imageCode", createText);
-      // 使用生产的验证码字符串返回一个BufferedImage对象并转为byte写入到byte数组中
-      BufferedImage challenge = defaultKaptcha.createImage(createText);
-      ImageIO.write(challenge, "jpg", jpegOutputStream);
-      log.info("createImageCode:" + createText);
-    } catch (IllegalArgumentException e) {
-      response.sendError(HttpServletResponse.SC_NOT_FOUND);
-      return;
-    }
-    // 定义response输出类型为image/jpeg类型，使用response输出流输出图片的byte数组
-    captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
-    response.setHeader("Cache-Control", "no-store");
-    response.setHeader("Pragma", "no-cache");
-    response.setDateHeader("Expires", 0);
-    response.setContentType("image/jpeg");
-    ServletOutputStream responseOutputStream = response.getOutputStream();
-    responseOutputStream.write(captchaChallengeAsJpeg);
-    responseOutputStream.flush();
-    responseOutputStream.close();
   }
 }

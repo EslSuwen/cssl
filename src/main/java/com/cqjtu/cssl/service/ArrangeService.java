@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.Class;
-import com.cqjtu.cssl.entity.TeachingPlan;
+import com.cqjtu.cssl.dto.output.TeachingPlan;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
