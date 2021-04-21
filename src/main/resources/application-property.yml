@@ -1,0 +1,20 @@
+
+security:
+  cors:
+    allowed-origins: "*"
+    allowed-methods: GET,POST,DELETE,PUT,OPTIONS
+    allowed-headers: Accept,Accept-Encoding,Accept-Language,Authorization,Connection,Content-Type,Host,Origin,Referer,User-Agent,X-Requested-With
+  jwt:
+    header: Authorization
+    secret: cmsSecret
+    expiration: 12000
+    issuer: suwen
+    authentication-path: /auth/login
+
+info:
+  app:
+    name: Credit Management Project
+    abbrName: CMS
+    version: v1.0-Alpha
+
+

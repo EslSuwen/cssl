@@ -1,10 +1,10 @@
 package com.cqjtu.cssl.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.Class;
-import com.cqjtu.cssl.entity.TeachingPlan;
+import com.cqjtu.cssl.dto.output.TeachingPlan;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -28,17 +28,6 @@ public interface ArrangeService extends IService<Arrange> {
   List<Arrange> findByTid(String tid);
 
   /**
-   * 管理员审核实验室时间安排
-   *
-   * @param aid 安排编号
-   * @param status 状态
-   * @return 操作状态
-   * @author suwen
-   * @date 2020/5/11 上午9:49
-   */
-  // boolean auditArrange(Integer aid, Audit status);
-
-  /**
    * 获取教学计划表
    *
    * @return java.util.List<教学计划表>
@@ -47,14 +36,6 @@ public interface ArrangeService extends IService<Arrange> {
    */
   List<TeachingPlan> getTeachingPlanList();
 
-  /**
-   * 获取已申请的实验室安排信息
-   *
-   * @return 实验室时间安排列表
-   * @author suwen
-   * @date 2020/5/26 下午8:40
-   */
-  // List<ArrangeAudit> getAuditArrange();
 
   /**
    * 增加排课信息
@@ -79,8 +60,8 @@ public interface ArrangeService extends IService<Arrange> {
   /**
    * 排课时间增加冲突检测
    *
-   * @param arrange
-   * @return
+   * @param arrange 排课信息
+   * @return 冲突
    */
-  ResponseEntity<ResultDto> ifAddArrange(Arrange arrange);
+  ResponseEntity<Result> ifAddArrange(Arrange arrange);
 }

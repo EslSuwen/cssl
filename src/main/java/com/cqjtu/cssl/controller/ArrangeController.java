@@ -4,14 +4,14 @@ import cn.hutool.core.io.IoUtil;
 import cn.hutool.poi.excel.ExcelUtil;
 import cn.hutool.poi.excel.ExcelWriter;
 import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.service.ArrangeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,18 +46,11 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/2/21 下午7:32
    */
+  @ApiOperation("根据教师编号查询排课")
   @GetMapping("/getInfo/{tid}")
-  public ResponseEntity<ResultDto> getArrange(
+  public ResponseEntity<Result> getArrange(
       @ApiParam(value = "教师编号", required = true) @PathVariable String tid) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取排课信息成功")
-            .data(arrangeService.findByTid(tid))
-            .build(),
-        HttpStatus.OK);
+    return Result.successGet(arrangeService.findByTid(tid));
   }
 
   /**
@@ -68,40 +61,12 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/9/26 早先10:05
    */
+  @ApiOperation("增加排课信息冲突检测")
   @PostMapping("/AddArrange")
-  public ResponseEntity<ResultDto> ifAddArrange(
+  public ResponseEntity<Result> ifAddArrange(
       @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
-
     return arrangeService.ifAddArrange(arrange);
   }
-
-  /**
-   * 获取已申请的实验室安排信息
-   *
-   * @return 实验室时间安排列表
-   * @author suwen
-   * @date 2020/5/15 下午7:27 @GetMapping("getAuditArrange") public ResponseEntity<ResultDto>
-   *     getAuditArrange() {
-   *     <p>return new ResponseEntity<>( ResultDto.builder() .success(true)
-   *     .code(ReturnCode.RETURN_CODE_20001.getCode()) .message("获取已申请的实验室安排信息成功")
-   *     .data(arrangeService.getAuditArrange()) .build(), HttpStatus.OK); }
-   */
-
-  /**
-   * 管理员审核实验室时间安排
-   *
-   * @param aid 安排编号
-   * @param status 审核状态
-   * @return 操作状态
-   * @author suwen
-   * @date 2020/5/11 上午9:49 @PutMapping("auditArrange") public ResponseEntity<ResultDto>
-   *     auditArrange( @ApiParam(value = "安排编号", required = true) @RequestParam Integer
-   *     aid, @ApiParam(value = "审核状态", required = true) @RequestParam Audit status) {
-   *     <p>return new ResponseEntity<>( ResultDto.builder()
-   *     .success(arrangeService.auditArrange(aid, status))
-   *     .code(ReturnCode.RETURN_CODE_20004.getCode()) .message("审核实验室时间安排成功") .build(),
-   *     HttpStatus.OK); }
-   */
 
   /**
    * 获取教学计划表
@@ -110,17 +75,10 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午3:41
    */
+  @ApiOperation("获取教学计划表")
   @GetMapping("/getTeachingPlan")
-  public ResponseEntity<ResultDto> getTeachingPlanList() {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取教学计划表成功")
-            .data(arrangeService.getTeachingPlanList())
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> getTeachingPlanList() {
+    return Result.successGet(arrangeService.getTeachingPlanList());
   }
 
   /**
@@ -129,6 +87,7 @@ public class ArrangeController {
    * @author suwen
    * @date 2020/5/13 下午5:51
    */
+  @ApiOperation("获取教学计划表 excel")
   @GetMapping("/getTeachingPlanExcel")
   public void getTeachingPlanExcel(HttpServletResponse response) throws IOException {
 
@@ -165,15 +124,9 @@ public class ArrangeController {
    * @param grade 年级
    * @return 班级名单
    */
+  @ApiOperation("通过年级获取班级名单")
   @GetMapping("/getClassByGrade/{grade}")
-  public ResponseEntity<ResultDto> getClassByGrade(@PathVariable Integer grade) {
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .message("获取班级信息成功")
-            .data(arrangeService.getClassByGrade(grade))
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> getClassByGrade(@PathVariable Integer grade) {
+    return Result.successGet(arrangeService.getClassByGrade(grade));
   }
 }

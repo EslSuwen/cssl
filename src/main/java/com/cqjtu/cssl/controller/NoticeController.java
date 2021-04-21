@@ -1,20 +1,19 @@
 package com.cqjtu.cssl.controller;
 
-import com.cqjtu.cssl.constant.ResultCode;
-import com.cqjtu.cssl.dto.ResultDto;
+import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.Notice;
 import com.cqjtu.cssl.service.NoticeService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 /**
- * 通知信息表，通知由管理员发布。 前端控制器
+ * 通知信息表，通知由管理员发布-前端控制器
  *
  * @author suwen
  * @since 2020-08-24
@@ -38,18 +37,11 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:07
    */
+  @ApiOperation("通过通知编号获取通知信息")
   @GetMapping("/getNoticeById")
-  public ResponseEntity<ResultDto> getNoticeById(
+  public ResponseEntity<Result> getNoticeById(
       @ApiParam(value = "通知编号", required = true) @RequestParam Integer nid) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取通知信息成功")
-            .data(noticeService.getNotice(nid))
-            .build(),
-        HttpStatus.OK);
+    return Result.successGet(noticeService.getNotice(nid));
   }
 
   /**
@@ -58,17 +50,11 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:07
    */
+  @ApiOperation("获取所有通知信息")
   @GetMapping("/getAllNotice/{noticeType}")
-  public ResponseEntity<ResultDto> getAllNotice(@PathVariable String noticeType) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("获取所有通知信息成功")
-            .data(noticeService.getAllNotice(noticeType))
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> getAllNotice(
+      @ApiParam(value = "通知类型", required = true) @PathVariable String noticeType) {
+    return Result.successGet(noticeService.getAllNotice(noticeType));
   }
 
   /**
@@ -77,17 +63,11 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:07
    */
+  @ApiOperation("通过条件查询所有通知信息")
   @GetMapping("/getNoticeByMap")
-  public ResponseEntity<ResultDto> getNoticeByMap(@RequestBody Map<String, Object> conditionsMap) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_GET_DATA.getCode())
-            .message("条件查询通知信息成功")
-            .data(noticeService.getNoticeByMap(conditionsMap))
-            .build(),
-        HttpStatus.OK);
+  public ResponseEntity<Result> getNoticeByMap(
+      @ApiParam(value = "通知条件", required = true) @RequestBody Map<String, Object> conditionsMap) {
+    return Result.successGet(noticeService.getNoticeByMap(conditionsMap));
   }
 
   /**
@@ -97,18 +77,11 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:10
    */
+  @ApiOperation("增加通知信息")
   @PostMapping("/addNotice")
-  public ResponseEntity<ResultDto> addNotice(
+  public ResponseEntity<Result> addNotice(
       @ApiParam(value = "通知信息", required = true) @RequestBody Notice notice) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_ADD_DATA.getCode())
-            .message("增加通知信息成功")
-            .data(noticeService.addNotice(notice))
-            .build(),
-        HttpStatus.OK);
+    return Result.successAdd(noticeService.addNotice(notice));
   }
 
   /**
@@ -118,18 +91,11 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:13
    */
+  @ApiOperation("修改通知信息")
   @PutMapping("/updateNotice")
-  public ResponseEntity<ResultDto> updateNotice(
+  public ResponseEntity<Result> updateNotice(
       @ApiParam(value = "通知信息", required = true) @RequestBody Notice notice) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
-            .message("修改通知信息成功")
-            .data(noticeService.updateNotice(notice))
-            .build(),
-        HttpStatus.OK);
+    return Result.successUpdate(noticeService.updateNotice(notice));
   }
 
   /**
@@ -138,17 +104,10 @@ public class NoticeController {
    * @author suwen
    * @date 2020/8/24 下午1:11
    */
+  @ApiOperation("删除通知信息")
   @DeleteMapping("/removeNotice")
-  public ResponseEntity<ResultDto> removeNotice(
+  public ResponseEntity<Result> removeNotice(
       @ApiParam(value = "通知编号", required = true) @RequestParam Integer nid) {
-
-    return new ResponseEntity<>(
-        ResultDto.builder()
-            .success(true)
-            .code(ResultCode.SUCCESS_DELETE_DATA.getCode())
-            .message("删除通知信息成功")
-            .data(noticeService.removeNotice(nid))
-            .build(),
-        HttpStatus.OK);
+    return Result.successDelete(noticeService.removeNotice(nid));
   }
 }

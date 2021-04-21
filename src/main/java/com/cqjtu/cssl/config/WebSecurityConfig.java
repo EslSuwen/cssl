@@ -38,14 +38,11 @@ import static org.springframework.http.HttpMethod.*;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String ROLE_ADMIN = "ADMIN";
 
-  @Value("${api.base-path}/**")
-  private String apiPath;
-
   @Value("${management.endpoints.web.exposure.include}")
   private String[] actuatorExposures;
 
   /** 放行白名单 */
-  private static String[] WHITE_LIST = {
+  private static final String[] WHITE_LIST = {
     // TODO 调试关闭验证
     "/**",
     "/**/*.css,",
@@ -84,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    String authPath = "/auth";
     http.cors()
         .and()
         .csrf()
@@ -103,10 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(OPTIONS, "/**")
         .permitAll()
-        .antMatchers(POST, apiPath)
-        .hasRole(ROLE_ADMIN)
-        .antMatchers(PUT, apiPath)
-        .hasRole(ROLE_ADMIN)
+        .antMatchers(authPath)
+        .permitAll()
         .antMatchers(DELETE, "/**")
         .hasRole(ROLE_ADMIN)
         .antMatchers(WHITE_LIST)

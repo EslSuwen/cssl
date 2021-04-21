@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.Class;
-import com.cqjtu.cssl.entity.TeachingPlan;
+import com.cqjtu.cssl.dto.output.TeachingPlan;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;

@@ -15,5 +15,6 @@
              teacher t
         WHERE n.tid = t.tid
           AND notice_type = #{noticeType}
+        ORDER BY notice_date DESC
     </select>
 </mapper>
