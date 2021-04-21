@@ -1,58 +1,72 @@
-server:                     #配置server
-  tomcat:                   #springboot乱码解决
+server: #配置server
+  tomcat: #springboot乱码解决
     uri-encoding: UTF-8
   servlet:
     context-path: /cssl
-    encoding:
-      force: true
-      charset: utf-8
-      enabled: true
   port: 8090
 
 spring:
   profiles:
-    active:
-      - dev2
-      - property
+    active: dev
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver       # 数据库访问配置,主数据源，默认的
-      initial-size: 5                                   # 下面为连接池的补充设置，应用到上面所有数据源中,初始化大小，最小，最大
+      initial-size: 5                 # 下面为连接池的补充设置，应用到上面所有数据源中,初始化大小，最小，最大
       min-idle: 5
       max-active: 20
-      max-wait: 60000                                   # 配置获取连接等待超时的时间
+      max-wait: 60000                 # 配置获取连接等待超时的时间
       time-between-eviction-runs-millis: 60000          # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
       min-evictable-idle-time-millis: 300000            # 配置一个连接在池中最小生存的时间，单位是毫秒
       validation-query: SELECT 1
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
-      pool-prepared-statements: true                    # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true  # 打开PSCache，并且指定每个连接上PSCache的大小
       max-pool-prepared-statement-per-connection-size: 20
-      filters: stat,log4j2,config                       # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,log4j2,config                   # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
       filter:
         stat:
           merge-sql: true
           slow-sql-millis: 5000
         config:
           enabled: true
-  redis:                # Redis 配置
+
+  ## Redis 配置
+  redis:
+    ## Redis数据库索引（默认为0）
+    database: 10
+    ## Redis服务器地址
+    # host: 47.107.239.108
+    ## Redis服务器连接端口
+    port: 6379
+    ## Redis服务器连接密码（默认为空）
+    password:
     jedis:
       pool:
-        max-active: 8   # 连接池最大连接数（使用负值表示没有限制）
-        max-wait: -1    # 连接池最大阻塞等待时间（使用负值表示没有限制）
-        max-idle: 8     # 连接池中的最大空闲连接
-        min-idle: 0     # 连接池中的最小空闲连接
-    timeout: 3000       # 连接超时时间（毫秒）
-  devtools:  #热部署
+        ## 连接池最大连接数（使用负值表示没有限制）
+        max-active: 8
+        ## 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+        ## 连接池中的最大空闲连接
+        max-idle: 8
+        ## 连接池中的最小空闲连接
+        min-idle: 0
+    ## 连接超时时间（毫秒）
+    timeout: 3000
+  devtools: #热部署
     restart:
+      enabled: true
+  http: #springboot乱码解决
+    encoding:
+      force: true
+      charset: utf-8
       enabled: true
   jpa:
     open-in-view: false
   servlet:
     multipart:
-      enabled: true                   # 开启 multipart 上传功能
-      file-size-threshold: 2KB        # 文件写入磁盘的阈值
+      enabled: true                  # 开启 multipart 上传功能
+      file-size-threshold: 2KB       # 文件写入磁盘的阈值
       max-file-size: 4096MB           # 最大文件大小
       max-request-size: 4096MB        # 最大请求大小
   security:
@@ -60,27 +74,59 @@ spring:
       name: root
       password: password
 
-mybatis-plus:                                     # mybatis-plus相关配置
-  mapper-locations: classpath:mybatis/*Mapper.xml # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+# mybatis-plus相关配置
+mybatis-plus:
+  # xml扫描，多个目录用逗号或者分号分隔（告诉 Mapper 所对应的 XML 文件位置）
+  mapper-locations: classpath:mybatis/*Mapper.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-logging: # 日志
+logging:
   config: classpath:log4j2/log4j2.xml
 
-management: # actuator
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+info:
+  app:
+    name: Course scheduling system of Laboratory
+    abbrName: cssl
+    version: v2.0-Beta
+
+api:
+  base-path: /api
+
+management:
   server:
     port: 8090
   endpoints:
     web:
       base-path: /actuator
       exposure:
-        include: health,info,env
+        #        include: health,info,env
+        include: "*"
   endpoint:
     health:
       show-details: always
 
-datasource: # 数据库加密
+security:
+  cors:
+    allowed-origins: "*"
+    allowed-methods: GET,POST,DELETE,PUT,OPTIONS
+    allowed-headers: Accept,Accept-Encoding,Accept-Language,Authorization,Connection,Content-Type,Host,Origin,Referer,User-Agent,X-Requested-With
+  jwt:
+    header: Authorization
+    secret: mySecret
+    expiration: 12000
+    issuer: suwen
+    authentication-path: /api/auth
+
+# 数据库加密
+
+datasource:
   dev:
     username: root
     password: dFIqLYDm1cmEpNleXHWQFdSdldkgOxdcHG5loAGpNMG355cf91v5hjz34cpKd7eOIfkq4uNfv9OGKvd+gOGVmg==
@@ -89,25 +135,30 @@ datasource: # 数据库加密
     username: root
     password: LftC/2nC7whrKpSBkyaeCPlhP2m5ilclXJwuSInGoq/ISiwXjRZyOorGDiVj+ohhCDfYL0MoJ3eWSQMydNbnYw==
     publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAN1+HtvlA7gaod0ZifVFO7+CEPT5pbwG8OuysaYNwMqOYMM8Abzv7rLzDw3XtfSbyM/dp6qXJd0yLn8ocrppTNcCAwEAAQ==
-
+  dev_wht:
+    username: root
+    password: vg+ZbKRc2nLCPrSXPaIbYz/8poxaeU3QbKWsV7vwogcA8jVdGBBd71SjNQhzBEUdb5Q0IX1JZU+/0ZnIrWzVng==
+    publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAM/TdV15R7tEDS9BT6EMylrfJPnpKkdHmkKZThN8V7ibmHSPtZZtnnX2SOaaHLjybnmUFTdiIlSfNeSvfUf/wIECAwEAAQ==
 ---
+#开发环境配置1
+
 spring:
-  profiles: dev  # 开发环境配置
+  profiles: dev
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
-      username: ${datasource.dev.username}
-      password: ${datasource.dev.password}
-      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
+      url: jdbc:mysql://121.43.135.81:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      username: ${datasource.dev_wht.username}
+      password: ${datasource.dev_wht.password}
+      connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev_wht.publicKey}
   redis:
     host: 47.115.8.44
-    database: 5
-    port: 6543
 
 
 ---
+#开发环境配置2
+
 spring:
-  profiles: dev2  # 开发环境配置2
+  profiles: dev2
   datasource:
     druid:
       url: jdbc:mysql://47.115.8.44:3306/csslDB-dev?characterEncoding=utf8
@@ -116,12 +167,14 @@ spring:
       connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
   redis:
     host: 47.115.8.44
-    database: 5
-    port: 6543
+
+
 
 ---
+#生产环境配置
+
 spring:
-  profiles: prod  # 生产环境配置
+  profiles: prod
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
@@ -130,12 +183,12 @@ spring:
       connection-properties: config.decrypt=true;config.decrypt.key=${datasource.dev.publicKey}
   redis:
     host: localhost
-    database: 2
-    port: 6688
 
 ---
+#生产环境配置2
+
 spring:
-  profiles: prod2  # 生产环境配置2
+  profiles: prod2
   datasource:
     druid:
       url: jdbc:mysql://localhost:3306/csslDB?characterEncoding=utf8
@@ -144,5 +197,3 @@ spring:
       connection-properties: config.decrypt=true;config.decrypt.key=${datasource.prod.publicKey}
   redis:
     host: 47.115.8.44
-    database: 2
-    port: 6688
