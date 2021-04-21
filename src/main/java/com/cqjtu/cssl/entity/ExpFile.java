@@ -25,7 +25,7 @@ public class ExpFile implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "项目编号", required = true)
+  @ApiModelProperty(value = "文件编号", required = true)
   @TableId(type = IdType.AUTO)
   private Long fileId;
 

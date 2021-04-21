@@ -62,7 +62,7 @@ public class ArrangeController {
    * @date 2020/9/26 早先10:05
    */
   @ApiOperation("增加排课信息冲突检测")
-  @PostMapping("/AddArrange")
+  @PostMapping("/addArrange")
   public ResponseEntity<Result> ifAddArrange(
       @ApiParam(value = "排课信息", required = true) @RequestBody Arrange arrange) {
     return arrangeService.ifAddArrange(arrange);
