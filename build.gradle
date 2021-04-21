@@ -1,6 +1,6 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.3.RELEASE'
-    id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+    id 'org.springframework.boot' version '2.4.5'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
 }
 
@@ -20,9 +20,9 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    implementation 'cn.hutool:hutool-all:5.3.10'
+    implementation 'cn.hutool:hutool-all:5.6.3'
 
-    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.1'
+    implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.2'
 
     implementation 'commons-beanutils:commons-beanutils:1.9.4'
     implementation 'org.apache.poi:poi-ooxml:4.1.2'

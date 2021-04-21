@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql://121.43.135.81:3306/cssldb-dev?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useUnicode=true&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: R2NYFPE7aRZf9INZUhmM0y+adhjiDX8gA2S8O52SZ4PjxP/zfm4z7k97w0UP3e0mGP9/YWU1cIBMZHH3AzGY3Q==
+      connection-properties: config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAMVTCq6IOrm4iIsIndfDYVtsXbe0o3mxNBqtapr9C9bLzrckyvNDQ+QOHy/BHnkhMUja3Mc9aaDgqKg1fshXGykCAwEAAQ==
+  redis:
+    host: 47.115.8.44
