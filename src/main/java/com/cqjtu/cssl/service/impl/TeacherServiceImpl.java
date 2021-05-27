@@ -11,6 +11,7 @@ import com.cqjtu.cssl.service.TeacherService;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,18 +28,15 @@ import java.util.List;
 public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
     implements TeacherService {
 
-  private final ExpProjectMapper expProjectMapper;
   private final ArrangeMapper arrangeMapper;
   private final ArrangePeriodMapper arrangePeriodMapper;
   private final CourseMapper courseMapper;
 
   @Autowired
   public TeacherServiceImpl(
-      ExpProjectMapper expProjectMapper,
       ArrangeMapper arrangeMapper,
       ArrangePeriodMapper arrangePeriodMapper,
       CourseMapper courseMapper) {
-    this.expProjectMapper = expProjectMapper;
     this.arrangeMapper = arrangeMapper;
     this.arrangePeriodMapper = arrangePeriodMapper;
     this.courseMapper = courseMapper;
@@ -47,8 +45,8 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
   @Override
   public boolean updatePassword(String tid, String oldPw, String newOld) {
     @NonNull
-    Teacher teacher = getOne(new QueryWrapper<Teacher>().eq("tid", tid).eq("tpassword", oldPw));
-    teacher.setTpassword(newOld);
+    Teacher teacher = getOne(new QueryWrapper<Teacher>().eq("tid", tid).last("limit 1"));
+    teacher.setTpassword(new BCryptPasswordEncoder().encode(newOld));
     return updateById(teacher);
   }
 

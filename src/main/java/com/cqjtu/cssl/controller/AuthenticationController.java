@@ -12,7 +12,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -61,7 +60,6 @@ public class AuthenticationController {
   public ResponseEntity<Result> login(
       @Valid @ApiParam(value = "请求登录模型", required = true) @RequestBody
           AuthenticationRequest authRequest) {
-    log.info(authRequest);
     Authentication authentication =
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
