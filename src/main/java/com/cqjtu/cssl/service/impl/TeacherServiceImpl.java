@@ -66,7 +66,7 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
       each.setArrangePeriod(
           arrangePeriodMapper.selectList(
               new QueryWrapper<ArrangePeriod>().eq("aid", each.getAid()).eq("lab_week", week)));
-      each.setLabClass(arrangeMapper.getClassNameByAid(each.getAid()));
+      each.setLabClass(arrangeMapper.getClassNameByProId(each.getProId()));
     }
     List<Curriculum> curriculumList = new ArrayList<>();
 
