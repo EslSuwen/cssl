@@ -6,7 +6,10 @@ import com.cqjtu.cssl.entity.Arrange;
 import com.cqjtu.cssl.entity.ArrangePeriod;
 import com.cqjtu.cssl.entity.Curriculum;
 import com.cqjtu.cssl.entity.Teacher;
-import com.cqjtu.cssl.mapper.*;
+import com.cqjtu.cssl.mapper.ArrangeMapper;
+import com.cqjtu.cssl.mapper.ArrangePeriodMapper;
+import com.cqjtu.cssl.mapper.CourseMapper;
+import com.cqjtu.cssl.mapper.TeacherMapper;
 import com.cqjtu.cssl.service.TeacherService;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
@@ -44,9 +47,12 @@ public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher>
 
   @Override
   public boolean updatePassword(String tid, String oldPw, String newOld) {
-    @NonNull
-    Teacher teacher = getOne(new QueryWrapper<Teacher>().eq("tid", tid).last("limit 1"));
-    teacher.setTpassword(new BCryptPasswordEncoder().encode(newOld));
+    @NonNull Teacher teacher = getOne(new QueryWrapper<Teacher>().eq("tid", tid).last("limit 1"));
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    if (!passwordEncoder.matches(oldPw, teacher.getTpassword())) {
+      return false;
+    }
+    teacher.setTpassword(passwordEncoder.encode(newOld));
     return updateById(teacher);
   }
 

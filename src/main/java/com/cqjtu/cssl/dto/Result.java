@@ -64,7 +64,7 @@ public class Result {
         Result.builder()
             .success(true)
             .code(ResultCode.SUCCESS_UPDATE_DATA.getCode())
-            .message(ResultCode.SUCCESS_ADD_DATA.getMessage())
+            .message(ResultCode.SUCCESS_UPDATE_DATA.getMessage())
             .data(data)
             .build(),
         HttpStatus.OK);
