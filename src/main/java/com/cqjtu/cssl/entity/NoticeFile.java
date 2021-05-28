@@ -33,7 +33,7 @@ public class NoticeFile implements Serializable {
   private String fileName;
 
   @ApiModelProperty(value = "通知发布人编号")
-  private Integer tid;
+  private String tid;
 
   @ApiModelProperty(value = "通知文件发布时间")
   private String fileDate;
