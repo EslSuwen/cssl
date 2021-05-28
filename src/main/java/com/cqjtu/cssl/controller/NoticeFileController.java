@@ -3,6 +3,7 @@ package com.cqjtu.cssl.controller;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.io.file.FileReader;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.cqjtu.cssl.constant.ResultCode;
 import com.cqjtu.cssl.dto.Result;
 import com.cqjtu.cssl.entity.NoticeFile;
@@ -91,7 +92,9 @@ public class NoticeFileController {
   @ApiOperation("获取通知文件列表")
   @GetMapping("/getAll")
   public ResponseEntity<Result> getAll() {
-    return Result.successGet(noticeFileService.list());
+    return Result.successGet(
+        noticeFileService.list(
+            new LambdaQueryWrapper<NoticeFile>().orderByDesc(NoticeFile::getFileDate)));
   }
 
   /**
