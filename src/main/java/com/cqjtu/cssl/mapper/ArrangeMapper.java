@@ -67,6 +67,14 @@ public interface ArrangeMapper extends BaseMapper<Arrange> {
   List<ArrangePeriod> getArrangePeriodByClassId(Integer classId);
 
   /**
+   * 根据 proId 获取 class, 再获取 class 的所有排课时间
+   *
+   * @param proId 班级编号
+   * @return 时间安排
+   */
+  List<ArrangePeriod> getArrangePeriodByProId(Integer proId);
+
+  /**
    * 根据时间安排编号获取课程信息
    *
    * @param aid 时间安排编号

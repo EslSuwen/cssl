@@ -35,6 +35,7 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     implements ArrangeService {
 
   private final ArrangePeriodService arrangePeriodService;
+  private final ArrangeClassService arrangeClassService;
   private final ExpProjectService expProjectService;
   private final LabInfoService labInfoService;
   private final TeacherService teacherService;
@@ -43,11 +44,13 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   @Autowired
   public ArrangeServiceImpl(
       ArrangePeriodService arrangePeriodService,
+      ArrangeClassService arrangeClassService,
       ExpProjectService expProjectService,
       LabInfoService labInfoService,
       TeacherService teacherService,
       CourseService courseService) {
     this.arrangePeriodService = arrangePeriodService;
+    this.arrangeClassService = arrangeClassService;
     this.expProjectService = expProjectService;
     this.labInfoService = labInfoService;
     this.teacherService = teacherService;
@@ -110,16 +113,13 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
     arrange.setCourseId(expProjectService.getById(arrange.getProId()).getCourseId());
     save(arrange);
 
-    int aid =
-        getOne(new QueryWrapper<Arrange>().last("LIMIT 1").eq("pro_id", arrange.getProId()))
-            .getAid();
+    int aid = arrange.getAid();
 
     // 更新项目卡片中实验室申请状态
     ExpProject expProject = new ExpProject();
     expProject.setProId(arrange.getProId());
     expProject.setLabStatus(Audit.PASS);
     expProjectService.updateById(expProject);
-
     return arrangePeriodService.saveBatch(
         arrange.getArrangePeriod().stream()
             .peek(each -> each.setAid(aid))
@@ -134,11 +134,8 @@ public class ArrangeServiceImpl extends ServiceImpl<ArrangeMapper, Arrange>
   @Override
   public ResponseEntity<Result> ifAddArrange(Arrange arrange) {
 
-    List<ArrangePeriod> arrangePeriodList = new ArrayList<>();
-
-    List<Class> classInfo = arrange.getLabClassInfo();
-    classInfo.forEach(
-        each -> arrangePeriodList.addAll(baseMapper.getArrangePeriodByClassId(each.getClassId())));
+    List<ArrangePeriod> arrangePeriodList = baseMapper.getArrangePeriodByProId(arrange.getProId());
+    List<Class> classInfo = baseMapper.getClassByProId(arrange.getProId());
     log.info(arrangePeriodList);
     log.info(arrange.getArrangePeriod());
     Optional<ArrangePeriod> arrangePeriodOptional =

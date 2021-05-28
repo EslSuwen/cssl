@@ -43,19 +43,29 @@
         WHERE aid IN (SELECT aid FROM arrange_class WHERE class_id = #{classId})
     </select>
 
+    <select id="getArrangePeriodByProId" resultType="com.cqjtu.cssl.entity.ArrangePeriod">
+        SELECT *
+        FROM arrange_period
+        WHERE aid IN (SELECT aid
+                      FROM arrange
+                      WHERE pro_id IN (SELECT DISTINCT pro_id
+                                       FROM exp_class
+                                       WHERE class_id IN (SELECT class_id FROM exp_class WHERE pro_id = #{proId})))
+    </select>
+
 
     <select id="getClassByAid" resultType="com.cqjtu.cssl.entity.Class">
         SELECT *
         FROM class
         WHERE class_id IN
-              (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+              (SELECT class_id FROM exp_class WHERE pro_id = (SELECT pro_id FROM arrange WHERE aid = #{aid}))
     </select>
 
     <select id="getClassByProId" resultType="com.cqjtu.cssl.entity.Class">
         SELECT *
         FROM class
         WHERE class_id IN
-              (SELECT class_id FROM arrange_class WHERE aid = #{aid})
+              (SELECT class_id FROM exp_class WHERE pro_id = #{proId})
     </select>
 
     <select id="getClassNameByAid" resultType="java.lang.String">
@@ -69,5 +79,4 @@
         FROM class
         WHERE class_id IN (SELECT class_id FROM exp_class WHERE pro_id = #{proId})
     </select>
-
 </mapper>
